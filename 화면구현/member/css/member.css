@@ -1,0 +1,346 @@
+#wrapper {
+    margin: 0 auto;
+    width: 900px;
+    height: 100%;
+}
+
+.home {
+    text-decoration: none;
+    color: #d7d7d7;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.header_login {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#h1_login {
+    margin: 0 0 10px;
+}
+
+.centerName {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.centerName > div {
+    width: 50%;
+    height: 200px;
+    float: left;
+    text-align: right;
+}
+
+.centerName > div:last-child {
+    padding: 50px 0px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.centerName > h1 {
+    font-size: 50px;
+    font-weight: normal;
+}
+
+
+main > h2 {
+    text-align: right;
+}
+
+.login {
+    width: 600px;
+    height: 100%;
+    margin: 0px auto 42px;
+    padding: 70px;
+    border: 1px solid rgba(0,0,0,.12);
+    font-size: 12px;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+}
+
+.login_user > table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.login_user > table > tbody > tr > td > input[type=text]{
+    position: relative;
+    width: 300px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #222;
+    box-sizing: border-box;
+    float: left;
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    text-indent: 15px;
+}
+
+.login_user > table > tbody > tr:nth-child(3) {
+    float: left;
+}
+
+.login_user > table > tbody > tr > td > span > label {
+    font-size: 14px;
+    border: 1px solid black;
+}
+
+.auto {
+    margin: 0 0 20px 0;
+}
+
+#login_button {
+    display: block;
+    width: 100%;
+    padding: 13px 0 13px;
+    border-radius: 6px;
+    border: solid 0px;
+    background: rgb(44,233,123);
+    background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+h2 {
+    color: #d7d7d7;
+}
+
+main > div > div > form > div > span > label > a {
+    color: #222;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+main > div > div > form > div > button {
+    border: 0px;
+    background-color: white;
+}
+
+.go_home > a {
+    float: right;
+}
+
+
+/* terms */
+.terms {
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#terms_header    {
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logoBox {
+    width: 50%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.logoBox > a {
+    width: 100%;
+    height: 100%;
+}
+
+.message {
+    width: 50%;
+    height: 100%;
+    float: right;
+    
+    font-size: 50px;
+    box-sizing: border-box;
+}
+
+
+#terms_main > h2 {
+    text-align: right;
+}
+
+#terms_main > div > section {
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#terms_main > div > section > ul {
+    margin: 0 auto;
+}
+
+#terms_main > div > section > ul > li {
+    width: 100%;
+    list-style: none;
+}
+
+#terms_main > div > section > ul > li > h3 {
+    width: 900px;
+    display: inline-block;
+}
+
+#terms_main > div > section > ul > li > textarea {
+    width: 900px;
+    height: 300px;
+    text-align: left;
+    resize: none;
+    border: 1px solid rgba(0,0,0,.12);
+}
+
+#terms_main > div > section > ul li:last-child {
+    text-align: right;
+    box-sizing: border-box;
+    padding: 60px;
+}
+
+#terms_main > div > section > ul > li > button {
+    border: 0px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: rgb(44,233,123);
+    background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+}
+
+#terms_main > div > section > ul > li > button:last-child {
+    background: #01b1ff 105.37%;
+}
+
+
+
+/* register */
+
+article {
+    width: 900px;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 10px;
+    display: block;
+    box-sizing: border-box;
+    
+}
+
+article > section {
+    margin: 100px 70px 30px;
+}
+
+article > section > h4 {
+    font-size: 20px;
+}
+
+article > section > table > tbody > tr {
+    height: 50px;
+}
+
+article > section > table > tbody > tr > th {
+    width: 150px;
+    padding: 10px;
+    border-bottom: 1px solid #dfe5ed;
+
+}
+
+article > section > table > tbody > tr > td {
+    padding: 10px;
+    border-bottom: 1px solid #dfe5ed;
+}
+
+article > section > table > tbody > tr > td > span {
+    margin-left: 10px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+article > section > table > tbody > tr > td > span > button {
+    width: 100px;
+    height: 27px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+article > section > table > tbody > tr > td > input {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > section > table > tbody > tr > td > div > input {
+    width: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > section > table > tbody > tr > td > span > input {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > section:nth-child(2) > table > tbody > tr:nth-child(4) > td > span > button:nth-child(4) {
+    margin: 10px;
+}
+
+article > section > table > tbody > tr > td > div:first-child > input {   
+    width: 40%;
+}
+
+#wrapper > main > article > div {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.register > section:nth-child(2) > table > tbody > .docCate > td {
+    width: 50%;
+    padding: 11px 10px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.submit {
+    border: 0px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: rgb(44,233,123);
+    background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+}
+
+/* find,change,delete 공통 */
+#wrapper > main > article > section > .find {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#wrapper > main > article > section > .find > span > a {
+    text-decoration: none;
+    color: rgba(0, 0, 0);
+}
+
