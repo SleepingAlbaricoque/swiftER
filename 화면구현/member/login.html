@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="./css/member.css">
+    <style>
+
+        /*footer*/
+        footer{
+            width: 100%;
+            height: 192px;
+            background: #fff;
+            border-top: 1px solid #e9e9e9;
+            box-sizing: border-box;
+            background: #01b1ff;
+        }
+        footer > ul {
+            width: 1200px;
+            height: 39px;
+            margin: 0 auto;
+            padding: 15px 0;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e9e9e9;
+            text-align: center;
+        }
+        footer > ul > li {
+            display: inline-block;
+            font-weight: bold;
+            border-right: 1px solid #d7d7d7;
+            padding: 0 10px;
+        }
+        footer > ul > li:first-child{border-left: 1px solid #d7d7d7;}
+
+        footer > ul > li > a {
+            color: #fff;
+        }
+
+        .footerLogoImage{
+            width: 170px;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            position: relative;
+            top: -30px;
+        }
+
+        footer > div{
+            width: 1200px;
+            height: auto;
+            padding-top: 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        footer > div > p{
+            float: left;
+            height: 100%;
+            font-size: 11px;
+            line-height: 15px;
+            color: #fff;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        footer > div > p > strong{
+            display: inline-block;
+            padding: 6px 15px 7px 0;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        footer > div > p:nth-of-type(2){
+            width: 300px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <header class="header_login">
+            <div class="centerLogo">
+                <h1 id="h1_login">
+                    <a href="#">
+                        <img src="./img/swifter_logo_login.png" alt="로고이미지" width="250px" height="185.5px">
+                    </a>
+                </h1>
+            </div>
+        </header>
+
+        <!-- main -->
+        <main class="login">
+            <div class="loginForm">
+                <div>
+                    <form action="#">
+                        <div class="login_user">   
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="uid" placeholder="switfER 아이디">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="uid" placeholder="비밀번호">
+                                        </td>
+                                    </tr>
+                                    <tr class="auto">
+                                        <td>
+                                            <span>
+                                                <input type="checkbox"> 자동 로그인
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" id="login_button" value="로그인">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <span>
+                                <label>
+                                    <a href="#">아이디 찾기  | </a>
+                                    <a href="#">비밀번호 찾기  | </a>
+                                    <a href="#">회원가입</a>
+                                </label>
+                            </span>
+
+                            <h2>또는</h2>
+                            <button>
+                                <img src="./img/naver.jpg" alt="네이버" width="60px" height="60px">
+                            </button>
+                            <button>
+                                <img src="./img/kakao.jpg" alt="카카오" width="60px" height="60px">
+                            </button>
+                            <button>
+                                <img src="./img/google.jpg" alt="구글" width="60px" height="60px">
+                            </button>
+
+                            <h2 class="go_home">
+                                <a href="#" class="home">홈으로</a>
+                            </h2>
+                        </div>
+                    </form>
+                </div>
+            </div>    
+        </main>
+    </div>
+</body>
+</html>
