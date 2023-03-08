@@ -213,12 +213,13 @@
         /* faq */
         .faq-page{
             width: 100%;
-            height: 850px;
+            height: auto;
+            margin-bottom: 80px;
         }
 
         .faq-banner{
             margin-top: 80px !important;
-            margin-bottom: 60px !important;
+            margin-bottom: 80px !important;
         }
         .faq-banner > h1{
             font-size: 40px;
@@ -251,6 +252,7 @@
         }
         .faq-table > tbody > tr{
             border-bottom: 1.5px solid #2ce97b;
+            position: relative;
         }
         .faq-table > tbody > tr:last-child{
             border-bottom: none;
@@ -264,11 +266,18 @@
             width: 1200px;
             text-align: left;
             padding-left: 30px;
+            cursor: pointer;
         }
         .faq-table > tbody > tr > td > i{
             font-size: 22px;
             margin-right: 10px;
             color: #01b1ff;
+        }
+        .faq-table > tbody > tr > td > a{
+            display: block;
+            position: absolute;
+            right: 15px;
+            bottom: 22px;
         }
         .faq-table > tbody > tr > td > a > i{
             font-size: 22px;
@@ -290,12 +299,54 @@
             border-radius: 30px;
             margin-right: 15px;
             margin-bottom: 25px;
+            cursor: pointer;
         }
-        .faq-table-tabs > input:nth-child(5){
-            border-right: 1.5px solid #2ce97b;
-            margin-right: 0;
+        .faq-table-tabs > input.on{
+            background: #0399d9;
+        }
+
+        .faq-question-focus{
+            background: #2ce97b77;
+        }
+        .faq-answer{display: none;}
+        .faq-answer > td{
+            margin-bottom: 50px;
+            cursor: default!important;
+            text-align: center;
+        }
+        .faq-answer.on{
+            display: block;
+            width: auto;
+            height: auto;
         }
         </style>
+        <script>
+            function highlight(i){
+                let row = document.querySelectorAll(".faq-question")[i];
+                let rowLength = document.querySelectorAll(".faq-question").length;
+                let answer = document.querySelectorAll(".faq-answer")[i];
+
+                if(!row.classList.contains('faq-question-focus')){
+                    for(let j =0; j < rowLength; j++){
+                        document.querySelectorAll(".faq-question")[j].classList.remove('faq-question-focus');
+                        document.querySelectorAll(".faq-answer")[j].classList.remove('on');
+                    }
+                }
+
+                row.classList.toggle('faq-question-focus');
+                answer.classList.toggle('on');
+            }
+
+            function clicked(i){
+                let button = document.querySelectorAll(".faq-table-tabs > input[type='button']")[i];
+
+                for(let j=0; j <5; j++){
+                    document.querySelectorAll(".faq-table-tabs > input[type='button']")[j].classList.remove('on');
+                }
+
+                button.classList.add('on');
+            }
+        </script>
 </head>
 <body>
     <div class="wrapper">
@@ -341,68 +392,152 @@
                 <p>swiftER의 이용에 가장 유용한 질문들로 모았습니다</p>
             </div>
             <div class="faq-table-tabs">
-                <input type="button" value="회원 정보">
-                <input type="button" value="증상 검색">
-                <input type="button" value="응급실 검색">
-                <input type="button" value="커뮤니티">
-                <input type="button" value="기타">
+                <input type="button" value="회원 정보" onclick="clicked(0)">
+                <input type="button" value="증상 검색" onclick="clicked(1)">
+                <input type="button" value="응급실 검색" onclick="clicked(2)">
+                <input type="button" value="커뮤니티" onclick="clicked(3)">
+                <input type="button" value="기타" onclick="clicked(4)">
             </div>
             <div class="faq-table-wrapper">
-                <table class="faq-table">
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
+                <table class="faq-table">     
+                    <tr class="faq-question">
+                        <td onclick="highlight(0)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
                         </td>
+                    </tr>
+                    <tr class="faq-answer">
                         <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
-                        </td>
-                    </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
                         </td>
                     </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
+                    <tr class="faq-question">
+                        <td onclick="highlight(1)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
                         </td>
+                    </tr>
+                    <tr class="faq-answer">
                         <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
-                        </td>
-                    </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
                         </td>
                     </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
+                    <tr class="faq-question">
+                        <td onclick="highlight(2)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
                         </td>
+                    </tr>
+                    <tr class="faq-answer">
                         <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
-                        </td>
-                    </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
                         </td>
                     </tr>       
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요 
+                    <tr class="faq-question">
+                        <td onclick="highlight(3)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
                         </td>
+                    </tr>
+                    <tr class="faq-answer">
                         <td>
-                            <a href="#"><i class="fa-solid fa-angle-down"></i></a>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(4)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(5)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(6)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(7)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(8)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
+                        </td>
+                    </tr>       
+                    <tr class="faq-question">
+                        <td onclick="highlight(9)">
+                            <i class="fa-solid fa-q"></i>제가 검색하고 싶은 증상이 리스트에 없어요
+                            <a href="#"><i class="fa-solid fa-angle-down"></i></a> 
+                        </td>
+                    </tr>
+                    <tr class="faq-answer">
+                        <td>
+                            <i class="fa-solid fa-a"></i>
+                            <br>
+                            <br>
+                            1:1 문의를 통해 검색 리스트에 등록을 원하시는 증상을 말씀해주시면 추후 업데이트에서 반영하도록 노력하겠습니다
                         </td>
                     </tr>       
                 </table>

@@ -208,34 +208,34 @@
             margin-right: 30px;
         }
 
-        /* notice */
-        .notice-page{
+        /* qna */
+        .qna-page{
             width: 100%;
-            height: 850px;
+            height: auto;
         }
 
-        .notice-banner{
+        .qna-banner{
             margin-top: 80px !important;
             margin-bottom: 60px !important;
         }
-        .notice-banner > h1{
+        .qna-banner > h1{
             font-size: 40px;
             font-family: 'IBM Plex Sans KR', sans-serif;
             font-weight: bold;
             text-align: center;
         }
-        .notice-banner > p{
+        .qna-banner > p{
             text-align: center;
             font-size: 18px;
             font-family: 'IBM Plex Sans KR', sans-serif;
         }
-        .notice-page > div, section{
+        .qna-page > div, section{
             width: 1300px;
             height: auto;
             margin: 0 auto;
         }
         
-        .notice-search{
+        .qna-search{
             text-align: center;
             position: relative;
             width: 560px!important;
@@ -243,7 +243,7 @@
             background: #01b1ff;
             border-radius: 5px;
         }
-        .notice-search-bar{
+        .qna-search-bar{
             width: 460px;
             height: 30px;
             text-align: center;
@@ -254,10 +254,10 @@
             left: 25px;
             top: 9px;
         }
-        .notice-search-bar:focus{
+        .qna-search-bar:focus{
             color: #000;
         }
-        .notice-search-button{
+        .qna-search-button{
             width: 50px;
             height: 31px;
             position: absolute;
@@ -270,46 +270,54 @@
             font-size: 14.5px;
             font-family: 'IBM Plex Sans KR', sans-serif;
         }
-        .notice-page-table-wrapper{
+        .qna-page-table-wrapper{
             border-top: 2.5px solid;
             border-bottom: 2.5px solid;
             border-image: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
             border-image-slice: 1;
-            margin: 20px auto 0 auto!important;
-            height: 530px!important;
+            margin: 20px auto 80px auto!important;
+            position: relative;
         }
-        .notice-page-table{
+        .qna-page-table{
             width: 1300px;
             text-align: center;
             border-collapse: collapse;
         }
-        .notice-page-table > tbody > tr:nth-child(1){
+        .qna-page-table > tbody > tr{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .qna-page-table > tbody > tr:nth-child(1){
             height: 50px;
             border-bottom: 1.5px solid #2ce97b;
         }   
-        .notice-page-table > tbody > tr th{
+        .qna-page-table > tbody > tr th{
             font-size: 18px;
             font-family: 'IBM Plex Sans KR', sans-serif;
         }
-        .notice-page-table > tbody > tr td{
+        .qna-page-table > tbody > tr td{
             font-size: 17px;
             border-top: 1.4rem solid;
             border-bottom: 1rem solid;
             border-color: transparent;
-            text-overflow: ellipsis;
+            
         }
-        .notice-page-table > tbody > tr td > a{
+        .qna-page-table > tbody > tr > td:nth-child(2){
+            width: 730px;
+        }
+        .qna-page-table > tbody > tr td > a{
             font-size: 17px;
         }
-        .notice-page-table > tbody > tr:nth-child(2) >td{
+        .qna-page-table > tbody > tr:nth-child(2) >td{
             border: none;
             padding-top: 15px;
         }
-        .notice-page-table-buttons{
-            margin: 30px auto 0 auto;
+        .qna-page-table-buttons{
+            margin: 65px auto 16.5px auto;
             text-align: center;
         }
-        .notice-page-table-buttons > .num{
+        .qna-page-table-buttons > .num{
             width: 25px;
             height: 25px;
             font-size: 14px;
@@ -320,7 +328,10 @@
             background: transparent;
             cursor: pointer;
         }
-        .notice-page-table-buttons > .next, .before{
+        .num.on{
+            background: #2ce97b;
+        }
+        .qna-page-table-buttons > .next, .before{
             width: 43px;
             height: 25px;
             font-size: 13px;
@@ -330,8 +341,25 @@
             background: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
             cursor: pointer;
         }
-        .notice-page-table-buttons > .before{
+        .qna-page-table-buttons > .before{
             background: #2ce97b;
+        }
+        .qna-write-button{
+            position: absolute;
+            right: 38px;
+            bottom: 70px;
+            padding-top: 5px;
+        }
+        .qna-write-button > input{
+            width: 110px;
+            height: 40px;
+            font-size: 19px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            background: #01b1ff;
+            cursor: pointer;
         }
         </style>
         <script>
@@ -385,88 +413,87 @@
                 </div>
             </div>
         </header>
-        <main class="notice-page">
-            <div class="notice-banner">
-                <h1>공지사항</h1>
-                <p>swiftER의 공지사항을 알려드립니다</p>
+        <main class="qna-page">
+            <div class="qna-banner">
+                <h1>문의하기</h1>
+                <p>무엇이든, 언제든 여기서 물어보세요</p>
             </div>
-            <div class="notice-search">
-                <input type="text" value="키워드를 검색하세요" class="notice-search-bar" onfocus="this.value=''">
-                <input type="button" value="검색" class="notice-search-button">
-            </div>
-            <div class="notice-page-table-wrapper">
-                <table class="notice-page-table">
+            <div class="qna-page-table-wrapper">
+                <table class="qna-page-table">
                     <tr>
                         <th>카테고리</th>
                         <th>제목</th>
-                        <th>등록일자</th>
-                        <th>조회수</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요 ellipsis 테스트입니다</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                     <tr>
                         <td>COMMUNITY</td>
-                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
+                        <td>emp****</td>
                         <td>2023.03.08</td>
-                        <td>23</td>
                     </tr>
                 </table>
-                <div class="notice-page-table-buttons">
+                <div class="qna-write-button">
+                    <input type="button" value="문의하기" onClick="location.href='#'">
+                </div>
+                <div class="qna-page-table-buttons">
                     <input type="button" value="이전" class="before">
                     <input type="button" value="1" class="num" onclick="numHightlight(0)">
-                    <input type="button" value="2" class="num" onclick="numHightlight(1)">
+                    <input type="button" value="2" class="num" onclick="numHightlight(1)" >
                     <input type="button" value="3" class="num" onclick="numHightlight(2)">
                     <input type="button" value="4" class="num" onclick="numHightlight(3)">
                     <input type="button" value="5" class="num" onclick="numHightlight(4)">
