@@ -223,12 +223,15 @@ font-size: 14px;
 color: #fff;
 box-sizing: border-box;
 }
+.btnList:hover {
+background-color: rgb(77, 190, 238);
+}
 .article__button {
 float: right;
 height: 49px;
-margin: -45px 0 0;
+margin: -45px 8px 0;
 line-height: 49px;
-font-size: 10px;
+font-size: 14px;
 }
 .btnSubmit {
 display: inline-block;
@@ -236,7 +239,7 @@ width: 200px;
 height: 60px;
 margin: 40px auto 0;
 background-color: rgba(1,177,255,1);
-border: 1px solid rgba(1,177,255,1)e;  
+border: 1px solid rgba(1,177,255,1);  
 border-radius: 34px;
 font-size: 16px;
 color: #fff;
@@ -245,7 +248,24 @@ text-align: center;
 box-sizing: border-box;
 }
 .btnSubmit:hover {
-background-color: #0954f6;
+background-color: rgb(77, 190, 238);
+}
+.btnCancle {
+display: inline-block;
+width: 200px;
+height: 60px;
+margin: 40px auto 0;
+background-color: rgb(236, 241, 243);
+border: 1px solid rgb(236, 241, 243);  
+border-radius: 34px;
+font-size: 16px;
+color: #111;
+line-height: 58px;
+text-align: center;
+box-sizing: border-box;
+}
+.btnCancle:hover {
+background-color: rgb(115, 209, 250);
 }
 
 /* community sub 공통 */
@@ -336,11 +356,11 @@ padding: 60px;
 box-sizing: border-box;
 }
 
-/* community - 글목록 */
+/* free - 글목록 */
 #community > .free > .list > article > table {
 width: 100%;
 border-collapse: collapse;
-border-top: 2px solid #111;
+border-top: 3px solid #111;
 }
 #community > .free > .list > article > table tr {
 width: 100%;
@@ -417,7 +437,7 @@ vertical-align: bottom;
 .button--list-search{
     position: absolute;
     top: 4px;
-    right: 3px;
+    right: 5px;
     z-index: 10;
     border: none;
     width: 25px;
@@ -427,7 +447,7 @@ vertical-align: bottom;
     font-size: 0px;
 }
 
-/* community - 글보기 */
+/* free - 글보기 */
 #community > .free > .view {}
 #community > .free > .view > article {}
 #community > .free > .view > article > h1 {
@@ -672,3 +692,68 @@ vertical-align: bottom;
 .button--comment-more:hover:after {
     opacity: 1
 }
+
+/* free - 글쓰기 */
+#community > .free > .write > article table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 3px solid #111;
+  }
+  #community > .free > .write > article table tr {
+    width: 100%;
+    height: 26px;
+  }
+  
+  #community > .free > .write > article table td {
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;        
+  }
+  
+  #community > .free > .write > article table td:first-child {
+    width: 100px;
+  }
+  
+  #community > .free > .write > article table input {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-indent: 10px;
+  }
+  
+  #community > .free > .write > article table select {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  #community > .free > .write > article table select * {
+    font-size: inherit;
+  }
+  
+  #community > .free > .write > article table textarea {
+    width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* mytown - 리스트카테고리 */
+
+  .mytownListCate{
+    display: inline-block;
+    padding: 13px;
+    width: 100px;
+    height: 13px;
+    font-size: 10px;
+    box-sizing: border-box;
+  }
+  #community > .free > .view > article > div select * {
+    font-size: inherit;
+  }
+  
+
