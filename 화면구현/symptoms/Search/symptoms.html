@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -146,8 +147,10 @@
 
         /* main */
         main > div {
-            padding-left: 200px;
-            padding-right: 200px;
+            padding-left: 300px;
+            padding-right: 300px;
+            width: auto;
+            height: auto;
         }
         main > div > .title > h3{
             padding-top: 50px;
@@ -156,38 +159,45 @@
         }
         main > div > .healthinfo{
             width: 100%;
+            height: 100%;
         }
         main > div > .healthinfo > p{
             font-size: 15px;
+        }
+        .healthinfo > form {
+            width: 100%;
+            height: 100%;
         }
         .search_body_cate{
             width: 100%;
             margin-top: 10px;
         }
         .bodylist{
-            height: 50px;
+            height: auto;
             width: 100%;
-            border:1px solid #01b1ff;
-            box-sizing: border-box;
+			border: 1px solid #01b1ff;
+            overflow: hidden;
         }
         .bodylist > li {
-            width: 16.56%;
+            width: 16.66%;
             height: 100%;
             float: left;
             text-align: center;
-            margin: 0px auto;
             border-right: 1px solid #01b1ff;
+            box-sizing: border-box;
+        }
+        .bodylist > li:last-child{
+            border-right: none;
         }
         .bodylist > li > a{
             display: block;
-            width: 100%;
-            height: 100%;
             text-align: center;
-            line-height: 45px;
             font-family: arial;
             font-size: 20px;
             font-weight: bold;
             background-color: white;
+            padding: 10px 16px;
+			text-decoration: none;
         }
         .bodylist > li.on > a{
             background-color: #01b1ff;
@@ -200,7 +210,6 @@
         }
         
         .search_body_subcate > h3 {
-            
             padding: 15px 0px 10px 30px;
             font-size: 30px;
             font-weight: bold;
@@ -226,22 +235,32 @@
             height: 100%;
             border: 1px solid #01b1ff;
             text-align: center;
+            margin-top: 20px;
         }
         .search_animal > div{
             display: block;
             width: 50%;
 
         }
+        
+        .search_animal > p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .search_animal > label{
+            font-size: 20px;   
+        }
         .searchbtn{
             width: 100%;
             height: 100%;
-            margin-top: 35px;
+            margin: 35px 0px;
             text-align: center;
             
         }
         .btnclear{
             padding: 10px 20px;
-            background-color: rgba(44,233,123,1);
+            margin-right: 50px;
+            background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
             border: 1px solid #0063ce;
             border-radius: 4px;
             font-size: 20px;
@@ -321,6 +340,29 @@
             margin-right: 30px;
         }
         </style>
+
+        <script>
+            // 반려동물 정보 체크박스 둘중하나 선택
+            function handleCheckboxClick(event, containerId) {
+                var clickedCheckbox = event.target;
+                if (clickedCheckbox.checked) {
+                    var checkboxes = document.querySelectorAll('#' + containerId + ' input[type="checkbox"]');
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i] !== clickedCheckbox) {
+                            checkboxes[i].checked = false;
+                        }
+                    }
+                }
+		    }
+
+            // 체크박스 해제 (초기화 버튼)
+            function uncheckAllCheckboxes() {
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                }
+            }
+        </script>
 </head>
 <body>
     <div class="wrapper">
@@ -395,15 +437,15 @@
                                     <h3>눈</h3>
                                     <ul class="subcateBox">
                                         <li>
-                                            <input type="radio" id="cont001" name="symptom">
+                                            <input type="checkbox" id="cont001" name="symptom1">
                                             <label for="chk01">눈이 빠질꺼 같음</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="cont002" name="symptom">
+                                            <input type="checkbox" id="cont002" name="symptom2">
                                             <label for="chk02">눈이 부음</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="cont003" name="symptom">
+                                            <input type="checkbox" id="cont003" name="symptom3">
                                             <label for="chk03">눈꼽이 많이 낌</label>
                                         </li>
                                         
@@ -411,32 +453,41 @@
                                     <h3>코</h3>
                                     <ul class="subcateBox">
                                         <li>
-                                            <input type="radio" id="cont011" name="symptom">
+                                            <input type="checkbox" id="cont011" name="symptom4">
                                             <label for="chk01">코막힘</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="cont012" name="symptom">
+                                            <input type="checkbox" id="cont012" name="symptom5">
                                             <label for="chk02">재채기</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="cont013" name="symptom">
+                                            <input type="checkbox" id="cont013" name="symptom6">
                                             <label for="chk03">콧물</label>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="search_animal">
+                            <div class="search_animal" id="checkbox-container-1">
                                 <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
-                                    <input type="radio" id="check1"><label for="animalchk1">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk2">아니요</label>
+                            </div>
+                            <div class="search_animal" id="checkbox-container-2">
+                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk2">아니요</label>
+                            </div>
+                            <div class="search_animal" id="checkbox-container-3">
+                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
-                                    <input type="radio" id="check2"><label for="animalchk2">아니요</label>
-                                
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
                             </div>
                         </div>
                         <div class="searchbtn">
-                            <a href="#" class="btnclear">초기화</a>
+                            <a href="#" class="btnclear" onclick="uncheckAllCheckboxes()">초기화</a>
                             <a href="#" class="btnresult">검색</a>
                         </div>
                     </form>

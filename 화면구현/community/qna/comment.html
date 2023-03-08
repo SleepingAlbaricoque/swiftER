@@ -48,86 +48,40 @@
         </header>
         <section id="community">
             <div class="free">
-              <section class="list">
+              <section class="write">
                 <aside>
                   <h2>커뮤니티</h2>
                   <ul>
-                    <li class="on"><a href="#">자유 게시판</a></li>
-                    <li><a href="#">질문 게시판</a></li>
-                    <li><a href="#">내가 사는 동네</a></li>
+                    <li><a href="../free/list.html">자유 게시판</a></li>
+                    <li class="on"><a href="../qna/list.html">질문 게시판</a></li>
+                    <li><a href="../mytown/list.html">내가 사는 동네</a></li>
                   </ul>
                 </aside>
                 <article>
-                  <nav>
-                    <h1>자유 게시판</h1>
-                    <!-- 리스트 검색 -->
-                    <div class="list-search">
-                        <form action="" role="search">
-                            <input type="text" class="input--list-search" value="" placeholder="검색어를 입력해주세요.">
-                            <button type="submit" class="button--list-search">검색</button>
-                        </form>
-                    </div>
-                    <!-- // 리스트 검색 -->
-                  </nav>
-                  <table>
-                    <tr>
-                      <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                      <td>lee</td>
-                      <td>13 views</td>
-                      <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>12 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>2112 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>32 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>22 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>232 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                        <td>lee</td>
-                        <td>6543 views</td>
-                        <td>23.01.11 13:11</td>
-                    </tr>
-                  </table>
-    
-                  <div class="page">
-                    <a href="#" class="prev">이전</a>
-                    <a href="#" class="num on">1</a>
-                    <a href="#" class="num">2</a>
-                    <a href="#" class="num">3</a>
-                    <a href="#" class="next">다음</a>
-                  </div>
-    
-                  <a href="./write.html" class="btnWrite">글쓰기</a>
-    
+                    <form action="#">
+                      <table>
+                        <tr>
+                          <td>제목</td>                  
+                          <td>
+                            <h2 class="title">고양이 키우고 싶다</h2>
+                          </td>
+                        </tr>                
+                        <tr>
+                          <td>내용</td>                  
+                          <td>
+                            <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                          </td>
+                        </tr>
+                      </table>
+                      <div>
+                        <a href="./view.html" class="btnCancle">취소하기</a>
+                        <input type="submit" class="btnSubmit" value="답변하기"/>
+                      </div>
+                    </form>
                 </article>
               </section>
             </div>
-          </section>
+        </section>
         <footer>
             <ul>
                 <li>
