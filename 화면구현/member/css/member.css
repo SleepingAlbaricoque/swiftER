@@ -166,7 +166,7 @@ main > div > div > form > div > button {
     width: 50%;
     height: 100%;
     float: right;
-    
+    font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 50px;
     box-sizing: border-box;
 }

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>swiftER</title>
+    <link rel="stylesheet" href="./css/myPage.css">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <style>
+        #wrapper > main {
+        }
+
+        .mypage {
+            width: 1300px;
+            margin: 0 auto;
+        }
+
+        main > div > div:nth-of-type(1) {
+            width: 30%;
+            position:relative;
+            top:0;
+            left:0;
+            display: inline-block;
+        }
+        main > div > div:nth-of-type(2) {
+            width: 60%;
+            position: relative;
+            top: 0;
+            right: 0;
+            float: right;
+        }
+        main > div > div:nth-of-type(3){
+            display: inline-block;
+            width: 30%;
+            position: relative;
+            top:50%;
+            right: 0;
+            margin-top: 50px;
+        }
+        main > div > div:nth-of-type(4){
+            width: 60%;
+            position: relative;
+            top: 0;
+            right: 0;
+            float: right;
+            margin-top: 50px;
+        }
+
+        
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 달력 초기화
+            $('#calendar').fullCalendar({
+                header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+                },
+                navLinks: true,
+                editable: true,
+                eventLimit: true,
+                events: [
+                // 이벤트 목록
+                {
+                    title: '이벤트 1',
+                    start: '2023-03-01',
+                    end: '2023-03-01',
+                    color: '#378006',
+                    memo: '이벤트 1 메모'
+                },
+                {
+                    title: '이벤트 2',
+                    start: '2023-03-05',
+                    end: '2023-03-05',
+                    color: '#378006',
+                    memo: '이벤트 2 메모'
+                },
+                ]
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a href="#">
+                        <img src="./img/swifter_logo.png" alt="logo" class="logoImage">
+                    </a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">증상검색</a>
+                        </li>
+                        <li>
+                            <a href="#">응급실검색</a>
+                        </li>
+                        <li>
+                            <a href="#">약국검색</a>
+                        </li>
+                        <li>
+                            <a href="#">커뮤니티</a>
+                        </li>
+                        <li>
+                            <a href="#">고객센터</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="mypage" border="1px">
+                <div>
+                    <table class="myInfo">
+                        <thead>
+                            <tr>
+                                <th>내정보</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>별명</th>
+                                <td>김밥말이</td>
+                                <th>가입일</th>
+                                <td>2023-03-07</td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>et009153@gmail.com</td>
+                                <th>회원구분</th>
+                                <td>일반회원</td>
+                            </tr>
+                            <tr>
+                                <th>휴대전화</th>
+                                <td>010-9153-7494</td>
+                                <td>
+                                    <input type="button" value="회원정보수정">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>주소</th>
+                                <td>부산광역시 사상구 엄궁로 142<br>코오롱아파트 107동 1403호</td>
+                                <td>
+                                    <input type="button" value="회원탈퇴">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="list1">
+                    <table>
+                        <tr>
+                            <th>카테고리1</th>
+                            <th>제목1</th>
+                            <th>작성일1</th>
+                        </tr>
+                    </table>
+                </div>
+                <div id="calendar">
+                    <br>
+                    <textarea id='memo' rows='4' cols='50'></textarea>
+                    <button id='save'>저장</button>
+                </div>
+                
+                <div class="list2">
+                    <tr>
+                        <th>카테고리2</th>
+                        <th>제목2</th>
+                        <th>작성일2</th>
+                    </tr>
+                </div>
+            </div>
+        </main>
+        
+    </div>
+</body>
+</html>
