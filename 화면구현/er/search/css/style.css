@@ -1,0 +1,342 @@
+/* fontawesome 그라데이션 */
+#search i.fa-home{
+    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+}
+/* rating */
+#search h6.rating{
+    font-size: 11px;
+    background-image: url("/swiftER/img/rating_star.png");
+    background-repeat: no-repeat;
+    background-position: 36px 0px;
+    background-size: auto 100%;
+}
+#search h6.rating.star1{width: 55px;}
+#search h6.rating.star2{width: 70px;}
+#search h6.rating.star3{width: 85px;}
+#search h6.rating.star4{width: 100px;}
+#search h6.rating.star5{width: 120px;}
+
+#search h5.rating{
+    width: 150px;
+    height: 20px;
+    font-size: 0px;
+    background-image: url("/swiftER/img/ico_rating_star.png");
+    background-repeat: no-repeat;
+    background-position: 36px 0;
+    text-indent: 86px;
+}
+#search h5.rating.star1{background-position: 0 -40px;}
+#search h5.rating.star2{background-position: 0 -80px;}
+#search h5.rating.star3{background-position: 0 -120px;}
+#search h5.rating.star4{background-position: 0 -160px;}
+#search h5.rating.star5{background-position: 0 -200px;}
+
+
+/* 검색 페이지 */
+#search > .er{
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#search > .er > div.selectBox{
+    width: 1050px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#search > .er > div > h2.er-search{
+    font-size: 33px;
+    font-weight: bold;
+    margin: 30px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    color: #1b9cff;;
+}
+#search > .er > div > form{
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+#search > .er > div > form > div{
+    width: 100%;
+    margin: 0 auto;
+}
+#search > .er > div > form > div > fieldset {
+    border: none;   
+    margin: 20px;
+}
+#search > .er > div > form > div > fieldset > legend{
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #8c8c88;
+}
+#search > .er > div > form > div > fieldset.location{}
+#search > .er > div > form > div > fieldset.location > legend{}
+#search > .er > div > form > div > fieldset.location > select{
+    width: 100px;
+    height: 27px;
+    border: 1px solid #94b7d0;
+}
+#search > .er > div > form > div > fieldset.location > select{
+    margin-right: 5px;
+}
+#search > .er > div > form > div > fieldset.location > select #city{}
+#search > .er > div > form > div > fieldset.location > select #town{}
+#search > .er > div > form > div > fieldset.med-department{}
+#search > .er > div > form > div > fieldset.med-department > legend{}
+#search > .er > div > form > div > fieldset.med-department > input{
+    margin-right: 5px;
+}
+#search > .er > div > form > div > fieldset.med-department > label{
+    color: #454545;
+    font-weight: bold;
+    margin-right: 40px;
+    font-size: 15px;
+}
+#search > .er > div > form > div > fieldset.med-equipment{}
+#search > .er > div > form > div > fieldset.med-equipment > legend{}
+#search > .er > div > form > div > fieldset.med-equipment > input{
+    margin-right: 5px;
+}
+#search > .er > div > form > div > fieldset.med-equipment > label{
+    color: #454545;
+    font-weight: bold;
+    margin-right: 40px;
+    font-size: 15px;
+}
+#search > .er > div > form > div.btn{
+    width: 250px;
+    height: 50px;
+    margin: 0 auto;
+}
+#search > .er > div > form > div.btn > input{
+    width: 100px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2px;
+    color: #fff;
+    margin-top: 7.5px;
+}
+#search > .er > div > form > div > input.resetBtn{
+    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+}
+#search > .er > div > form > div > input.subBtn{
+    background-color: #1b9cff;
+    float: right;
+}
+#search > .er > div.map{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+#search > .er > div.map > h2{
+    font-size: 25px;
+    font-weight: bold;
+    margin: 30px;
+}
+
+/* 맵 크기 값 */
+#search > .er > div.map > div.search_map{
+    width: 1000px;
+    height: 550px;
+    border: 1px solid #111;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+#search > .er > div.info{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    margin: 30px;
+}
+#search > .er > div.info > p{
+    font-size: 15px;
+    color: #7f7f7f;
+    line-height: 21px;
+}
+
+/* 응급실 정보 페이지 */
+
+#search > .Detail{
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#search > .Detail > div.ErInfo{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#search > .Detail > div.ErInfo > nav{
+    margin: 40px 25px 10px;
+}
+#search > .Detail > div.ErInfo > nav > h1{
+    font-size: 30px;
+    font-weight: bold;
+}
+#search > .Detail > div.ErInfo > article.part1, .part2{
+    float: left;
+    width: 50%;
+    height: 400px;
+}
+#search > .Detail > div.ErInfo > article.part1{
+    width: 50%;
+    height: auto;
+}
+#search > .Detail > div.ErInfo > article.part1 > article{
+    position: relative;
+    margin: 30px;
+}
+#search > .Detail > div.ErInfo > article.part1 > article > div.border1{
+    width: 180px;
+    height: 40px;
+    margin-bottom: 10px;
+    border:1px solid transparent;
+    border-bottom: none;
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    background-image:linear-gradient(#fff, #fff),linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+}
+#search > .Detail > div.ErInfo > article.part1 > article > div > h2{
+    position: relative;
+    top: 20px;
+    font-size: 20px;
+    line-height: 10px;
+    text-align: center;
+    vertical-align: bottom;
+}
+#search > .Detail > div.ErInfo > article.part1 > article > div.border2{
+    position: absolute;
+    width: 317px;
+    top: 29px;
+    right: 29px;
+    margin: 10px;
+    border: 1px solid transparent;
+    background-image: linear-gradient(#fff, #fff), 
+    linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+#search > .Detail > div.ErInfo > article.part1 > article > p{
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 15px;
+}
+#search > .Detail > div.ErInfo > article.part2{
+    width: 50%;
+    height: auto;
+}
+#search > .Detail > div.ErInfo > article.part2 > div{
+    margin-top: 100px;
+}
+#search > .Detail > div.ErInfo > article.part2 > div  > nav{
+    width: 400px;
+    height: auto;
+}
+#search > .Detail > div.ErInfo > article.part2 > div  > nav > h2{
+    font-size: 30px;
+    margin: 20px;
+}
+#search > .Detail > div.ErInfo > article.part2 > div  > nav > span{
+    font-size: 17px;
+    line-height: 55px;
+}
+/* 리뷰 */
+#search > .Detail > article.review{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#search > .Detail > article.review > nav{
+    margin: 30px 0 10px;
+}
+#search > .Detail > article.review > nav > h1{
+    font-size: 25px;
+    line-height: 75px;
+    border-bottom: 3px solid transparent;
+    background-image: linear-gradient(#fff, #fff), 
+    linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+#search > .Detail > .review > ul{
+    padding: 10px;
+    box-sizing: border-box;
+}
+#search > .Detail > .review > ul > li{
+    padding-top: 16px;
+    border-bottom: 1px solid #ececec;
+    box-sizing: border-box;
+}
+#search > .Detail > .review > ul > li > div{
+    overflow: hidden;
+}
+#search > .Detail > .review > ul > li > div > h5{
+    float: left;
+}
+#search > .Detail > .review > ul > li > div > span{
+    float: right;
+    color: #555;
+}
+#search > .Detail > .review > ul > li > h3{
+    color: #555;
+    margin-top: 6px;
+}
+#search > .Detail > .review > ul > li > p{
+    width: 100%;
+    height: 60px;
+    color: #555;
+    font-size: 14px;
+    line-height: 19px;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-top: 10px;
+}
+#search > .Detail > .review > .paging{
+    width: 100%;
+    padding: 30px 0;
+    text-align: center;
+}
+#search > .Detail > .review > .paging > .prev{}
+#search > .Detail > .review > .paging > .next{}
+#search > .Detail > .review > .paging > .num{}
+#search > .Detail > .review > .paging > span > a{
+    color: #777;
+    font-size: 11px;
+    letter-spacing: -1px;
+}
+#search > .Detail > .review > .paging > span > a:hover{
+    text-rendering: underline;
+}
+#search > .Detail > .review > .paging > .num > a{
+    display: inline-block;
+    min-width: 14px;
+    margin: 0 2px;
+    padding: 8px 9px;
+    border: 1px solid #c4c4c4;
+    background: url() 0 0 repeat-x;
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+#search > .Detail > .review > .paging > .num > a:hover{
+    border: 1px solid #454c5f;
+    text-decoration: none;
+}
+#search > .Detail > .review > .paging > .num > a:on{
+    color: #fe434c;
+    font-weight: bold;
+}
