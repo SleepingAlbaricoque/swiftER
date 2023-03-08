@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>swiftER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font: normal 12px "맑은 고딕";
+        }
+
+        ul,ol {list-style: none;}
+
+        a {text-decoration: none;color: #111;}
+
+        input,textarea {outline: none;}
+
+        #wrapper {width: 100%;}
+
+        /*header*/
+        header{
+            width: 100%;
+            height: 197px;
+        }
+
+        header > div{
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .top{
+            height: 35px;
+        }
+        .top > div{
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: right;
+        }
+        .top > div > a{
+            display: inline-block;
+            height: 100%;
+            line-height: 35px;
+            border-right: 1px solid #e9e9e9;
+            padding: 0 10px;
+            color: #646464;
+        }
+        .top > div > a:last-child{
+            border-right: none;
+        }
+
+        .logo{
+            height: 115px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+        .logo > div{
+            position: relative;
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .logo > div > a{
+            display: inline-block;
+            margin-top: 30px;
+        }
+        .logo > div > form{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -185px;
+            margin-top: -22px;
+            display: inline-block;
+            width: 370px;
+            height: 45px;
+        }
+        .logo > div > form> input{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #e9e9e9;
+            border-radius: 5px;
+            font-size: 20px;
+            padding-left: 10px;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+        .logo > div > form > button{
+            position: absolute;
+            right: 6px;
+            top: 10px;
+            background: #fff;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            outline: none;
+        }
+        .logo > div > form > button > a{
+            position: absolute;
+            font-size: 20px;
+            display: inline-block;
+            right: 0.3px;
+            top: 0px;
+        }
+        .logoImage{
+            width: 200px;
+            position: absolute;
+            left: -100px;
+            top: -50px;
+        }
+
+        .menu{
+            height: 50px;
+            background: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+        }
+        .menu > div{
+            width: 1000px;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu > div > ul{
+            display: inline-block;
+            padding-bottom: 1px;
+        }
+        .menu > div > ul:nth-child(1){float:left;}
+        .menu > div > ul:nth-child(2){float:right;}
+        .menu > div > ul > li{float:left;}
+        .menu > div > ul > li > a{
+            padding: 0 55px;
+            font-size: 19px;
+            color: #fff;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+
+        /*footer*/
+        footer{
+            width: 100%;
+            height: 192px;
+            background: #fff;
+            border-top: 1px solid #e9e9e9;
+            box-sizing: border-box;
+            background: #01b1ff;
+            overflow: hidden;
+        }
+        footer > ul{
+            width: 1200px;
+            height: 39px;
+            margin: 0 auto;
+            padding: 15px 0;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e9e9e9;
+            text-align: center;
+        }
+        footer > ul > li{
+            display: inline-block;
+            font-weight: bold;
+            border-right: 1px solid #d7d7d7;
+            padding: 0 10px;
+        }
+        footer > ul > li > a{color: #fff;}
+        footer > ul > li:first-child{border-left: 1px solid #d7d7d7;}
+
+        .footerLogoImage{
+            width: 170px;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            position: relative;
+            top: -30px;
+        }
+
+        footer > div{
+            width: 1200px;
+            height: auto;
+            padding-top: 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        footer > div > p{
+            float: left;
+            height: 100%;
+            font-size: 11px;
+            line-height: 15px;
+            color: #fff;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        footer > div > p > strong{
+            display: inline-block;
+            padding: 6px 15px 7px 0;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        footer > div > p:nth-of-type(2){
+            width: 300px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        /* notice */
+        .notice-page{
+            width: 100%;
+            height: 850px;
+        }
+
+        .notice-banner{
+            margin-top: 80px !important;
+            margin-bottom: 60px !important;
+        }
+        .notice-banner > h1{
+            font-size: 40px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+        .notice-banner > p{
+            text-align: center;
+            font-size: 18px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        .notice-page > div, section{
+            width: 1300px;
+            height: auto;
+            margin: 0 auto;
+        }
+        
+        .notice-search{
+            text-align: center;
+            position: relative;
+            width: 560px!important;
+            height: 50px!important;
+            background: #01b1ff;
+            border-radius: 5px;
+        }
+        .notice-search-bar{
+            width: 460px;
+            height: 30px;
+            text-align: center;
+            font-size: 15px;
+            color: #646464;
+            border: none;
+            position: absolute;
+            left: 25px;
+            top: 9px;
+        }
+        .notice-search-bar:focus{
+            color: #000;
+        }
+        .notice-search-button{
+            width: 50px;
+            height: 31px;
+            position: absolute;
+            right: 16px;
+            top: 8px;
+            border: 1px solid #0486be;
+            border-radius: 5px;
+            background: #0390ccaf;
+            color: #fff;
+            font-size: 14.5px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        .notice-page-table-wrapper{
+            border-top: 2.5px solid;
+            border-bottom: 2.5px solid;
+            border-image: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
+            border-image-slice: 1;
+            margin: 20px auto 0 auto!important;
+            height: 530px!important;
+        }
+        .notice-page-table{
+            width: 1300px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        .notice-page-table > tbody > tr:nth-child(1){
+            height: 50px;
+            border-bottom: 1.5px solid #2ce97b;
+        }   
+        .notice-page-table > tbody > tr th{
+            font-size: 18px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        .notice-page-table > tbody > tr td{
+            font-size: 17px;
+            border-top: 1.4rem solid;
+            border-bottom: 1rem solid;
+            border-color: transparent;
+        }
+        .notice-page-table > tbody > tr td > a{
+            font-size: 17px;
+        }
+        .notice-page-table > tbody > tr:nth-child(2) >td{
+            border: none;
+            padding-top: 15px;
+        }
+        .notice-page-table-buttons{
+            margin: 30px auto 0 auto;
+            text-align: center;
+        }
+        .notice-page-table-buttons > .num{
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            border: 1px solid #2ce97b;
+            border-radius: 50%;
+            margin: 0 0.7px;
+        }
+        .notice-page-table-buttons > .next, .before{
+            width: 43px;
+            height: 25px;
+            font-size: 13px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
+        }
+        .notice-page-table-buttons > .before{
+            background: #2ce97b;
+        }
+        </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a href="#">
+                        <img src="../img/swifter_logo.png" alt="logo" class="logoImage">
+                    </a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">증상검색</a>
+                        </li>
+                        <li>
+                            <a href="#">응급실검색</a>
+                        </li>
+                        <li>
+                            <a href="#">약국검색</a>
+                        </li>
+                        <li>
+                            <a href="#">커뮤니티</a>
+                        </li>
+                        <li>
+                            <a href="#">고객센터</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="notice-page">
+            <div class="notice-banner">
+                <h1>공지사항</h1>
+                <p>swiftER의 공지사항을 알려드립니다</p>
+            </div>
+            <div class="notice-search">
+                <input type="text" value="키워드를 검색하세요" class="notice-search-bar" onfocus="this.value=''">
+                <input type="button" value="검색" class="notice-search-button">
+            </div>
+            <div class="notice-page-table-wrapper">
+                <table class="notice-page-table">
+                    <tr>
+                        <th>카테고리</th>
+                        <th>제목</th>
+                        <th>등록일자</th>
+                        <th>조회수</th>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>COMMUNITY</td>
+                        <td><a href="#">바이럴 활동 적발 시 계정 임의 탈퇴 조치 시행</a></td>
+                        <td>2023.03.08</td>
+                        <td>23</td>
+                    </tr>
+                </table>
+                <div class="notice-page-table-buttons">
+                    <input type="button" value="이전" class="before">
+                    <input type="button" value="1" class="num">
+                    <input type="button" value="2" class="num">
+                    <input type="button" value="3" class="num">
+                    <input type="button" value="4" class="num">
+                    <input type="button" value="5" class="num">
+                    <input type="button" value="6" class="num">
+                    <input type="button" value="7" class="num">
+                    <input type="button" value="8" class="num">
+                    <input type="button" value="9" class="num">
+                    <input type="button" value="10" class="num">
+                    <input type="button" value="다음" class="next">
+                </div>
+            </div>
+        </main>
+        <footer>
+            <ul>
+                <li>
+                    <a href="#">서비스소개</a>
+                </li>
+                <li>
+                    <a href="#">서비스이용약관</a>
+                </li>
+                <li>
+                    <a href="#">책임의한계와법적고지</a>
+                </li>
+                <li>
+                    <a href="#">사이트맵</a>
+                </li>
+            </ul>
+            <div>
+                <p> 
+                    <img src="../img/swifter_logo.png" alt="logo" class="footerLogoImage">
+                <p>
+                    <strong>swiftER</strong>
+                    <br>
+                    부산시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)
+                    <br>
+                    대표이사 : 홍길동
+                    <br>
+                    사업자등록번호 : 220-81-83676
+                    <br>
+                    통신판매업신고 : 강남 10630호 Fax : 02-589-8842
+                </p>
+                <p>
+                    <strong>고객센터</strong>
+                    <br>
+                    Tel : 1234-5678 (평일 09:00~18:00)
+                    <br>
+                    스마일클럽/SVIP 전용 : 1522-5700 (365일 09:00~18:00)
+                    <br>
+                    경기도 부천시 원미구 부일로 223(상동) 투나빌딩 6층
+                    <br>
+                    Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr
+                </p>
+            </div>
+        </footer>
+</body>
+</html>
