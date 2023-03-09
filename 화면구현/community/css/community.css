@@ -233,6 +233,13 @@ margin: -45px 8px 0;
 line-height: 49px;
 font-size: 14px;
 }
+.comment__button {
+float: right;
+height: 49px;
+margin: -58px 8px 0;
+line-height: 49px;
+font-size: 14px;
+}
 .btnSubmit {
 display: inline-block;
 width: 200px;
@@ -267,7 +274,24 @@ box-sizing: border-box;
 .btnCancle:hover {
 background-color: rgb(115, 209, 250);
 }
-
+.btnComment {
+    float: right;
+    display: inline-block;
+    width: 130px;
+    height: 58px;
+    margin: -62px 12px auto 0;
+    background-color: rgb(236, 241, 243);
+    border: 1px solid rgb(236, 241, 243);
+    border-radius: 35px;
+    font-size: 14px;
+    color: #111;
+    line-height: 58px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.btnComment:hover {
+background-color: rgb(115, 209, 250);
+}
 /* community sub 공통 */
 #community > div > section > article > nav {
     width: 100%;
@@ -481,10 +505,35 @@ vertical-align: bottom;
   padding: 26px;
   box-sizing: border-box;
 }
-
 #community > .free > .view > article > .content * {
   font-size: 16px;
   line-height: 32px;
+}
+#community > .free > .view > article > .commentContent {
+    width: 100%;
+    height: 100%;        
+    border-bottom: 1px solid #e9e9e9;
+    padding: 26px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 32px;
+}
+#community > .free > .view > article > .commentContents {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-top: 1px solid rgb(10, 40, 53);
+    border-bottom: none;
+    box-sizing: border-box;
+}
+#community > .free > .view > article > .commentContent * {
+    font-size: 16px;
+    line-height: 32px;
+}
+.commentTitle {
+  margin-bottom: 6px;
+  font-size: 2px;
+  font-weight: bold;
 }
 
 .comment {
@@ -537,43 +586,6 @@ vertical-align: bottom;
     height: 47px;
     line-height: 47px
 }
-.comment__modify {
-    position: relative
-}
-
-.comment__modify .textarea--comment {
-    padding: 15px 20px
-}
-
-.button--comment-modify-cancel, .button--comment-modify-confirm {
-    transition: background-color .2s;
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 170px;
-    height: 50px;
-    background-color: #fff;
-    box-sizing: border-box;
-    line-height: 48px;
-    border: 1px solid #ddd;
-    vertical-align: middle;
-    text-align: center;
-    color: rgba(1,177,255,1);
-    cursor: pointer
-}
-
-.button--comment-modify-cancel:hover, .button--comment-modify-confirm:hover {
-    background-color: #000;
-    border-color: #000;
-    color: #fff
-}
-
-.button--comment-modify-cancel {
-    right: 169px;
-    color: #222
-}
-
 .comment__list {
     margin-top: 20px
 }
@@ -582,116 +594,20 @@ vertical-align: bottom;
     padding: 20px 0;
     background-color: #fff;
     border-bottom: 1px solid #ebebeb;
-    text-align: right
+    text-align: left;
 }
-
-.comment__list li.comment__item--mine {
-    background-color: #fefdf2
-}
-
-.comment__list li.comment__item--deleted {
-    background-color: #f9f9f9
-}
-
-.comment__button {
-    display: inline-block;
-    height: 25px;
-    line-height: 25px;
-    vertical-align: top
-}
-
-.comment__button {
-    margin: -3px 0 0 -4px
-}
-
-.comment__button>span {
-    position: relative;
-    float: left
-}
-
-.comment__button>span:before {
-    display: inline-block;
-    content: "";
-    width: 1px;
-    height: 10px;
-    margin: -3px 3px 0 4px;
-    background-color: #ddd;
-    vertical-align: middle
-}
-
-.comment__button button {
-    transition: color .2s;
-    height: 25px;
-    margin: 0;
-    padding: 0 5px;
-    background-color: transparent;
-    vertical-align: top;
-    line-height: 25px;
-    border: 0;
+.comment_font{
+    padding: 10px;
     font-size: 14px;
-    color: #888
 }
-
-.comment__button button:hover {
-    color: #000
-}
-
-.comment__modify {
-    display: none;
-    clear: both;
-    padding-left: 55px
-}
-
-.comment__more {
-    margin: 30px 0 0;
-    text-align: center
-}
-
-.button--comment-more {
-    position: relative;
-    display: inline-block;
-    width: 130px;
-    height: 43px;
-    background-color: #fff;
-    box-sizing: border-box;
-    border-radius: 22px;
-    border: 1px solid #ddd;
-    line-height: 41px;
+.paging{
     text-align: center;
-    font-size: 15px;
-    color: rgba(1,177,255,1)
+}
+.num{
+    font-size: 30px;
 }
 
-.button--comment-more:after, .button--comment-more:before {
-    transition: opacity .2s;
-    content: "";
-    position: absolute;
-    left: 45px;
-    top: 50%;
-    margin: -6px 0 0
-}
 
-.button--comment-more:before {
-    opacity: 1
-}
-
-.button--comment-more:after {
-    opacity: 0
-}
-
-.button--comment-more:hover {
-    background-color: rgba(1,177,255,1);
-    border-color: rgba(1,177,255,1);
-    color: #fff
-}
-
-.button--comment-more:hover:before {
-    opacity: 0
-}
-
-.button--comment-more:hover:after {
-    opacity: 1
-}
 
 /* free - 글쓰기 */
 #community > .free > .write > article table {
@@ -745,15 +661,15 @@ vertical-align: bottom;
   /* mytown - 리스트카테고리 */
 
   .mytownListCate{
-    display: inline-block;
-    padding: 13px;
-    width: 100px;
-    height: 13px;
-    font-size: 10px;
+    width: 90px;
+    height: 26px;
+    font-size: 12px;
     box-sizing: border-box;
+    position: absolute;
+    left: 436px;
+    top: 65px;
   }
   #community > .free > .view > article > div select * {
     font-size: inherit;
   }
   
-
