@@ -157,38 +157,98 @@
             font-weight: bold;
         }
         .title > p {
+            width: 1200px;
             font-size: 30px;
             font-weight: bold;
             padding-top: 50px;
+            padding-bottom: 50px;
             text-align: center;
+            border: 1px solid #01b1ff;
+            border-radius: 30px;
+            margin: 50px auto;
         }
         .disease {
             width: 100%;
             height: 150px;
-            margin-top: 30px;
-
+            display: flex;
+            justify-content: center;
         }
         .disease > ul {
             width: 100%;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
         .disease > ul > li {
-            float: left;
-            width: 25%;
+            width: 100%;
             box-sizing: border-box;
+
             
         }
         .disease > ul > li > p {
             width: 200px;
-            padding:20px;
-            float: right;
+            padding: 20px;
             border: 1px solid #01b1ff;
+            background: #01b1ff;
+            border-radius: 30px;
             text-align: center;
             font-size: 30px;
             font-weight: bold;
+            margin: 0 auto;
+            color: #fff;
         }
         section {
+            width: 1100px;
+            margin: 0 auto;
+            border: 1px solid #01b1ff;
+            border-radius: 30px;
+            padding: 50px;
+        }
+        .dis_title {
+            width: 100px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dis_title > h3{
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .symp_wrapper {
+            display: flex;
+            align-items: center;
 
         }
+        .symp_title {
+            width: 110px;
+            text-align: center;
+        }
+        .symp_title > h4{
+            font-size: 22px;
+            font-weight: bold;
+            width: 103px;
+        }
+        .symp_content > p {
+            font-size: 22px;
+        }
+        .department {
+            display: flex;
+            justify-content: center;
+        }
+        .department > h5{
+            width: 100px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .department > ul{
+            width: 100%;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .department > ul > li{}
         main > div > .healthinfo{
             width: 100%;
             height: 100%;
@@ -373,6 +433,10 @@
             margin-left: 30px;
             margin-right: 30px;
         }
+        .size {
+            width: 23%;
+            text-align: center;
+        }
         </style>
 </head>
 <body>
@@ -427,36 +491,42 @@
                     </ul>
                 </nav>
                 <section>
-                    <table border="1">
-                        <th>
-                            <h3>감기</h3>
-                        </th>
-                        <tr>
-                            <td>주요증상</td>
-                            <td>
-                                <p>감기 바이러스에 노출된 지 1~3일 후에 증상이 나타난다.<br/>
-                                   증상은 감기 바이러스가 상부 호흡기계에 어느 정도 침투했는가에 따라 다양하게 나타난다.<br/>
-                                   콧물, 코막힘, 목 부위의 통증, 기침과 근육통이 흔하게 나타나는 증상이다.<br/>
-                                   성인에게서 열이 나는 경우는 드물거나 미열에 그치지만, 소아에게서는 발열 증상이 흔하게 나타난다.<br/>
-                                   결막염이 동반되어 눈물이 날 수도 있다. 환자의 연령, 기존에 앓고 있었던 질환, 면역상태 등에 따라 증상의 정도가 달라질 수 있다.<br/>
-                                   감기의 경과 중에 다른 합병증이 없어도 콧물이 진해지고, 누렇거나 푸르게 변하기도 한다.<br/>
-                                   재채기, 코막힘, 콧물, 인후통, 기침, 미열, 두통 및 근육통과 같은 증상이 나타나지만 대개는 특별한 치료 없이도 저절로 치유된다.
-                                </p> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>관련 과 : </td>
-                            <td>내과</td>
-                            <td>이비인후과</td>
-                        </tr>
-                    </table>
+                    <div class="dis_title">
+                        <h3>감기</h3>
+                    </div>
+                    <div class="symp_wrapper">  
+                        <div class="symp_title">
+                            <h4>주요증상 :</h4>
+                        </div>
+                        <div class="symp_content">
+                            <p>
+                                감기 바이러스에 노출된 지 1~3일 후에 증상이 나타난다.<br/>
+                                증상은 감기 바이러스가 상부 호흡기계에 어느 정도 침투했는가에 따라 다양하게 나타난다.<br/>
+                                콧물, 코막힘, 목 부위의 통증, 기침과 근육통이 흔하게 나타나는 증상이다.<br/>
+                                성인에게서 열이 나는 경우는 드물거나 미열에 그치지만, 소아에게서는 발열 증상이 흔하게 나타난다.<br/>
+                                결막염이 동반되어 눈물이 날 수도 있다. 환자의 연령, 기존에 앓고 있었던 질환, 면역상태 등에 따라 증상의 정도가 달라질 수 있다.<br/>
+                                감기의 경과 중에 다른 합병증이 없어도 콧물이 진해지고, 누렇거나 푸르게 변하기도 한다.<br/>
+                                재채기, 코막힘, 콧물, 인후통, 기침, 미열, 두통 및 근육통과 같은 증상이 나타나지만 대개는 특별한 치료 없이도 저절로 치유된다.
+                            </p> 
+                        </div>
+                    </div>
+                    <div class="department">
+                        <div class="symp_title">
+                            <h4>관련 과 :</h4>
+                        </div>
+                        <ul>
+                            <li>내과</li>
+                            <li>내과</li>
+                            <li>내과</li>
+                            <li>내과</li>
+                        </ul>
+                    </div>
                     <div>
                         <p>
                             본 페이지에서 제공하는 내용은 참고사항일 뿐 게시물에 대한 법적책임은 없음을 밝혀드립니다.<br/>
                             자세한 내용은 전문가와 상담하시길 바랍니다.
                         </p>
                     </div>
-                        
                 </section>
             </div>
         </main>
@@ -467,7 +537,7 @@
                 </li>
                 <li>
                     <a href="#">서비스이용약관</a>
-                </li>symptoms
+                </li>
                 <li>
                     <a href="#">책임의한계와법적고지</a>
                 </li>
