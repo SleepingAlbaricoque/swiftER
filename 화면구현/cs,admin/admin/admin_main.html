@@ -12,7 +12,8 @@
         * {
             margin: 0;
             padding: 0;
-            font: normal 12px "맑은 고딕";
+            font-size: 14px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
         }
 
         ul,ol {list-style: none;}
@@ -27,12 +28,15 @@
         header{
             width: 100%;
             height: 60px;
-            background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+            background: #fafbfd;
             position: relative;
+            box-shadow: -2px 10px 11px -4px rgba(162,160,160,0.75);
+            -webkit-box-shadow: -2px 10px 11px -4px rgba(162,160,160,0.75);
+            -moz-box-shadow: -2px 10px 11px -4px rgba(162,160,160,0.75);
         }
 
         .logo > div{
-            background: #fff;
+            background: transparent;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -42,6 +46,52 @@
         }
         .logo-head{
             width: 40px;
+        }
+
+        .search{
+            background: #f8f6f6;
+            border-radius: 50%;
+            width: 37px;
+            height: 37px;
+            position: absolute;
+            left: 200px;
+            top: 10px;
+        }
+        .search > a > i{
+            display: block;
+            position: absolute;
+            left: 8px;
+            top: 9px;
+            font-size: 20px;
+            color: #01b1ff;
+        }
+        .search-bar{display: none;}
+        .search-bar.on{display: block;}
+        .search-bar > input[type=text]{
+            border: 0.5px solid #eee;
+            border-radius: 18px;
+            width: 300px;
+            height: 33px;
+            text-indent: 10px;
+            font: normal 12px "맑은 고딕";
+            display: block;
+            position: absolute;
+            left: 60px;
+            bottom: 0px;
+        }
+        .search-bar > input[type=button]{
+            border: none;
+            border-radius: 10px;
+            background: #01b1ff;
+            width: 35px;
+            height: 23px;
+            color: #fff;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            left: 315px;
+            bottom: 5.5px;
+            cursor: pointer;
         }
 
         .menu{
@@ -55,11 +105,157 @@
         .menu > div > ul > li > a{
             font-size: 17px;
             font-family: 'IBM Plex Sans KR', sans-serif;
-            color: #fff;
+            color: #111;
         }
         
-        /* footer */
+        /* admin_main */
+        .admin-index > div:first-child{
+            float: left;
+        }
+        .sub{
+            width: 185px;
+            height: 692.5px;
+        }
+        .sub > aside{
+            width: 100%;
+            height: 100%;
+            background: rgb(44,233,123);
+            background: linear-gradient(0deg, #2ce97b 0%, #01b1ff 100%);
+            color: #fff;
+            font-weight: lighter;
+        }
+        .cate{
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+        .cate  a{
+            font-size: 17px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            color: #fff;
+        }
+        .subcate{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 12px;
+            display: none;
+        }
+        .subcate.on{display: block;}
+        .subcate li{
+            display: block;
+            margin-bottom: 8px;
+        }
+        .subcate > li > a{
+            font-size: 14.5px;
+        }
+        .sub > aside > ul > li:nth-child(1){
+            padding-top: 23px;
+        }
+
+        .admin-content{
+            width: 100%;
+            height: 692.5px;
+            background: #f8f6f6;
+        }
+        .admin-content > section{
+            margin: 0 auto;
+            width: 1200px;
+            height: 250px;
+            background: #fff;
+            border: 1px solid #c3c0c0;
+            margin-bottom: 50px;
+            margin-left: 270px;
+        }
+        .admin-content > section.shadow{
+            box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -webkit-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -moz-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+        }
+        .control-panel-main > ul{
+            padding-top: 30px;
+            padding-left: 40px;
+            height: 110px;
+            border-bottom: 1px solid #c3c0c0;
+        }
+        .control-panel-main-item{
+            float: left;
+            margin-right: 185px;
+        }
+        .control-panel-main > p{
+            display: block;
+            width: 1200px;
+            height: 35px;
+            font-size: 20px;
+            font-weight:lighter;
+            text-indent: 30px;
+            padding-top: 8px;
+            border-bottom: 1px solid #c3c0c0;
+        }
+        .control-panel-main > p > span{
+            float: right;
+            margin-top: 10px;
+            margin-right: 15px;
+            font-size: 12px;
+        }
+        .control-panel-main > p > span > span{font-size: 12px;}
+        .control-panel-main-icon > i{
+            font-size: 70px;
+            color: #01b1ff;
+
+        }
+        .control-panel-main-item > ol{float: left;}
+        .control-panel-main-item > ol:nth-child(1){
+            margin-right: 20px;
+        }
+        .control-panel-main-item > ol:nth-child(2) > li:nth-child(1){
+            color: #6a6a6a;
+            margin-bottom: 2.5px;
+        }
+        .control-panel-main-item > ol:nth-child(2) > li:nth-child(2){
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .control-panel-main > p:nth-of-type(2){
+            border-bottom: none;
+            text-align: center;
+            height: 50px;
+            padding-top: 13px;
+        }
+        .control-panel-main > p:nth-of-type(2) > a > input{
+            background: #2ce97b;
+            width: 180px;
+            height: 38px;
+            border: none;
+            border-radius: 18px;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .increase{
+            color: #2ce97b;
+        }
+        .decrease{
+            color: red;
+        }
+
     </style>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -69,6 +265,13 @@
                     <a href="#">
                         <img class="logo-head" src="../img/swifter_logo_head.png" alt="swiftER 로고">
                     </a>
+                </div>
+            </div>
+            <div class="search">
+                <a href="#" onclick="searchBar()"><i class="fa-solid fa-magnifying-glass fa-flip-horizontal"></i></a>
+                <div class="search-bar"> 
+                    <input type="text">
+                    <input type="button" value="검색" onClick="location.href='#'"> 
                 </div>
             </div>
             <div class="menu">
@@ -87,8 +290,106 @@
                 </div>
             </div>
         </header>
-        <main>
-            
+        <main class="admin-index">
+            <div class="sub">
+                <aside>
+                    <ul>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(0)">회원관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">회원 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">회원 정보 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(1)">병원 리뷰 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">리뷰 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">리뷰 상세 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(2)">커뮤니티 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">게시판 별 글보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate" onclick="revealSubCate(3)">
+                            <a href="#">고객센터 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">FAQ 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">QnA 리스트</a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="admin-content">
+                <section style="border:none; background: transparent; height: 30px;"></section>
+                <section class="control-panel-main shadow">
+                    <p>현황 보고서<span>* <span>2023-03-10</span> 기준</span></p>
+                    <ul>
+                        <li class="control-panel-main-item">
+                            <ol>
+                                <li class="control-panel-main-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </li>
+                            </ol>
+                            <ol>
+                                <li>총 회원 수</li>
+                                <li>30명</li>
+                                <li>전일 대비 <span class="decrease">3명 </span><i class="fa-solid fa-angle-down decrease"></i></li>
+                            </ol>
+                        </li>
+                        <li class="control-panel-main-item">
+                            <ol>
+                                <li class="control-panel-main-icon">
+                                    <i class="fa-solid fa-hospital-user"></i>
+                                </li>
+                            </ol>
+                            <ol>
+                                <li>총 병원 리뷰 수</li>
+                                <li>100건</li>
+                                <li>전일 대비 <span class="increase">5건 </span><i class="fa-solid fa-angle-up increase"></i></li>
+                            </ol>
+                        </li>
+                        <li class="control-panel-main-item">
+                            <ol>
+                                <li class="control-panel-main-icon">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </li>
+                            </ol>
+                            <ol>
+                                <li>총 커뮤니티 작성글 수</li>
+                                <li>1500건</li>
+                                <li>전일 대비 <span class="increase">50건 </span><i class="fa-solid fa-angle-up increase"></i></li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <p>
+                        <a href="#">
+                            <input type="button" value="보고서 상세보기">
+                        </a>
+                    </p>
+                </section>
+                <section class=" shadow">
+
+                </section>
+            </div>
         </main>
         <footer>
 
