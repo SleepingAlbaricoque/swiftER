@@ -279,7 +279,7 @@ background-color: rgb(115, 209, 250);
     display: inline-block;
     width: 130px;
     height: 58px;
-    margin: -62px 12px auto 0;
+    margin: -101px -84px auto 0;
     background-color: rgb(236, 241, 243);
     border: 1px solid rgb(236, 241, 243);
     border-radius: 35px;
@@ -302,6 +302,7 @@ background-color: rgb(115, 209, 250);
     float: left;
     font-size: 26px;
     font-weight: bold;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 #community > div > section > article > nav > h2 {
     font-size: 20px;
@@ -352,9 +353,10 @@ min-height: 600px;
 }
 
 #community > .free > section > aside > h2 {
-font-size: 24px;
+font-size: 29px;
 font-weight: bold;
 margin: 26px 0;
+font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
 #community > .free > section > aside > ul {}
@@ -365,6 +367,7 @@ margin-bottom: 16px;
 font-size: 16px;
 font-weight: bold;
 color: #9e9e9e;
+font-family: 'IBM Plex Sans KR', sans-serif;
 }
 #community > .free > section > aside > ul > li > a:hover {
 color: #111;
@@ -384,7 +387,7 @@ box-sizing: border-box;
 #community > .free > .list > article > table {
 width: 100%;
 border-collapse: collapse;
-border-top: 3px solid #111;
+border-top: 2px solid #111;
 }
 #community > .free > .list > article > table tr {
 width: 100%;
@@ -396,6 +399,10 @@ background-color: #f7f7f7;
 #community > .free > .list > article > table td {
 padding: 16px;
 border-bottom: 1px solid #ccc;
+}
+#community > .free > .list > article > table td:nth-child(2) {
+}
+#community > .free > .list > article > table td:nth-child(3) {
 }
 #community > .free > .list > article > table td:last-child {
 text-align: center;
@@ -475,9 +482,10 @@ vertical-align: bottom;
 #community > .free > .view {}
 #community > .free > .view > article {}
 #community > .free > .view > article > h1 {
-  font-size: 23px;
+  font-size: 26px;
   font-weight: bold;
   padding: 10px;
+  font-family: 'IBM Plex Sans KR', sans-serif;
 }
 #community > .free > .view > article > nav {
   width: 100%;
@@ -598,15 +606,23 @@ vertical-align: bottom;
 }
 .comment_font{
     padding: 10px;
-    font-size: 14px;
+    font-size: 15px;
 }
 .paging{
     text-align: center;
 }
+.prev > a {
+ font-size: 13px;
+}
+.next > a{
+ font-size: 13px;
+}
 .num{
     font-size: 30px;
 }
-
+.num > a {
+    font-size: 15px;
+}
 
 
 /* free - 글쓰기 */
@@ -666,8 +682,9 @@ vertical-align: bottom;
     font-size: 12px;
     box-sizing: border-box;
     position: absolute;
-    left: 436px;
-    top: 65px;
+    left: 32.2%;
+    top: 10.9%;
+    outline: none;
   }
   #community > .free > .view > article > div select * {
     font-size: inherit;
