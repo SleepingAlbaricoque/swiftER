@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./css/member.css">
+    <link rel="stylesheet" href="./css/calendar.css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    
     <title>마이페이지</title>
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
         #wrapper {
             width: 1300px;
         }
@@ -52,6 +55,7 @@
         }
 
         #wrapper > main > div > article > section > .article_name {
+            font-family: 'IBM Plex Sans KR', sans-serif;
             text-align: center;
             margin-top: 20px;
         }
@@ -69,7 +73,7 @@
             margin: 0 auto;
         }
 
-        article > section > table > tbody > tr > th {
+        main > div > article > section > table > tbody > tr > th {
             width: 75px;
             padding: 10px;
             border-bottom: 1px solid #dfe5ed;
@@ -78,6 +82,10 @@
         #wrapper > main > div > article > div {
             text-align: center;
             margin-bottom: 50px;
+        }
+
+        main > div {
+            width: 1300px;
         }
 
 
@@ -177,23 +185,91 @@
             background: rgb(44,233,123);
             background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
         }
-        
 
-
-
-
-
-        
-        /*
-        --------------------------------------------------------------------------------------
-        */
-        #datepicker {
-            width: 520px;
-            margin: 0 auto;
-            position: relative;
-            top: 420px;
-        }
     </style>
+<script>
+    window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
+
+    let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
+    let today = new Date();     // 페이지를 로드한 날짜를 저장
+    today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+
+    // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+    function buildCalendar() {
+
+        let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
+        let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
+
+        let tbody_Calendar = document.querySelector(".Calendar > tbody");
+        document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
+        document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+
+        while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
+            tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
+        }
+
+        let nowRow = tbody_Calendar.insertRow();        // 첫번째 행 추가           
+
+        for (let j = 0; j < firstDate.getDay(); j++) {  // 이번달 1일의 요일만큼
+            let nowColumn = nowRow.insertCell();        // 열 추가
+        }
+
+        for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
+
+            let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
+
+
+            let newDIV = document.createElement("p");
+            newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
+            nowColumn.appendChild(newDIV);
+
+            if (nowDay.getDay() == 6) {                 // 토요일인 경우
+                nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+            }
+
+            if (nowDay < today) {                       // 지난날인 경우
+                newDIV.className = "pastDay";
+                newDIV.onclick = function () { choiceDate(this); }
+            }
+            else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
+                newDIV.className = "today";
+                newDIV.onclick = function () { choiceDate(this); }
+            }
+            else {                                      // 미래인 경우
+                newDIV.className = "futureDay";
+                newDIV.onclick = function () { choiceDate(this); }
+            }
+        }
+    }
+
+    // 날짜 선택
+    function choiceDate(newDIV) {
+        if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+            document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
+        }
+        newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+    }
+
+    // 이전달 버튼 클릭
+    function prevCalendar() {
+        nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
+        buildCalendar();    // 달력 다시 생성
+    }
+    // 다음달 버튼 클릭
+    function nextCalendar() {
+        nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
+        buildCalendar();    // 달력 다시 생성
+    }
+
+    // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+    function leftPad(value) {
+        if (value < 10) {
+            value = "0" + value;
+            return value;
+        }
+        return value;
+    }
+</script>
 </head>
 <body>
     <div id="wrapper">
@@ -214,153 +290,147 @@
                 <a href="#" class="home">홈으로</a>
             </h2>
             <div>
-            <article>
-                <section>
-                    <h4 class="article_name">내정보</h4>
-                    <table id="myInfo">
-                        <tr>
-                            <th>
-                                활동명
-                            </th>
-                            <td>
-                                김밥말이
-                            </td>
-                            <th>가입일</th>
-                            <td>2023.03.07</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                E-mail
-                            </th>
-                            <td>
-                                et002727@naver.com
-                            </td>
-                            <th>
-                                회원구분
-                            </th>
-                            <td>
-                                일반회원
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                휴대전화
-                            </th>
-                            <td>
-                                010-9153-7494
-                            </td>
-                            <th>
-                                작성한 글
-                            </th>
-                            <td>
-                                79
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                주소
-                            </th>
-                            <td>
-                                부산광역시 사상구 엄궁로 142
-                            </td>
-                            <th>상세주소</th>
-                            <td>
-                                코오롱아파트 107동 1403호
-                            </td>
-                            
-                        </tr>
-                    </table>
-                </section>
-                <div>
-                    <button class="submit">
-                        회원정보수정
-                    </button>
-                </div>
-            </article>
-            <article>
-                <section>
-                    <h4 class="article_name">내가 작성한 글 </h4>
-                    <table>
-                        <tr>
-                            <th>
-                                카테고리
-                            </th>
-                            <th>
-                                제목
-                            </th>
-                            <th>
-                                댓글
-                            </th>
-                            <th>
-                                조회수
-                            </th>
-                            <th>
-                                작성일
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td>안녕하세요</td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
-                        </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td>안녕하세요</td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
-                        </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td>안녕하세요</td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
-                        </tr>
-                    </table>
-                </section>
-                <div>
-                    <button class="submit">
-                        더보기
-                    </button>
-                </div>
-            </article>
+                <article>
+                    <section>
+                        <h4 class="article_name">내정보</h4>
+                        <table id="myInfo">
+                            <tr>
+                                <th>
+                                    활동명
+                                </th>
+                                <td>
+                                    김밥말이
+                                </td>
+                                <th>가입일</th>
+                                <td>2023.03.07</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    E-mail
+                                </th>
+                                <td>
+                                    et002727@naver.com
+                                </td>
+                                <th>
+                                    회원구분
+                                </th>
+                                <td>
+                                    일반회원
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    휴대전화
+                                </th>
+                                <td>
+                                    010-9153-7494
+                                </td>
+                                <th>
+                                    작성한 글
+                                </th>
+                                <td>
+                                    79
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    주소
+                                </th>
+                                <td>
+                                    부산광역시 사상구 엄궁로 142
+                                </td>
+                                <th>상세주소</th>
+                                <td>
+                                    코오롱아파트 107동 1403호
+                                </td>
+                                
+                            </tr>
+                        </table>
+                    </section>
+                    <div>
+                        <button class="submit">
+                            회원정보수정
+                        </button>
+                    </div>
+                </article>
+                <article>
+                    <section>
+                        <h4 class="article_name">내가 작성한 글 </h4>
+                        <table>
+                            <tr>
+                                <th>
+                                    카테고리
+                                </th>
+                                <th>
+                                    제목
+                                </th>
+                                <th>
+                                    댓글
+                                </th>
+                                <th>
+                                    조회수
+                                </th>
+                                <th>
+                                    작성일
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>자유게시판</td>
+                                <td>안녕하세요</td>
+                                <td>7</td>
+                                <td>5000</td>
+                                <td>2023.03.09</td>
+                            </tr>
+                            <tr>
+                                <td>자유게시판</td>
+                                <td>안녕하세요</td>
+                                <td>7</td>
+                                <td>5000</td>
+                                <td>2023.03.09</td>
+                            </tr>
+                            <tr>
+                                <td>자유게시판</td>
+                                <td>안녕하세요</td>
+                                <td>7</td>
+                                <td>5000</td>
+                                <td>2023.03.09</td>
+                            </tr>
+                        </table>
+                    </section>
+                    <div>
+                        <button class="submit">
+                            더보기
+                        </button>
+                    </div>
+                </article>
             </div>
-
-
-
-
-            <div id="datepicker" class="calendar">
-
+            <div id="newCalendar">
+                <table class="Calendar">
+                    <thead>
+                        <tr>
+                            <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+                            <td colspan="5">
+                                <span id="calYear"></span>년
+                                <span id="calMonth"></span>월
+                            </td>
+                            <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+                        </tr>
+                        <tr>
+                            <td>일</td>
+                            <td>월</td>
+                            <td>화</td>
+                            <td>수</td>
+                            <td>목</td>
+                            <td>금</td>
+                            <td>토</td>
+                        </tr>
+                    </thead>
+        
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
-            <script>
-                $(function() {
-                    //input을 datepicker로 선언
-                    $("#datepicker").datepicker({
-                        dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                        ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-                        ,changeYear: true //option값 년 선택 가능
-                        ,changeMonth: true //option값  월 선택 가능                
-                        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                        ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-                        ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                        ,buttonText: "선택" //버튼 호버 텍스트              
-                        ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-                        ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
-                        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
-                        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
-                        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-                        ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                        ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    });                    
-                    
-                    //초기값을 오늘 날짜로 설정해줘야 합니다.
-                    $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-                });
-            </script>
+            
         </main>
     </div>
     <footer>

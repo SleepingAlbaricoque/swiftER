@@ -5,8 +5,12 @@
 }
 
 .home {
-    text-decoration: none;
-    color: #d7d7d7;
+    opacity: 0.5;
+}
+
+.home:hover {
+    transition: 0.5s;
+    opacity: 1;
 }
 
 main {
@@ -43,11 +47,11 @@ main {
     padding: 50px 0px;
     box-sizing: border-box;
     text-align: left;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
-.centerName > h1 {
-    font-size: 50px;
-    font-weight: normal;
+#wrapper > header > .centerName > div > h1 {
+    margin: 10px 0px;
 }
 
 
@@ -113,6 +117,12 @@ main > h2 {
     font-size: 18px;
     font-weight: bold;
     color: white;
+    cursor: pointer;
+}
+
+#login_button:hover {
+    background: rgb(44,233,123);
+    transition: 0.5s;
 }
 
 h2 {
@@ -125,13 +135,24 @@ main > div > div > form > div > span > label > a {
     text-decoration: none;
 }
 
+main > div > div > form > div > span > label > a:hover {
+    color: #a1a1a1;
+    transition: 0.5s;
+}
+
 main > div > div > form > div > button {
     border: 0px;
     background-color: white;
+    cursor: pointer;
 }
 
 .go_home > a {
     float: right;
+}
+
+.go_home > a:hover {
+    color: #969696;
+    transition: 0.5s;
 }
 
 
@@ -218,12 +239,17 @@ main > div > div > form > div > button {
     font-size: 18px;
     font-weight: bold;
     color: white;
-    background: rgb(44,233,123);
     background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+    cursor: pointer;
 }
 
 #terms_main > div > section > ul > li > button:last-child {
     background: #01b1ff 105.37%;
+}
+
+#terms_main > div > section > ul > li > button:hover {
+    transition: 0.5s;
+    background:rgba(44,233,123,1)
 }
 
 
@@ -246,6 +272,7 @@ article > section {
 }
 
 article > section > h4 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 20px;
 }
 
@@ -257,7 +284,7 @@ article > section > table > tbody > tr > th {
     width: 150px;
     padding: 10px;
     border-bottom: 1px solid #dfe5ed;
-
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
 article > section > table > tbody > tr > td {
@@ -326,11 +353,18 @@ article > section > table > tbody > tr > td > div:first-child > input {
     border-radius: 10px;
     width: 200px;
     height: 50px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 18px;
     font-weight: bold;
     color: white;
     background: rgb(44,233,123);
     background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+    cursor: pointer;
+}
+
+.submit:hover {
+    background: rgb(44,233,123);
+    transition: 0.5s;
 }
 
 /* find,change,delete 공통 */
@@ -344,3 +378,7 @@ article > section > table > tbody > tr > td > div:first-child > input {
     color: rgba(0, 0, 0);
 }
 
+#wrapper > main > article > section > .find > span > a:hover {
+    color: rgba(0, 0, 0, 0.4);
+    transition: 0.5s;
+}
