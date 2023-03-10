@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin_member</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+
+        ul,ol {list-style: none;}
+
+        a {text-decoration: none;color: #111;}
+
+        input,textarea {outline: none;}
+
+        #wrapper {width: 100%; height: 100%;}
+
+        /* header*/
+        header{
+            width: 100%;
+            height: 60px;
+            background: #fafbfd;
+            position: relative;
+        }
+
+        .logo > div{
+            background: transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            left: 25px;
+            top: 9px;
+        }
+        .logo-head{
+            width: 40px;
+        }
+
+        .search{
+            background: #f8f6f6;
+            border-radius: 50%;
+            width: 37px;
+            height: 37px;
+            position: absolute;
+            left: 200px;
+            top: 10px;
+        }
+        .search > a > i{
+            display: block;
+            position: absolute;
+            left: 8px;
+            top: 9px;
+            font-size: 20px;
+            color: #01b1ff;
+        }
+        .search-bar{display: none;}
+        .search-bar.on{display: block;}
+        .search-bar > input[type=text]{
+            border: 0.5px solid #eee;
+            border-radius: 18px;
+            width: 300px;
+            height: 33px;
+            text-indent: 10px;
+            font: normal 12px "맑은 고딕";
+            display: block;
+            position: absolute;
+            left: 60px;
+            bottom: 0px;
+        }
+        .search-bar > input[type=button]{
+            border: none;
+            border-radius: 10px;
+            background: #01b1ff;
+            width: 35px;
+            height: 23px;
+            color: #fff;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            left: 315px;
+            bottom: 5.5px;
+            cursor: pointer;
+        }
+
+        .menu{
+            position: absolute;
+            right: 50px;
+            top: 18px;
+        }
+        .menu > div > ul > li{
+            float: left;
+        }
+        .menu > div > ul > li > a{
+            font-size: 17px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            color: #111;
+        }
+        
+        /* admin_main */
+        .admin-index{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .admin-index > div:first-child{
+            height: 100%;
+            
+        }
+        .admin-index > div:not(:first-child){
+            height: 100%;
+        }
+        .sub{
+            width: 10.6%;
+            height: 100%;
+            box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -webkit-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -moz-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+        }
+        .sub > aside{
+            width: 100%;
+            height: 100%;
+            background: rgb(44,233,123);
+            background: linear-gradient(0deg, #2ce97b 0%, #01b1ff 100%);
+            color: #fff;
+            font-weight: lighter;
+        }
+        .cate{
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+        .cate  a{
+            font-size: 17px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            color: #fff;
+        }
+        .subcate{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 12px;
+            display: none;
+        }
+        .subcate.on{display: block;}
+        .subcate li{
+            display: block;
+            margin-bottom: 8px;
+        }
+        .subcate > li > a{
+            font-size: 14.5px;
+        }
+        .sub > aside > ul > li:nth-child(1){
+            padding-top: 23px;
+        }
+
+        /* admin_member */
+        .admin-member-list{
+            width: 1701px;
+            height: auto;
+            background: #f8f6f6;
+            position: absolute;
+            top: 0;
+            left: 10.6%;
+            box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -webkit-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -moz-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+        }
+        
+    </style>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="logo">
+                <div>
+                    <a href="#">
+                        <img class="logo-head" src="../img/swifter_logo_head.png" alt="swiftER 로고">
+                    </a>
+                </div>
+            </div>
+            <div class="search">
+                <a href="#" onclick="searchBar()"><i class="fa-solid fa-magnifying-glass fa-flip-horizontal"></i></a>
+                <div class="search-bar"> 
+                    <input type="text">
+                    <input type="button" value="검색" onClick="location.href='#'"> 
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">커뮤니티 |&nbsp;</a>
+                        </li>
+                        <li>
+                            <a href="#">&nbsp;고객센터 |&nbsp;</a>
+                        </li>
+                        <li>
+                            <a href="#">&nbsp;로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="admin-index">
+            <div class="sub">
+                <aside>
+                    <ul>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(0)">회원관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">회원 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">회원 정보 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(1)">병원 리뷰 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">리뷰 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">리뷰 상세 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(2)">커뮤니티 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">게시판 별 글보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate" onclick="revealSubCate(3)">
+                            <a href="#">고객센터 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">FAQ 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">QnA 리스트</a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="admin-member-list">
+                <div class="admin-member-list-wrapper">
+                    <table></table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
