@@ -382,3 +382,48 @@ article > section > table > tbody > tr > td > div:first-child > input {
     color: rgba(0, 0, 0, 0.4);
     transition: 0.5s;
 }
+
+/* review 페이지 */
+.reviewER {
+    margin-bottom: 100px;
+}
+
+.reviewER > section > .review {
+    width: 100%;
+}
+
+.selectBox {
+    width: 40%;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+.reviewER > section > .review > tbody > tr > th {
+    width: 20%;
+}
+
+.reviewER > section > .review > tbody > tr > td:nth-child(2) {
+    width: 60%;
+}
+
+.reviewER > section > .review > tbody > tr > td:nth-child(3) {
+    width: 20%;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+}
+
+.review> tbody > tr:nth-child(5) > td:nth-child(2) > input[type=text] {
+    width: 80%;
+}
+
+.review> tbody > tr:nth-child(6) > td:nth-child(2) > textarea {
+    width: 80%;
+    height: 100px;
+    resize: none;
+}
+
+#rating {
+    width: 20%;
+}
