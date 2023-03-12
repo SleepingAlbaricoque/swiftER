@@ -25,51 +25,120 @@
             <h2>
                 <a href="#" class="home"><img src="./img/home.png" alt="홈으로" width="50px" height="50px"></a>
             </h2>
-            <article class="findId">
+            <article class="reviewER">
                 <section>
-                    <h4 class="find">아래의 정보를 입력하여 swiftER 비밀번호를 찾으십시오</h4>
-                    <table>
+                    <h4 class="find">방문했던 병원의 리뷰를 남겨주세요</h4>
+                    <table class="review">
                         <tr>
                             <th>
-                                ID
+                                지역
                             </th>
                             <td>
-                                <input type="text" name="id" placeholder="ID 입력">
-                                <span>가입할 때 사용하신 ID를 입력하여 주십시오</span>
+                                <select name="region" class="selectBox" id="region">
+                                    <option value="10">강원도</option>
+                                    <option value="11">경기도</option>
+                                    <option value="12">경상남도</option>
+                                    <option value="13">경상북도</option>
+                                    <option value="14">광주광역시</option>
+                                    <option value="15">대구광역시</option>
+                                    <option value="16">대전광역시</option>
+                                    <option value="17">부산광역시</option>
+                                    <option value="18">서울특별시</option>
+                                    <option value="19">세종특별자치시</option>
+                                    <option value="20">울산광역시</option>
+                                    <option value="21">인천광역시</option>
+                                    <option value="22">전라남도</option>
+                                    <option value="23">전라북도</option>
+                                    <option value="24">제주특별자치도</option>
+                                    <option value="25">충청남도</option>
+                                    <option value="26">충청북도</option>
+                                </select>
                             </td>
+                            <td>방문 병원의 지역</td>
                         </tr>
                         <tr>
                             <th>
-                                E-mail
+                                세부지역
                             </th>
                             <td>
-                                <input type="text" name="email" placeholder="E-mail 입력">
-                                <span>가입할 때 사용하신 E-mail을 입력하여 주십시오</span>
+                                <select name="subregion" class="selectBox" id="subregion">
+                                    <option value="10">강원도</option>
+                                    <option value="11">경기도</option>
+                                    <option value="12">경상남도</option>
+                                    <option value="13">경상북도</option>
+                                    <option value="14">광주광역시</option>
+                                    <option value="15">대구광역시</option>
+                                    <option value="16">대전광역시</option>
+                                    <option value="17">부산광역시</option>
+                                    <option value="18">서울특별시</option>
+                                    <option value="19">세종특별자치시</option>
+                                    <option value="20">울산광역시</option>
+                                    <option value="21">인천광역시</option>
+                                    <option value="22">전라남도</option>
+                                    <option value="23">전라북도</option>
+                                    <option value="24">제주특별자치도</option>
+                                    <option value="25">충청남도</option>
+                                    <option value="26">충청북도</option>
+                                </select>
                             </td>
+                            <td>방문병원의 세부지역</td>
                         </tr>
                         <tr>
                             <th>
-                                인증번호
+                                병원명
                             </th>
                             <td>
-                                <input type="text" name="key" placeholder="비밀번호 확인">
-                                <span>이메일로 전송받은 인증번호를 입력하여 주십시오</span>
+                                <input type="text">
                             </td>
+                            <td>방문병원의 세부지역</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                방문일자
+                            </th>
+                            <td>
+                                <input type="date">
+                            </td>
+                            <td>방문병원의 세부지역</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                제목
+                            </th>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>리뷰 제목</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                본문
+                            </th>
+                            <td>
+                                <textarea name="content" id="content"></textarea>
+                            </td>
+                            <td>리뷰 본문</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                평점
+                            </th>
+                            <td>
+                                <select name="rating" class="selectBox" id="rating">
+                                    <option value="1">1점</option>
+                                    <option value="2">2점</option>
+                                    <option value="3">3점</option>
+                                    <option value="4">4점</option>
+                                    <option value="5">5점</option>
+                                </select>
+                            </td>
+                            <td>평점 ( 보통 : 3점 )</td>
                         </tr>
                     </table>
-                    <div class="find">
-                        <span>
-                            <a href="#">로그인</a>
-                            |
-                            <a href="#">아이디 찾기</a>
-                            |
-                            <a href="#">회원가입</a>
-                        </span>
-                    </div>
                 </section>
                 <div>
                     <button class="submit">
-                        비밀번호 찾기
+                        작성 완료
                     </button>
                 </div>
             </article>
