@@ -2,396 +2,352 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>swiftER</title>
+    <link rel="stylesheet" href="./css/member.css">
+    <link rel="stylesheet" href="./css/calendar.css">
     <link rel="stylesheet" href="./css/myPage.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <style>
-        #wrapper > main {
-        }
+    <script src="https://kit.fontawesome.com/bf3bc66abd.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>마이페이지</title>
 
-        .mypage {
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        #wrapper > main > div > aside {
-            width: 40%;
-            height: 800px;
-        }
-
-        #wrapper > main > div > aside > div.myInfo {
-            width: 60%;
-            margin: 0 auto;
-        }
-
-        /* section calendar */
-
-        .sec_cal {
-            width: 60%;
-            margin: 0 auto;
-            font-family: "NotoSansR";
-            position: relative;
-        }
-
-        .sec_cal .cal_nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            font-size: 48px;
-            line-height: 78px;
-        }
-
-        .sec_cal .cal_nav .year-month {
-            width: 300px;
-            text-align: center;
-            line-height: 1;
-        }
-
-        .sec_cal .cal_nav .nav {
-            display: flex;
-            border: 1px solid #333333;
-            border-radius: 5px;
-        }
-
-        .sec_cal .cal_nav .go-prev,
-        .sec_cal .cal_nav .go-next {
-            display: block;
-            width: 50px;
-            height: 78px;
-            font-size: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sec_cal .cal_nav .go-prev::before,
-        .sec_cal .cal_nav .go-next::before {
-            content: "";
-            display: block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #000;
-            border-width: 3px 3px 0 0;
-            transition: border 0.1s;
-        }
-
-        .sec_cal .cal_nav .go-prev:hover::before,
-        .sec_cal .cal_nav .go-next:hover::before {
-            border-color: #ed2a61;
-        }
-
-        .sec_cal .cal_nav .go-prev::before {
-            transform: rotate(-135deg);
-        }
-
-        .sec_cal .cal_nav .go-next::before {
-            transform: rotate(45deg);
-        }
-
-        .sec_cal .cal_wrap {
-            padding-top: 40px;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .sec_cal .cal_wrap .days {
-            display: flex;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .sec_cal .cal_wrap::after {
-            top: 368px;
-        }
-
-        .sec_cal .cal_wrap .day {
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            width: calc(100% / 7);
-            text-align: left;
-            color: #999;
-            font-size: 12px;
-            text-align: center;
-            border-radius:5px
-        }
-
-        .current.today {background: rgb(242 242 242);}
-
-        .sec_cal .cal_wrap .dates {
-            display: flex;
-            flex-flow: wrap;
-            height: 290px;
-        }
-
-        .sec_cal .cal_wrap .day:nth-child(7n -1) {
-            color: #3c6ffa;
-        }
-
-        .sec_cal .cal_wrap .day:nth-child(7n) {
-            color: #ed2a61;
-        }
-
-        .sec_cal .cal_wrap .day.disable {
-            color: #ddd;
-        }        
-    </style>
     <script>
-        console.log(new Date()); // 현재 날짜(로컬 기준) 객체 만들기
-        console.log(new Date(2023, 3, 7));
-        $(document).ready(function() {
-            calendarInit();
-        });
-        /*
-            달력 렌더링 할 때 필요한 정보 목록 
+        window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
 
-            현재 월(초기값 : 현재 시간)
-            금월 마지막일 날짜와 요일
-            전월 마지막일 날짜와 요일
-        */
+        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
+        let today = new Date();     // 페이지를 로드한 날짜를 저장
+        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
 
-        function calendarInit() {
+        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+        function buildCalendar() {
 
-            // 날짜 정보 가져오기
-            var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
-            var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
-            var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
-            var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
-        
-            var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-            // 달력에서 표기하는 날짜 객체
-        
-            
-            var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
-            var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
-            var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
+            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
+            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
 
-            // kst 기준 현재시간
-            // console.log(thisMonth);
+            let tbody_Calendar = document.querySelector(".Calendar > tbody");
+            document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
+            document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
 
-            // 캘린더 렌더링
-            renderCalender(thisMonth);
-
-            function renderCalender(thisMonth) {
-
-                // 렌더링을 위한 데이터 정리
-                currentYear = thisMonth.getFullYear();
-                currentMonth = thisMonth.getMonth();
-                currentDate = thisMonth.getDate();
-
-                // 이전 달의 마지막 날 날짜와 요일 구하기
-                var startDay = new Date(currentYear, currentMonth, 0);
-                var prevDate = startDay.getDate();
-                var prevDay = startDay.getDay();
-
-                // 이번 달의 마지막날 날짜와 요일 구하기
-                var endDay = new Date(currentYear, currentMonth + 1, 0);
-                var nextDate = endDay.getDate();
-                var nextDay = endDay.getDay();
-
-                // console.log(prevDate, prevDay, nextDate, nextDay);
-
-                // 현재 월 표기
-                $('.year-month').text(currentYear + '.' + (currentMonth + 1));
-
-                // 렌더링 html 요소 생성
-                calendar = document.querySelector('.dates')
-                calendar.innerHTML = '';
-                
-                // 지난달
-                for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
-                    calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
-                }
-                // 이번달
-                for (var i = 1; i <= nextDate; i++) {
-                    calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
-                }
-                // 다음달
-                for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
-                    calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
-                }
-
-                // 오늘 날짜 표기
-                if (today.getMonth() == currentMonth) {
-                    todayDate = today.getDate();
-                    var currentMonthDate = document.querySelectorAll('.dates .current');
-                    currentMonthDate[todayDate -1].classList.add('today');
-                }
+            while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
+                tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
             }
 
-            // 이전달로 이동
-            $('.go-prev').on('click', function() {
-                thisMonth = new Date(currentYear, currentMonth - 1, 1);
-                renderCalender(thisMonth);
-            });
+            let nowRow = tbody_Calendar.insertRow();        // 첫번째 행 추가           
 
-            // 다음달로 이동
-            $('.go-next').on('click', function() {
-                thisMonth = new Date(currentYear, currentMonth + 1, 1);
-                renderCalender(thisMonth); 
-            });
+            for (let j = 0; j < firstDate.getDay(); j++) {  // 이번달 1일의 요일만큼
+                let nowColumn = nowRow.insertCell();        // 열 추가
+            }
+
+            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
+
+                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
+
+
+                let newDIV = document.createElement("p");
+                newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
+                nowColumn.appendChild(newDIV);
+
+                if (nowDay.getDay() == 6) {                 // 토요일인 경우
+                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+                }
+
+                if (nowDay < today) {                       // 지난날인 경우
+                    newDIV.className = "pastDay";
+                    newDIV.onclick = function () { choiceDate(this); 
+                    
+                    }
+                }
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
+                    newDIV.className = "today";
+                    newDIV.onclick = function () { choiceDate(this); }
+                }
+                else {                                      // 미래인 경우
+                    newDIV.className = "futureDay";
+                    newDIV.onclick = function () { choiceDate(this); }
+                }
+            }
         }
-        </script>
+
+        // 날짜 선택
+        function choiceDate(newDIV) {
+            if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
+            }
+            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+
+            let selectYear = document.querySelector("#calYear").innerHTML;      // 이전 날짜 선택시 년도 가져오기
+            let selectMonth = document.querySelector("#calMonth").innerHTML;    // 이전 날짜 선택시 달 가져오기
+            let selectDay = document.querySelector(".choiceDay").innerHTML;     // 이전 날짜 선택시 일 가져오기
+
+            let checkDay = selectYear + selectMonth + selectDay;
+            document.querySelector("#historydate").value = checkDay;
+            console.log(checkDay);
+        }
+
+        // 이전달 버튼 클릭
+        function prevCalendar() {
+            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
+            buildCalendar();    // 달력 다시 생성
+        }
+        // 다음달 버튼 클릭
+        function nextCalendar() {
+            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
+            buildCalendar();    // 달력 다시 생성
+        }
+
+        // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+        function leftPad(value) {
+            if (value < 10) {
+                value = "0" + value;
+                return value;
+            }
+            return value;
+        }
+    </script>
 </head>
 <body>
     <div id="wrapper">
         <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
+            <div class="centerName">
+                <div><img src="./img/swifter_logo.png" alt="로고" width="200px" height="200px" class="logo">
                 </div>
-            </div>
-            <div class="logo">
                 <div>
-                    <a href="#">
-                        <img src="./img/swifter_logo.png" alt="logo" class="logoImage">
-                    </a>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">증상검색</a>
-                        </li>
-                        <li>
-                            <a href="#">응급실검색</a>
-                        </li>
-                        <li>
-                            <a href="#">약국검색</a>
-                        </li>
-                        <li>
-                            <a href="#">커뮤니티</a>
-                        </li>
-                        <li>
-                            <a href="#">고객센터</a>
-                        </li>
-                    </ul>
-                </div>
+                    <h1>
+                        
+                        swiftER <br> 마이페이지
+                    </h1>
+                </div> 
             </div>
         </header>
         <main>
-            <div class="mypage" border="1px">
-                <aside>
-                    <div class="myInfo">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>내정보</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>별명</th>
-                                    <td>김밥말이</td>
-                                    <th>가입일</th>
-                                    <td>2023-03-07</td>
-                                </tr>
-                                <tr>
-                                    <th>이메일</th>
-                                    <td>et009153@gmail.com</td>
-                                    <th>회원구분</th>
-                                    <td>일반회원</td>
-                                </tr>
-                                <tr>
-                                    <th>휴대전화</th>
-                                    <td>010-9153-7494</td>
-                                    <td>
-                                        <input type="button" value="회원정보수정">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>주소</th>
-                                    <td>부산광역시 사상구 엄궁로 142<br>코오롱아파트 107동 1403호</td>
-                                    <td>
-                                        <input type="button" value="회원탈퇴">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="sec_cal">
-                        <div class="cal_nav">
-                            <a href="javascript:;" class="nav-btn go-prev">prev</a>
-                            <div class="year-month"></div>
-                            <a href="javascript:;" class="nav-btn go-next">next</a>
-                        </div>
-                        <div class="cal_wrap">
-                            <div class="days">
-                                <div class="day">MON</div>
-                                <div class="day">TUE</div>
-                                <div class="day">WED</div>
-                                <div class="day">THU</div>
-                                <div class="day">FRI</div>
-                                <div class="day">SAT</div>
-                                <div class="day">SUN</div>
-                            </div>
-                            <div class="dates"></div>
-                        </div>
-                    </div>
-                </aside>
-                <article>
-                    <div class="list">
-                        <table>
+            <h2>
+                <a href="#" class="home"><img src="./img/home.png" alt="홈으로" width="50px" height="50px"></a>
+            </h2>
+            <article>
+                <section>
+                    <h4 class="article_name">내정보</h4>
+                    <table id="myInfo">
+                        <tr>
+                            <th>
+                                활동명
+                            </th>
+                            <td>
+                                김밥말이
+                            </td>
+                            <th>가입일</th>
+                            <td>2023.03.07</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                E-mail
+                            </th>
+                            <td>
+                                et002727@naver.com
+                            </td>
+                            <th>
+                                회원구분
+                            </th>
+                            <td>
+                                일반회원
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                휴대전화
+                            </th>
+                            <td>
+                                010-9153-7494
+                            </td>
+                            <th>
+                                작성한 글
+                            </th>
+                            <td>
+                                79
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                주소
+                            </th>
+                            <td>
+                                부산광역시 사상구 엄궁로 142
+                            </td>
+                            <th>상세주소</th>
+                            <td>
+                                코오롱아파트 107동 1403호
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">
+                        회원정보수정
+                    </button>
+                </div>
+            </article>
+            <article>
+                <section>
+                    <h4 class="article_name">내가 작성한 글 </h4>
+                    <table>
+                        <tr>
+                            <th>
+                                카테고리
+                            </th>
+                            <th>
+                                제목
+                            </th>
+                            <th>
+                                댓글
+                            </th>
+                            <th>
+                                조회수
+                            </th>
+                            <th>
+                                작성일
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">
+                        더보기
+                    </button>
+                </div>
+            </article>
+            <div class="calendarborder">
+                <div id="newCalendar">
+                    <table class="Calendar">
+                        <thead>
                             <tr>
-                                <th>카테고리</th>
-                                <th>제목</th>
-                                <th>작성일</th>
+                                <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+                                <td colspan="5">
+                                    <span id="calYear"></span>년
+                                    <span id="calMonth"></span>월
+                                </td>
+                                <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
                             </tr>
-                        </table>
-                    </div>
-                </article>
+                            <tr>
+                                <td>일</td>
+                                <td>월</td>
+                                <td>화</td>
+                                <td>수</td>
+                                <td>목</td>
+                                <td>금</td>
+                                <td>토</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="history">
+                    <table class="historyTable">
+                        <tr>
+                            <th>날짜</th>
+                            <th>병원명</th>
+                            <th>질환/증상</th>
+                        </tr>
+                        <tr>
+                            <td>2023.03.10</td>
+                            <td>부산대병원</td>
+                            <td>두드러기</td>
+                        </tr>
+                        <tr>
+                            <td>2023.03.10</td>
+                            <td>부산대병원</td>
+                            <td>두드러기</td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div class="history">
+                    <table class="historyTable">
+                        <tr>
+                            <th>날짜</th>
+                            <th>병원명</th>
+                            <th>질환/증상</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="button">등록</button>
+                </div>
             </div>
+            <article class="reviewSection">
+                <section>
+                    <h4 class="article_name">
+                        내가 작성한 리뷰
+                    </h4>
+                        <span><a href="#"><i class="fa-sharp fa-regular fa-keyboard"></i>&nbsp;리뷰 작성하기</a></span>
+                    <table>
+                        <tr>
+                            <th>지역</th>
+                            <th>세부지역</th>
+                            <th>제목</th>
+                            <th>평점</th>
+                            <th>날짜</th>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a href="#">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a href="#">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a href="#">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">더보기</button>
+                </div>
+            </article>
         </main>
-        <footer>
-            <ul>
-                <li>
-                    <a href="#">서비스소개</a>
-                </li>
-                <li>
-                    <a href="#">서비스이용약관</a>
-                </li>
-                <li>
-                    <a href="#">책임의한계와법적고지</a>
-                </li>
-                <li>
-                    <a href="#">사이트맵</a>
-                </li>
-            </ul>
-            <div>
-                <p>
-                    <img src="./img/swifter_logo.png" alt="logo" class="footerLogoImage">
-                </p>
-                <p>
-                    <strong>swiftER</strong>
-                    <br>
-                    부산시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)
-                    <br>
-                    대표이사 : 홍길동
-                    <br>
-                    사업자등록번호 : 220-81-83676
-                    <br>
-                    통신판매업신고 : 강남 10630호 Fax : 02-589-8842
-                </p>
-                <p>
-                    <strong>고객센터</strong>
-                    <br>
-                    Tel : 1234-5678 (평일 09:00~18:00)
-                    <br>
-                    스마일클럽/SVIP 전용 : 1522-5700 (365일 09:00~18:00)
-                    <br>
-                    경기도 부천시 원미구 부일로 223(상동) 투나빌딩 6층
-                    <br>
-                    Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr
-                </p>
-            </div>
-        </footer>
     </div>
 </body>
 </html>
