@@ -1,0 +1,123 @@
+<th:block th:include="@{_header.html}"/>
+        <script>
+            function beat(i){
+                let arrow = document.getElementsByClassName("fa-arrow-right-long")[i];
+                arrow.classList.add("fa-beat-fade");
+            }
+
+            function stop(i){
+                let arrow = document.getElementsByClassName("fa-arrow-right-long")[i];
+                arrow.classList.remove("fa-beat-fade");
+            }
+        </script>
+        <main class="cs-index">
+            <div class="cs-banner">
+                <h1>swiftER 고객센터</h1>
+            </div>
+            <section class="notice">
+                <h1>공지사항</h1>
+                <a href="#" onmouseover="beat(0)" onmouseout="stop(0)">더보기&nbsp;&nbsp;<i class="fa-solid fa-arrow-right-long"></i></a>
+                <div>
+                    <table class="notice-table">
+                        <tr>
+                            <td>NOTICE&nbsp;&nbsp;|</td>
+                            <td><a href="#">&nbsp;&nbsp;공공기관 고객만족도조사 관련 개인정보 제3자 제공사항 알림</a></td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>NOTICE&nbsp;&nbsp;|</td>
+                            <td><a href="#">&nbsp;&nbsp;공공기관 고객만족도조사 관련 개인정보 제3자 제공사항 알림</a></td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>NOTICE&nbsp;&nbsp;|</td>
+                            <td><a href="#">&nbsp;&nbsp;공공기관 고객만족도조사 관련 개인정보 제3자 제공사항 알림</a></td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>NOTICE&nbsp;&nbsp;|</td>
+                            <td><a href="#">&nbsp;&nbsp;공공기관 고객만족도조사 관련 개인정보 제3자 제공사항 알림</a></td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>NOTICE&nbsp;&nbsp;|</td>
+                            <td><a href="#">&nbsp;&nbsp;공공기관 고객만족도조사 관련 개인정보 제3자 제공사항 알림</a></td>
+                            <td>23.02.28</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+            <section class="faq">
+                <h1>자주하는 질문</h1>
+                
+                <div class="type-search">
+                    <div>
+                        <div>
+                            <a href="#"><i class="fa-solid fa-user"></i>회원 정보</a>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i>증상 검색</a>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fa-solid fa-hospital"></i>응급실 검색</a>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fa-solid fa-comments"></i>커뮤니티</a>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fa-solid fa-headset"></i>기타</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-search">
+                    <h1>빠르게 찾기</h1>
+                    <input class="search-bar" type="text">
+                    <input class="search-button" type="button" value="검색">
+                </div>
+            </section>
+            <section class="qna">
+                <h1>문의하기</h1>
+                <a href="#" onmouseover="beat(1)" onmouseout="stop(1)">더보기&nbsp;&nbsp;<i class="fa-solid fa-arrow-right-long"></i></a>
+                <div>
+                    <table class="qna-table">
+                        <tr>
+                            <td>ER&nbsp;&nbsp;</td>
+                            <td><a href="#">|&nbsp;&nbsp;응급실 검색에서 지도가 계속 로딩만 되고 안떠요</a></td>
+                            <td>mah****</td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>MEMBER&nbsp;&nbsp;</td>
+                            <td><a href="#">|&nbsp;&nbsp;응급실 검색에서 지도가 계속 로딩만 되고 안떠요</a></td>
+                            <td>mah****</td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>SYMPTOMS&nbsp;&nbsp;</td>
+                            <td><a href="#">|&nbsp;&nbsp;응급실 검색에서 지도가 계속 로딩만 되고 안떠요</a></td>
+                            <td>mah****</td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>COMMUNITY&nbsp;&nbsp;</td>
+                            <td><a href="#">|&nbsp;&nbsp;응급실 검색에서 지도가 계속 로딩만 되고 안떠요</a></td>
+                            <td>mah****</td>
+                            <td>23.02.28</td>
+                        </tr>
+                        <tr>
+                            <td>ETC&nbsp;&nbsp;</td>
+                            <td><a href="#">|&nbsp;&nbsp;응급실 검색에서 지도가 계속 로딩만 되고 안떠요</a></td>
+                            <td>mah****</td>
+                            <td>23.02.28</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+            <section class="qna-buttons">
+                <div>
+                    <input type="button" value="1:1 문의내역 확인하기">
+                    <input type="button" value="1:1 문의하기">
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{_footer.html}"/>        

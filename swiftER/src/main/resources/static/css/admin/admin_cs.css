@@ -1,0 +1,275 @@
+/* 공통 */
+#cs-cate{
+    width: 120px;
+    height: 25px;
+    border: 1px solid #bebcbc;
+    font-size: 14px;
+    outline: none;
+}
+#cs-cate:focus{ /* 접근성 이슈때문에 추가*/
+    box-shadow:0 0 3px #2ce97b;
+    -moz-box-shadow:0 0 3px #2ce97b;
+    -webkit-box-shadow:0 0 3px #2ce97b;
+}
+#cs-cate > option{
+    font-size: 13px;
+}
+
+.admin-list-delete{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background: #01b1ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* list */
+.cs-panel-main{
+    border: 1px solid #c3c0c0;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    overflow: auto;
+    overflow-x: hidden;
+    height: auto;
+    background: #fff;
+}
+.cs-panel-main > p:nth-of-type(1){
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c3c0c0;
+    padding-right: 30px;
+}
+.cs-panel-main > p:nth-of-type(2){
+    text-align: center;
+}
+.cs-panel-main > p{
+    height: 35px;
+    font-size: 20px;
+    font-weight: lighter;
+    text-indent: 30px;
+    padding-top: 8px;
+}
+.cs-panel-main > p > span{
+    height: 10px;
+    font-size: 12px;
+    margin-top: 9px;
+}
+.cs-panel-main > p > span > span{
+    font-size: 12px;
+}
+.cs-panel-main > ul{
+    display: flex;
+    padding-top: 30px;
+    padding-left: 40px;
+    height: 110px;
+    border-bottom: 1px solid #c3c0c0;
+}
+.cs-panel-main-icon > i{
+    font-size: 70px;
+    color: #01b1ff;
+}
+.cs-panel-main-item{
+    display: flex;
+    margin-right: 132.5px;
+}
+.cs-panel-main-item > ol:nth-child(1){
+    margin-right: 20px;
+}
+.cs-panel-main-item > ol:nth-child(2){
+    width: 130px;
+}
+.cs-panel-main-item > ol:nth-child(2) > li:nth-child(1){
+    color: #6a6a6a;
+    margin-bottom: 2.5px;
+}
+.cs-panel-main-item > ol:nth-child(2) > li:nth-child(2){
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.admin-cs-table-wrapper{
+    padding: 20px 30px;
+}
+.admin-cs-table{
+    width: 1050px;
+    text-align: center;
+}
+.admin-cs-table > tbody> tr td{
+    padding-top: 20px;
+}
+.admin-cs-table > tbody > tr th{
+    padding-bottom: 5px;
+}
+.admin-cs-table > tbody > tr > th:nth-child(2){
+    width: 80px;
+}
+.admin-cs-table > tbody > tr > th:nth-child(3){
+    width: 80px;
+}
+.admin-cs-table > tbody > tr > th:nth-child(4){
+    width: 600px;
+}
+.admin-cs-table > tbody > tr > th:nth-child(5){
+    width: 200px;
+}
+.admin-cs-table > tbody > tr > td:nth-child(4){
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 5px;
+}
+.admin-cs-table > tbody > tr:nth-child(12) > td{
+    text-align: right;
+    padding-right: 70px;
+}
+
+.admin-cs-list-table-buttons{
+    margin: 40px auto 0 auto;
+    text-align: center;
+}
+.admin-cs-list-table-buttons > .num{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: 1px solid #2ce97b;
+    border-radius: 50%;
+    margin: 0 0.7px;
+    background: transparent;
+    cursor: pointer;
+}
+.admin-cs-list-table-buttons > .num2{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: 1px solid #2ce97b;
+    border-radius: 50%;
+    margin: 0 0.7px;
+    background: transparent;
+    cursor: pointer;
+}
+.admin-cs-list-table-buttons > .next, .before{
+    width: 43px;
+    height: 25px;
+    font-size: 13px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
+    cursor: pointer;
+}
+.admin-cs-list-table-buttons > .before{
+    background: #2ce97b;
+}
+.num.on{
+    background-color: #2ce97b;
+}
+
+/* view, modify, write */
+.admin-cs-form{
+    padding: 10px 40px 20px 40px;
+}
+.admin-cs-form-table{
+    width: 1050px;
+    text-align: left;
+    border-collapse: collapse;
+}
+.admin-cs-form-table > tbody> tr td{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.admin-cs-form-table > tbody> tr{
+    border-bottom: 1px solid #c3c0c0;
+}
+.admin-cs-form-table > tbody > tr > td.key{
+    padding-left: 15px;
+    font-weight: bold;
+}
+.admin-cs-write-title{
+    width: 700px;
+    height: 25px;
+    border: none;
+    font-size: 15px;
+    text-indent: 20px;
+}
+.admin-cs-form-table > tbody > tr:nth-child(1) > td:nth-child(4){
+    padding-left: 20px;
+    padding-right: 30px;
+}
+.admin-cs-form-table > tbody > tr:nth-child(2) > td:nth-child(2){
+    padding-left: 20px;
+}
+.admin-cs-form-table > tbody > tr:last-child{
+    border: none;
+}
+
+.admin-cs-write-file{
+    font-size: 13px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+.admin-cs-write-file::file-selector-button{
+    border: none;
+    border-radius: 16px;
+    background: #01b1ff;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    width: 80px;
+    height: 30px;
+    margin-right: 15px;
+}
+#admin-cs-write-content{
+    resize: none;
+    width: 900px;
+    min-height: 300px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border: none;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.admin-cs-control-buttons{
+    position: relative;
+    bottom: -15px;
+    right: -820px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.admin-cs-control-buttons > input{
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.admin-cs-back-to-list{
+    border: 1px solid #2ce97b;
+    color: #2ce97b;
+    background: none;
+    margin-right: 8px;
+}
+.admin-cs-modify-article{
+    border: none;
+    background: #2ce97b;
+    color: #fff;
+}
+.admin-cs-delete-article{
+    border: none;
+    background: #2ce97b;
+    color: #fff;
+}
+
+/* admin_cs_faq_modify */
+.text-gray{
+	color : gray;	
+}	
+
+/* admin_cs_faq_view, admin_cs_notice_view */
+.admin-cs-faq-control-buttons, .admin-cs-notice-control-buttons{
+	right: -720px!important;
+}

@@ -1,0 +1,82 @@
+<th:block th:include="@{admin/admin_header.html}"/>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+
+        function deleteConfirm(element){
+            if(confirm("정말로 삭제하시겠습니까?")){
+                location.href = "#";
+            }
+        }
+
+        function textFocus(element){
+            textFocus = function(){}; // 단 한 번만 실행되도록 실행 직후 빈 함수로 교체
+            element.value = "";
+            element.style.color = "black";
+        }
+
+        function titleFocus(element){
+            titleFocus = function(){}; // 단 한 번만 실행되도록 실행 직후 빈 함수로 교체
+            element.value = "";
+            element.style.color = "black";
+        }
+    </script>
+            <div class="admin-content">
+                <div class="cs-panel-main shadow">
+                    <p>공지사항 작성하기</p>
+                    <form class="admin-cs-form">
+                        <table class="admin-cs-form-table">
+                            <tr>
+                                <td class="key">제목</td>
+                                <td>
+                                    <input type="text" value="제목을 입력하세요" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)">
+                                </td>
+                                <td class="key">카테고리</td>
+                                <td>
+                                    <select name="cate" id="cs-cate">
+                                        <option value="member">회원정보</option>
+                                        <option value="symptoms">증상검색</option>
+                                        <option value="er">응급실검색</option>
+                                        <option value="community">커뮤니티</option>
+                                        <option value="etc">기타</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="key">첨부파일</td>
+                                <td colspan="3">
+                                    <input type="file" class="admin-cs-write-file">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="key">내용</td>
+                                <td colspan="3">
+                                    <textarea name="admin-cs-write-content" class="text-gray" id="admin-cs-write-content" cols="30" rows="10" onfocus="textFocus(this)">내용을 입력하세요</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="admin-cs-control-buttons">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
+                            <input type="button" value="작성완료" class="admin-cs-modify-article" onclick="location.href='#'">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

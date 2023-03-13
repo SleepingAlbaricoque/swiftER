@@ -1,0 +1,558 @@
+<th:block th:include="@{admin/admin_header.html}"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin_qna_view</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+
+        ul,ol {list-style: none;}
+
+        a {text-decoration: none;color: #111;}
+
+        input,textarea {outline: none;}
+
+        html, body{
+            height: 100%;
+        }
+
+        #wrapper {
+            width: 100%; 
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* header*/
+        header{
+            width: 100%;
+            height: 60px;
+            background: #fafbfd;
+            overflow: hidden;
+        }
+
+        .logo > div{
+            background: transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            left: 25px;
+            top: 9px;
+        }
+        .logo-head{
+            width: 40px;
+        }
+
+        .search{
+            background: #f8f6f6;
+            border-radius: 50%;
+            width: 37px;
+            height: 37px;
+            position: relative;
+            left: 190px;
+            top: -30px;
+        }
+        .search > a > i{
+            display: block;
+            font-size: 25px;
+            color: #01b1ff;
+        }
+        .search > a > i:nth-child(1){
+            color: #f8f6f6;
+            font-size: 40px;
+        }
+        .search > a > i:nth-child(2){
+            padding-top: 4px;
+            padding-right: 3px;
+        }
+        .search-bar{display: none;}
+        .search-bar.on{display: block;}
+        .search-bar > input[type=text]{
+            border: 0.5px solid #eee;
+            border-radius: 18px;
+            width: 300px;
+            height: 33px;
+            text-indent: 10px;
+            font: normal 12px "맑은 고딕";
+            display: block;
+            position: absolute;
+            left: 60px;
+            bottom: 0px;
+        }
+        .search-bar > input[type=button]{
+            border: none;
+            border-radius: 10px;
+            background: #01b1ff;
+            width: 35px;
+            height: 23px;
+            color: #fff;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            left: 315px;
+            bottom: 5.5px;
+            cursor: pointer;
+        }
+
+        .menu{
+            position: relative;
+            top: -60px;
+            left: 1260px;
+
+        }
+        .menu > div > ul > li{
+            float: left;
+        }
+        .menu > div > ul > li > a{
+            font-size: 17px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            color: #111;
+        }
+
+        /* main common layout */
+        .admin-index{
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        .sub{
+            display: flex;
+            flex: none;
+            width: 180px;
+            background: linear-gradient(0deg, #2ce97b 0%, #01b1ff 100%);
+        }
+        .admin-content{
+            display: flex;
+            flex: 1;
+            overflow: auto;
+            flex-direction: column;
+            background: #f8f6f6;
+            box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -webkit-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            -moz-box-shadow: -1px 6px 14px -8px rgba(97,91,91,0.75) inset;
+            padding-left: 120px;
+            padding-top: 40px;
+        }
+
+        .sub > aside{
+            width: 100%;
+            height: 100%;
+            background: rgb(44,233,123);
+            background: linear-gradient(0deg, #2ce97b 0%, #01b1ff 100%);
+            color: #fff;
+            font-weight: lighter;
+        }
+        .cate{
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+        .cate  a{
+            font-size: 17px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            color: #fff;
+        }
+        .subcate{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 12px;
+            display: none;
+        }
+        .subcate.on{display: block;}
+        .subcate li{
+            display: block;
+            margin-bottom: 8px;
+        }
+        .subcate > li > a{
+            font-size: 14.5px;
+        }
+        .sub > aside > ul > li:nth-child(1){
+            padding-top: 23px;
+        }
+
+        /* admin_main */
+        .cs-panel-main{
+            border: 1px solid #c3c0c0;
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+            overflow: auto;
+            overflow-x: hidden;
+            height: auto;
+            background: #fff;
+            margin-bottom: 50px;
+        }
+        .cs-panel-main > p:nth-of-type(1){
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #c3c0c0;
+            padding-right: 30px;
+        }
+        .cs-panel-main > p:nth-of-type(2){
+            text-align: center;
+        }
+        .cs-panel-main > p{
+            height: 35px;
+            font-size: 20px;
+            font-weight: lighter;
+            text-indent: 30px;
+            padding-top: 8px;
+        }
+        .cs-panel-main > p > span{
+            height: 10px;
+            font-size: 12px;
+            margin-top: 9px;
+        }
+        .cs-panel-main > p > span > span{
+            font-size: 12px;
+        }
+        .cs-panel-main > ul{
+            display: flex;
+            padding-top: 30px;
+            padding-left: 40px;
+            height: 110px;
+            border-bottom: 1px solid #c3c0c0;
+        }
+        .cs-panel-main-icon > i{
+            font-size: 70px;
+            color: #01b1ff;
+        }
+        .cs-panel-main-item{
+            display: flex;
+            margin-right: 132.5px;
+        }
+        .cs-panel-main-item > ol:nth-child(1){
+            margin-right: 20px;
+        }
+        .cs-panel-main-item > ol:nth-child(2){
+            width: 130px;
+        }
+        .cs-panel-main-item > ol:nth-child(2) > li:nth-child(1){
+            color: #6a6a6a;
+            margin-bottom: 2.5px;
+        }
+        .cs-panel-main-item > ol:nth-child(2) > li:nth-child(2){
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .admin-cs-form{
+            padding: 10px 40px 20px 40px;
+        }
+        .admin-cs-form-table{
+            width: 1050px;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .admin-cs-form-table > tbody> tr td{
+            padding-top: 20px;
+            padding-bottom: 10px;
+        }
+        .admin-cs-form-table > tbody> tr{
+            border-bottom: 1px solid #c3c0c0;
+        }
+        .admin-cs-form-table > tbody > tr > td.key{
+            padding-left: 15px;
+            font-weight: bold;
+        }
+        .admin-cs-write-title{
+            width: 700px;
+            height: 25px;
+            border: none;
+            font-size: 15px;
+            text-indent: 20px;
+        }
+        .admin-cs-form-table > tbody > tr:nth-child(1) > td:nth-child(4){
+            padding-left: 20px;
+            padding-right: 30px;
+        }
+        .admin-cs-form-table > tbody > tr:nth-child(2) > td:nth-child(1){
+            padding-right: 20px;
+        }
+        .admin-cs-form-table > tbody > tr:nth-child(2) > td:nth-child(2){
+            padding-left: 20px;
+            border-bottom: 1px solid #e2e2e2;
+        }
+        .admin-cs-form-table > tbody > tr:nth-child(3) > td:nth-child(1){
+            padding-left: 20px;
+        }
+        .admin-cs-form-table > tbody > tr:last-child{
+            border: none;
+        }
+
+        #cs-cate{
+            width: 120px;
+            height: 25px;
+            border: 1px solid #bebcbc;
+            font-size: 14px;
+            outline: none;
+        }
+        #cs-cate:focus{ /* 접근성 이슈때문에 추가*/
+            box-shadow:0 0 3px #2ce97b;
+            -moz-box-shadow:0 0 3px #2ce97b;
+            -webkit-box-shadow:0 0 3px #2ce97b;
+        }
+        #cs-cate > option{
+            font-size: 13px;
+        }
+
+        .admin-cs-write-file{
+            font-size: 13px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        .admin-cs-write-file::file-selector-button{
+            border: none;
+            border-radius: 16px;
+            background: #01b1ff;
+            color: #fff;
+            font-size: 13px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            width: 80px;
+            height: 30px;
+            margin-right: 15px;
+        }
+        #admin-cs-write-content{
+            resize: none;
+            width: 900px;
+            min-height: 300px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border: none;
+            padding-left: 20px;
+            font-size: 16px;
+        }
+        #admin-cs-answer-content{
+            resize: none;
+            width: 900px;
+            height: 100px;
+            min-height: 100px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border: none;
+            padding-left: 20px;
+            font-size: 16px;
+        }
+
+        .admin-cs-control-buttons{
+            position: relative;
+            bottom: -15px;
+            right: -720px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .admin-cs-control-buttons > input{
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .admin-cs-back-to-list{
+            border: 1px solid #2ce97b;
+            color: #2ce97b;
+            background: none;
+            margin-right: 8px;
+        }
+        .admin-cs-modify-article{
+            border: none;
+            background: #2ce97b;
+            color: #fff;
+        }
+        .admin-cs-delete-article{
+            border: none;
+            background: #2ce97b;
+            color: #fff;
+        }
+
+        .shadow{
+            box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -webkit-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -moz-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+        }
+    </style>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+
+        function deleteConfirm(element){
+            if(confirm("정말로 삭제하시겠습니까?")){
+                location.href = "#";
+            }
+        }
+
+        window.onload = function(){ // 답변 내용이 있을 때에만 답변 레이아웃 출력
+            let answer = document.getElementById("admin-cs-answer-content");
+            let answerContent = answer.value;
+
+            console.log(answerContent);
+
+            if(answerContent !== ''){
+                document.body.style.height = 'auto'; // body를 지정해 height를 auto로
+                document.documentElement.style.height = 'auto'; // html을 지정해 height를 auto로 해야 overflow-y: auto 했을 때 요소 안이 아닌 화면에 세로 스크롤이 생김
+                document.querySelector(".admin-cs-answer").style.display = ""; // display: none 반대로 보이게 하기 위함
+                document.querySelector(".admin-cs-modify-article").value = "답변수정";
+            }
+            
+        }
+            
+        
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="logo">
+                <div>
+                    <a href="#">
+                        <img class="logo-head" src="../img/swifter_logo_head.png" alt="swiftER 로고">
+                    </a>
+                </div>
+            </div>
+            <div class="search">
+                <a href="#" onclick="searchBar()" class="fa-stack">
+                    <i class="fa-solid fa-circle fa-stack-2x"></i>
+                    <i class="fa-solid fa-magnifying-glass fa-flip-horizontal fa-stack-1x"></i>
+                </a>
+                <div class="search-bar"> 
+                    <input type="text">
+                    <input type="button" value="검색" onClick="location.href='#'"> 
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">커뮤니티 |&nbsp;</a>
+                        </li>
+                        <li>
+                            <a href="#">&nbsp;고객센터 |&nbsp;</a>
+                        </li>
+                        <li>
+                            <a href="#">&nbsp;로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="admin-index">
+            <div class="sub">
+                <aside>
+                    <ul>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(0)">회원관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">회원 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">회원 정보 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(1)">병원 리뷰 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">리뷰 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">리뷰 상세 보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate">
+                            <a href="#" onclick="revealSubCate(2)">커뮤니티 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">게시판 별 글보기</a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="cate" onclick="revealSubCate(3)">
+                            <a href="#">고객센터 관리</a>
+                            <ol class="subcate">
+                                <li>
+                                    <a href="#">FAQ 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">QnA 리스트</a>
+                                </li>
+                                <li>
+                                    <a href="#">공지사항 리스트</a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="admin-content">
+                <div class="cs-panel-main shadow">
+                    <p>QnA 보기</p>
+                    <form class="admin-cs-form">
+                        <table class="admin-cs-form-table">
+                            <tr>
+                                <td class="key">제목</td>
+                                <td>
+                                    <input type="text" value="응급실 위치정보 업데이트 안내" class="admin-cs-write-title" readonly>
+                                </td>
+                                <td class="key">카테고리</td>
+                                <td>ER</td>
+                            </tr>
+                            <tr>
+                                <td class="key" rowspan="2">첨부파일</td>
+                                <td colspan="3"> <span>질문자 |</span> swiftERimg.png</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"> <span>관리자 |</span> sdfsd</td>
+                            </tr>
+                            <tr>
+                                <td class="key">내용</td>
+                                <td colspan="3">
+                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly>업데이트 예정입니까?</textarea>
+                                </td>
+                            </tr>
+                            <tr class="admin-cs-answer" style="display:none;">
+                                <td class="key">답변</td>
+                                <td colspan="3">
+                                    <textarea name="admin-cs-write-content" id="admin-cs-answer-content" cols="30" rows="10" readonly></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="admin-cs-control-buttons">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
+                            <input type="button" value="답변하기" class="admin-cs-modify-article" onclick="location.href='#'">
+                            <input type="button" value="삭제하기" class="admin-cs-delete-article" onclick="deleteConfirm(this)">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<th:block th:include="@{_header.html}"/>
+        <script>
+            function flick(element){
+                let question = document.querySelector('.qna-view-question');
+                let answer = document.querySelectorAll('.qna-view-answer')[0];
+
+                if(element === answer){
+                    if(element.classList.contains('selected')){
+                        return;
+                    }
+                }
+
+                if(answer.style.display == 'none'){
+                    return;
+                }
+
+                console.log(answer.style.display == 'block');
+                question.classList.toggle('selected');
+                answer.classList.toggle('selected');
+            }
+        </script>
+        <main class="qna-view">
+            <div class="qna-banner">
+                <h1>문의하기</h1>
+                <p>무엇이든, 언제든 여기서 물어보세요</p>
+            </div>
+            <div class="qna-view-table-wrapper">
+                <table class="qna-view-table">
+                    <tr>
+                        <th><i class="fa-solid fa-q"></i>[ER]&nbsp;응급실 검색에서 저희 지역은 선택 옵션에 없는데 어떻게 된 일인가요</th>
+                    </tr>
+                    <tr>
+                        <td>emp**** &nbsp; 2023.03.09</td>
+                    </tr>
+                    <tr class="qna-view-question" onmouseover="flick(this)">
+                        <td>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis porta porta. Pellentesque ac finibus turpis. Praesent euismod tempus viverra. Integer vitae urna luctus, viverra arcu vitae, rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc vitae condimentum ex, eget ullamcorper urna. Cras eros lorem, aliquam et laoreet non, luctus eu ante. Aliquam elementum nisl at mauris molestie, eget tempus tellus luctus. Duis scelerisque auctor est convallis dictum. Maecenas placerat dignissim sapien. Phasellus ultricies, arcu sit amet suscipit consequat, elit turpis tempor justo, eu feugiat felis nunc sit amet velit.
+                        </td>
+                    </tr>
+                    <tr class="qna-view-answer selected" onmouseover="flick(this)" style="display:block;">
+                        <th><i class="fa-solid fa-a"></i></th>
+                    </tr>
+                    <tr class="qna-view-answer" style="display:block;">
+                        <td>
+                            현재 저희 서비스는 대도시 위주로 응급실 정보를 제공하고 있습니다. 추후 업데이트를 통해 더 많은 지역에 응급실 정보를 제공하는 swiftER로 거듭나겠습니다. 감사합니다. 
+                            But there's one sound
+                            That no one knows
+                            What does the fox say?
+                            "Ring-ding-ding-ding-dingeringeding!
+                            Gering-ding-ding-ding-dingeringeding!
+                            Gering-ding-ding-ding-dingeringeding!"
+                            What the fox say?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="back-to-qna-page">
+                <input type="button" value="목록으로" onClick="location.href='#'">
+            </div>
+        </main>
+<th:block th:include="@{_footer.html}"/>        

@@ -2,3 +2,4 @@
 *.log
 .application.properties
 application.properties
+*.properties
