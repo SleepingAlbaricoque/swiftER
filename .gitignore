@@ -1,2 +1,4 @@
 /.metadata/
 *.log
+.application.properties
+application.properties

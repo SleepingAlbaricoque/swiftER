@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>admin_index</title>
+    <title>admin_faq_list</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
@@ -28,8 +28,9 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
         }
+
+        html, body{height: 100%;}
 
         /* header*/
         header{
@@ -105,8 +106,8 @@
 
         .menu{
             position: relative;
-            top: -4.4rem;
-            left: 112.75rem;
+            top: -60px;
+            left: 1260px;
 
         }
         .menu > div > ul > li{
@@ -145,7 +146,7 @@
 
         .sub > aside{
             width: 100%;
-            height: 909px;
+            height: 100%;
             background: rgb(44,233,123);
             background: linear-gradient(0deg, #2ce97b 0%, #01b1ff 100%);
             color: #fff;
@@ -178,14 +179,8 @@
             padding-top: 23px;
         }
 
-        .shadow{
-            box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
-            -webkit-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
-            -moz-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
-        }
-
-        /* admin_member*/
-        .member-panel-main{
+        /* admin_main */
+        .cs-panel-main{
             border: 1px solid #c3c0c0;
             display: flex;
             flex-direction: column;
@@ -194,78 +189,102 @@
             height: auto;
             background: #fff;
         }
-        .member-panel-main > p:nth-of-type(1){
+        .cs-panel-main > p:nth-of-type(1){
             display: flex;
             justify-content: space-between;
             border-bottom: 1px solid #c3c0c0;
             padding-right: 30px;
         }
-        .member-panel-main > p:nth-of-type(2){
+        .cs-panel-main > p:nth-of-type(2){
             text-align: center;
         }
-        .member-panel-main > p{
+        .cs-panel-main > p{
             height: 35px;
             font-size: 20px;
             font-weight: lighter;
             text-indent: 30px;
             padding-top: 8px;
         }
-        .member-panel-main > p > span{
+        .cs-panel-main > p > span{
             height: 10px;
             font-size: 12px;
             margin-top: 9px;
         }
-        .member-panel-main > p > span > span{
+        .cs-panel-main > p > span > span{
             font-size: 12px;
         }
+        .cs-panel-main > ul{
+            display: flex;
+            padding-top: 30px;
+            padding-left: 40px;
+            height: 110px;
+            border-bottom: 1px solid #c3c0c0;
+        }
+        .cs-panel-main-icon > i{
+            font-size: 70px;
+            color: #01b1ff;
+        }
+        .cs-panel-main-item{
+            display: flex;
+            margin-right: 132.5px;
+        }
+        .cs-panel-main-item > ol:nth-child(1){
+            margin-right: 20px;
+        }
+        .cs-panel-main-item > ol:nth-child(2){
+            width: 130px;
+        }
+        .cs-panel-main-item > ol:nth-child(2) > li:nth-child(1){
+            color: #6a6a6a;
+            margin-bottom: 2.5px;
+        }
+        .cs-panel-main-item > ol:nth-child(2) > li:nth-child(2){
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-        .member-table-wrapper{
+        .admin-cs-table-wrapper{
             padding: 20px 30px;
         }
-        .member-table{
+        .admin-cs-table{
             width: 1050px;
             text-align: center;
         }
-        .member-table > tbody> tr td{
+        .admin-cs-table > tbody> tr td{
             padding-top: 20px;
         }
-        .member-table > tbody > tr > th:nth-child(2){
-            width: 289.31px;
+        .admin-cs-table > tbody > tr th{
+            padding-bottom: 5px;
         }
-        .member-table > tbody > tr > th:nth-child(5){
+        .admin-cs-table > tbody > tr > th:nth-child(2){
+            width: 80px;
+        }
+        .admin-cs-table > tbody > tr > th:nth-child(3){
+            width: 80px;
+        }
+        .admin-cs-table > tbody > tr > th:nth-child(4){
+            width: 600px;
+        }
+        .admin-cs-table > tbody > tr > th:nth-child(5){
             width: 200px;
         }
-
-        .details-button{
-            width: 70px;
-            height: 28px;
-            background: #01b1ff;
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            cursor: pointer;
+        .admin-cs-table > tbody > tr > td:nth-child(4){
+            max-width: 600px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 5px;
+        }
+        .admin-cs-table > tbody > tr:nth-child(12) > td{
+            text-align: right;
+            padding-right: 70px;
         }
 
-        .pending-requests{
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-        .pending-requests-table-wrapper{
-            padding: 20px 30px;
-        }
-        .pending-requests-table{
-            width: 1050px;
-            text-align: center;
-        }
-        .pending-requests-table > tbody > tr > th:nth-child(2){
-            width: 289.31px;
-        }
-
-        .member-list-table-buttons{
+        .admin-cs-list-table-buttons{
             margin: 40px auto 0 auto;
             text-align: center;
         }
-        .member-list-table-buttons > .num{
+        .admin-cs-list-table-buttons > .num{
             width: 25px;
             height: 25px;
             font-size: 14px;
@@ -276,7 +295,7 @@
             background: transparent;
             cursor: pointer;
         }
-        .member-list-table-buttons > .num2{
+        .admin-cs-list-table-buttons > .num2{
             width: 25px;
             height: 25px;
             font-size: 14px;
@@ -287,7 +306,7 @@
             background: transparent;
             cursor: pointer;
         }
-        .member-list-table-buttons > .next, .before{
+        .admin-cs-list-table-buttons > .next, .before{
             width: 43px;
             height: 25px;
             font-size: 13px;
@@ -297,14 +316,43 @@
             background: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
             cursor: pointer;
         }
-        .member-list-table-buttons > .before{
+        .admin-cs-list-table-buttons > .before{
             background: #2ce97b;
         }
         .num.on{
             background-color: #2ce97b;
         }
-        .num2.on{
-            background-color: #2ce97b;
+
+        #cs-cate{
+            width: 120px;
+            height: 25px;
+            border: 1px solid #bebcbc;
+            font-size: 14px;
+            outline: none;
+        }
+        #cs-cate:focus{ /* 접근성 이슈때문에 추가*/
+            box-shadow:0 0 3px #2ce97b;
+            -moz-box-shadow:0 0 3px #2ce97b;
+            -webkit-box-shadow:0 0 3px #2ce97b;
+        }
+        #cs-cate > option{
+            font-size: 13px;
+        }
+
+        .admin-list-delete{
+            width: 100px;
+            height: 30px;
+            border: none;
+            border-radius: 10px;
+            background: #01b1ff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .shadow{
+            box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -webkit-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
+            -moz-box-shadow: -2px 10px 11px -11px rgba(162,160,160,0.75);
         }
     </style>
     <script>
@@ -326,26 +374,37 @@
         }
 
         function numHightlight(i){
-                let num = document.querySelectorAll(".num")[i];
-                let numLength = document.querySelectorAll(".num").length;
+            let num = document.querySelectorAll(".num")[i];
+            let numLength = document.querySelectorAll(".num").length;
 
-                for(let j =0; j < numLength; j++){
-                    document.querySelectorAll(".num")[j].classList.remove('on');    
-                }
-
-                num.classList.add('on');
+            for(let j =0; j < numLength; j++){
+                document.querySelectorAll(".num")[j].classList.remove('on');    
             }
 
-        function numHightlight2(i){
-                let num = document.querySelectorAll(".num2")[i];
-                let numLength = document.querySelectorAll(".num2").length;
+            num.classList.add('on');
+        }
 
-                for(let j =0; j < numLength; j++){
-                    document.querySelectorAll(".num2")[j].classList.remove('on');    
+        function checkAll(element){
+            let checkboxes = Array.from(document.getElementsByName("individualItem"));
+            element.addEventListener('change', function(){  
+                
+                if(this.checked){
+                    checkboxes.forEach(function(checkbox){
+                        checkbox.checked = true;
+                    });
+                }else{
+                    checkboxes.forEach(function(checkbox){
+                        checkbox.checked = false;
+                    });
                 }
+            });
+        }
 
-                num.classList.add('on');
+        function deleteConfirm(element){
+            if(confirm("정말로 삭제하시겠습니까?")){
+                location.href = "#";
             }
+        }
     </script>
 </head>
 <body>
@@ -427,76 +486,131 @@
                                 <li>
                                     <a href="#">QnA 리스트</a>
                                 </li>
+                                <li>
+                                    <a href="#">공지사항 리스트</a>
+                                </li>
                             </ol>
                         </li>
                     </ul>
                 </aside>
             </div>
             <div class="admin-content">
-                <div class="member-panel-main shadow">
-                    <p>회원 리스트</p>
-                    <div class="member-table-wrapper">
-                        <table class="member-table">
+                <div class="cs-panel-main shadow">
+                    <p>FAQ 목록
+                        <select name="cate" id="cs-cate">
+                            <option value="member">회원정보</option>
+                            <option value="symptoms">증상검색</option>
+                            <option value="er">응급실검색</option>
+                            <option value="community">커뮤니티</option>
+                            <option value="etc">기타</option>
+                        </select>
+                    </p>
+                    <div class="admin-cs-table-wrapper">
+                        <table class="admin-cs-table">
                             <tr>
+                                <th><input type="checkbox" onclick="checkAll(this)"></th>
                                 <th>번호</th>
-                                <th>아이디</th>
-                                <th>등급</th>
-                                <th>이름</th>
-                                <th>가입일자</th>
-                                <th></th>
+                                <th>카테고리</th>
+                                <th>제목</th>
+                                <th>작성일</th>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>10</td>
+                                <td>ER</td>
+                                <td>
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>9</td>
+                                <td>ER</td>
+                                <td>
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>8</td>
+                                <td>ER</td>
+                                <td>
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>7</td>
+                                <td>ER</td>
+                                <td>
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>6</td>
+                                <td>ER</td>
+                                <td>
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
                                 <td>5</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                                <td>ER</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
                                 </td>
+                                <td>23.03.13</td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
                                 <td>4</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                                <td>ER</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
                                 </td>
+                                <td>23.03.13</td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
                                 <td>3</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                                <td>ER</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
                                 </td>
+                                <td>23.03.13</td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
                                 <td>2</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                                <td>ER</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
                                 </td>
+                                <td>23.03.13</td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" name="individualItem"></td>
                                 <td>1</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                                <td>ER</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                </td>
+                                <td>23.03.13</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <input type="button" value="삭제하기" class="admin-list-delete" onclick="deleteConfirm(this)">
                                 </td>
                             </tr>
                         </table>
-                        <div class="member-list-table-buttons">
+                        <div class="admin-cs-list-table-buttons">
                             <input type="button" value="이전" class="before">
                             <input type="button" value="1" class="num" onclick="numHightlight(0)">
                             <input type="button" value="2" class="num" onclick="numHightlight(1)">
@@ -508,43 +622,6 @@
                             <input type="button" value="8" class="num" onclick="numHightlight(7)">
                             <input type="button" value="9" class="num" onclick="numHightlight(8)">
                             <input type="button" value="10" class="num" onclick="numHightlight(9)">
-                            <input type="button" value="다음" class="next">
-                        </div>
-                    </div>
-                </div>
-                <div class="member-panel-main pending-requests shadow">
-                    <p>인증 대기 리스트</p>
-                    <div class="pending-requests-table-wrapper">
-                        <table class="pending-requests-table member-table">
-                            <tr>
-                                <th>번호</th>
-                                <th>아이디</th>
-                                <th>이름</th>
-                                <th>가입일자</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>test10</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="member-list-table-buttons">
-                            <input type="button" value="이전" class="before">
-                            <input type="button" value="1" class="num2" onclick="numHightlight2(0)">
-                            <input type="button" value="2" class="num2" onclick="numHightlight2(1)">
-                            <input type="button" value="3" class="num2" onclick="numHightlight2(2)">
-                            <input type="button" value="4" class="num2" onclick="numHightlight2(3)">
-                            <input type="button" value="5" class="num2" onclick="numHightlight2(4)">
-                            <input type="button" value="6" class="num2" onclick="numHightlight2(5)">
-                            <input type="button" value="7" class="num2" onclick="numHightlight2(6)">
-                            <input type="button" value="8" class="num2" onclick="numHightlight2(7)">
-                            <input type="button" value="9" class="num2" onclick="numHightlight2(8)">
-                            <input type="button" value="10" class="num2" onclick="numHightlight2(9)">
                             <input type="button" value="다음" class="next">
                         </div>
                     </div>

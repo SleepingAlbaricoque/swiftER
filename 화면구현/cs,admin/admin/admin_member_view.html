@@ -269,7 +269,7 @@
         .control-buttons{
             position: relative;
             bottom: -15px;
-            right: -880px;
+            right: -780px;
         }
         .control-buttons > input{
             width: 100px;
@@ -350,6 +350,13 @@
 
                 element.value = "수정하기";
             }
+        }
+
+        function permaBan(element){
+            if(confirm("정말 탈퇴시키시겠습니까?")){
+                location.href = "#";
+            }
+
         }
     </script>
 </head>
@@ -497,6 +504,7 @@
                 <div class="control-buttons">
                     <input type="button" value="목록으로" class="back-to-member-list" onclick="location.href='#'">
                     <input type="button" value="수정하기" class="modify-member" onclick="modifyMember(this)">
+                    <input type="button" value="탈퇴시키기" class="modify-member" onclick="permaBan(this)">
                 </div>
             </div>
         </main>
