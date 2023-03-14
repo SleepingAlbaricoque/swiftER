@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <title>PW 변경하기</title>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="centerName">
+                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
+                </div>
+                <div>
+                    <h1>
+                        
+                        swiftER <br> 비밀번호 변경하기
+                    </h1>
+                </div> 
+            </div>
+        </header>
+        <main>
+            <h2>
+                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+            </h2>
+            <article class="findId">
+                <section>
+                    <h4 class="find">기존 비밀번호는 암호화 처리되어 안내가 불가능하오니<br>새로운 비밀번호를 등록해 주시기 바랍니다</h4>
+                    <table>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <td>
+                                <input type="text" name="id" disabled value="id">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호
+                            </th>
+                            <td>
+                                <input type="text" name="pass1" placeholder="E-mail 입력">
+                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호 재입력
+                            </th>
+                            <td>
+                                <input type="text" name="key" placeholder="비밀번호 확인">
+                                <span>다시 한번 변경할 비밀번호를 입력해주세요</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="find">
+                        <span>
+                            <a th:href="@{#}">로그인</a>
+                            |
+                            <a th:href="@{#}">아이디 찾기</a>
+                            |
+                            <a th:href="@{#}">회원가입</a>
+                        </span>
+                    </div>
+                </section>
+                <div>
+                    <button class="submit">
+                        비밀번호 변경하기
+                    </button>
+                </div>
+            </article>
+        </main>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>

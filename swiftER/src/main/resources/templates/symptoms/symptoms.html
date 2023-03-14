@@ -1,0 +1,159 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:include="@{symptoms/_header.html}"/>
+        <main>
+            <div>
+                <div class="title">
+                    <h3>증상검색</h3>
+                </div>
+                <div class="healthinfo">
+                    <p>신체부위 내 증상을 선택 하신 후 검색 버튼을 클릭해 주세요.</p>
+                    <!-- 신체부위 검색 탭 -->
+                    <form action="#">
+                        <div>
+                            <div class="search_body_cate">
+                                <ul class="bodylist">
+                                    <li th:classappend="${body1_code} eq 10 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=10}">머리</a></li>
+                                    <li th:classappend="${body1_code} eq 20 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=20}">팔다리</a></li>
+                                    <li th:classappend="${body1_code} eq 30 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=30}">상반신</a></li>
+                                    <li th:classappend="${body1_code} eq 40 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=40}">하반신</a></li>
+                                    <li th:classappend="${body1_code} eq 50 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=50}">정신</a></li>
+                                    <li th:classappend="${body1_code} eq 60 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=60}">신경</a></li>
+                                </ul>
+                                <th:block th:if="${body1_code} eq 10">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                <input type="hidden" th:value="${cate.code}">
+                                    <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
+	                                    <ul class="subcateBox">
+	                                        <li th:each="bd1 : ${bd1}">
+	                                            <input type="checkbox" id="cont001" name="symptom1" value="#">
+	                                            <label for="chk01">[[${bd1.symptom}]]</label>
+	                                        </li>
+	                                    </ul>
+                                </div>
+                                </th:block>
+								<th:block th:if="${body1_code} eq 20">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                    <h3>[[${cate.part}]]</h3>
+                                    <ul class="subcateBox">
+                                        <li>
+                                            <input type="checkbox" id="cont001" name="symptom1">
+                                            <label for="chk01">눈이 빠질꺼 같음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont002" name="symptom2">
+                                            <label for="chk02">눈이 부음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont003" name="symptom3">
+                                            <label for="chk03">눈꼽이 많이 낌</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </th:block>
+                                <th:block th:if="${body1_code} eq 30">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                    <h3>[[${cate.part}]]</h3>
+                                    <ul class="subcateBox">
+                                        <li>
+                                            <input type="checkbox" id="cont001" name="symptom1">
+                                            <label for="chk01">눈이 빠질꺼 같음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont002" name="symptom2">
+                                            <label for="chk02">눈이 부음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont003" name="symptom3">
+                                            <label for="chk03">눈꼽이 많이 낌</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </th:block>
+                                <th:block th:if="${body1_code} eq 40">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                    <h3>[[${cate.part}]]</h3>
+                                    <ul class="subcateBox">
+                                        <li>
+                                            <input type="checkbox" id="cont001" name="symptom1">
+                                            <label for="chk01">눈이 빠질꺼 같음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont002" name="symptom2">
+                                            <label for="chk02">눈이 부음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont003" name="symptom3">
+                                            <label for="chk03">눈꼽이 많이 낌</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </th:block>
+                                <th:block th:if="${body1_code} eq 50">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                    <h3>[[${cate.part}]]</h3>
+                                    <ul class="subcateBox">
+                                        <li>
+                                            <input type="checkbox" id="cont001" name="symptom1">
+                                            <label for="chk01">눈이 빠질꺼 같음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont002" name="symptom2">
+                                            <label for="chk02">눈이 부음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont003" name="symptom3">
+                                            <label for="chk03">눈꼽이 많이 낌</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </th:block>
+                                <th:block th:if="${body1_code} eq 60">
+                                <div class="search_body_subcate" th:each="cate : ${cate}" >
+                                    <h3>[[${cate.part}]]</h3>
+                                    <ul class="subcateBox">
+                                        <li>
+                                            <input type="checkbox" id="cont001" name="symptom1">
+                                            <label for="chk01">눈이 빠질꺼 같음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont002" name="symptom2">
+                                            <label for="chk02">눈이 부음</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cont003" name="symptom3">
+                                            <label for="chk03">눈꼽이 많이 낌</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </th:block>
+                            </div>
+                            <div class="search_animal" id="checkbox-container-1">
+                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
+                                
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk2">아니요</label>
+                            </div>
+                            <div class="search_animal" id="checkbox-container-2">
+                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
+                                
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk2">아니요</label>
+                            </div>
+                            <div class="search_animal" id="checkbox-container-3">
+                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
+                                
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="checkbox" id="check" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
+                            </div>
+                        </div>
+                        <div class="searchbtn">
+                            <a href="#" class="btnclear" onclick="uncheckAllCheckboxes()">초기화</a>
+                            <a href="#" class="btnresult">검색</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+<th:block th:include="@{symptoms/_footer.html}"/>
