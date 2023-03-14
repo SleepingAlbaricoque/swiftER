@@ -4,4 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.ERDAO">
 	
+	<insert id="insertArticle" useGeneratedKeys="true" keyProperty="no">
+    </insert>
+
+    <select id="selectErCate" resultType="kr.co.swiftER.vo.ERCateVO">
+    	select * from `search_er_cate`;
+    </select>
+
+    <select id="selectErSubCate" resultType="kr.co.swiftER.vo.ERSubcateVO">
+    	select * from `search_er_subcate` where `region` = #{city};
+    </select>
+
+	
+	
 </mapper>
