@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public class CommunityDAO {
+public interface CommunityDAO {
 
 }

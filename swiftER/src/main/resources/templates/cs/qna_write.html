@@ -5,40 +5,41 @@
                 <p>무엇이든, 언제든 여기서 물어보세요</p>
             </div>
             <div class="qna-write-wrapper">
-                <form action="#">
+                <form th:action="@{/cs/qna/write}" method="post">
+                	<input type="hidden" name="cate" value="3">
                     <table class="qna-write-table">
                         <tr>
                             <td>제목</td>
                             <td>
-                                <input type="text" class="qna-write-title">
+                                <input type="text" class="qna-write-title" name="title">
                             </td>
                             <td>분류</td>
                             <td>
-                                <select name="cate" id="qna-cate">
-                                    <option value="member">회원정보</option>
-                                    <option value="symptoms">증상 검색</option>
-                                    <option value="er">응급실 검색</option>
-                                    <option value="community">커뮤니티</option>
-                                    <option value="etc">기타</option>
+                                <select name="subcate" id="qna-cate">
+                                    <option value="10">회원정보</option>
+                                    <option value="20">증상 검색</option>
+                                    <option value="30">응급실 검색</option>
+                                    <option value="40">커뮤니티</option>
+                                    <option value="50">기타</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>첨부 파일</td>
                             <td colspan="3">
-                                <input type="file" class="qna-write-file">
+                                <input type="file" class="qna-write-file" name="file">
                             </td>
                         </tr>
                         <tr>
                             <td>내용</td>
                             <td colspan="3">
-                                <textarea name="qna-write-content" id="qna-write-content" cols="30" rows="10"></textarea>
+                                <textarea name="content" id="qna-write-content" cols="30" rows="10"></textarea>
                             </td>
                         </tr>
                     </table>
                     <div class="qna-write-buttons">
-                        <input type="button" value="목록으로" onClick="location.href='#'">
-                        <input type="button" value="작성완료" onClick="location.href='#'">
+                        <input type="button" value="목록으로" th:onclick="|location.href='@{/cs/qna}'|">
+                        <input type="submit" value="작성완료">
                     </div>
                 </form>
             </div>

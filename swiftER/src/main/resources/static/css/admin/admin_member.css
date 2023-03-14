@@ -1,0 +1,223 @@
+/* admin_member*/
+.member-view-panel-main{
+    border: 1px solid #c3c0c0;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    overflow: auto;
+    height: auto;
+    background: #fff;
+    box-sizing: border-box;
+}
+.member-view-panel-main> p:nth-of-type(1){
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c3c0c0;
+    padding-right: 30px;
+}
+.member-view-panel-main > p:nth-of-type(2){
+    text-align: center;
+}
+.member-view-panel-main > p{
+    height: 35px;
+    font-size: 20px;
+    font-weight: lighter;
+    text-indent: 30px;
+    padding-top: 8px;
+}
+.member-view-panel-main > p > span{
+    height: 10px;
+    font-size: 12px;
+    margin-top: 9px;
+}
+.member-view-panel-main > p > span > span{
+    font-size: 12px;
+}
+
+.member-view-table-wrapper{
+    padding: 20px 30px;
+    box-sizing: border-box;
+}
+.member-view-table{
+    width: 1050px;
+    text-align: center;
+    border-collapse: collapse;
+}
+.member-view-table > tbody > tr{
+    border-bottom: 1px solid #eee;
+}
+.member-view-table > tbody> tr td{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    height: 25px;
+    text-align: left;
+    width: 10%;
+}
+.member-view-table > tbody > tr > td.key{
+    padding-left: 15px;
+    font-weight: bold;
+}
+.member-view-table > tbody > tr > td > input[type=text]{
+    border: none;
+    width: 100%;
+}
+
+.doc-member-panel{
+    margin-top: 18px;
+}
+.verify-doc{
+    width: 70px;
+    height: 28px;
+    background: #01b1ff;
+    border: none;
+    border-radius: 18px;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 60px;
+}
+
+.control-buttons{
+    position: relative;
+    bottom: -15px;
+    right: -780px;
+}
+.control-buttons > input{
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.back-to-member-list{
+    border: 1px solid #2ce97b;
+    color: #2ce97b;
+    background: none;
+    margin-right: 8px;
+}
+.modify-member{
+    border: none;
+    background: #2ce97b;
+    color: #fff;
+}
+
+ /* admin_member*/
+.member-panel-main{
+    border: 1px solid #c3c0c0;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    overflow: auto;
+    height: auto;
+    background: #fff;
+}
+.member-panel-main > p:nth-of-type(1){
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c3c0c0;
+    padding-right: 30px;
+}
+.member-panel-main > p:nth-of-type(2){
+    text-align: center;
+}
+.member-panel-main > p{
+    height: 35px;
+    font-size: 20px;
+    font-weight: lighter;
+    text-indent: 30px;
+    padding-top: 8px;
+}
+.member-panel-main > p > span{
+    height: 10px;
+    font-size: 12px;
+    margin-top: 9px;
+}
+.member-panel-main > p > span > span{
+    font-size: 12px;
+}
+
+.member-table-wrapper{
+    padding: 20px 30px;
+}
+.member-table{
+    width: 1050px;
+    text-align: center;
+}
+.member-table > tbody> tr td{
+    padding-top: 20px;
+}
+.member-table > tbody > tr > th:nth-child(2){
+    width: 289.31px;
+}
+.member-table > tbody > tr > th:nth-child(5){
+    width: 200px;
+}
+
+.details-button{
+    width: 70px;
+    height: 28px;
+    background: #01b1ff;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pending-requests{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.pending-requests-table-wrapper{
+    padding: 20px 30px;
+}
+.pending-requests-table{
+    width: 1050px;
+    text-align: center;
+}
+.pending-requests-table > tbody > tr > th:nth-child(2){
+    width: 289.31px;
+}
+
+.member-list-table-buttons{
+    margin: 40px auto 0 auto;
+    text-align: center;
+}
+.member-list-table-buttons > .num{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: 1px solid #2ce97b;
+    border-radius: 50%;
+    margin: 0 0.7px;
+    background: transparent;
+    cursor: pointer;
+}
+.member-list-table-buttons > .num2{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: 1px solid #2ce97b;
+    border-radius: 50%;
+    margin: 0 0.7px;
+    background: transparent;
+    cursor: pointer;
+}
+.member-list-table-buttons > .next, .before{
+    width: 43px;
+    height: 25px;
+    font-size: 13px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
+    cursor: pointer;
+}
+.member-list-table-buttons > .before{
+    background: #2ce97b;
+}
+.num.on{
+    background-color: #2ce97b;
+}
+.num2.on{
+    background-color: #2ce97b;
+}

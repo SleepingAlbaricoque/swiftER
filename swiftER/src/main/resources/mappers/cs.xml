@@ -3,5 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.CSDAO">
-	
+	<insert id="insertArticle" parameterType="kr.co.swiftER.vo.CSQuestionsVO" useGeneratedKeys="true" keyProperty="no">
+		insert into `cs_questions` set 
+			`qno`=#{qno}, `member_uid` = #{member_uid}, `cate` =#{cate}, `subcate`=#{subcate}, `title`=#{title}, `content`=#{content}, 
+			<if test="fname.isEmpty() == true">
+				`file` = 0, 
+			</if>
+			<if test="fname.isEmpty() == false">
+				`file` = 1, 
+			</if>
+			`regip`=#{regip}, `rdate`=NOW();
+	</insert>
+	<insert id="insertFile">
+		
+	</insert>
 </mapper>
