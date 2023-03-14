@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
-    <link rel="stylesheet" href="./css/member.css">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="./img/swifter_logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <style>
 
         /*footer*/
@@ -82,8 +83,8 @@
         <header class="header_login">
             <div class="centerLogo">
                 <h1 id="h1_login">
-                    <a href="#">
-                        <img src="./img/swifter_logo_login.png" alt="로고이미지" width="250px" height="185.5px">
+                    <a th:href="@{/}">
+                        <img th:src="@{/img/member/swifter_logo_login.png}" alt="로고이미지" width="250px" height="185.5px">
                     </a>
                 </h1>
             </div>
@@ -125,25 +126,25 @@
                             
                             <span>
                                 <label>
-                                    <a href="#">아이디 찾기  | </a>
-                                    <a href="#">비밀번호 찾기  | </a>
-                                    <a href="#">회원가입</a>
+                                    <a th:href="@{#}">아이디 찾기  | </a>
+                                    <a th:href="@{#}">비밀번호 찾기  | </a>
+                                    <a th:href="@{#}">회원가입</a>
                                 </label>
                             </span>
 
                             <h2>또는</h2>
                             <button>
-                                <img src="./img/naver.jpg" alt="네이버" width="60px" height="60px">
+                                <img th:src="@{/img/member/naver.jpg}" alt="네이버" width="60px" height="60px">
                             </button>
                             <button>
-                                <img src="./img/kakao.jpg" alt="카카오" width="60px" height="60px">
+                                <img th:src="@{/img/member/kakao.jpg}" alt="카카오" width="60px" height="60px">
                             </button>
                             <button>
-                                <img src="./img/google.jpg" alt="구글" width="60px" height="60px">
+                                <img th:src="@{/img/member/google.jpg}" alt="구글" width="60px" height="60px">
                             </button>
 
                             <h2 class="go_home">
-                                <a href="#" class="home">홈으로</a>
+                                <a th:href="@{/}" class="home">홈으로</a>
                             </h2>
                         </div>
                     </form>
