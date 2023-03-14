@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>swiftER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/symptoms.css}">
+        <script>
+            // 반려동물 정보 체크박스 둘중하나 선택
+            function handleCheckboxClick(event, containerId) {
+                var clickedCheckbox = event.target;
+                if (clickedCheckbox.checked) {
+                    var checkboxes = document.querySelectorAll('#' + containerId + ' input[type="checkbox"]');
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i] !== clickedCheckbox) {
+                            checkboxes[i].checked = false;
+                        }
+                    }
+                }
+		    }
+
+            // 체크박스 해제 (초기화 버튼)
+            function uncheckAllCheckboxes() {
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                }
+            }
+        </script>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a href="#">
+                        <img src="../img/swifter_logo.png" alt="logo" class="logoImage">
+                    </a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">증상검색</a>
+                        </li>
+                        <li>
+                            <a href="#">응급실검색</a>
+                        </li>
+                        <li>
+                            <a href="#">약국검색</a>
+                        </li>
+                        <li>
+                            <a href="#">커뮤니티</a>
+                        </li>
+                        <li>
+                            <a href="#">고객센터</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>

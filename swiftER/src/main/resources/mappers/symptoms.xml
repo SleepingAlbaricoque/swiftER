@@ -4,4 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.SymptomsDAO">
 	
+	<select id="selectCate" resultType="kr.co.swiftER.vo.SymptomsSubcateVO">
+		SELECT * from `search_body_subcate` where `body1_code`=#{body1_code};
+	</select>
+	
+	<!-- <select id="selectCateCode" resultType="kr.co.swiftER.vo.SymptomsSubcateVO">
+		SELECT `code` from `search_body_subcate`;
+	</select> --> 
+	
+	<select id="selectBody1" resultType="kr.co.swiftER.vo.SymptomsSymptomsVO">
+		SELECT b.`symptom` FROM `search_body_subcate` AS a
+		JOIN `search_symptoms` AS b ON a.code = b.part2a
+		WHERE a.`code`=#{code}
+		ORDER BY a.`code`;
+	</select>
+	
 </mapper>

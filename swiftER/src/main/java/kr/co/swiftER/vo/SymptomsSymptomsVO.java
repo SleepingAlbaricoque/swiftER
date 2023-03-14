@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SymptomsSymptomsVO {
-	private String symptoms;
+	private String symptom;
 	private int symptomsCate;
-	private int symptomsSubcate;
+	private int part2a;
 	private String illness1;
 	private String illness2;
 	private String illness3;
@@ -33,4 +33,10 @@ public class SymptomsSymptomsVO {
 	private String illness21;
 	private String illness22;
 	private String illness23;
+	
+	
+	// 추가필드
+	private String part;
+	
+	private String code;
 }
