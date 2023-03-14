@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="./css/member.css">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="./img/swifter_logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <title>리뷰 작성하기</title>
 </head>
 <body>
     <div id="wrapper">
         <header>
             <div class="centerName">
-                <div><img src="./img/swifter_logo.png" alt="로고" width="200px" height="200px" class="logo">
+                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
                 </div>
                 <div>
                     <h1>
@@ -24,7 +25,7 @@
         </header>
         <main>
             <h2>
-                <a href="#" class="home"><img src="./img/home.png" alt="홈으로" width="50px" height="50px"></a>
+                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="reviewER">
                 <section>
