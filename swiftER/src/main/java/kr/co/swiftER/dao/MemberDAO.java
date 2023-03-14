@@ -11,4 +11,6 @@ public interface MemberDAO {
 
 	public MemberTermsVO selectTerms();
 	
+	public int countMember(String uid);
+	
 }
