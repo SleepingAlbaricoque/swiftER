@@ -24,69 +24,15 @@
                         <th>작성자</th>
                         <th>등록일</th>
                     </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요 ellipsis 테스트입니다</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
-                    </tr>
-                    <tr>
-                        <td>COMMUNITY</td>
-                        <td><a href="#">제 게시물에 모욕적인 댓글을 단 유저를 탈퇴시켜주세요</a></td>
-                        <td>emp****</td>
-                        <td>2023.03.08</td>
+                    <tr th:each="qna:${qnaList}">
+                    	<td>[[${qna.subcate}]]</td>
+                    	<td><a th:href="@{/qna/view?no=__${qna.no}__}">[[${qna.title}]]</a></td>
+                    	<td>[[${qna.member_uid}]]</td>
+                    	<td>[[${qna.rdate}]]</td>
                     </tr>
                 </table>
                 <div class="qna-write-button">
-                    <input type="button" value="문의하기" onClick="location.href='#'">
+                    <input type="button" value="문의하기" th:onclick="|location.href='@{/cs/qna/write}'|">
                 </div>
                 <div class="qna-page-table-buttons">
                     <input type="button" value="이전" class="before">

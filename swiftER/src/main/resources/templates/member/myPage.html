@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
+    <link rel="stylesheet" th:href="@{/css/member/calendar.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <script src="https://kit.fontawesome.com/bf3bc66abd.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>마이페이지</title>
+
+    <script>
+        window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
+
+        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
+        let today = new Date();     // 페이지를 로드한 날짜를 저장
+        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+
+        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+        function buildCalendar() {
+
+            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
+            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
+
+            let tbody_Calendar = document.querySelector(".Calendar > tbody");
+            document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
+            document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+
+            while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
+                tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
+            }
+
+            let nowRow = tbody_Calendar.insertRow();        // 첫번째 행 추가           
+
+            for (let j = 0; j < firstDate.getDay(); j++) {  // 이번달 1일의 요일만큼
+                let nowColumn = nowRow.insertCell();        // 열 추가
+            }
+
+            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
+
+                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
+
+
+                let newDIV = document.createElement("p");
+                newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
+                nowColumn.appendChild(newDIV);
+
+                if (nowDay.getDay() == 6) {                 // 토요일인 경우
+                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+                }
+
+                if (nowDay < today) {                       // 지난날인 경우
+                    newDIV.className = "pastDay";
+                    newDIV.onclick = function () { choiceDate(this); 
+                    
+                    }
+                }
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
+                    newDIV.className = "today";
+                    newDIV.onclick = function () { choiceDate(this); }
+                }
+                else {                                      // 미래인 경우
+                    newDIV.className = "futureDay";
+                    newDIV.onclick = function () { choiceDate(this); }
+                }
+            }
+        }
+
+        // 날짜 선택
+        function choiceDate(newDIV) {
+            if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
+            }
+            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+
+            let selectYear = document.querySelector("#calYear").innerHTML;      // 이전 날짜 선택시 년도 가져오기
+            let selectMonth = document.querySelector("#calMonth").innerHTML;    // 이전 날짜 선택시 달 가져오기
+            let selectDay = document.querySelector(".choiceDay").innerHTML;     // 이전 날짜 선택시 일 가져오기
+
+            let checkDay = selectYear + selectMonth + selectDay;
+            document.querySelector("#historydate").value = checkDay;
+            console.log(checkDay);
+        }
+
+        // 이전달 버튼 클릭
+        function prevCalendar() {
+            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
+            buildCalendar();    // 달력 다시 생성
+        }
+        // 다음달 버튼 클릭
+        function nextCalendar() {
+            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
+            buildCalendar();    // 달력 다시 생성
+        }
+
+        // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+        function leftPad(value) {
+            if (value < 10) {
+                value = "0" + value;
+                return value;
+            }
+            return value;
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="centerName">
+                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
+                </div>
+                <div>
+                    <h1>
+                        
+                        swiftER <br> 마이페이지
+                    </h1>
+                </div> 
+            </div>
+        </header>
+        <main>
+            <h2>
+                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+            </h2>
+            <article>
+                <section>
+                    <h4 class="article_name">내정보</h4>
+                    <table id="myInfo">
+                        <tr>
+                            <th>
+                                활동명
+                            </th>
+                            <td>
+                                김밥말이
+                            </td>
+                            <th>가입일</th>
+                            <td>2023.03.07</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                E-mail
+                            </th>
+                            <td>
+                                et002727@naver.com
+                            </td>
+                            <th>
+                                회원구분
+                            </th>
+                            <td>
+                                일반회원
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                휴대전화
+                            </th>
+                            <td>
+                                010-9153-7494
+                            </td>
+                            <th>
+                                작성한 글
+                            </th>
+                            <td>
+                                79
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                주소
+                            </th>
+                            <td>
+                                부산광역시 사상구 엄궁로 142
+                            </td>
+                            <th>상세주소</th>
+                            <td>
+                                코오롱아파트 107동 1403호
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">
+                        회원정보수정
+                    </button>
+                </div>
+            </article>
+            <article>
+                <section>
+                    <h4 class="article_name">내가 작성한 글 </h4>
+                    <table>
+                        <tr>
+                            <th>
+                                카테고리
+                            </th>
+                            <th>
+                                제목
+                            </th>
+                            <th>
+                                댓글
+                            </th>
+                            <th>
+                                조회수
+                            </th>
+                            <th>
+                                작성일
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a th:href="@{#}">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a th:href="@{#}">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                        <tr>
+                            <td>자유게시판</td>
+                            <td><a th:href="@{#}">안녕하세요</a></td>
+                            <td>7</td>
+                            <td>5000</td>
+                            <td>2023.03.09</td>
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">
+                        더보기
+                    </button>
+                </div>
+            </article>
+            <div class="calendarborder">
+                <div id="newCalendar">
+                    <table class="Calendar">
+                        <thead>
+                            <tr>
+                                <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+                                <td colspan="5">
+                                    <span id="calYear"></span>년
+                                    <span id="calMonth"></span>월
+                                </td>
+                                <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+                            </tr>
+                            <tr>
+                                <td>일</td>
+                                <td>월</td>
+                                <td>화</td>
+                                <td>수</td>
+                                <td>목</td>
+                                <td>금</td>
+                                <td>토</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="history">
+                    <table class="historyTable">
+                        <tr>
+                            <th>날짜</th>
+                            <th>병원명</th>
+                            <th>질환/증상</th>
+                        </tr>
+                        <tr>
+                            <td>2023.03.10</td>
+                            <td>부산대병원</td>
+                            <td>두드러기</td>
+                        </tr>
+                        <tr>
+                            <td>2023.03.10</td>
+                            <td>부산대병원</td>
+                            <td>두드러기</td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div class="history">
+                    <table class="historyTable">
+                        <tr>
+                            <th>날짜</th>
+                            <th>병원명</th>
+                            <th>질환/증상</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="button">등록</button>
+                </div>
+            </div>
+            <article class="reviewSection">
+                <section>
+                    <h4 class="article_name">
+                        내가 작성한 리뷰
+                    </h4>
+                        <span><a href="#"><i class="fa-sharp fa-regular fa-keyboard"></i>&nbsp;리뷰 작성하기</a></span>
+                    <table>
+                        <tr>
+                            <th>지역</th>
+                            <th>세부지역</th>
+                            <th>제목</th>
+                            <th>평점</th>
+                            <th>날짜</th>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a th:href="@{#}">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a th:href="@{#}">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                        </tr>
+                            <td>부산광역시</td>
+                            <td>사상구</td>
+                            <td><a th:href="@{#}">정말 좋아요</a></td>
+                            <td>5</td>
+                            <td>2023.03.10</td>
+                        </tr>
+                    </table>
+                </section>
+                <div>
+                    <button class="submit">더보기</button>
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+</html>

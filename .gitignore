@@ -3,3 +3,5 @@
 .application.properties
 application.properties
 *.properties
+**/application.properties
+**/log

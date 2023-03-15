@@ -3,5 +3,46 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.CommunityDAO">
-	
+	<!-- free -->
+	<select id="selectCate" resultType="kr.co.swiftER.vo.CommunityCateVO">
+        SELECT `cate` FROM `community_cate`
+        WHERE `code` = #{cateCode};
+    </select>
+
+    <insert id="insertFreeArticle" useGeneratedKeys="true" keyProperty="no">
+        insert into `community_article` set
+            `comments`=#{comments},
+            `cateCode`=#{cateCode},
+            `regionCode`=#{regionCode},
+            `uid`=#{member_uid},
+            `title`=#{title},
+            `content`=#{content},
+            `file`=#{file},
+            `rdate`=NOW(),
+            `regip`=#{regip};
+    </insert>
+    
+    <select id="selectFreeArticle" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+        select a.*, b.code, c.code from `community_article` as a 
+        join `community_cate` as b 
+        on a.cateCode = b.code
+        join `community_region_code` as c 
+        on a.regionCode = c.code
+        where `no`=#{no};
+    </select>
+
+    <select id="selectFreeArticles" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+        select a.*, c.code from `community_article` as a 
+        join `community_cate` as b 
+        on a.cateCode = b.code 
+        join `community_region_code` as c 
+        on a.regionCode = c.code
+        where b.code = #{cateCode} 
+        order by `no` desc 
+        limit #{start}, 10;
+    </select>
+    
+    <select id="selectCountTotal" resultType="int">
+        select count(`no`) from `community_article` where `cateCode` = #{cateCode};
+    </select>
 </mapper>

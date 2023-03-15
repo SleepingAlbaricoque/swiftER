@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <title>회원 탈퇴</title>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="centerName">
+                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
+                </div>
+                <div>
+                    <h1>
+                        
+                        swiftER <br> 회원 탈퇴
+                    </h1>
+                </div> 
+            </div>
+        </header>
+        <main>
+            <h2>
+                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+            </h2>
+            <article class="findId">
+                <section>
+                    <h4 class="find">회원 탈퇴를 위하여 아래 정보를 입력하십시오</h4>
+                    <table>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <td>
+                                <input type="text" name="id" placeholder="ID 입력">
+                                <span>가입할 때 사용하신 ID를 입력하여 주십시오</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호
+                            </th>
+                            <td>
+                                <input type="text" name="pass1" placeholder="비밀번호 입력">
+                                <span>사용중인 비밀번호를 입력하여 주십시오</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호 재확인
+                            </th>
+                            <td>
+                                <input type="text" name="pass2" placeholder="비밀번호 재확인">
+                                <span>다시 한번 비밀번호를 입력하여 주십시오</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <ul id="deleteUl">
+                        회원탈퇴 안내
+                        <li>
+                            지금까지 swiftER 서비스를 이용해주셔서 감사합니다.
+                            <br>
+                            회원을 탈퇴하면 swiftER 서비스 내 나의 계정 정보가 <strong>삭제</strong>되고 <strong>복구</strong> 할 수 없습니다.
+                        </li>
+                        <li>
+                            <input type="checkbox">위 내용을 숙지 하였으며, 동의합니다
+                        </li>
+                    </ul>
+                </section>
+                <div>
+                    <button class="submit">
+                        탈퇴하기
+                    </button>
+                </div>
+            </article>
+        </main>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>

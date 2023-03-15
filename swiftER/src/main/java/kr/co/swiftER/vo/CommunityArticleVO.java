@@ -11,12 +11,29 @@ public class CommunityArticleVO {
 	private int no;
 	private int parent;
 	private int comments;
-	private int cate;
-	private int region;
+	private int cateCode;
+	private int regionCode;
 	private String memberUid;
 	private String title;
 	private String content;
 	private String file;
 	private String regip;
 	private String rdate;
+	
+	// 추가필드
+	private String cate;
+	private String region;
+	
+	public int getCateCode() {
+        return cateCode;
+    }
+    public void setCateCode(String cateCode) {
+        this.cateCode = Integer.parseInt(cateCode);
+    }
+	public int getRegionCode() {
+        return regionCode;
+    }
+    public void setRegionCode(String regionCode) {
+        this.regionCode = Integer.parseInt(regionCode);
+    }
 }
