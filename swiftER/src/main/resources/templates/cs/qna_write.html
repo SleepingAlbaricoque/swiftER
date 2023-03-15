@@ -5,7 +5,7 @@
                 <p>무엇이든, 언제든 여기서 물어보세요</p>
             </div>
             <div class="qna-write-wrapper">
-                <form th:action="@{/cs/qna/write}" method="post">
+                <form th:action="@{/cs/qna/write}" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="cate" value="3">
                     <table class="qna-write-table">
                         <tr>
@@ -27,7 +27,7 @@
                         <tr>
                             <td>첨부 파일</td>
                             <td colspan="3">
-                                <input type="file" class="qna-write-file" name="file">
+                                <input type="file" class="qna-write-file" name="fname">
                             </td>
                         </tr>
                         <tr>

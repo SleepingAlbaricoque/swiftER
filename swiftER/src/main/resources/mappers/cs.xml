@@ -15,6 +15,17 @@
 			`regip`=#{regip}, `rdate`=NOW();
 	</insert>
 	<insert id="insertFile">
-		
+		insert into `file` set
+			`cate`=#{cate},
+			`parent`= #{parent},
+			`newName`= #{newName},
+			`oriName`= #{oriName},
+			`rdate`= NOW();
 	</insert>
+	
+	<select id="selectArticles" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		select a.*, b.subcate from `cs_questions` as a 
+		join `cs_subcate` as b 
+		on a.subcate = b.subcode;
+	</select>
 </mapper>
