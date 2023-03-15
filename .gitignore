@@ -4,3 +4,4 @@
 application.properties
 *.properties
 **/application.properties
+**/log
