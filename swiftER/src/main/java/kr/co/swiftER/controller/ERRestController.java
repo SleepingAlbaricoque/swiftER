@@ -33,7 +33,9 @@ import kr.co.swiftER.vo.ErResultVO;
 
 @Controller
 public class ERRestController {
+
 /*
+
 	@Value("${restApi.key}")
     private String restApiKey;
     
@@ -115,6 +117,6 @@ public class ERRestController {
         		
 		
 	}
-	
-*/	
+	*/
+
 }

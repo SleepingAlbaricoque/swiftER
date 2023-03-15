@@ -13,8 +13,10 @@ import kr.co.swiftER.service.SymptomsService;
 import kr.co.swiftER.vo.SymptomsCateVO;
 import kr.co.swiftER.vo.SymptomsSubcateVO;
 import kr.co.swiftER.vo.SymptomsSymptomsVO;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class SymptomsController {
 
 	@Autowired

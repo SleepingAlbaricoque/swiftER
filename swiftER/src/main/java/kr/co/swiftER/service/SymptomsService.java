@@ -20,6 +20,7 @@ public class SymptomsService {
 		return dao.selectCate(body1_code);
 	}
 	
+	
 	public List<SymptomsSymptomsVO> selectBody1(String code) {
 		return dao.selectBody1(code);
 	}
