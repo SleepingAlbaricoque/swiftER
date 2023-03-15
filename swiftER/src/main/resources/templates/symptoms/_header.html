@@ -30,6 +30,31 @@
                     checkboxes[i].checked = false;
                 }
             }
+            
+            
+            function validateCheckboxes() {
+            	  const div1Checkbox1 = document.getElementById('div1-checkbox1');
+            	  const div1Checkbox2 = document.getElementById('div1-checkbox2');
+            	  
+            	  const div2Checkbox1 = document.getElementById('div2-checkbox1');
+            	  const div2Checkbox2 = document.getElementById('div2-checkbox2');
+            	  
+            	  const div3Checkbox1 = document.getElementById('div3-checkbox1');
+            	  const div3Checkbox2 = document.getElementById('div3-checkbox2');
+
+            	  if (!div1Checkbox1.checked && !div1Checkbox2.checked && !div2Checkbox1.checked && !div2Checkbox2.checked && !div3Checkbox1.checked && !div3Checkbox2.checked) {
+            	    alert('동물 접촉 여부란에 체크하셔야 합니다!');
+            	    return false;
+            	  }
+
+            	  return true;
+            	}
+
+            	document.querySelector('a').addEventListener('click', function(event) {
+            	  if (!validateCheckboxes()) {
+            	    event.preventDefault();
+            	  }
+            	});
         </script>
 </head>
 <body>

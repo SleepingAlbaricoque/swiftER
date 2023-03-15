@@ -21,8 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ERRestController {
-	/*
-    @Value("${restApi.key}")
+
+	@Value("${restApi.key}")
+
     private String restApiKey;
     
     @Value("${restApi.erbasisUrl}")
@@ -82,10 +83,11 @@ public class ERRestController {
             result.put("RESULT", "FAILED");
             log.error(e.getMessage());
         }
+
         
         mav.addObject("items", result);
         mav.setViewName("er/er");
         return mav;
     }
-    */
+
 }
