@@ -1,0 +1,84 @@
+<th:block th:include="@{_header.html}"/>
+  <section id="community">
+      <div class="free">
+        <section class="list">
+          <aside>
+            <h2>커뮤니티</h2>
+            <ul>
+              <li class="on"><a th:href="@{./freeList}">자유 게시판</a></li>
+              <li class=""><a th:href="@{./qnaList}">질문 게시판</a></li>
+              <li class=""><a th:href="@{./mytownList}">내가 사는 동네</a></li>
+            </ul>
+          </aside>
+          <article>
+            <nav>
+              <h1>자유 게시판</h1>
+              <!-- 리스트 검색 -->
+              <div class="list-search">
+                  <form action="" role="search">
+                      <input type="text" class="input--list-search" value="" placeholder="검색어를 입력해주세요.">
+                      <button type="submit" class="button--list-search">검색</button>
+                  </form>
+              </div>
+              <!-- // 리스트 검색 -->
+            </nav>
+            <table>
+              <tr>
+                <td><a th:href="@{./freeView}">오늘 점심 뭐먹고 싶은가요</a></td>
+                <td>lee</td>
+                <td>13 views</td>
+                <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>12 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>2112 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>32 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>22 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>232 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+              <tr>
+                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
+                  <td>lee</td>
+                  <td>6543 views</td>
+                  <td>23.01.11 13:11</td>
+              </tr>
+            </table>
+
+            <div class="page">
+              <a href="#" class="prev">이전</a>
+              <a href="#" class="num on">1</a>
+              <a href="#" class="num">2</a>
+              <a href="#" class="num">3</a>
+              <a href="#" class="next">다음</a>
+            </div>
+
+            <a th:href="@{./freeWrite}" class="btnWrite">글쓰기</a>
+
+          </article>
+        </section>
+      </div>
+    </section>
+ <th:block th:include="@{_footer.html}"/>
