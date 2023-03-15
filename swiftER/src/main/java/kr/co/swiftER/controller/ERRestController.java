@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ERRestController {
-
+/*
 	@Value("${restApi.key}")
 
     private String restApiKey;
@@ -89,5 +89,5 @@ public class ERRestController {
         mav.setViewName("er/er");
         return mav;
     }
-
+*/
 }

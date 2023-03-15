@@ -12,66 +12,23 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/js/validation.js}"></script>
 	<script>
-		$('#btnEmail').click(function(){
-			$(this).hide();
+	$(document).ready(function(){
+		$('#btnEmailCheck').click(function(){
 			let email = $('input[name=email]').val();
 			
-			if(isEmailAuthOk){
-				return;
-			}
-			
-			if(isEmailOk){
-				$('.msgEmail').text('인증코드 이메일을 발송하였습니다\n잠시만 기다려주세요');
-				console.log(isEmailOk);
-				
-				setTimeout(function(){
-					$.ajax({
-						url:'/swiftER/member/emailAuth',
-						method: 'GET',
-						data:{"email":email},
-						dataType: 'json',
-						success: function(data){
-							if(data.status > 0){
-								isEmailAuthOk = true;
-								$('.msgEmail').text('이메일을 확인 후 인증코드를 입력하세요');
-								$('.auth').show();
-								receiveCode = data.code;
-							}else{
-								alert('메일 전송에 실패하였습니다\n다시 시도해주세요');
-								$('#btnEmail').show();
-							}
-						}
-					});
-				}, 500);
-			}else{
-				alert('이메일을 확인하세요');
-				$('#btnEmail').show();
-			}
+			$.ajax({
+				url : '/swiftER/member/checkEmail',
+   				method : 'get',
+   				data : {"email":email},
+   				dataType : 'json',
+   				success : function(data){
+   					console.log('ㅅㅂ');
+   				}
+			});
 		});
-		
-		// 이메일 인증코드 확인
-		$('#btnEmailConfirm').click(function(){
-			let code = $('input[name=auth]').val();
-			
-			if(code == ''){
-				alert('이메일 확인 후 인증 코드를 입력하세요');
-				return;
-			}
-			
-			if(code == receivedCode){
-				isEmailAuthCodeOk = true;
-				$('input[name=km_email]').attr('readonly', true);
-				$('.msgEmail').text('이메일이 인증되었습니다');
-				$('.auth').hide();
-			}else{
-				alert('인증코드가 틀립니다\n다시 확인해주세요');
-			}
-		});
-		
-		
-	</script>
+	})
 
-    
+	</script>
 </head>
 <body>
     <div id="wrapper">
@@ -151,7 +108,7 @@
                             <td>
                                 <input type="text" name="email" placeholder="이메일 입력">
                                 <span>
-                                    <button id="btnEmail" onclick="emailSend()">인증번호 전송</button>
+                                    <button id="btnEmailCheck">인증번호 전송</button>
                                     <br>
                                     <input type="text" name="key" placeholder="인증번호 입력">
                                     <button>인증번호 확인 </button>
