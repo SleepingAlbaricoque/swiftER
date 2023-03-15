@@ -1,0 +1,55 @@
+<th:block th:include="@{_header.html}"/>
+  <section id="community">
+      <div class="free">
+        <section class="view">
+          <aside>
+            <h2>커뮤니티</h2>
+            <ul>
+              <li class=""><a th:href="@{./freeList}">자유 게시판</a></li>
+              <li class="on"><a th:href="@{./qnaList}">질문 게시판</a></li>
+              <li class=""><a th:href=".@{/mytownList}">내가 사는 동네</a></li>
+            </ul>
+          </aside>
+          <article>
+              <h1>질문 게시판</h1>
+              <a th:href="@{./qnaList}" class="btnList">목록보기</a>
+              <nav>
+                <h2 class="title">배아픈데 뭐때문에 아픈지모르겠어요</h2>
+                <p>
+                  <span>lee</span>
+                  <span>2023.01.11 13:11</span>
+                </p>
+              </nav>
+
+              <div class="content">
+                <p>
+                  오른쪽 아랫배쪽이 찢어질듯이 아픈데 왜그런걸까요 ㅠㅠ<br/>
+                </p>
+              </div>
+              <!-- 아티클 부가 기능 -->
+              <div class="article__ext">
+              <div class="article__button">
+                  <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                  <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+              </div>
+              </div>
+              <!-- // 아티클 부가 기능 -->
+              <a th:href="@{./qnaComment}" class="btnComment">답변하기</a>
+             <nav class="commentContents">
+                  <h2 class="commentTitle">답변☞배아픈데 뭐때문에 아픈지모르겠어요</h2>
+                  <p>
+                      <span>이수만 내과 의사</span>
+                      <span>2023.01.11 13:11</span>
+                  </p>
+              </nav>
+              <div class="commentContent">
+                  <p>
+                  맹장염일 가능성이 있습니다. 빠른시일내에 병원에 꼭 가셔서 검사받아보세요.<br/>
+                  </p>
+              </div>
+          </article>
+          
+        </section>
+      </div>
+    </section>
+<th:block th:include="@{_footer.html}"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.buildship.ui.wizard.project.import">
-		<item key="project_location" value="C:\Users\java1\Desktop\workspace\SwiftER\swiftER"/>
+		<item key="project_location" value="C:\Users\java1\Desktop\workspace\swiftER\swiftER"/>
 		<item key="apply_working_sets" value="false"/>
 		<list key="working_sets">
 		</list>

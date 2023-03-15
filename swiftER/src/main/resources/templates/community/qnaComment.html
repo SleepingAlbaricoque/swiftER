@@ -1,0 +1,38 @@
+<th:block th:include="@{_header.html}"/>
+  <section id="community">
+      <div class="free">
+        <section class="write">
+          <aside>
+            <h2>커뮤니티</h2>
+            <ul>
+              <li class=""><a th:href="@{./freeList}">자유 게시판</a></li>
+              <li class="on"><a th:href="@{./qnaList}">질문 게시판</a></li>
+              <li class=""><a th:href=".@{/mytownList}">내가 사는 동네</a></li>
+            </ul>
+          </aside>
+          <article>
+              <form action="#">
+                <table>
+                  <tr>
+                    <td>제목</td>                  
+                    <td>
+                      <h2 class="title">고양이 키우고 싶다</h2>
+                    </td>
+                  </tr>                
+                  <tr>
+                    <td>내용</td>                  
+                    <td>
+                      <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                    </td>
+                  </tr>
+                </table>
+                <div>
+                  <a th:href="@{./qnaView}" class="btnCancle">취소하기</a>
+                  <input type="submit" class="btnSubmit" value="답변하기"/>
+                </div>
+              </form>
+          </article>
+        </section>
+      </div>
+  </section>
+<th:block th:include="@{_footer.html}"/>

@@ -1,0 +1,176 @@
+<th:block th:include="@{_header.html}"/>
+  <section id="community">
+      <div class="free">
+        <section class="view">
+          <aside>
+            <h2>커뮤니티</h2>
+            <ul>
+ 			  <li class=""><a th:href="@{./freeList}">자유 게시판</a></li>
+              <li class=""><a th:href="@{./qnaList}">질문 게시판</a></li>
+              <li class="on"><a th:href="@{./mytownList}">내가 사는 동네</a></li>
+            </ul>
+          </aside>
+          <article>
+              <h1>내가 사는 동네</h1>
+              <a th:href="@.{/mytownList}" class="btnList">목록보기</a>
+              <nav>
+                <h2 class="title">[부산]내분비내과 잘하는 병원이랑 선생님 이름 추천받아요</h2>
+                <p>
+                  <span>lee</span>
+                  <span>2023.01.11 13:11</span>
+                </p>
+              </nav>
+
+              <div class="content">
+                <p>
+                  고양이 너무 귀엽고 이쁘고 다하네<br/>
+                </p>
+              </div>
+              <!-- 아티클 부가 기능 -->
+              <div class="article__ext">
+              <div class="article__button">
+                  <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                  <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+              </div>
+              </div>
+              <!-- // 아티클 부가 기능 -->
+              <div class="comment">
+                  <h3>댓글 <em class="comment__total" id="txt_CommentTotalCount">0</em></h3>
+          
+                      <div class="comment__form" role="form">
+                          <form action="">
+                              <fieldset class="comment__fieldset">
+                                  <textarea class="textarea--comment" id="txt_comment" maxlength="200" placeholder="저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받을 수 있습니다.&#10;건전한 토론 문화와 양질의 댓글 문화를 위해, 타인에게 불쾌감을 주는 욕설 또는 특정 계층/민족, 종교 등을 비하하는 단어들은 표시가 제한됩니다."></textarea>
+                                  <span class="comment__count" role="region" aria-live="polite" aria-label="글자수 제한"></span>
+                                  <button type="button" class="button--comment" data-sourceno="0" data-parentno="0">등록</button>
+                              </fieldset>
+                          </form>
+                      </div>
+          <!-- 댓글-->
+          <div class="comment__list">
+              <ul>
+                  <li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li>
+                  <li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li><li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li><li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li><li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li><li>
+                      <div class="comment_name">
+                          <span>absheng1011	2023.01.11 13:14</span>
+                      </div>
+                      <p class="comment_font">
+                          부산 내분비내과면 좋은문화병원 추천드려요 선생님은 OO선생님이 잘하세요!<br>
+                          진료 잘 받고오세요~!!!
+                      </p>
+                      <!-- 댓글 아티클 부가 기능 -->
+                      <div class="comment__ext">
+                      <div class="comment__button">
+                          <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                          <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                      </div>
+                      </div>
+                       <!-- // 댓글 아티클 부가 기능 -->
+                  </li>
+              </ul>
+              <div class="paging">
+                  <span class="prev">
+                      <a href="#">&lt;&nbsp;이전</a>
+                  </span>
+                  <span class="num">
+                      <a href="#" class="on">1</a>
+                      <a href="#" class="on">2</a>
+                      <a href="#">3</a>
+                      <a href="#">4</a>
+                      <a href="#">5</a>
+                  </span>
+                  <span class="next">
+                      <a href="#">다음&nbsp;&gt;</a>
+                  </span>
+              </div>
+              </ul>
+              
+          </div>
+          <!-- // 댓글 -->
+              
+          </article>
+          
+        </section>
+      </div>
+    </section>
+<th:block th:include="@{_footer.html}"/>
