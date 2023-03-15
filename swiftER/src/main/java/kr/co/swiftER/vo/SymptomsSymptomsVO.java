@@ -11,6 +11,7 @@ public class SymptomsSymptomsVO {
 	private String symptom;
 	private int symptomsCate;
 	private int part2a;
+	private int part2b;
 	private String illness1;
 	private String illness2;
 	private String illness3;
