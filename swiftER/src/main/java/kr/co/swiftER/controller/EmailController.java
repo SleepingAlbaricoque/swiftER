@@ -10,17 +10,17 @@ import kr.co.swiftER.service.EmailService;
 
 @Controller
 public class EmailController {
-
-    @Autowired
-    private EmailService emailService;
-
-    @ResponseBody
-    @GetMapping("/member/checkEmail")
-    public String sendEmail(@RequestParam("email") String email) {
-        String to = email;
-        String subject = "swiftER 인증코드입니다";
-        String text = "This is a test email sent from Spring Boot application.";
-        emailService.sendSimpleMessage(to, subject, text);
-        return email;
-    }
+//
+//    @Autowired
+//    private EmailService emailService;
+//
+//    @ResponseBody
+//    @GetMapping("/member/checkEmail")
+//    public String sendEmail(@RequestParam("email") String email) {
+//        String to = email;
+//        String subject = "swiftER 인증코드입니다";
+//        String text = "This is a test email sent from Spring Boot application.";
+//        emailService.sendSimpleMessage(to, subject, text);
+//        return email;
+//    }
 }
