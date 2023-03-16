@@ -1,5 +1,6 @@
 package kr.co.swiftER.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,13 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.MemberService;
+import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.MemberTermsVO;
+import kr.co.swiftER.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -55,6 +60,22 @@ public class MemberController {
 		return "member/registerDoc";
 	}
 	
+	/* 일반회원 가입(post) */
+	@ResponseBody
+	@PostMapping("member/registerNor")
+	public Map<String, Integer> insertUser(Principal principal, @ModelAttribute("MemberVO") MemberVO member, HttpServletRequest req){
+		member.setRegip(req.getRemoteAddr());
+		
+		service.insertMember(member);
+		
+		int result = service.insertMember(member);
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	
+	
 	
 	/* 회원가입 유효성 검사 - id*/
 	@ResponseBody
@@ -67,5 +88,7 @@ public class MemberController {
 		map.put("result", result);
 		return map;
 	}
+	
+	 
 	
 }

@@ -22,12 +22,43 @@
    				data : {"email":email},
    				dataType : 'json',
    				success : function(data){
-   					console.log('ㅅㅂ');
+   					console.log(email);
    				}
 			});
 		});
-	})
-
+		
+		$('#btncheckCode').click(function(){
+			let code = $('input[name=code]').val();
+			
+			$.ajax({
+				url : '/swiftER/member/checkCode',
+				method : 'get',
+				data : {"code":code},
+				dataType : 'json',
+				success : function(data){
+					
+					console.log('data : ' + data);
+					
+					if(data.result != 0){
+						$('.resultCode').css('color', 'red').text('사용할수 없는 이메일입니다');
+						console.log(data.result);
+					}else{
+						$('.resultCode').css('color', 'green').text('사용 가능한 이메일입니다');
+						$('input[name=code]').attr('readonly', true);
+						isEmailAuthOk = true;
+						console.log(data.result);
+					}
+				}
+				
+			})
+		});
+		
+		$('').submit(function(){
+			
+		});
+		
+	});
+	
 	</script>
 </head>
 <body>
@@ -57,7 +88,7 @@
                                 아이디
                             </th>
                             <td>
-                                <input type="text" name="uid" id="uid" placeholder="아이디 입력">
+                                <input type="text" name="uid" id="uid" placeholder="아이디 입력" required>
                                 <span class="resultUid">영문, 숫자로 5~12자까지 설정해 주십시오</span>
                             </td>
                         </tr>
@@ -66,7 +97,7 @@
                                 비밀번호
                             </th>
                             <td>
-                                <input type="text" name="pass1" placeholder="비밀번호 입력">
+                                <input type="text" name="pass1" placeholder="비밀번호 입력" required>
                                 <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주십시오</span>
                             </td>
                         </tr>
@@ -75,8 +106,8 @@
                                 비밀번호 확인
                             </th>
                             <td>
-                                <input type="text" name="pass2" placeholder="비밀번호 확인">
-                                <span>비밀번호 재입력</span>
+                                <input type="text" name="pass2" placeholder="비밀번호 확인" required>
+                                <span class="resultPass">비밀번호 재입력</span>
                             </td>
                         </tr>
                     </table>
@@ -87,52 +118,52 @@
                         <tr>
                             <th>이름</th>
                             <td>
-                                <input type="text" name="name" placeholder="이름 입력">
+                                <input type="text" name="name" placeholder="이름 입력" required>
                                 <span class="resultName">한글 2~6자를 입력해 주십시오</span>
                             </td>
                         </tr>
                         <tr>
                             <th>별명</th>
                             <td>
-                                <input type="text" name="nick" placeholder="별명 입력">
+                                <input type="text" name="nickname" placeholder="별명 입력" required>
                             </td>
                         </tr>
                         <tr>
                             <th>생년월일</th>
                             <td>
-                                <input type="date" name="date">
+                                <input type="date" name="birth" required>
                             </td>
                         </tr>
                         <tr>
                             <th>E-mail</th>
                             <td>
-                                <input type="text" name="email" placeholder="이메일 입력">
-                                <span>
+                                <input type="text" name="email" placeholder="이메일 입력" required>
                                     <button id="btnEmailCheck">인증번호 전송</button>
+                                    <span class="resultEmail">수신가능한 이메일을 입력해 주십시오</span>
                                     <br>
-                                    <input type="text" name="key" placeholder="인증번호 입력">
-                                    <button>인증번호 확인 </button>
-                                </span>
+                                    <input type="text" name="code" placeholder="인증번호 입력" required>
+                                    <button id="btncheckCode">인증번호 확인 </button>
+                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <input type="text" name="phone" placeholder="휴대전화">
-                                <span> - 포함 13자리를 입력해주세요</span>
+                                <input type="text" name="hp" placeholder="휴대전화" required>
+                                <span class="resultHp"> - 포함 13자리를 입력해주세요</span>
                             </td>
                         </tr>
                         <tr>
                             <th>주소</th>
                             <td>
                                 <div>
-                                    <input type="text" name="zip" placeholder="우편번호 입력">
+                                    <input type="text" name="zip" placeholder="우편번호 입력" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr1">
+                                    <input type="text" name="addr1" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr2">
+                                    <input type="text" name="addr2" required>
                                 </div>
                             </td>
                         </tr>
