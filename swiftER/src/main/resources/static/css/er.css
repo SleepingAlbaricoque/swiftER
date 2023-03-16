@@ -129,19 +129,19 @@
     background-color: #1b9cff;
     float: right;
 }
-#search > .er > div.map{
+#search > .er > div.search_map{
     width: 100%;
     height: auto;
     margin: 0 auto;
 }
-#search > .er > div.map > h2{
+#search > .er > div.search_map > h2{
     font-size: 25px;
     font-weight: bold;
     margin: 30px;
 }
 
 /* 맵 크기 값 */
-#search > .er > div.map > div.search_map{
+#search > .er > div.search_map > #map{
     width: 1000px;
     height: 550px;
     border: 1px solid #111;
