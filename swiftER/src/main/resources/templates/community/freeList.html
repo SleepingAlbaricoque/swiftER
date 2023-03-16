@@ -1,84 +1,52 @@
-<th:block th:include="@{_header.html}"/>
+<th:block th:insert="~{@{_header.html}}"/>
   <section id="community">
       <div class="free">
         <section class="list">
           <aside>
             <h2>커뮤니티</h2>
             <ul>
-              <li class="on"><a th:href="@{./freeList}">자유 게시판</a></li>
-              <li class=""><a th:href="@{./qnaList}">질문 게시판</a></li>
-              <li class=""><a th:href="@{./mytownList}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
+              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./qnaList?cateCode=11}">질문 게시판</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./mytownList?cateCode=12}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
             <nav>
-              <h1>자유 게시판</h1>
+              <h1 th:text="${ccv.cate}"></h1>
               <!-- 리스트 검색 -->
               <div class="list-search">
                   <form action="" role="search">
-                      <input type="text" class="input--list-search" value="" placeholder="검색어를 입력해주세요.">
+                      <input type="text" class="input--list-search" name= "keyword" value="" placeholder="검색어를 입력해주세요.">
                       <button type="submit" class="button--list-search">검색</button>
                   </form>
               </div>
               <!-- // 리스트 검색 -->
             </nav>
             <table>
-              <tr>
-                <td><a th:href="@{./freeView}">오늘 점심 뭐먹고 싶은가요</a></td>
-                <td>lee</td>
-                <td>13 views</td>
-                <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>12 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>2112 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>32 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>22 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>232 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
-              <tr>
-                  <td><a href="./view.html">오늘 점심 뭐먹고 싶은가요</a></td>
-                  <td>lee</td>
-                  <td>6543 views</td>
-                  <td>23.01.11 13:11</td>
-              </tr>
+             <tr th:each="cates:${cates}">
+	              <td><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no})}" th:text="${cates.title}"></a></td>
+	              <td>[[${(cates.member_uid)}]]</td>
+	              <td>[[${(cates.comments)}]] views</td>	
+	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>
+             </tr>
             </table>
 
             <div class="page">
-              <a href="#" class="prev">이전</a>
-              <a href="#" class="num on">1</a>
-              <a href="#" class="num">2</a>
-              <a href="#" class="num">3</a>
-              <a href="#" class="next">다음</a>
-            </div>
+            <th:block th:if="${groups[0] > 1}">
+                <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[0]- 1})}" class="prev">이전</a>
+            </th:block>
+            <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
+                <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${num})}" th:class="${num == currentPage ? 'num current' : 'num'}">[[${num}]]</a>
+            </th:block>
+            <th:block th:if="${groups[1] < lastPage}">
+                <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[1] + 1})}" class="next">다음</a>
+            </th:block>
+          </div>
 
-            <a th:href="@{./freeWrite}" class="btnWrite">글쓰기</a>
+            <a th:href="@{/community/freeWrite(cateCode=${cateCode})}" class="btnWrite">글쓰기</a>
 
           </article>
         </section>
       </div>
     </section>
- <th:block th:include="@{_footer.html}"/>
+<th:block th:insert="~{@{_footer.html}}"/>
