@@ -23,4 +23,5 @@ public class EmailController {
         emailService.sendSimpleMessage(to, subject, text);
         return email;
     }
+    
 }

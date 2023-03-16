@@ -1,14 +1,18 @@
 package kr.co.swiftER.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.SymptomsService;
 import kr.co.swiftER.vo.SymptomsCateVO;
 import kr.co.swiftER.vo.SymptomsSubcateVO;
@@ -36,9 +40,15 @@ public class SymptomsController {
 		return "symptoms/symptoms";
 	}
 	
-	@PostMapping("symptoms/symptoms")
-	public String symptoms() {
-		return "symptoms/symptoms";
+	@PostMapping(value="symptoms/symptoms")
+	@ResponseBody
+	public Map<String, Integer> symptoms(@RequestBody SymptomsSymptomsVO symptom) {
+		
+		int result = service.insertsymptoms(symptom);
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
 	}
 	
 	@GetMapping("symptoms/resultsymptoms")
