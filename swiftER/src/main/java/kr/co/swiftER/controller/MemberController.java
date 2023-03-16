@@ -62,17 +62,13 @@ public class MemberController {
 	
 	/* 일반회원 가입(post) */
 	@ResponseBody
-	@PostMapping("member/registerNor")
-	public Map<String, Integer> insertUser(Principal principal, @ModelAttribute("MemberVO") MemberVO member, HttpServletRequest req){
-		member.setRegip(req.getRemoteAddr());
+	@PostMapping("member/insertMember")
+	public String insertMember(Principal principal, @ModelAttribute("MemberVO") MemberVO vo, HttpServletRequest req){
+		String regip = req.getRemoteAddr();
+		vo.setRegip(regip);
 		
-		service.insertMember(member);
-		
-		int result = service.insertMember(member);
-		Map<String, Integer> map = new HashMap<>();
-		
-		map.put("result", result);
-		return map;
+		int result = service.insertMember(vo);
+		return "redirect:/index?success="+result;
 	}
 	
 	

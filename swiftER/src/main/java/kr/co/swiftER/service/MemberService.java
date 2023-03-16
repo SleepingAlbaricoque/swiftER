@@ -1,6 +1,7 @@
 package kr.co.swiftER.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.swiftER.dao.MemberDAO;
@@ -13,6 +14,7 @@ public class MemberService {
 	
 	@Autowired MemberDAO dao;
 	@Autowired MemberRepo repo;
+	@Autowired private PasswordEncoder passwordEncoder;
 	
 	/* 회원 약관 불러오기 */
 	public MemberTermsVO selectTerms() {
@@ -24,8 +26,10 @@ public class MemberService {
 		return repo.countByUid(uid);
 	}
 
-	public int insertMember(MemberVO member) {
-		return dao.insertMember(member);
+	public int insertMember(MemberVO vo) {
+		vo.setPass(passwordEncoder.encode(vo.getPass()));
+		int result = dao.insertMember(vo);
+		return result;
 	}
 	
 }

@@ -17,7 +17,7 @@
 			`nickname`=#{nickname},
 			`birth`=#{birth},
 			`email`=#{email},
-			`contract`=#{contract},
+			`contact`=#{contact},
 			`zip`=#{zip},
 			`addr1`=#{addr1},
 			`addr2`=#{addr2},
