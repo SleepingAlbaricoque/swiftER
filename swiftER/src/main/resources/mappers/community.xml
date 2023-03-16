@@ -45,4 +45,12 @@
     <select id="selectCountTotal" resultType="int">
         select count(`no`) from `community_article` where `cateCode` = #{cateCode};
     </select>
+    
+    <select id="selectFreeListSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+        SELECT   no, title, comments, cateCode, content, member_uid, rdate
+	    FROM `community_article`
+	    WHERE title LIKE '%' || #{keyword} || '%'
+	    order BY `no` desc 
+	    LIMIT 0, 10;
+    </select>
 </mapper>
