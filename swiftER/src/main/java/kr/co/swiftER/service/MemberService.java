@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import kr.co.swiftER.dao.MemberDAO;
 import kr.co.swiftER.repo.MemberRepo;
 import kr.co.swiftER.vo.MemberTermsVO;
+import kr.co.swiftER.vo.MemberVO;
 
 @Service
 public class MemberService {
@@ -21,6 +22,10 @@ public class MemberService {
 	/* 회원가입 유효성 검사 */
 	public int countUid(String uid) {
 		return repo.countByUid(uid);
+	}
+
+	public int insertMember(MemberVO member) {
+		return dao.insertMember(member);
 	}
 	
 }

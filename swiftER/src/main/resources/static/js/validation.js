@@ -8,13 +8,16 @@
     let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
     let regPass  = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    let regZip = /\d{5}/;
 
 // 폼 데이터 검증 결과 상태변수
     let isUidOk   = false;
     let isPassOk  = false;
     let isNameOk  = false;
     let isEmailOk = false;
+    let isEmailAuthOk = false;
     let isHpOk 	  = false;
+    let isZipOk = false;
 
     $(function(){
 
@@ -118,12 +121,25 @@
     			$('.resultHp').css('color', 'red').text('휴대폰이 유효하지 않습니다.');
     		}else{
     			isHpOk = true;
-    			$('.resultHp').text('');
+    			$('.resultHp').css('color', 'green').text('O');
+    		}
+    	});
+    	
+    	// 우편번호 유효성 검사
+    	$('input[name=zip]').focusout(function(){
+    		let zip = $(this).val();
+
+    		if(!zip.match(regZip)){
+    			isZipOk = false;
+    			$('.resultZip').css('color', 'red').text('우편번호가 유효하지 않습니다.');
+    		}else{
+    			isZipOk = true;
+    			$('.resultZip').css('color', 'green').text('O');
     		}
     	});
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
-    	$('.register > form').submit(function(e){
+    	$('.submit').click(function(e){
 
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
@@ -153,8 +169,50 @@
     			alert('휴대폰을 확인하십시오.');
     			return false;
     		}
+    		
+    		// 우편번호 검증
+    		if(!isZipOk){
+    			alert('우편번호를 확인하십시오.');
+    			return false;
+    		}
+    		
+    		let uid = $('input[name=uid]').val();
+    		let pass = $('input[name=pass2]').val();
+    		let name = $('input[name=name]').val();
+    		let nickname = $('input[name=nickname]').val();
+    		let birth = $('input[name=birth]').val();
+    		let email = $('input[name=email]').val();
+    		let contact = $('input[name=hp]').val();
+    		let zip = $('input[name=zip]').val();
+    		let addr1 = $('input[name=addr1]').val();
+    		let addr2 = $('input[name=addr2]').val();
+    		
+    		let jsonData = {
+				"uid" : uid,
+				"pass" : pass,
+				"name" : name,
+				"nickname" : nickname,
+				"birth" : birth,
+				"email" : email,
+				"contact" : contact,
+				"zip" : zip,
+				"addr1" : addr1,
+				"addr2" : addr2
+			}
+    		
+    		
+    		$.ajax({
+				
+				url : '/swiftER/member/insertUser',
+				method : 'post',
+				data : jsonData,
+				dataType : 'json',
+				success : function(data){
+					console.log('!');
+						}
+			});
 
     		// 최종 전송
-    		return true;
+    		location.href="/swiftER/member/login";
     	});
     });

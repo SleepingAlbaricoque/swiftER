@@ -9,4 +9,22 @@
 		SELECT * FROM `member_terms`;
 	</select>
 	
+	<insert id="insertMember">
+		INSERT INTO `member` set 
+			`uid`=#{uid},
+			`pass`=#{pass},
+			`name`=#{name},
+			`nickname`=#{nickname},
+			`birth`=#{birth},
+			`email`=#{email},
+			`contract`=#{contract},
+			`zip`=#{zip},
+			`addr1`=#{addr1},
+			`addr2`=#{addr2},
+			`grade`=1,
+			`regip`=#{regip},
+			`rdate`=NOW();
+			
+	</insert>
+	
 </mapper>

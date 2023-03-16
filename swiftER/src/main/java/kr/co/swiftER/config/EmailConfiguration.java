@@ -1,21 +1,32 @@
 package kr.co.swiftER.config;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 public class EmailConfiguration {
+	@Value("${spring.mail.username}")
+    private String id;
+    @Value("${spring.mail.password}")
+    private String password;
+    @Value("${spring.mail.host}")
+    private String host;
+    @Value("${spring.mail.port}")
+    private int port;
 
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("et002929@gmail.com");
-        mailSender.setPassword("dqnygnyqmwvabnth");
+        mailSender.setHost(host);
+        mailSender.setPort(port);
+        mailSender.setUsername(id);
+        mailSender.setPassword(password);
         mailSender.setProtocol("smtp");
         mailSender.setJavaMailProperties(javaMailProperties());
 
