@@ -24,5 +24,9 @@ public class SymptomsService {
 	public List<SymptomsSymptomsVO> selectBody1(String code) {
 		return dao.selectBody1(code);
 	}
+	
+	public int insertsymptoms(SymptomsSymptomsVO symptom) {
+		return dao.insertsymptoms(symptom);
+	}
 
 }
