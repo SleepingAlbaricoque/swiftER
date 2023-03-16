@@ -3,11 +3,17 @@ package kr.co.swiftER.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletRequest;
+import kr.co.swiftER.entity.MemberEntity;
+import kr.co.swiftER.security.MyUserDetails;
 import kr.co.swiftER.service.CommunityService;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.CommunityCateVO;
@@ -22,7 +28,8 @@ public class CommunityController {
 	
 	 /* Free */
     @GetMapping(value = {"community/freeList"})
-    public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode, String code){
+    public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode, String code,
+    		@RequestParam(value="keyword", defaultValue = "") String keyword, String title){
     	
     	 pg = (pg == null) ? "1" : pg;
 
@@ -35,7 +42,7 @@ public class CommunityController {
 
          CommunityCateVO ccv = service.selectCate(cateCode);
          List<CommunityArticleVO> cates = service.selectFreeArticles(start, cateCode);
-         
+         List<CommunityArticleVO> serchfree = service.selectFreeListSearch(title, cateCode, keyword);
          
          /*log.info("currentPage : " + currentPage);
          log.info("lastPage : " + lastPage);
@@ -57,15 +64,31 @@ public class CommunityController {
         return "community/freeList";
     }
     
-    @GetMapping("community/freeView")
-	public String FreeView() {
-		return "community/freeView";
-	}
+    @GetMapping(value = {"community/freeView"})
+    public String FreeView(Model model, int no, String cate ){
+    	
+    	 CommunityCateVO ccv = service.selectCate(cate);
+         CommunityArticleVO vo = service.selectFreeArticle(no);
+
+         model.addAttribute("vo", vo);
+         model.addAttribute("cate", cate);
+
+         return "community/freeView";
+    }
+    @GetMapping(value = {"community/freeWrite"})
+    public String FreeWrite(Model model, @RequestParam("cate") String cate){
+
+        model.addAttribute("cate", cate);
+
+        return "community/freeWrite";
+    }
     
-    @GetMapping("community/freeWrite")
-	public String FreeWrite() {
-		return "community/freeWrite";
-	}
+    @PostMapping(value = {"community/freeWrite"})
+    public String FreeWrite(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
+    		Integer cate){
+
+        return "redirect:/community/freeWrite?cate="+cate;
+    }
     
     /* Qna */
     @GetMapping("community/qnaList")

@@ -1,29 +1,20 @@
 package kr.co.swiftER.controller;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.client.RestTemplate;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.Unmarshaller;
-import kr.co.swiftER.vo.ErResultVO;
+import ch.qos.logback.core.model.Model;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class ERRestController {
-/*
 	@Value("${restApi.key}")
-
     private String restApiKey;
     
     @Value("${restApi.erbasisUrl}")
@@ -35,59 +26,27 @@ public class ERRestController {
     @Value("${restApi.erlocationUrl}")
     private String erlocationUrl;
     
-    @PostMapping("er/erSearch")
+    @Value("${restApi.erlistUrl}")
+    private String erlistUrl;
+    
     @ResponseBody
-    public ModelAndView erSearch(String city, String town) throws IOException {
-        Map<String, Object> result = new HashMap<>();
-        ModelAndView mav = new ModelAndView();
+    @PostMapping("er/erSearch")    
+    public String erSearch(Model model, String city, String town) throws IOException {
+        String[] arrUrl = {erbasisUrl, erdetailUrl, erlocationUrl, erlistUrl};
         
-        String[] arrUrl = {erbasisUrl, erdetailUrl, erlocationUrl};
-        String[] arrName = {"BASIS", "DETAIL", "LOACTION"};
+        String pageNo = "1";
+        String numOfRows = "1000";
         
-        try {
-            String pageNo = "1";
-            String numOfRows = "1000";
-            String urlstr = arrUrl[0] + restApiKey + "&STAGE1=" + city + "&STAGE2=" + town 
-                    + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
-            URL url = new URL(urlstr); 
-                
-            System.out.println("url : "+url);
-            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
-            connect.setRequestMethod("GET");
-                
-            JAXBContext jaxbContext = JAXBContext.newInstance(ErResultVO.class);
-            Unmarshaller unmarsharller = jaxbContext.createUnmarshaller();
-            ErResultVO ErResultVO = (ErResultVO) unmarsharller.unmarshal(url);
-            result.put(arrName[0], ErResultVO.body.basisItems.basis);
-            Collection<Object> values = result.values();
-            System.out.println(values);
-                
-            if(ErResultVO.body.basisItems.basis != null && ErResultVO.header.resultCode.equals("00")) {
-                    
-                for(int i = 1; i < arrUrl.length; i++) {
-                    urlstr = arrUrl[i] + restApiKey + "&STAGE1=" + city + "&STAGE2=" + town 
-                           + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows ; 
-                    url = new URL(urlstr); 
-                    connect = (HttpURLConnection) url.openConnection();
-                    connect.setRequestMethod("GET");                    
-                    unmarsharller = jaxbContext.createUnmarshaller();
-                        
-                    ErResultVO = (ErResultVO) unmarsharller.unmarshal(url);
-                    result.put(arrName[i], ErResultVO.body.basisItems.basis);                
-                }
-            } else {
-                throw new Exception();
-            }
-            result.put("RESULT", "SUCCESS");
-        } catch (Exception e) {
-            result.put("RESULT", "FAILED");
-            log.error(e.getMessage());
-        }
-
+        // RestTemplate 생성            
+        RestTemplate restTemplate = new RestTemplate();
+         
+        // 오브젝트로 결과값 받아오기
+        String url = arrUrl[3] + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        System.out.println("url : "+url);        
+        String response = restTemplate.getForObject(url, String.class);
         
-        mav.addObject("items", result);
-        mav.setViewName("er/er");
-        return mav;
+        log.info("response : " + response);
+        
+        return response;
     }
-*/
 }
