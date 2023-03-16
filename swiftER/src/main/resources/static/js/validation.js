@@ -139,7 +139,7 @@
     	});
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
-    	$('.submit').click(function(e){
+    	$('.submit').click(function(){
 
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
@@ -200,10 +200,11 @@
 				"addr2" : addr2
 			}
     		
+    		console.log(jsonData);
     		
     		$.ajax({
 				
-				url : '/swiftER/member/insertUser',
+				url : '/swiftER/member/insertMember',
 				method : 'post',
 				data : jsonData,
 				dataType : 'json',
@@ -213,6 +214,6 @@
 			});
 
     		// 최종 전송
-    		location.href="/swiftER/member/login";
+    		//location.href="/swiftER/member/login";
     	});
     });
