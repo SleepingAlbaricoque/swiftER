@@ -1,13 +1,13 @@
-<th:block th:include="@{_header.html}"/>
+<th:block th:insert="~{@{_header.html}}"/>
   <section id="community">
       <div class="free">
         <section class="view">
           <aside>
             <h2>커뮤니티</h2>
-            <ul>
-              <li class=""><a th:href="@{./freeList}">자유 게시판</a></li>
-              <li class="on"><a th:href="@{./qnaList}">질문 게시판</a></li>
-              <li class=""><a th:href=".@{/mytownList}">내가 사는 동네</a></li>
+             <ul>
+              <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
+              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./qnaList?cateCode=11}">질문 게시판</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./mytownList?cateCode=12}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
@@ -52,4 +52,4 @@
         </section>
       </div>
     </section>
-<th:block th:include="@{_footer.html}"/>
+<th:block th:insert="~{@{_footer.html}}"/>

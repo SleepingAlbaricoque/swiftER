@@ -1,18 +1,18 @@
-<th:block th:include="@{_header.html}"/>
+<th:block th:insert="~{@{_header.html}}"/>
   <section id="community">
       <div class="free">
         <section class="view">
           <aside>
             <h2>커뮤니티</h2>
-            <ul>
- 			  <li class=""><a th:href="@{./freeList}">자유 게시판</a></li>
-              <li class=""><a th:href="@{./qnaList}">질문 게시판</a></li>
-              <li class="on"><a th:href="@{./mytownList}">내가 사는 동네</a></li>
+             <ul>
+              <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
+              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./qnaList?cateCode=11}">질문 게시판</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./mytownList?cateCode=12}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
               <h1>내가 사는 동네</h1>
-              <a th:href="@.{/mytownList}" class="btnList">목록보기</a>
+              <a th:href="@{./mytownList}" class="btnList">목록보기</a>
               <nav>
                 <h2 class="title">[부산]내분비내과 잘하는 병원이랑 선생님 이름 추천받아요</h2>
                 <p>
@@ -173,4 +173,4 @@
         </section>
       </div>
     </section>
-<th:block th:include="@{_footer.html}"/>
+<th:block th:insert="~{@{_footer.html}}"/>

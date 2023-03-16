@@ -21,29 +21,25 @@ public class CommunityService {
 	public CommunityCateVO selectCate(String cateCode){
         return dao.selectCate(cateCode);
     }
-	
-	public int insertFreeArticle(CommunityArticleVO vo){
-		
+	public int insertFreeArticle(CommunityArticleVO vo){	
         int result = dao.insertFreeArticle(vo);
         return result;
     }
-	
 	public CommunityArticleVO selectFreeArticle(int no){
         return dao.selectFreeArticle(no);
     }
-	
 	public List<CommunityArticleVO> selectFreeArticles(int start, String cateCode){
         return dao.selectFreeArticles(start, cateCode);
     }
-	
 	public CommunityArticleVO selectCommunityFreeNo(int no){
         return dao.selectCommunityFreeNo(no);
     }
-
+	public List<CommunityArticleVO> selectFreeListSearch(String title, String cateCode, String keyword){
+		return dao.selectFreeListSearch(title, cateCode, keyword);
+	}
 	public int getLimitStart(int currentPage){
         return (currentPage - 1) * 10;
     }
-	
 	public int getCurrentPage(String pg){
 	        int currentPage = 1;
 	        if (pg != null){
@@ -51,11 +47,9 @@ public class CommunityService {
 	        }
 	        return currentPage;
 	 }
-	
 	public long getTotalCount(String cateCode){
 	        return dao.selectCountTotal(cateCode);
 	}
-	
 	public int getLastPageNum(long total){
         int lastPage = 0;
 
@@ -66,11 +60,9 @@ public class CommunityService {
         }
         return lastPage;
     }
-	
 	public int getPageStartNum(long total, int start){
 	        return (int) (total - start);
 	}
-	
 	public int[] getPageGroup(int currentPage, int lastPage){
         int groupCurrent = (int) Math.ceil(currentPage/10.0);
         int groupStart = (groupCurrent - 1) * 10 + 1;
@@ -84,6 +76,4 @@ public class CommunityService {
 
         return groups;
     }
-	
-	
 }

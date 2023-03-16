@@ -20,4 +20,5 @@ public interface CommunityDAO {
 	public List<CommunityArticleVO> selectFreeArticles(@Param("start")int start,@Param("cateCode") String cateCode);
 	public CommunityArticleVO selectCommunityFreeNo(int no);
 	public int selectCountTotal(@Param("cateCode")String cateCode);
+	public List<CommunityArticleVO> selectFreeListSearch(@Param("title")String title, @Param("cateCode") String cateCode, @Param("keyword")String keyword);
 }

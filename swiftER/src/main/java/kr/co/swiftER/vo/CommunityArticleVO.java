@@ -13,7 +13,7 @@ public class CommunityArticleVO {
 	private int comments;
 	private int cateCode;
 	private int regionCode;
-	private String memberUid;
+	private String member_uid;
 	private String title;
 	private String content;
 	private String file;
@@ -23,6 +23,7 @@ public class CommunityArticleVO {
 	// 추가필드
 	private String cate;
 	private String region;
+	private String keyword;
 	
 	public int getCateCode() {
         return cateCode;
