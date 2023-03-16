@@ -37,7 +37,7 @@ public class EmailController {
     public String sendEmail(@RequestParam("email") String email) {
         String to = email;
         String subject = "swiftER 인증코드입니다";
-        String text = "인증번호는" + key + "입니다";
+        String text = "인증번호는 " + key + " 입니다";
         emailService.sendSimpleMessage(to, subject, text);
         return email;
     }
