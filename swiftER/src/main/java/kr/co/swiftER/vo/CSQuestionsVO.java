@@ -13,14 +13,17 @@ public class CSQuestionsVO {
 	private int no;
 	private int qno;
 	private String member_uid;
-	private int cate;
-	private int subcate;
+	private int cateCode;
+	private int subcateCode;
 	private String title;
 	private String content;
-	private String file;
+	private int file;
 	private String regip;
 	private String rdate;
 	
 	// 파일 업로드를 위해 추가
 	private MultipartFile fname;
+	
+	// QnA 리스트 출력을 위해 추가
+	private String subcate;
 }

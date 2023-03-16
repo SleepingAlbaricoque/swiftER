@@ -5,13 +5,8 @@
 <mapper namespace="kr.co.swiftER.dao.CSDAO">
 	<insert id="insertArticle" parameterType="kr.co.swiftER.vo.CSQuestionsVO" useGeneratedKeys="true" keyProperty="no">
 		insert into `cs_questions` set 
-			`qno`=#{qno}, `member_uid` = #{member_uid}, `cate` =#{cate}, `subcate`=#{subcate}, `title`=#{title}, `content`=#{content}, 
-			<if test="fname.isEmpty() == true">
-				`file` = 0, 
-			</if>
-			<if test="fname.isEmpty() == false">
-				`file` = 1, 
-			</if>
+			`qno`=#{qno}, `member_uid` = #{member_uid}, `cateCode` =#{cateCode}, `subcateCode`=#{subcateCode}, 
+			`title`=#{title}, `content`=#{content}, `file` =#{file}, 
 			`regip`=#{regip}, `rdate`=NOW();
 	</insert>
 	<insert id="insertFile">
@@ -26,6 +21,18 @@
 	<select id="selectArticles" resultType="kr.co.swiftER.vo.CSQuestionsVO">
 		select a.*, b.subcate from `cs_questions` as a 
 		join `cs_subcate` as b 
-		on a.subcate = b.subcode;
+		on a.subcateCode = b.subcode
+		<if test="subcateCode != 0">
+			where a.subcateCode = #{subcateCode}
+		</if>
+		order by rdate desc
+		limit #{start}, 10;
+	</select>
+	
+	<select id="selectCountTotal" resultType="int">
+		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode}
+		<if test="subcateCode != 0">
+			and `subcateCode` = #{subcateCode};
+		</if>
 	</select>
 </mapper>
