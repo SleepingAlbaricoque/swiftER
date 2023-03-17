@@ -149,6 +149,91 @@
     margin-bottom: 20px;
 }
 
+#search > .er > div.search_map > #map .wrap {
+	position: absolute;
+	left: 0;
+	bottom: 40px;
+	width: 360px;
+	height: 132px;
+	margin-left: -144px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 12px;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	line-height: 1.5;
+}
+#search > .er > div.search_map > #map .wrap * {
+	padding: 0;
+	margin: 0;
+}
+#search > .er > div.search_map > #map .wrap .info {
+	width: 360px;
+	height: 120px;
+	border-radius: 5px;
+	border-bottom: 2px solid #ccc;
+	border-right: 1px solid #ccc;
+	overflow: hidden;
+	background: #fff;
+}
+#search > .er > div.search_map > #map .wrap .info:nth-child(1) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+#search > .er > div.search_map > #map .info .title {
+	padding: 5px 0 0 10px;
+	height: 30px;
+	background: #eee;
+	border-bottom: 1px solid #ddd;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 30px;
+}
+#search > .er > div.search_map > #map .info .close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #888;
+	width: 17px;
+	height: 17px;
+	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+#search > .er > div.search_map > #map .info .close:hover {
+	cursor: pointer;
+}
+#search > .er > div.search_map > #map .info .body {
+	position: relative;
+	overflow: hidden;
+}
+#search > .er > div.search_map > #map .info .desc {
+	position: relative;
+	margin: 10px 0 0 15px;
+	height: 75px;
+}
+#search > .er > div.search_map > #map .desc .ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#search > .er > div.search_map > #map .desc .jibun {
+	font-size: 11px;
+	color: #888;
+	margin-top: -2px;
+}
+#search > .er > div.search_map > #map .info:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: 0;
+	width: 22px;
+	height: 12px;
+	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+#search > .er > div.search_map > #map .info .link {
+	color: #5085BB;
+}
+/* map css 끝 */
+
 #search > .er > div.info{
     width: 100%;
     height: auto;

@@ -65,48 +65,100 @@ $(document).ready(function () {
 				let er = items;
 				console.log("er : ", er);
 				
-				console.log(items[0].dutyName);
-				
-				for(var item of items){
-					// 마커 이미지의 이미지 주소입니다
-					var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-				    
-				    
-				    // 마커 이미지의 이미지 크기 입니다
-				    var imageSize = new kakao.maps.Size(24, 35); 
-				    
+				// 마커 이미지의 이미지 주소입니다
+				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+			    
+			    // 마커 이미지의 이미지 크기 입니다
+			    var imageSize = new kakao.maps.Size(24, 35); 
+			    var LatLng = new kakao.maps.LatLng(er[0].wgs84Lat, er[0].wgs84Lon);
+			    
+			    er.forEach(function (item) {
+			    	console.log("items : ", item);
+			    	
 				    // 마커 이미지를 생성합니다    
 				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 				    
 				    // 마커를 생성합니다
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
-				        position: new kakao.maps.LatLng(item.wgs84Lat, item.wgs84Lon), // 마커를 표시할 위치
-				        title : item.dutyName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				        position: new kakao.maps.LatLng(item.wgs84Lat, item.wgs84Lon),
 				        image : markerImage // 마커 이미지 
 				    });
 				    
 				 	//이동할 위도 경도 위치를 생성합니다 
-				    var moveLatLon = new kakao.maps.LatLng(items[0].wgs84Lat, items[0].wgs84Lon);
-				    
+				    var moveLatLon = LatLng;
 				    // 지도 중심을 부드럽게 이동시킵니다
 				    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
 				    map.panTo(moveLatLon);
+				    
+					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+					var overlay = new kakao.maps.CustomOverlay({
+					    position: new kakao.maps.LatLng(item.wgs84Lat, item.wgs84Lon)
+					});
+				    
+				    // widowinfo 태그 생성
+		            var content = document.createElement('div');
+		            content.className = 'wrap';
+
+		            var info = document.createElement('div');
+		            info.className = 'info';
+
+		            var title = document.createElement('div');
+		            title.className = 'title';
+		            title.innerHTML = item.dutyName;
+		            
+		            var close = document.createElement('div');
+		            close.className = 'close';
+		            close.onclick = function() {overlay.setMap(null);};
+		            close.title = '닫기';
+		            
+		            var body = document.createElement('div');
+		            body.className = 'body';
+		            
+		            var desc = document.createElement('div');
+		            desc.className = 'desc';
+		            
+		            var ellipsis = document.createElement('div');
+		            ellipsis.className = 'ellipsis';
+		            ellipsis.innerHTML = item.dutyAddr;
+		            
+		            var jibun = document.createElement('div');
+		            jibun.className = 'jibun';
+		            jibun.innerHTML = '연락처1 : '+item.dutyTel1+' 연락처2 : '+item.dutyTel3;
+		            
+		            var linkdiv = document.createElement('div');
+
+		            var link = document.createElement('a');
+		            link.className = 'link';
+		            link.href = '#';
+		            link.innerHTML = '자세히 보기';
+		            
+		            linkdiv.appendChild(link);
+		            desc.appendChild(ellipsis);
+		            desc.appendChild(jibun);
+		            desc.appendChild(linkdiv);
+		            body.appendChild(desc);
+		            title.appendChild(close);
+		            info.appendChild(title);
+		            info.appendChild(body);
+		            content.appendChild(info);
 				
-					
-				}
+		            console.log(content)
+		            // widowinfo 태그 생성 끝
+		            
+					overlay.setContent(content);
+		            //overlay.setMap(map);
+		            
+					// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+					kakao.maps.event.addListener(marker, 'click', function() {
+						console.log("marker : %o", marker);
+					    overlay.setMap(map);
+					});
 				
-				
-				
+			    });
 			}
-			
 		});
-		
 	});
-	
-	
-	
-	
 });	
 function subregion(city){
 	let jsonData = {"city":city}
