@@ -44,10 +44,9 @@ public class SymptomsController {
 	@ResponseBody
 	public Map<String, Integer> symptoms(@RequestBody SymptomsSymptomsVO symptom) {
 		
-		int result = service.insertsymptoms(symptom);
 		
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result", result);
+
 		return map;
 	}
 	

@@ -15,5 +15,5 @@ public interface SymptomsDAO {
 
 	public List<SymptomsSubcateVO> selectCate(String body1_code);
 	public List<SymptomsSymptomsVO> selectBody1(String code);
-	public int insertsymptoms(SymptomsSymptomsVO symptom);
+	public int insertsymptoms(List<SymptomsSymptomsVO> symptom);
 }

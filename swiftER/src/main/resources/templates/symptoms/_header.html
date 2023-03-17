@@ -49,7 +49,34 @@
 
             	  return true;
             	}
+            function checkboxresult() {
+        		var chkarr = new Array();
+            	var cnt = $("input[name='${bd1.symptom}']:checked").length;
+            	$("input:checkbox[name='${bd1.symptom}']:checked").each(function(){
+        			chkarr.push($(this).val());
+        			console.log(chkarr);
+        		});
 
+            	let chk = confirm("검색 하시겠습니까?");
+        			
+       			if(cnt.length == 0){
+	  				alert('증상을 체크해주세요!');
+	  				return false;
+       			}
+       			let chks = chkarr.toString();
+       			
+       			if(chk){
+       				$.ajax({
+       					url:'/swiftER/symptoms/symptoms',
+       					type:'post',
+       					data:{'chkarr':chkarr},
+       					datatype
+       				
+       				// location.href = "/swiftER/symptoms/resultsymptoms?symptom="+chks;
+       				
+       			});
+       			}
+            }
         </script>
 </head>
 <body>
