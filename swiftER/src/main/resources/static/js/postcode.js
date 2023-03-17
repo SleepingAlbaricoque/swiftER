@@ -1,8 +1,3 @@
-/*
- * 날짜 : 2023/02/14
- * 이름 : 김채영
- * 내용 : 회원가입 주소 우편번호 찾기
- */
 function postcode() {
     new daum.Postcode({
         oncomplete: function(data) {
