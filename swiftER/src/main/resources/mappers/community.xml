@@ -11,12 +11,14 @@
 
     <insert id="insertFreeArticle" useGeneratedKeys="true" keyProperty="no">
         insert into `community_article` set
+            `parents`=#{parents},
             `comments`=#{comments},
             `cateCode`=#{cateCode},
             `regionCode`=#{regionCode},
-            `uid`=#{member_uid},
+            `member_uid`=#{member_uid},
             `title`=#{title},
             `content`=#{content},
+            `view`=#{view},
             `file`=#{file},
             `rdate`=NOW(),
             `regip`=#{regip};
@@ -46,11 +48,31 @@
         select count(`no`) from `community_article` where `cateCode` = #{cateCode};
     </select>
     
-    <select id="selectFreeListSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+    <select id="selectFindTitleSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
         SELECT   no, title, comments, cateCode, content, member_uid, rdate
-	    FROM `community_article`
-	    WHERE title LIKE '%' || #{keyword} || '%'
+	    FROM `community_article`	    
+	    WHERE title like CONCAT('%',#{keyword},'%')
+	    AND cateCode = #{cateCode}
 	    order BY `no` desc 
-	    LIMIT 0, 10;
+	    LIMIT #{start}, 10;
+    </select>
+    
+    <select id="insertComment" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+        insert into `community_article` set 
+			`parent`=#{parent},
+			`content`=#{content},
+			`member_uid`=#{member_uid},
+			`regip`=#{regip},
+			`rdate`=NOW();	
+    </select>
+    <select id="selectComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+         SELECT a.*, b.uid FROM `community_article` AS a 
+		 JOIN `member` AS b ON a.member_uid = b.uid 
+	     WHERE `parent`=#{parent} ORDER BY `no` ASC;	
+    </select>
+    <select id="selectCommentLatest" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+         SELECT a.*, b.uid FROM `community_article` AS a 
+		 JOIN `member` AS b ON a.member_uid = b.uid 
+		 WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1;
     </select>
 </mapper>

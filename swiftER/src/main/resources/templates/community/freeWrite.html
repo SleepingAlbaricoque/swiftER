@@ -11,7 +11,8 @@
             </ul>
           </aside>
           <article>
-              <form action="#">
+              <form th:action="@{/community/freeWrite(cateCode=${cateCode})}" method="POST">
+              <input type="hidden" name="cateCode" th:value="${cateCode}">
                 <table>
                   <tr>
                     <td>제목</td>                  
