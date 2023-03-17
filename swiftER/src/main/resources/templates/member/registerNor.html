@@ -11,6 +11,8 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/js/validation.js}"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	$(document).ready(function(){
 		$('#btnEmailCheck').click(function(){
@@ -77,7 +79,7 @@
         </header>
         <main>
             <h2>
-                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+                <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="register">
                 <section>
@@ -157,13 +159,13 @@
                             <th>주소</th>
                             <td>
                                 <div>
-                                    <input type="text" name="zip" placeholder="우편번호 입력" required>
+                                    <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr1" required>
+                                    <input type="text" name="addr1" id="addr1" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr2" required>
+                                    <input type="text" name="addr2" id="addr2" required>
                                 </div>
                             </td>
                         </tr>
