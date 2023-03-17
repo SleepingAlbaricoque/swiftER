@@ -648,14 +648,25 @@
     }
     .qna-view-table > tbody > tr:nth-child(2){
         height: auto;
-        border-bottom: 1.5px solid #2ce97b;
     }
     .qna-view-table > tbody > tr:nth-child(2) > td{
         padding-bottom: 10px;
     }
     .qna-view-table > tbody > tr:nth-child(3) > td{
-        padding-top: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: #d8e3ddc4;
+        border-bottom: 1.5px solid #2ce97b;
+        font-size: 13px;
+        font-family: 'IBM Plex Sans KR', sans-serif;
+    }
+    .qna-view-table > tbody > tr:nth-child(4) > td{
+        padding-top: 30px;
         padding-bottom: 60px;
+        
+    }
+    .qna-view-table > tbody > tr:nth-child(4) > td *{
+    	font-size: 15px;
     }
     .qna-view-table > tbody > tr > th > i{
         font-size: 25px;

@@ -11,6 +11,7 @@
 	</insert>
 	<insert id="insertFile">
 		insert into `file` set
+			`board`=1,
 			`cate`=#{cate},
 			`parent`= #{parent},
 			`newName`= #{newName},
@@ -34,5 +35,29 @@
 		<if test="subcateCode != 0">
 			and `subcateCode` = #{subcateCode};
 		</if>
+	</select>
+	
+	<resultMap id="selectArticleResultMap" type="kr.co.swiftER.vo.CSQuestionsVO">
+		<id column="no" property="no"/>
+		<result column="qno" property="qno"/>
+		<result column="member_uid" property="member_uid"/>
+		<result column="cateCode" property="cateCode"/>
+		<result column="subcateCode" property="subcateCode"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="file" property="file"/>
+		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+		<result column="subcate" property="subcate"/>
+		<collection property="fvoList" column="PARENT" ofType="kr.co.swiftER.vo.FileVO" select="selectFiles" javaType="java.util.ArrayList"/>
+	</resultMap>
+	<select id="selectArticle" resultMap="selectArticleResultMap">
+		select a.*, b.subcate from `cs_questions` as a 
+		join `cs_subcate` as b 
+		on a.subcateCode = b.subcode
+		where a.no=#{parent};
+	</select>
+	<select id="selectFiles" resultType="kr.co.swiftER.vo.FileVO">
+		select * from `file` where `parent`=#{parent} and `board`=3;
 	</select>
 </mapper>

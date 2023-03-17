@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import jakarta.mail.Multipart;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.swiftER.exceptions.CustomException;
@@ -33,6 +33,9 @@ public class CSController {
 
 	@Autowired
 	private CSService service;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	@GetMapping("cs/index")
 	public String index() {
@@ -87,12 +90,33 @@ public class CSController {
 		model.addAttribute("qnaList", qnaList);
 		// select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 subcateCode값 저장해야 함
 		model.addAttribute("subcateCode", subcateCode);
+		// 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+		model.addAttribute("pg", pg);
+		
 		return "cs/qna";
 	}
 	
 	@GetMapping("cs/qna/view")
-	public String qnaView(String no) {
-		return "qna_view";
+	public String qnaView(String no, Model model) {
+		// 사용자가 선택한 글 불러오기
+		List<CSQuestionsVO> list = sqlSession.selectList("kr.co.swiftER.dao.CSDAO.selectArticle", "86");
+		System.out.println(list);
+		List<CSQuestionsVO> article = service.selectArticle(no);
+		/*
+		// rdate 날짜까지만 표시하기
+		article.setRdate(article.getRdate().substring(0, 11));
+		// 아이디 마스킹 처리
+		article.setMember_uid(article.getMember_uid().substring(0, article.getMember_uid().length() - 3).concat("***"));
+		
+		// 불러온 글 저장
+		model.addAttribute("article", article);
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			
+		}
+		*/
+		return "redirect:cs/index";
 	}
 	
 	@GetMapping("cs/qna/write")
@@ -104,22 +128,30 @@ public class CSController {
 	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req){
 		// 작성자(현재 로그인 되어있는 사용자)의 정보 가져오려면 principal 객체를 현재 메서드의 파라미터로 줘서 principal 객체에 .getName()하면 됨
 		
-		// 사용자가 업로드한 파일들 가져오기
-		List<MultipartFile> files = req.getFiles("fname");
-		
-		// CSQuestionsVO 객체에 not null 속성 값 채우기(rdate는 쿼리문에서 처리)
+		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
 		article.setMember_uid("admin");
 		article.setRegip(req.getRemoteAddr());
-		article.setFile(files.size());
 		
-		// 사용자가 작성한 QnA DB에 insert
-		service.insertArticle(article);
-		
-		for(MultipartFile file : files) {
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			article.setFile(files.size());
 			
-			// DB에 파일 업로드
-			service.uploadFile(file, article);
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			for(MultipartFile file : files) {
+				// DB에 파일 업로드
+				service.uploadFile(file, article);
+			}
+		}else { // 첨부 파일이 없는 경우
+			
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			article.setFile(0);
 		}
+		
 		return "redirect:/cs/qna";
 	}
 }

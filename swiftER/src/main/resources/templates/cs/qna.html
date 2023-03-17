@@ -19,11 +19,12 @@ function selectCate(code){
 }
 
 window.onload = () => {
+	let pg = [[${pg}]];
 	// 사용자가 선택한 subcate(옵션)을 select 박스 맨 위에 놓기
 	document.querySelector('#qna-cate').value = [[${subcateCode}]];
 	
-	// 페이지 로드 시 페이지 버튼 1이 highlight 되도록
-	document.querySelectorAll('.num')[0].classList.add('on');
+	// 페이지 로드 시 페이지 파라미터로 넘어온 pg 페이지 버튼이 highlight 되도록
+	document.querySelectorAll('.num')[pg - 1].classList.add('on');
 }
 </script>
 <main class="qna-page">
@@ -51,7 +52,7 @@ window.onload = () => {
 	         </tr>
 	         <tr th:each="qna:${qnaList}">
 	         	<td>[[${qna.subcate}]]</td>
-	         	<td><a th:href="@{/qna/view?no=__${qna.no}__}">[[${qna.title}]]</a></td>
+	         	<td><a th:href="@{/cs/qna/view?no=__${qna.no}__}">[[${qna.title}]]</a></td>
 	         	<td>[[${qna.member_uid}]]</td>
 	         	<td>[[${qna.rdate}]]</td>
 	         </tr>
@@ -65,7 +66,7 @@ window.onload = () => {
 	        </th:block>
 	        <th:block th:if="${groups[1] != 0}">
 	        	<th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
-	        		<input type="button" value="1" class="num" onclick="numHightlight(value)">
+	        		<input type="button" th:value="${num}" class="num" onclick="numHightlight(value)">
 	        	</th:block>
 	        </th:block>
 	        <th:block th:if="${groups[1]<lastPageNum}">

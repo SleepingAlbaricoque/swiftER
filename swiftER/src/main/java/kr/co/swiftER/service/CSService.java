@@ -1,12 +1,23 @@
 package kr.co.swiftER.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +41,10 @@ public class CSService {
 	
 	public List<CSQuestionsVO> selectArticles(String cateCode, String subcateCode, int start){
 		return dao.selectArticles(cateCode, subcateCode, start);
+	}
+	
+	public List<CSQuestionsVO> selectArticle(String parent) {
+		return dao.selectArticle(parent);
 	}
 	
 	// 파일 업로드
@@ -69,6 +84,25 @@ public class CSService {
 		return fvo;
 	}
 	
+	
+	// 파일 다운로드
+	public ResponseEntity<Resource> fileDownload(FileVO file) throws IOException{
+		Path path = Paths.get(uploadPath + "/" + file.getNewName());
+		String contentType = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getOriName(), StandardCharsets.UTF_8).build());
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+		
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+	
+	// 파일 조회
+	public List<FileVO> selectFiles(int parent){
+		return dao.selectFiles(parent);
+	}
 	
 	// 페이징
 	// 글 총 갯수(total)

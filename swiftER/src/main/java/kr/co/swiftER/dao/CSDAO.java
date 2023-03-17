@@ -15,9 +15,13 @@ public interface CSDAO {
 
 	public int insertArticle(CSQuestionsVO article);
 	public List<CSQuestionsVO> selectArticles(String cateCode, @Param(value="subcateCode") String subcateCode, @Param(value="start") int start);
+	public List<CSQuestionsVO> selectArticle(String parent);
 	
 	// FileVO를 file 테이블에 업로드
 	public int insertFile(FileVO fvo);
+	
+	// 파일 조회
+	public List<FileVO> selectFiles(int parent);
 	
 	// 페이징 처리를 위한 메서드
 	// 전체 글 갯수

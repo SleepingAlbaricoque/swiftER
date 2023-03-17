@@ -27,14 +27,17 @@
             <div class="qna-view-table-wrapper">
                 <table class="qna-view-table">
                     <tr>
-                        <th><i class="fa-solid fa-q"></i>[ER]&nbsp;응급실 검색에서 저희 지역은 선택 옵션에 없는데 어떻게 된 일인가요</th>
+                        <th><i class="fa-solid fa-q"></i>[ [[${article.subcate}]] ]&nbsp;[[${article.title}]]</th>
                     </tr>
                     <tr>
-                        <td>emp**** &nbsp; 2023.03.09</td>
+                        <td>[[${article.member_uid}]] &nbsp; [[${article.rdate}]]</td>
+                    </tr>
+                    <tr>
+                    	<td>첨부파일 </td>
                     </tr>
                     <tr class="qna-view-question" onmouseover="flick(this)">
                         <td>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis porta porta. Pellentesque ac finibus turpis. Praesent euismod tempus viverra. Integer vitae urna luctus, viverra arcu vitae, rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc vitae condimentum ex, eget ullamcorper urna. Cras eros lorem, aliquam et laoreet non, luctus eu ante. Aliquam elementum nisl at mauris molestie, eget tempus tellus luctus. Duis scelerisque auctor est convallis dictum. Maecenas placerat dignissim sapien. Phasellus ultricies, arcu sit amet suscipit consequat, elit turpis tempor justo, eu feugiat felis nunc sit amet velit.
+                        	[(${article.content})]
                         </td>
                     </tr>
                     <tr class="qna-view-answer selected" onmouseover="flick(this)" style="display:block;">

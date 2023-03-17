@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FileVO {
 	private int fno;
+	private int board;
 	private int cate;
 	private int parent;
 	private String newName;

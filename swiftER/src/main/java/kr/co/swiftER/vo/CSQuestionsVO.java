@@ -1,5 +1,7 @@
 package kr.co.swiftER.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -26,4 +28,7 @@ public class CSQuestionsVO {
 	
 	// QnA 리스트 출력을 위해 추가
 	private String subcate;
+	
+	// 파일 다운로드를 위해 추가
+	private List<FileVO> fvoList;
 }
