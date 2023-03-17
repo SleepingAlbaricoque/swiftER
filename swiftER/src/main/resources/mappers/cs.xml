@@ -49,7 +49,7 @@
 		<result column="regip" property="regip"/>
 		<result column="rdate" property="rdate"/>
 		<result column="subcate" property="subcate"/>
-		<collection property="fvoList" column="PARENT" ofType="kr.co.swiftER.vo.FileVO" select="selectFiles" javaType="java.util.ArrayList"/>
+		<collection column="no" property="fvoList" ofType="kr.co.swiftER.vo.FileVO" select="selectFile" javaType="List"/>
 	</resultMap>
 	<select id="selectArticle" resultMap="selectArticleResultMap">
 		select a.*, b.subcate from `cs_questions` as a 
@@ -57,7 +57,11 @@
 		on a.subcateCode = b.subcode
 		where a.no=#{parent};
 	</select>
-	<select id="selectFiles" resultType="kr.co.swiftER.vo.FileVO">
-		select * from `file` where `parent`=#{parent} and `board`=3;
+	<select id="selectFile" resultType="kr.co.swiftER.vo.FileVO">
+		select * from `file` where `parent`=#{parent} and `board`=1;
+	</select>
+	
+	<select id="selectFileForDownload" resultType="kr.co.swiftER.vo.FileVO">
+		select * from `file` where `parent`=#{parent} and `board`=1 limit 1 offset #{num};
 	</select>
 </mapper>

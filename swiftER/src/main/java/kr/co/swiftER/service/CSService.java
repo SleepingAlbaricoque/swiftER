@@ -99,9 +99,14 @@ public class CSService {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
-	// 파일 조회
-	public List<FileVO> selectFiles(int parent){
-		return dao.selectFiles(parent);
+	// 파일 조회(selectArticle 할 때 CSQuestionsVO 멤버인 List<FileVO>값 가져오기 위한 메서드)
+	public FileVO selectFile(int parent){
+		return dao.selectFile(parent);
+	}
+	
+	// 다운로드를 위한 파일 조회
+	public FileVO selectFileForDownload(String parent, int no) {
+		return dao.selectFileForDownload(parent, no);
 	}
 	
 	// 페이징

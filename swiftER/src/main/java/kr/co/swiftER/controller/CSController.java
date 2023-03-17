@@ -13,6 +13,8 @@ import java.util.UUID;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.swiftER.exceptions.CustomException;
 import kr.co.swiftER.service.CSService;
 import kr.co.swiftER.vo.CSQuestionsVO;
+import kr.co.swiftER.vo.FileVO;
 
 @Controller
 public class CSController {
@@ -99,10 +102,10 @@ public class CSController {
 	@GetMapping("cs/qna/view")
 	public String qnaView(String no, Model model) {
 		// 사용자가 선택한 글 불러오기
-		List<CSQuestionsVO> list = sqlSession.selectList("kr.co.swiftER.dao.CSDAO.selectArticle", "86");
-		System.out.println(list);
-		List<CSQuestionsVO> article = service.selectArticle(no);
-		/*
+		List<CSQuestionsVO> list = sqlSession.selectList("kr.co.swiftER.dao.CSDAO.selectArticle", no);
+		CSQuestionsVO article = list.get(0);
+		List<FileVO> files = article.getFvoList();
+		
 		// rdate 날짜까지만 표시하기
 		article.setRdate(article.getRdate().substring(0, 11));
 		// 아이디 마스킹 처리
@@ -113,10 +116,19 @@ public class CSController {
 		
 		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
 		if(article.getFile() >0) {
-			
+			model.addAttribute("files", files);
 		}
-		*/
-		return "redirect:cs/index";
+		
+		return "cs/qna_view";
+	}
+	
+	@GetMapping("download")
+	public ResponseEntity<Resource> download(String parent, int num) throws IOException{
+		// 파일 조회
+		FileVO fvo = service.selectFileForDownload(parent, num);
+		
+		// 파일 다운로드
+		return service.fileDownload(fvo);
 	}
 	
 	@GetMapping("cs/qna/write")
@@ -125,11 +137,12 @@ public class CSController {
 	}
 	
 	@PostMapping("cs/qna/write")
-	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req){
+	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal){
 		// 작성자(현재 로그인 되어있는 사용자)의 정보 가져오려면 principal 객체를 현재 메서드의 파라미터로 줘서 principal 객체에 .getName()하면 됨
+		String username = principal.getName();
 		
 		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
-		article.setMember_uid("admin");
+		article.setMember_uid(username);
 		article.setRegip(req.getRemoteAddr());
 		
 		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기

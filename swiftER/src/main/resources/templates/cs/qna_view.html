@@ -33,7 +33,13 @@
                         <td>[[${article.member_uid}]] &nbsp; [[${article.rdate}]]</td>
                     </tr>
                     <tr>
-                    	<td>첨부파일 </td>
+                    	<th:block th:if="${files != null}">
+                    		<td>첨부파일&nbsp;&nbsp;
+                    			<th:block th:each="file, status:${files}">
+                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a>
+                    			</th:block>
+                    		</td>
+                    	</th:block>
                     </tr>
                     <tr class="qna-view-question" onmouseover="flick(this)">
                         <td>
@@ -58,7 +64,7 @@
                 </table>
             </div>
             <div class="back-to-qna-page">
-                <input type="button" value="목록으로" onClick="location.href='#'">
+                <input type="button" value="목록으로" th:onclick="|location.href='@{/cs/qna}'|">
             </div>
         </main>
 <th:block th:include="@{_footer.html}"/>        

@@ -43,6 +43,8 @@ public class SecurityConfig {
 				.requestMatchers("/img/**").permitAll()
 				.requestMatchers("/member/login").permitAll()
 				.requestMatchers("/error/**").permitAll()
+				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
+				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll();
 		
 		/*

@@ -17,11 +17,15 @@ public interface CSDAO {
 	public List<CSQuestionsVO> selectArticles(String cateCode, @Param(value="subcateCode") String subcateCode, @Param(value="start") int start);
 	public List<CSQuestionsVO> selectArticle(String parent);
 	
+	// 파일 처리
 	// FileVO를 file 테이블에 업로드
 	public int insertFile(FileVO fvo);
 	
-	// 파일 조회
-	public List<FileVO> selectFiles(int parent);
+	// selectArticle을 위해 파일 조회
+	public FileVO selectFile(int parent);
+	
+	// 파일 다운로드를 위해 파일 조회
+	public FileVO selectFileForDownload(@Param(value="parent") String parent, @Param(value="num") int num); // num 파라미터는 쿼리문에서 offset을 수행하기 위해 필요한 값
 	
 	// 페이징 처리를 위한 메서드
 	// 전체 글 갯수

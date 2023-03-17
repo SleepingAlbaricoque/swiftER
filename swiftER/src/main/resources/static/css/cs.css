@@ -648,6 +648,7 @@
     }
     .qna-view-table > tbody > tr:nth-child(2){
         height: auto;
+        border-bottom: 1.5px solid #2ce97b;
     }
     .qna-view-table > tbody > tr:nth-child(2) > td{
         padding-bottom: 10px;
@@ -693,8 +694,8 @@
 
     .back-to-qna-page{
         position: absolute;
-        right: 300px;
-        bottom: 35px;
+        right: 10%;
+        bottom: -13%;
         padding-top: 5px;
         width: auto!important;
     }
