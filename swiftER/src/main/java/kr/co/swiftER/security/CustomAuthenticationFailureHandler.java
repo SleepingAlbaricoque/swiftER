@@ -28,10 +28,10 @@ extends SimpleUrlAuthenticationFailureHandler {
     throws IOException, ServletException {
 
 	  String errorMessage;
-	  if (exception instanceof BadCredentialsException) {
+	  if (exception instanceof BadCredentialsException) { //비밀번호가 일치하지 않을 때 던지는 예외
 		  errorMessage = "incorrect ID or PW.";
-		  } else if (exception instanceof InternalAuthenticationServiceException) {
-			  errorMessage = "Internal system problem. Contact the manager.";
+		  } else if (exception instanceof InternalAuthenticationServiceException) { //존재하지 않는 아이디일 때 던지는 예외
+			  errorMessage = "Account does not exist. Join our member.";
 			  } else if (exception instanceof UsernameNotFoundException) {
 				  errorMessage = "Account does not exist. Join our member.";
 				  } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
