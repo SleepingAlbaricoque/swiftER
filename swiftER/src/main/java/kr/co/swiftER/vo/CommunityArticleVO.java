@@ -16,6 +16,7 @@ public class CommunityArticleVO {
 	private String member_uid;
 	private String title;
 	private String content;
+	private int view;
 	private String file;
 	private String regip;
 	private String rdate;

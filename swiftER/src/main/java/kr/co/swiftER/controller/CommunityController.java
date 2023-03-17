@@ -17,16 +17,17 @@ import kr.co.swiftER.security.MyUserDetails;
 import kr.co.swiftER.service.CommunityService;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.CommunityCateVO;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+@Log4j2
 @Controller
 public class CommunityController {
 
 	@Autowired
 	private CommunityService service;
 	
-	 /* Free */
+	/* Free */
     @GetMapping(value = {"community/freeList"})
     public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode, String code,
     		@RequestParam(value="keyword", defaultValue = "") String keyword, String title){
@@ -41,8 +42,21 @@ public class CommunityController {
          int groups[] = service.getPageGroup(currentPage, lastPage);
 
          CommunityCateVO ccv = service.selectCate(cateCode);
-         List<CommunityArticleVO> cates = service.selectFreeArticles(start, cateCode);
-         List<CommunityArticleVO> serchfree = service.selectFreeListSearch(title, cateCode, keyword);
+         
+         List<CommunityArticleVO> cates = null;
+         
+         if(keyword.equals("")) {
+        	// log.info("here1...");
+        	 cates = service.selectFreeArticles(start, cateCode);        	 
+         }else {
+        	 // log.info("here2...");
+        	 cates = service.selectFindTitleSearch(start, title, cateCode, keyword);
+         }
+         
+          // log.info("here3... : " + cates);
+         
+         //List<CommunityArticleVO> cates = service.selectFreeArticles(start, cateCode);
+         //List<CommunityArticleVO> serchfree = service.selectFindTitleSearch(title, cateCode, keyword);
          
          /*log.info("currentPage : " + currentPage);
          log.info("lastPage : " + lastPage);
@@ -60,34 +74,35 @@ public class CommunityController {
          model.addAttribute("ccv", ccv);
          model.addAttribute("cates", cates);
          model.addAttribute("cateCode", cateCode);
+         model.addAttribute("keyword", keyword);
+         
          
         return "community/freeList";
     }
-    
+
     @GetMapping(value = {"community/freeView"})
-    public String FreeView(Model model, int no, String cate ){
+    public String FreeView(Model model, int no, String cateCode ){
     	
-    	 CommunityCateVO ccv = service.selectCate(cate);
+    	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
 
          model.addAttribute("vo", vo);
-         model.addAttribute("cate", cate);
+         model.addAttribute("cateCode", cateCode);
 
          return "community/freeView";
     }
     @GetMapping(value = {"community/freeWrite"})
-    public String FreeWrite(Model model, @RequestParam("cate") String cate){
+    public String FreeWrite(Model model, @RequestParam("cateCode") String cateCode){
 
-        model.addAttribute("cate", cate);
+        model.addAttribute("cateCode", cateCode);
 
         return "community/freeWrite";
     }
-    
     @PostMapping(value = {"community/freeWrite"})
     public String FreeWrite(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
-    		Integer cate){
+    		Integer cateCode){
 
-        return "redirect:/community/freeWrite?cate="+cate;
+        return "redirect:/community/freeWrite?cateCode="+cateCode;
     }
     
     /* Qna */

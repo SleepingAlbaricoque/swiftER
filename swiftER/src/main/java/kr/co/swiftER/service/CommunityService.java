@@ -34,8 +34,8 @@ public class CommunityService {
 	public CommunityArticleVO selectCommunityFreeNo(int no){
         return dao.selectCommunityFreeNo(no);
     }
-	public List<CommunityArticleVO> selectFreeListSearch(String title, String cateCode, String keyword){
-		return dao.selectFreeListSearch(title, cateCode, keyword);
+	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword){
+		return dao.selectFindTitleSearch(start, title, cateCode, keyword);
 	}
 	public int getLimitStart(int currentPage){
         return (currentPage - 1) * 10;
