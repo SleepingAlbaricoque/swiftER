@@ -94,7 +94,7 @@
         <main class="login">
             <div class="loginForm">
                 <div>
-                    <form action="#">
+                    <form action="#" method="post">
                         <div class="login_user">   
                             <table>
                                 <tbody>
@@ -106,8 +106,18 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" name="uid" placeholder="비밀번호">
+                                            <input type="text" name="pass" placeholder="비밀번호">
                                         </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                    		<span id="error" th:if="${param.error}">
+								                    <p id="errormessage" th:text="${exception}"></p>
+											</span>
+											<span id="error" th:unless="${param.error}">
+								                    <p>&nbsp;</p>
+											</span>
+                                    	</td>
                                     </tr>
                                     <tr class="auto">
                                         <td>

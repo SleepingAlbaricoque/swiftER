@@ -25,7 +25,7 @@ public class SymptomsService {
 		return dao.selectBody1(code);
 	}
 	
-	public int insertsymptoms(SymptomsSymptomsVO symptom) {
+	public int insertsymptoms(List<SymptomsSymptomsVO> symptom) {
 		return dao.insertsymptoms(symptom);
 	}
 

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ERRestController {
+	/*
 	@Value("${restApi.key}")
     private String restApiKey;
     
@@ -45,8 +46,9 @@ public class ERRestController {
         System.out.println("url : "+url);        
         String response = restTemplate.getForObject(url, String.class);
         
-        log.info("response : " + response);
+//        log.info("response : " + response);
         
         return response;
     }
+    */
 }

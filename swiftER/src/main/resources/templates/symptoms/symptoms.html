@@ -30,28 +30,34 @@
                     checkboxes[i].checked = false;
                 }
             }
-            	
-            function checkboxresult() {
-        		var chkarr = new Array();
-            	var cnt = $("input[name='${bd1.symptom}']:checked").length;
-            	$("input:checkbox[name='${bd1.symptom}']:checked").each(function(){
-        			chkarr.push($(this).val());
-        			console.log(chkarr);
-        		});
-
-            	let chk = confirm("검색 하시겠습니까?");
-        			
-       			if(cnt.length == 0){
-	  				alert('증상을 체크해주세요!');
-	  				return false;
-       			}
-       			let chks = chkarr.toString();
-       			
-       			if(chk){
-       				location.href = "/swiftER/symptoms/resultsymptoms?symptom="+chks;
-       			}else{
-       				return false;
-       			}
+            
+            function checkboxresult(){
+				    //배열 선언
+                    var chkarr = new Array();
+                    $('input:checkBox[name="${bd1.symptom}"]:checked').each(function(){//체크된 리스트 저장
+                    	chkarr.push($(this).val());
+                    });
+                    
+                    console.log(chkarr);	
+                    
+                    let chks = chkarr.toString();
+                    
+                    var param = {"chks" : chks};// 체크박스 배열 저장
+                    
+                    //ajax 호출
+                    $.ajax({
+                        url:"/swiftER/symptoms/symptoms",
+                        type:'post',
+                        data:JSON.stringify(param),
+                        dataType:'json',
+                        traditional: true,
+                        contentType:'application/json; charset=UTF-8',
+                        success:function(data){
+                            console.log(chkarr);
+                             
+                        }
+                    });
+                    
             }
         </script>
 </head>
@@ -101,7 +107,7 @@
                 <div class="healthinfo">
                     <p>신체부위 내 증상을 선택 하신 후 검색 버튼을 클릭해 주세요.</p>
                     <!-- 신체부위 검색 탭 -->
-                    <form th:action="@{/symptoms/symptoms}" method="post">
+                    <form th:action="@{/symptoms/symptoms}" method="post" id="myForm">
                         <div>
                             <div class="search_body_cate">
                                 <ul class="bodylist">
@@ -142,7 +148,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" value="#">
+	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -154,7 +160,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code} or ${bd1.part2b} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" value="#">
+	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -166,7 +172,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" value="#">
+	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -178,7 +184,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" value="#">
+	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>

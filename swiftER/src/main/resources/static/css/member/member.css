@@ -92,7 +92,19 @@ main > h2 {
     text-indent: 15px;
 }
 
-.login_user > table > tbody > tr:nth-child(3) {
+body > div > main > div > div > form > div > table > tbody > tr:nth-child(3) > td {
+	height:30px;
+}
+
+#error > p {
+	margin: 0 auto;
+}
+
+#errormessage {
+	color:red;
+}
+
+.login_user > table > tbody > tr:nth-child(4) {
     float: left;
 }
 
