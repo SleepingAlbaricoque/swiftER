@@ -45,7 +45,7 @@ public class ERRestController {
         System.out.println("url : "+url);        
         String response = restTemplate.getForObject(url, String.class);
         
-        log.info("response : " + response);
+//        log.info("response : " + response);
         
         return response;
     }
