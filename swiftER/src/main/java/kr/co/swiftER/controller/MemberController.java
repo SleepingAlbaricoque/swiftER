@@ -75,8 +75,6 @@ public class MemberController {
 		return "redirect:/index?success="+result;
 	}
 	
-	
-	
 	/* 회원가입 유효성 검사 - id*/
 	@ResponseBody
 	@GetMapping("member/checkUid")
@@ -89,6 +87,24 @@ public class MemberController {
 		return map;
 	}
 	
+	/* 회원탈퇴 */
+	@GetMapping("member/deleteMember")
+	public String deleteMember(String uid) {
+		return "member/deleteMember";
+	}
 	 
+	/* 비밀번호 찾기 */
+	@GetMapping("member/findPw")
+	public String findPw() {
+		return "member/findPw";
+	}
 	
+	/* 비밀번호 변경 */
+	@GetMapping("member/changePw")
+	public String changePw(Model model, Principal principal) {
+		String uid = principal.getName();
+		System.out.println(uid);
+		model.addAttribute("uid", uid);
+		return "member/changePw";
+	}
 }

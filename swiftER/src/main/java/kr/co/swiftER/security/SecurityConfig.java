@@ -45,7 +45,8 @@ public class SecurityConfig {
 				.requestMatchers("/error/**").permitAll()
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
-				.requestMatchers("/").permitAll();
+				.requestMatchers("/").permitAll()
+				.requestMatchers("/member/**").hasAnyRole("0", "1", "2");
 		
 		/*
 		// 자동로그인 설정
