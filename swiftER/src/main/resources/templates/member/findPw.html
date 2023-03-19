@@ -9,6 +9,63 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <title>PW 찾기</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+	$(document).ready(function(){
+		let isEmailOk = false;
+		$('#findPwEmailCheck').click(function(){
+			let email = $('input[name=email]').val();
+			
+			$.ajax({
+				url : '/swiftER/member/checkEmail',
+   				method : 'get',
+   				data : {"email":email},
+   				dataType : 'json',
+   				success : function(data){
+   					console.log(email);
+   				}
+			});
+		});
+		
+		$('#findPwCheckCode').click(function(){
+			let code = $('input[name=code]').val();
+			
+			$.ajax({
+				url : '/swiftER/member/checkCode',
+				method : 'get',
+				data : {"code":code},
+				dataType : 'json',
+				success : function(data){
+					
+					console.log('data : ' + data);
+					
+					if(data.result != 0){
+						$('.resultCode').css('color', 'red').text('잘못된 인증번호입니다');
+						console.log(data.result);
+					}else{
+						$('.resultCode').css('color', 'green').text('인증 되었습니다');
+						$('input[name=code]').attr('readonly', true);
+						isEmailAuthOk = true;
+						console.log(data.result);
+					}
+				}
+				
+			})
+		});
+		
+		$('#findPwSubmit').click(function(){
+			// 이메일 검증
+    		if(!isEmailOk){
+    			alert('이메일 인증을 진행해야합니다.');
+    			return false;
+    		}else{
+    			location.href="/swiftER/member/changePw";
+    		}
+		});
+		
+	});
+	
+	</script>
 </head>
 <body>
     <div id="wrapper">
@@ -47,7 +104,7 @@
                             </th>
                             <td>
                                 <input type="text" name="email" placeholder="E-mail 입력">
-                                <span>가입할 때 사용하신 E-mail을 입력하여 주십시오</span>
+                                <span><button id="findPwEmailCheck">인증번호 전송</button></span>
                             </td>
                         </tr>
                         <tr>
@@ -55,8 +112,8 @@
                                 인증번호
                             </th>
                             <td>
-                                <input type="text" name="key" placeholder="비밀번호 확인">
-                                <span>이메일로 전송받은 인증번호를 입력하여 주십시오</span>
+                                <input type="text" name="code" placeholder="비밀번호 확인">
+                                <span class="resultCode"><button id="findPwCheckCode">인증번호 확인</button>&nbsp;&nbsp;&nbsp;전송받은 인증번호를 입력해 주십시오</span>
                             </td>
                         </tr>
                     </table>
@@ -71,7 +128,7 @@
                     </div>
                 </section>
                 <div>
-                    <button class="submit">
+                    <button id="findPwSubmit">
                         비밀번호 찾기
                     </button>
                 </div>
