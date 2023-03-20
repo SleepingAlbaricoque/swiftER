@@ -9,6 +9,53 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <title>PW 변경하기</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    	let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
+	    $('input[name=pass2]').focusout(function(){
+			let pass1 = $('input[name=pass1]').val();
+			let pass2 = $(this).val();
+	
+			if(pass1 == pass2){
+	
+				if(pass2.match(regPass)){
+					isPassOk = true;
+					$('.resultPass').css('color', 'green').text('비밀번호가 일치합니다.');
+				}else{
+					isPassOk = false;
+					$('.resultPass').css('color', 'red').text('영문, 숫자, 특수문자 조합하여 8~16자이어야 합니다.');
+				}
+			}else{
+				isPassOk = false;
+				$('.resultPass').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
+			}
+		});
+	    
+	    $('#changePwSubmit').click(function(){
+	    	alert('!');
+			let pass2 = $('input[name=pass2]').val();
+			let uid = $('input[name=id]').val();
+			$.ajax({
+				url : '/swiftER/member/changePw',
+				method : 'post',
+				data : {
+						"pass2":pass2,
+						"uid":uid
+						},
+				dataType : 'json',
+				success : function(data){
+					if(data.result == 1){
+						alert('비밀번호가 변경되었습니다!');
+						location.href="/swiftER/";
+					}else{
+						alert('오류 발생!');
+					}
+				}
+			});
+	    });
+    });	
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -45,8 +92,8 @@
                                 비밀번호
                             </th>
                             <td>
-                                <input type="text" name="pass1" placeholder="E-mail 입력">
-                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요</span>
+                                <input type="text" name="pass1" placeholder="비밀번호 입력">
+                                <span>영문, 숫자, 특수문자를 조합하여 8~16자까지 설정해 주세요</span>
                             </td>
                         </tr>
                         <tr>
@@ -54,8 +101,8 @@
                                 비밀번호 재입력
                             </th>
                             <td>
-                                <input type="text" name="key" placeholder="비밀번호 확인">
-                                <span>다시 한번 변경할 비밀번호를 입력해주세요</span>
+                                <input type="text" name="pass2" placeholder="비밀번호 확인">
+                                <span class="resultPass">다시 한번 변경할 비밀번호를 입력해주세요</span>
                             </td>
                         </tr>
                     </table>
@@ -70,7 +117,7 @@
                     </div>
                 </section>
                 <div>
-                    <button class="submit">
+                    <button class="submit" id="changePwSubmit">
                         비밀번호 변경하기
                     </button>
                 </div>
