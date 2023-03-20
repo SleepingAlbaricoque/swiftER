@@ -11,7 +11,7 @@
             </ul>
           </aside>
           <article>
-              <h1>자유 게시판</h1>
+              <h1 th:text="${ccv.cate}"></h1>
               <a th:href="@{./freeList}" class="btnList">목록보기</a>
               <nav>
                 <h2 class="title" th:text="${vo.title}"></h2>

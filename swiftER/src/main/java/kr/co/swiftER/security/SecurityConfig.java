@@ -40,9 +40,10 @@ public class SecurityConfig {
 		http.authorizeHttpRequests()
 				.requestMatchers("/css/**").permitAll() // spring security가 css, img,js 폴더 접근도 막아서 설정해
 				.requestMatchers("/img/**").permitAll()
-				.requestMatchers("/img/**").permitAll()
+				.requestMatchers("/js/**").permitAll()
 				.requestMatchers("/member/login").permitAll()
 				.requestMatchers("/error/**").permitAll()
+				.requestMatchers("/community/**").permitAll()
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()

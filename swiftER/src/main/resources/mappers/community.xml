@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.CommunityDAO">
+	
 	<!-- free -->
 	<select id="selectCate" resultType="kr.co.swiftER.vo.CommunityCateVO">
         SELECT `cate` FROM `community_cate`
@@ -11,7 +12,6 @@
 
     <insert id="insertFreeArticle" useGeneratedKeys="true" keyProperty="no">
         insert into `community_article` set
-            `parents`=#{parents},
             `comments`=#{comments},
             `cateCode`=#{cateCode},
             `regionCode`=#{regionCode},
@@ -34,12 +34,16 @@
     </select>
 
     <select id="selectFreeArticles" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-        select a.*, c.code from `community_article` as a 
+         select a.*, c.code from `community_article` as a 
         join `community_cate` as b 
         on a.cateCode = b.code 
         join `community_region_code` as c 
         on a.regionCode = c.code
-        where b.code = #{cateCode} 
+        where b.code = #{cateCode}
+        <if test="regionCode!=100">
+        and c.code=#{regionCode}
+        </if>
+        and `parent` = 0
         order by `no` desc 
         limit #{start}, 10;
     </select>
@@ -49,10 +53,13 @@
     </select>
     
     <select id="selectFindTitleSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-        SELECT   no, title, comments, cateCode, content, member_uid, rdate
+        SELECT   no, title, comments, cateCode, regionCode, content, member_uid, rdate
 	    FROM `community_article`	    
 	    WHERE title like CONCAT('%',#{keyword},'%')
 	    AND cateCode = #{cateCode}
+	    <if test="regionCode!=100">
+        AND regionCode = #{regionCode}
+        </if>
 	    order BY `no` desc 
 	    LIMIT #{start}, 10;
     </select>
@@ -74,5 +81,8 @@
          SELECT a.*, b.uid FROM `community_article` AS a 
 		 JOIN `member` AS b ON a.member_uid = b.uid 
 		 WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1;
+    </select>
+    <select id="updateArticleView" resultType="int">
+		UPDATE `community_article` SET `view` = `view` + 1 WHERE `no`=?;    
     </select>
 </mapper>

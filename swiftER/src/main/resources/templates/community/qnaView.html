@@ -6,24 +6,24 @@
             <h2>커뮤니티</h2>
              <ul>
               <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
-              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./qnaList?cateCode=11}">질문 게시판</a></li>
-              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./mytownList?cateCode=12}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=12}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
-              <h1>질문 게시판</h1>
-              <a th:href="@{./qnaList}" class="btnList">목록보기</a>
+              <h1 th:text="${ccv.cate}"></h1>
+              <a th:href="@{./freeList}" class="btnList">목록보기</a>
               <nav>
-                <h2 class="title">배아픈데 뭐때문에 아픈지모르겠어요</h2>
+                <h2 class="title" th:text="${vo.title}"></h2>
                 <p>
-                  <span>lee</span>
-                  <span>2023.01.11 13:11</span>
+                 <span>[[${(vo.member_uid)}]]</span>
+               	 <span>[[${(vo.rdate).substring(2, 10)}]]</span>
                 </p>
               </nav>
 
               <div class="content">
                 <p>
-                  오른쪽 아랫배쪽이 찢어질듯이 아픈데 왜그런걸까요 ㅠㅠ<br/>
+                  [[${vo.content}]]
                 </p>
               </div>
               <!-- 아티클 부가 기능 -->
@@ -36,7 +36,7 @@
               <!-- // 아티클 부가 기능 -->
               <a th:href="@{./qnaComment}" class="btnComment">답변하기</a>
              <nav class="commentContents">
-                  <h2 class="commentTitle">답변☞배아픈데 뭐때문에 아픈지모르겠어요</h2>
+                  <h2 class="commentTitle">답변☞ [[${vo.title}]]</h2>
                   <p>
                       <span>이수만 내과 의사</span>
                       <span>2023.01.11 13:11</span>
