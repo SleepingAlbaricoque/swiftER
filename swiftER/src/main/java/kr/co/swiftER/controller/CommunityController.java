@@ -29,7 +29,7 @@ public class CommunityController {
 	
 	/* Free */
     @GetMapping(value = {"community/freeList"})
-    public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode, String code,
+    public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode,@RequestParam(value="regionCode", defaultValue = "0") String regionCode, String code,
     		@RequestParam(value="keyword", defaultValue = "") String keyword, String title){
     	
     	 pg = (pg == null) ? "1" : pg;
@@ -47,10 +47,10 @@ public class CommunityController {
          
          if(keyword.equals("")) {
         	// log.info("here1...");
-        	 cates = service.selectFreeArticles(start, cateCode);        	 
+        	 cates = service.selectFreeArticles(start, cateCode, regionCode);        	 
          }else {
         	 // log.info("here2...");
-        	 cates = service.selectFindTitleSearch(start, title, cateCode, keyword);
+        	 cates = service.selectFindTitleSearch(start, title, cateCode, keyword, regionCode);
          }
          
           // log.info("here3... : " + cates);
@@ -74,6 +74,7 @@ public class CommunityController {
          model.addAttribute("ccv", ccv);
          model.addAttribute("cates", cates);
          model.addAttribute("cateCode", cateCode);
+         model.addAttribute("regionCode", regionCode);
          model.addAttribute("keyword", keyword);
          
          
@@ -86,6 +87,7 @@ public class CommunityController {
     	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
 
+         model.addAttribute("ccv", ccv);
          model.addAttribute("vo", vo);
          model.addAttribute("cateCode", cateCode);
 
@@ -100,9 +102,19 @@ public class CommunityController {
     }
     @PostMapping(value = {"community/freeWrite"})
     public String FreeWrite(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
-    		Integer cateCode){
-
-        return "redirect:/community/freeWrite?cateCode="+cateCode;
+    		Integer cateCode,Integer regionCode){
+    	
+        MemberEntity member = myUser.getMember();
+        
+        vo.setMember_uid(member.getUid());
+        vo.setCateCode(String.valueOf(cateCode));
+        vo.setRegionCode(String.valueOf(regionCode));
+        vo.setRegip(req.getRemoteAddr());
+        service.insertFreeArticle(vo);
+        
+        
+        return "redirect:/community/freeList?cateCode="+cateCode;
+        
     }
     
     /* Qna */
@@ -111,10 +123,18 @@ public class CommunityController {
 		return "community/qnaList";
 	}
     
-    @GetMapping("community/qnaView")
-	public String QnaView() {
-		return "community/qnaView";
-	}
+    @GetMapping(value = {"community/qnaView"})
+    public String QnaView(Model model, int no, String cateCode ){
+    	
+    	 CommunityCateVO ccv = service.selectCate(cateCode);
+         CommunityArticleVO vo = service.selectFreeArticle(no);
+
+         model.addAttribute("ccv", ccv);
+         model.addAttribute("vo", vo);
+         model.addAttribute("cateCode", cateCode);
+
+         return "community/qnaView";
+    }
     
     @GetMapping("community/qnaWrite")
 	public String QnaWrite() {
@@ -137,8 +157,27 @@ public class CommunityController {
 		return "community/mytownView";
 	}
     
-    @GetMapping("community/mytownWrite")
-	public String MytownWrite() {
-		return "community/mytownWrite";
-	}
+    @GetMapping(value = {"community/mytownWrite"})
+    public String MytownWrite(Model model, @RequestParam("cateCode") String cateCode){
+
+        model.addAttribute("cateCode", cateCode);
+
+        return "community/mytownWrite";
+    }
+    @PostMapping(value = {"community/mytownWrite"})
+    public String MytownWrite(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
+    		Integer cateCode,Integer regionCode){
+    	
+        MemberEntity member = myUser.getMember();
+        
+        vo.setMember_uid(member.getUid());
+        vo.setCateCode(String.valueOf(cateCode));
+        vo.setRegionCode(String.valueOf(regionCode));
+        vo.setRegip(req.getRemoteAddr());
+        service.insertFreeArticle(vo);
+        
+        
+        return "redirect:/community/freeList?cateCode="+cateCode;
+        
+    }
 }

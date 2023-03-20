@@ -17,6 +17,7 @@ public class CommunityService {
 	@Autowired
 	private CommunityDAO dao;
 	
+	
 	/* Free */
 	public CommunityCateVO selectCate(String cateCode){
         return dao.selectCate(cateCode);
@@ -28,14 +29,14 @@ public class CommunityService {
 	public CommunityArticleVO selectFreeArticle(int no){
         return dao.selectFreeArticle(no);
     }
-	public List<CommunityArticleVO> selectFreeArticles(int start, String cateCode){
-        return dao.selectFreeArticles(start, cateCode);
+	public List<CommunityArticleVO> selectFreeArticles(int start, String cateCode,String regionCode){
+        return dao.selectFreeArticles(start, cateCode, regionCode);
     }
 	public CommunityArticleVO selectCommunityFreeNo(int no){
         return dao.selectCommunityFreeNo(no);
     }
-	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword){
-		return dao.selectFindTitleSearch(start, title, cateCode, keyword);
+	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword,String regionCode){
+		return dao.selectFindTitleSearch(start, title, cateCode, regionCode, keyword);
 	}
 	public int getLimitStart(int currentPage){
         return (currentPage - 1) * 10;
