@@ -137,7 +137,7 @@
                                 활동명
                             </th>
                             <td>
-                                김밥말이
+                                [[${vo.nickname}]]
                             </td>
                             <th>가입일</th>
                             <td>2023.03.07</td>
@@ -147,13 +147,13 @@
                                 E-mail
                             </th>
                             <td>
-                                et002727@naver.com
+                                [[${vo.email}]]
                             </td>
                             <th>
                                 회원구분
                             </th>
                             <td>
-                                일반회원
+                                [[${vo.grade}]]
                             </td>
                         </tr>
                         <tr>
@@ -161,13 +161,13 @@
                                 휴대전화
                             </th>
                             <td>
-                                010-9153-7494
+                                [[${vo.contact}]]
                             </td>
                             <th>
                                 작성한 글
                             </th>
                             <td>
-                                79
+                                [[${ca}]]
                             </td>
                         </tr>
                         <tr>
@@ -175,11 +175,11 @@
                                 주소
                             </th>
                             <td>
-                                부산광역시 사상구 엄궁로 142
+                                [[${vo.addr1}]]
                             </td>
                             <th>상세주소</th>
                             <td>
-                                코오롱아파트 107동 1403호
+                                [[${vo.addr2}]]
                             </td>
                             
                         </tr>
@@ -212,26 +212,12 @@
                                 작성일
                             </th>
                         </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td><a th:href="@{#}">안녕하세요</a></td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
-                        </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td><a th:href="@{#}">안녕하세요</a></td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
-                        </tr>
-                        <tr>
-                            <td>자유게시판</td>
-                            <td><a th:href="@{#}">안녕하세요</a></td>
-                            <td>7</td>
-                            <td>5000</td>
-                            <td>2023.03.09</td>
+                        <tr th:each="cas : ${cas}">
+                            <td>[[${cas.cateCode}]]</td>
+                            <td><a th:href="@{#}">[[${cas.title}]]</a></td>
+                            <td>[[${cas.comments}]]</td>
+                            <td>[[${cas.view}]]</td>
+                            <td>[[${cas.rdate}]]</td>
                         </tr>
                     </table>
                 </section>
@@ -323,25 +309,12 @@
                             <th>평점</th>
                             <th>날짜</th>
                         </tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">정말 좋아요</a></td>
-                            <td>5</td>
-                            <td>2023.03.10</td>
-                        </tr>
-                        </tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">정말 좋아요</a></td>
-                            <td>5</td>
-                            <td>2023.03.10</td>
-                        </tr>
-                        </tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">정말 좋아요</a></td>
-                            <td>5</td>
-                            <td>2023.03.10</td>
+                        <tr th:each="ers : ${ers}">
+                            <td>[[${ers.region}]]</td>
+                            <td>[[${ers.subregion}]]</td>
+                            <td><a th:href="@{#}">[[${ers.title}]]</a></td>
+                            <td>[[${ers.rating}]]</td>
+                            <td>[[${ers.rdate}]]</td>
                         </tr>
                     </table>
                 </section>

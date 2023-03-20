@@ -1,4 +1,13 @@
 <th:block th:insert="~{@{_header.html}}"/>
+<script>
+function regionCodes(value){
+ location.href ="/swiftER/community/freeList?cateCode="+[[${cateCode}]]+"&regionCode="+value;
+}
+
+window.onload = () => {
+	document.querySelector('#region').value = [[${regionCode}]];
+}
+</script>
   <section id="community">
       <div class="free">
         <section class="list">
@@ -7,38 +16,39 @@
             <ul>
               <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
               <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
-              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=12}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList(cateCode=12, regionCode=100)}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
             <nav>
               <h1 th:text="${ccv.cate}"></h1>
               <th:block th:if="${cateCode} == '12' ">
-              <select class="mytownListCate">
-                    <option value="0">선택</option>
-                    <option>서울</option>
-                    <option>부산</option>
-                    <option>대구</option>
-                    <option>인천</option>
-                    <option>광주</option>
-                    <option>대전</option>
-                    <option>울산</option>
-                    <option>세종</option>
-                    <option>경기도</option>
-                    <option>강원도</option>
-                    <option>충청북도</option>
-                    <option>충청남도</option>
-                    <option>전라북도</option>
-                    <option>전라남도</option>
-                    <option>경상북도</option>
-                    <option>경상남도</option>
-                    <option>제주도</option>
+              <select class="regionCode" name="regionCode" id="region" onchange="regionCodes(value)">
+                    <option value="100">선택</option>
+                    <option value="10">서울</option>
+                    <option value="11">부산</option>
+                    <option value="12">대구</option>
+                    <option value="13">인천</option>
+                    <option value="14">광주</option>
+                    <option value="15">대전</option>
+                    <option value="16">울산</option>
+                    <option value="17">세종</option>
+                    <option value="18">경기도</option>
+                    <option value="19">강원도</option>
+                    <option value="20">충청북도</option>
+                    <option value="21">충청남도</option>
+                    <option value="22">전라북도</option>
+                    <option value="23">전라남도</option>
+                    <option value="24">경상북도</option>
+                    <option value="25">경상남도</option>
+                    <option value="26">제주도</option>
                 </select>
                 </th:block>
               <!-- 리스트 검색 -->
               <div class="list-search">
-                  <form th:action="@{/community/freeList(cateCode=${cateCode})}" method="GET" role="search">
+                  <form th:action="@{/community/freeList(cateCode=${cateCode},regionCode=${regionCode})}" method="GET" role="search">
                   	  <input type="hidden" th:value="${cateCode}" name="cateCode">
+                  	  <input type="hidden" th:value="${regionCode}" name="regionCode">
                       <input type="text" class="input--list-search" name= "keyword" value="" placeholder="검색어를 입력해주세요.">
                       <button type="submit" class="button--list-search">검색</button>
                   </form>
@@ -46,12 +56,22 @@
               <!-- // 리스트 검색 -->
             </nav>
             <table>
-             <tr th:each="cates:${cates}">
+            <th:block th:if="${cateCode}== 10 or ${cateCode}== 12">
+              <tr th:each="cates:${cates}">
 	              <td><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no})}" th:text="${cates.title}"></a></td>
 	              <td>[[${(cates.member_uid)}]]</td>
 	              <td>[[${(cates.view)}]] views</td>	
 	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>
-             </tr>
+              </tr>
+             </th:block>
+             <th:block th:if="${cateCode}== 11">
+              <tr th:each="cates:${cates}">
+	              <td><a th:href="@{/community/qnaView(cateCode=${cateCode},no=${cates.no})}" th:text="${cates.title}"></a></td>
+	              <td>[[${(cates.member_uid)}]]</td>
+	              <td>[[${(cates.view)}]] views</td>	
+	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>
+              </tr>
+             </th:block>
             </table>
 
             <div class="page">
@@ -64,8 +84,15 @@
             <th:block th:if="${groups[1] < lastPage}">
                 <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[1] + 1})}" class="next">다음</a>
             </th:block>
+            
           </div>
-            <a th:href="@{/community/freeWrite(cateCode=${cateCode})}" class="btnWrite">글쓰기</a>
+            <th:block th:if="${cateCode}== 10 or ${cateCode}== 11">
+	            <a th:href="@{/community/freeWrite(cateCode=${cateCode})}" class="btnWrite">글쓰기</a>
+            </th:block>
+            <th:block th:if="${cateCode}== 12">
+	            <a th:href="@{/community/mytownWrite(cateCode=${cateCode})}" class="btnWrite">글쓰기</a>
+	            
+            </th:block>
           </article>
         </section>
       </div>

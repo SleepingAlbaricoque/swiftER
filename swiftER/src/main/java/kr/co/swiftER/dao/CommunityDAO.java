@@ -17,8 +17,10 @@ public interface CommunityDAO {
 	public CommunityCateVO selectCate(@Param("cateCode")String cateCode);
 	public int insertFreeArticle(CommunityArticleVO vo);
 	public CommunityArticleVO selectFreeArticle(@Param("no")int no);
-	public List<CommunityArticleVO> selectFreeArticles(@Param("start")int start,@Param("cateCode") String cateCode);
+	public List<CommunityArticleVO> selectFreeArticles(@Param("start")int start,@Param("cateCode") String cateCode, @Param("regionCode") String regionCode);
 	public CommunityArticleVO selectCommunityFreeNo(int no);
 	public int selectCountTotal(@Param("cateCode")String cateCode);
-	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode, @Param("keyword")String keyword);
+	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode,@Param("regionCode") String regionCode, @Param("keyword")String keyword);
+
+
 }
