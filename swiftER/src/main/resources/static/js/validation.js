@@ -7,7 +7,7 @@
     let regName  = /^[가-힣]{2,6}$/;
     let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
-    let regPass  = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
     let regZip = /\d{5}/;
 
 // 폼 데이터 검증 결과 상태변수
@@ -126,8 +126,9 @@
     	});
     	
     	// 우편번호 유효성 검사
-    	$('input[name=zip]').focusout(function(){
-    		let zip = $(this).val();
+    	$('input[name=addr2]').focusout(function(){
+    		let zip = $('input[name=zip]').val();
+    		console.log(zip);
 
     		if(!zip.match(regZip)){
     			isZipOk = false;
@@ -209,11 +210,14 @@
 				data : jsonData,
 				dataType : 'json',
 				success : function(data){
-					console.log('!');
+					if(data.result == 1){
+						alert("회원가입이 완료되었습니다!")
+						location.href="/swiftER/member/login";	
+					}else{
+						alert("오류 발생!");
+					}
+					
 						}
 			});
-
-    		// 최종 전송
-    		//location.href="/swiftER/member/login";
     	});
     });

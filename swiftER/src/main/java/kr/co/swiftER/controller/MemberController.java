@@ -2,6 +2,7 @@ package kr.co.swiftER.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.MemberService;
 import kr.co.swiftER.vo.CSQuestionsVO;
+import kr.co.swiftER.vo.CommunityArticleVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
@@ -67,12 +71,15 @@ public class MemberController {
 	/* 일반회원 가입(post) */
 	@ResponseBody
 	@PostMapping("member/insertMember")
-	public String insertMember(Principal principal, @ModelAttribute("MemberVO") MemberVO vo, HttpServletRequest req){
+	public Map<String, Integer> insertMember(Principal principal, @ModelAttribute("MemberVO") MemberVO vo, HttpServletRequest req){
 		String regip = req.getRemoteAddr();
 		vo.setRegip(regip);
 		
 		int result = service.insertMember(vo);
-		return "redirect:/index?success="+result;
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
 	}
 	
 	/* 회원가입 유효성 검사 - id*/
@@ -99,12 +106,53 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
-	/* 비밀번호 변경 */
+	/* 비밀번호 변경 get */
 	@GetMapping("member/changePw")
 	public String changePw(Model model, Principal principal) {
 		String uid = principal.getName();
 		System.out.println(uid);
 		model.addAttribute("uid", uid);
 		return "member/changePw";
+	}
+	
+	/* 비밀번호 변경 post */
+	@ResponseBody
+	@PostMapping("member/changePw")
+	public Map<String, Integer> changePw(@RequestParam(value="pass2") String pass2, @RequestParam(value="uid") String uid) {
+		int result = service.updatePass(pass2, uid);
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	
+	/* 마이페이지 */
+	@GetMapping("member/myPage")
+	public String myPage(Principal principal, Model model) {
+		String uid = principal.getName();
+		
+		MemberVO vo = service.selectMember(uid);
+		
+		List<CommunityArticleVO> cas = service.selectCaList(uid);
+		
+		for(CommunityArticleVO ca : cas) 
+			ca.setRdate(vo.getRdate().substring(0,10));
+		
+		List<ERReviewVO> ers = service.selectErReviewList(uid);
+		
+		for(ERReviewVO er : ers)
+			er.setRdate(vo.getRdate().substring(0,10));
+		
+		/* 게시글 수 */
+		int ca = service.countCa(uid);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("ca", ca);
+		model.addAttribute("cas", cas);
+		model.addAttribute("ers", ers);
+		
+		System.out.println(vo.getNickname());
+		return "member/myPage";
 	}
 }

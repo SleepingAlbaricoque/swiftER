@@ -42,12 +42,16 @@ public class SecurityConfig {
 				.requestMatchers("/img/**").permitAll()
 				.requestMatchers("/js/**").permitAll()
 				.requestMatchers("/member/login").permitAll()
+				.requestMatchers("/member/terms").permitAll()
+				.requestMatchers("/member/registerNor").permitAll()
+				.requestMatchers("/member/registerDoc").permitAll()
 				.requestMatchers("/error/**").permitAll()
 				.requestMatchers("/community/**").permitAll()
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
-				.requestMatchers("/member/**").hasAnyRole("0", "1", "2");
+				.requestMatchers("/member/**").permitAll();
 		
 		/*
 		// 자동로그인 설정
