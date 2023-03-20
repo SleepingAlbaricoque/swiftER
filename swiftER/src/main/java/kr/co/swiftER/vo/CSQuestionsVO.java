@@ -19,6 +19,7 @@ public class CSQuestionsVO {
 	private int subcateCode;
 	private String title;
 	private String content;
+	private int view;
 	private int file;
 	private String regip;
 	private String rdate;

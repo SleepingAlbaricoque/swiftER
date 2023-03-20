@@ -39,7 +39,7 @@
         border-collapse: collapse;
     }
     .faq-table > tbody > tr{
-        border-bottom: 1.5px solid #2ce97b;
+        /*border-bottom: 1.5px solid #2ce97b;*/
         position: relative;
     }
     .faq-table > tbody > tr:last-child{
@@ -96,11 +96,15 @@
     .faq-question-focus{
         background: #2ce97b77;
     }
+    .faq-question{
+    	border-top: 1px solid #2ce97b;
+    }
     .faq-answer{display: none;}
     .faq-answer > td{
         margin-bottom: 50px;
         cursor: default!important;
         text-align: center;
+        border-bottom: none;
     }
     .faq-answer.on{
         display: block;
@@ -532,7 +536,8 @@
         border-image: linear-gradient(37deg, rgba(1,177,255,1) 0%, #2ce97b 84%, rgba(1,177,255,1) 100%);
         border-image-slice: 1;
         margin: 20px auto 0 auto!important;
-        height: 530px!important;
+        height: auto;
+        padding-bottom: 20px;
     }
     .notice-page-table{
         width: 1300px;
@@ -709,6 +714,9 @@
         color: #fff;
         background: #01b1ff;
         cursor: pointer;
+        position: relative;
+        bottom: 210px;
+        right: 120px;
     }
     
     /* qna_write */
@@ -784,19 +792,19 @@
         font-size: 15px;
         text-indent: 20px;
     }
-    #qna-cate{
+    #qna-cate, #notice-cate{
         width: 120px;
         height: 25px;
         border: 1px solid #bebcbc;
         font-size: 14px;
         outline: none;
     }
-    #qna-cate:focus{ /* 접근성 이슈때문에 추가*/
+    #qna-cate, #notice-cate:focus{ /* 접근성 이슈때문에 추가*/
         box-shadow:0 0 3px #2ce97b;
         -moz-box-shadow:0 0 3px #2ce97b;
         -webkit-box-shadow:0 0 3px #2ce97b;
     }
-    #qna-cate > option{
+    #qna-cate, #notice-cate > option{
         font-size: 13px;
     }
     .qna-write-file{

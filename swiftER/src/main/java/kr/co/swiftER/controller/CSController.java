@@ -7,7 +7,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -46,8 +49,35 @@ public class CSController {
 	}
 	
 	@GetMapping("cs/notice")
-	public String notice() {
-		return "cs/notice";
+	public String notice(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
+		// 페이징 처리
+		int total = service.selectCountTotal("1", subcateCode);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+		
+	    // notice 글들 불러오기(사용자가 subcate값까지 고른 경우 subcate로 필터링한 결과 가져옴)
+	    List<CSQuestionsVO> noticeList = service.selectArticles("1", subcateCode, start);
+	    
+	    for(CSQuestionsVO notice : noticeList) {
+			// rdate 날짜까지만 표시하기
+			notice.setRdate(notice.getRdate().substring(0, 11));
+		}
+	    
+	    // 화면에 출력할 글들 저장 
+	    model.addAttribute("noticeList", noticeList);
+	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+	 	model.addAttribute("pg", pg);
+	 	model.addAttribute("subcateCode", subcateCode);
+		
+	 	return "cs/notice";
 	}
 	
 	@GetMapping("cs/notice/view")
@@ -56,8 +86,29 @@ public class CSController {
 	}
 	
 	@GetMapping("cs/faq")
-	public String faq() {
+	public String faq(@RequestParam(value="subcateCode", defaultValue = "10") String subcateCode, Model model) {
+		// faq 글들 불러오기
+		List<CSQuestionsVO> faqList = new ArrayList<>();
+		
+		// FAQ 글 들 중 사용자가 선택한 subCate에 해당하는 글들을 가져오기(페이지 첫 로드시 subCate값은 회원정보로 고정)
+		faqList = service.selectArticles("2", subcateCode, 0);
+		
+		model.addAttribute("faqList", faqList);
+		
 		return "cs/faq";
+	}
+	
+	@ResponseBody
+	@GetMapping("cs/faqByCate")
+	public Map<String, List<CSQuestionsVO>> faqByCate(@RequestParam(value="subcateCode", defaultValue = "10") String subcateCode) {
+		// 사용자가 faq 페이지에서 subcate 버튼을 누르면 해당 subcate에 해당하는 글만 json 형식으로 리턴하는 메서드
+		// faq 글들 불러오기
+		List<CSQuestionsVO> faqList = service.selectArticles("2", subcateCode, 0);
+		
+		// 뷰로 불러온 글들 전송하기
+		Map<String, List<CSQuestionsVO>> result = new HashMap<>();
+		result.put("faqList", faqList);
+		return result;
 	}
 	
 	@GetMapping("cs/qna")

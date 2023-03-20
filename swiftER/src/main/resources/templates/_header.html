@@ -12,16 +12,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link rel="stylesheet" th:href="@{/css/cs.css?v=2}">
+    <link rel="stylesheet" th:href="@{/css/cs.css?v=3}">
     <link rel="stylesheet" th:href="@{/css/community.css}" />
 </head>
 <body>
     <div class="wrapper">
         <header>
             <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
+                <div sec:authorize="!isAuthenticated()">
+                	<a th:href="@{/index}">HOME</a>
+                    <a th:href="@{/member/login}">로그인</a>
+                    <a th:href="@{/member/terms}">회원가입</a>
+                	<a th:href="@{/cs/index}">고객센터</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                	<a th:href="@{/index}">HOME</a>
+                	<a th:href="@{/member/myPage}"><span sec:authentication="principal.member.nickname"> 님 환영합니다</span></a>
+                	<a th:href="@{/member/logout}">로그아웃</a>
+                	<a th:href="@{/cs/index}">고객센터</a>
                 </div>
             </div>
             <div class="logo">
@@ -35,19 +43,19 @@
                 <div>
                     <ul>
                         <li>
-                            <a href="#">증상검색</a>
+                            <a th:href="@{/symptoms/symptoms}">증상검색</a>
                         </li>
                         <li>
-                            <a href="#">응급실검색</a>
+                            <a th:href="@{/er/er}">응급실검색</a>
                         </li>
                         <li>
                             <a href="#">약국검색</a>
                         </li>
                         <li>
-                            <a href="#">커뮤니티</a>
+                            <a th:href="@{/community/freeList}">커뮤니티</a>
                         </li>
                         <li>
-                            <a href="#">고객센터</a>
+                            <a th:href="@{/cs/index}">고객센터</a>
                         </li>
                     </ul>
                 </div>

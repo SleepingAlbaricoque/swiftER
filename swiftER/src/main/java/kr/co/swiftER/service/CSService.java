@@ -47,6 +47,11 @@ public class CSService {
 		return dao.selectArticle(parent);
 	}
 	
+	// 글 조회수 업데이트
+	public int updateArticleView(String no) {
+		return dao.updateArticleView(no);
+	}
+	
 	// 파일 업로드
 	// applicaton.properties에서 설정한 파일 저장 경로 주입받기
 	@Value("${spring.servlet.multipart.location}")

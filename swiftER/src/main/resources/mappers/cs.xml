@@ -23,8 +23,9 @@
 		select a.*, b.subcate from `cs_questions` as a 
 		join `cs_subcate` as b 
 		on a.subcateCode = b.subcode
+		where a.cateCode = #{cateCode}
 		<if test="subcateCode != 0">
-			where a.subcateCode = #{subcateCode}
+			and a.subcateCode = #{subcateCode}
 		</if>
 		order by rdate desc
 		limit #{start}, 10;
@@ -64,4 +65,8 @@
 	<select id="selectFileForDownload" resultType="kr.co.swiftER.vo.FileVO">
 		select * from `file` where `parent`=#{parent} and `board`=1 limit 1 offset #{num};
 	</select>
+	
+	<update id="updateArticleView">
+		update `cs_questions` set `view` = `view` +1 where `no` = #{no};
+	</update>
 </mapper>
