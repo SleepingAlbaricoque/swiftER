@@ -98,7 +98,8 @@ public class CommunityController {
          List<CommunityArticleVO> cm = service.selectComments(parent);
          service.updateArticleView(no);
          
-         // log.info("cm : " + cm);
+         log.info("parent : " + parent);
+         log.info("cm : " + cm);
          
          model.addAttribute("currentPage", currentPage);
          model.addAttribute("lastPage", lastPage);
@@ -108,6 +109,7 @@ public class CommunityController {
          model.addAttribute("vo", vo);
          model.addAttribute("cm", cm);
          model.addAttribute("cateCode", cateCode);
+         model.addAttribute("parent", parent);
 
          return "community/freeView";
     }
