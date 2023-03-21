@@ -53,6 +53,7 @@ public class SecurityConfig {
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
 				.requestMatchers("/er/**").permitAll();
+
 		
 		/*
 		// 자동로그인 설정
@@ -73,7 +74,7 @@ public class SecurityConfig {
 		http.logout()
 		.invalidateHttpSession(true)
 		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-		.logoutSuccessUrl("/index")
+		.logoutSuccessUrl("/")
 		.deleteCookies("remember-me", "JSESIONID"); // 자동 로그인 쿠키 삭제
 		
 		return http.build();
