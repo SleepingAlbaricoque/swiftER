@@ -76,7 +76,7 @@
     <select id="selectComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
          SELECT a.*, b.uid FROM `community_article` AS a 
 		 JOIN `member` AS b ON a.member_uid = b.uid 
-		 WHERE `parent` != 0 ORDER BY `no` DESC;	
+		 WHERE `parent` =#{parent} ORDER BY `no` DESC;	
     </select>
     
     <select id="selectCommentCountTotal" resultType="int">
@@ -85,5 +85,8 @@
     
     <update id="updateArticleView">
 		UPDATE `community_article` SET `view` = `view` + 1 WHERE `no`= #{no};    
+    </update>
+    <update id="updateComments">
+		UPDATE `community_article` SET `comments` = (select count(`no`) from `community_article` where `parent` = #{parent});    
     </update>
 </mapper>
