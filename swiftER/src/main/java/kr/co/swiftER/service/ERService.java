@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.swiftER.dao.ERDAO;
 import kr.co.swiftER.vo.ERCateVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 
 
@@ -24,6 +25,10 @@ public class ERService {
 	
 	public List<ERSubcateVO> selectErSubCate(String city){
 		return dao.selectErSubCate(city);
+	}
+	
+	public List<ERReviewVO> selectErReview(String code) {
+		return dao.selectErReview(code);
 	}
 	
 
