@@ -98,8 +98,8 @@ public class CommunityController {
          List<CommunityArticleVO> cm = service.selectComments(parent);
          service.updateArticleView(no);
          
-         log.info("parent : " + parent);
-         log.info("cm : " + cm);
+         //log.info("parent : " + parent);
+         //log.info("cm : " + cm);
          
          model.addAttribute("currentPage", currentPage);
          model.addAttribute("lastPage", lastPage);
