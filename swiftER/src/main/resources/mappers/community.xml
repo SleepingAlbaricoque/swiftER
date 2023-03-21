@@ -64,25 +64,26 @@
 	    LIMIT #{start}, 10;
     </select>
     
-    <select id="insertComment" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="no">
         insert into `community_article` set 
 			`parent`=#{parent},
 			`content`=#{content},
 			`member_uid`=#{member_uid},
 			`regip`=#{regip},
 			`rdate`=NOW();	
-    </select>
+    </insert>
+    
     <select id="selectComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
          SELECT a.*, b.uid FROM `community_article` AS a 
 		 JOIN `member` AS b ON a.member_uid = b.uid 
-	     WHERE `parent`=#{parent} ORDER BY `no` ASC;	
+		 WHERE `parent` != 0 ORDER BY `no` DESC;	
     </select>
-    <select id="selectCommentLatest" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-         SELECT a.*, b.uid FROM `community_article` AS a 
-		 JOIN `member` AS b ON a.member_uid = b.uid 
-		 WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1;
+    
+    <select id="selectCommentCountTotal" resultType="int">
+        select count(`no`) from `community_article` where `parent` = #{parent};
     </select>
-    <select id="updateArticleView" resultType="int">
-		UPDATE `community_article` SET `view` = `view` + 1 WHERE `no`=?;    
-    </select>
+    
+    <update id="updateArticleView">
+		UPDATE `community_article` SET `view` = `view` + 1 WHERE `no`= #{no};    
+    </update>
 </mapper>
