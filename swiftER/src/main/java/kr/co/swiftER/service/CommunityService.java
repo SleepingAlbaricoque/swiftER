@@ -2,29 +2,43 @@ package kr.co.swiftER.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.swiftER.controller.CommunityController;
 import kr.co.swiftER.dao.CommunityDAO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.CommunityCateVO;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+@Log4j2
 @Service
 public class CommunityService {
 	
 	@Autowired
 	private CommunityDAO dao;
 	
+	/* Comment */
+	public int insertComment(CommunityArticleVO vo){	
+        int result = dao.insertComment(vo);
+        return result;
+    }
+	public long getCommentTotalCount(String parent){
+        return dao.selectCommentCountTotal(parent);
+    }
+	public List<CommunityArticleVO> selectComments(String parent){
+        return dao.selectComments(parent);
+    }
 	
 	/* Free */
-	public CommunityCateVO selectCate(String cateCode){
-        return dao.selectCate(cateCode);
-    }
 	public int insertFreeArticle(CommunityArticleVO vo){	
         int result = dao.insertFreeArticle(vo);
         return result;
+    }
+	public CommunityCateVO selectCate(String cateCode){
+        return dao.selectCate(cateCode);
     }
 	public CommunityArticleVO selectFreeArticle(int no){
         return dao.selectFreeArticle(no);
@@ -37,6 +51,9 @@ public class CommunityService {
     }
 	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword,String regionCode){
 		return dao.selectFindTitleSearch(start, title, cateCode, regionCode, keyword);
+	}
+	public int updateArticleView(int no) {
+		return dao.updateArticleView(no);
 	}
 	public int getLimitStart(int currentPage){
         return (currentPage - 1) * 10;

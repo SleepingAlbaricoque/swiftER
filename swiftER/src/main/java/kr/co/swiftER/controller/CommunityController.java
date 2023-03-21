@@ -30,7 +30,7 @@ public class CommunityController {
 	/* Free */
     @GetMapping(value = {"community/freeList"})
     public String FreeList(Model model, String pg, @RequestParam(value="cateCode", defaultValue = "10") String cateCode,@RequestParam(value="regionCode", defaultValue = "0") String regionCode, String code,
-    		@RequestParam(value="keyword", defaultValue = "") String keyword, String title){
+    		@RequestParam(value="keyword", defaultValue = "") String keyword, String title, String no){
     	
     	 pg = (pg == null) ? "1" : pg;
 
@@ -40,7 +40,8 @@ public class CommunityController {
          int lastPage = service.getLastPageNum(total);
          int pageStartNum = service.getPageStartNum(total, start);
          int groups[] = service.getPageGroup(currentPage, lastPage);
-
+         
+         
          CommunityCateVO ccv = service.selectCate(cateCode);
          
          List<CommunityArticleVO> cates = null;
@@ -53,7 +54,7 @@ public class CommunityController {
         	 cates = service.selectFindTitleSearch(start, title, cateCode, keyword, regionCode);
          }
          
-          // log.info("here3... : " + cates);
+           //log.info("here3... : " + cates);
          
          //List<CommunityArticleVO> cates = service.selectFreeArticles(start, cateCode);
          //List<CommunityArticleVO> serchfree = service.selectFindTitleSearch(title, cateCode, keyword);
@@ -77,22 +78,46 @@ public class CommunityController {
          model.addAttribute("regionCode", regionCode);
          model.addAttribute("keyword", keyword);
          
-         
         return "community/freeList";
     }
 
     @GetMapping(value = {"community/freeView"})
-    public String FreeView(Model model, int no, String cateCode ){
+    public String FreeView(Model model, String pg, int no, String cateCode, String parent){
+    	
+    	 pg = (pg == null) ? "1" : pg;
+
+    	 int currentPage = service.getCurrentPage(pg);
+         int start = service.getLimitStart(currentPage);
+         long total = service.getCommentTotalCount(parent);
+         int lastPage = service.getLastPageNum(total);
+         int pageStartNum = service.getPageStartNum(total, start);
+         int groups[] = service.getPageGroup(currentPage, lastPage);
     	
     	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
-
+         List<CommunityArticleVO> cm = service.selectComments(parent);
+         service.updateArticleView(no);
+         
+         // log.info("cm : " + cm);
+         
+         model.addAttribute("currentPage", currentPage);
+         model.addAttribute("lastPage", lastPage);
+         model.addAttribute("pageStartNum", pageStartNum);
+         model.addAttribute("groups", groups);
          model.addAttribute("ccv", ccv);
          model.addAttribute("vo", vo);
+         model.addAttribute("cm", cm);
          model.addAttribute("cateCode", cateCode);
 
          return "community/freeView";
     }
+    
+    @PostMapping(value = {"community/freeView"})
+    public String FreeComment(Model model) {
+    	
+    	return "community/freeView";
+    }
+    
     @GetMapping(value = {"community/freeWrite"})
     public String FreeWrite(Model model, @RequestParam("cateCode") String cateCode){
 
@@ -117,12 +142,8 @@ public class CommunityController {
         
     }
     
-    /* Qna */
-    @GetMapping("community/qnaList")
-	public String QnaList() {
-		return "community/qnaList";
-	}
     
+    /* Qna */
     @GetMapping(value = {"community/qnaView"})
     public String QnaView(Model model, int no, String cateCode ){
     	
@@ -135,28 +156,32 @@ public class CommunityController {
 
          return "community/qnaView";
     }
-    
-    @GetMapping("community/qnaWrite")
-	public String QnaWrite() {
-		return "community/qnaWrite";
-	}
-    
-    @GetMapping("community/qnaComment")
-	public String QnaComment() {
-		return "community/qnaComment";
-	}
+  
+    @GetMapping(value = {"community/qnaComment"})
+    public String QnaComment(Model model, @RequestParam("cateCode") String cateCode){
+
+        model.addAttribute("cateCode", cateCode);
+
+        return "community/qnaComment";
+    }
+    @PostMapping(value = {"community/qnaComment"})
+    public String QnaComment(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
+    		Integer cateCode,Integer regionCode){
+    	
+        MemberEntity member = myUser.getMember();
+        
+        vo.setMember_uid(member.getUid());
+        vo.setCateCode(String.valueOf(cateCode));
+        vo.setRegionCode(String.valueOf(regionCode));
+        vo.setRegip(req.getRemoteAddr());
+        service.insertFreeArticle(vo);
+        
+        
+        return "redirect:/community/freeList?cateCode="+cateCode;
+        
+    }
     
     /* Mytown */
-    @GetMapping("community/mytownList")
-	public String MytownList() {
-		return "community/mytownList";
-	}
-    
-    @GetMapping("community/mytownView")
-	public String MytownView() {
-		return "community/mytownView";
-	}
-    
     @GetMapping(value = {"community/mytownWrite"})
     public String MytownWrite(Model model, @RequestParam("cateCode") String cateCode){
 
