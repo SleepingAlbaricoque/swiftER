@@ -41,6 +41,12 @@
 </head>
 <body>
     <div class="terms">
+    <p class="p_Header">
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+       	</p>
         <header id="terms_header">
             <div class="logoBox">
                 <a th:href="@{/}">

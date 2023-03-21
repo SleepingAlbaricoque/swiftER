@@ -153,6 +153,18 @@ public class MemberController {
 		model.addAttribute("ers", ers);
 		
 		System.out.println(vo.getNickname());
+		System.out.println(vo.getGrade());
 		return "member/myPage";
+	}
+	
+	/* 작성한 글 페이지 */
+	@GetMapping("member/articleList")
+	public String articleList(String uid, Model model) {
+		List<CommunityArticleVO> cas = service.selectCaListAll(uid);
+		MemberVO vo = service.selectMember(uid);
+		for(CommunityArticleVO ca : cas)
+			ca.setRdate(vo.getRdate().substring(0,10));
+		model.addAttribute("cas", cas);
+		return "member/articleList";
 	}
 }

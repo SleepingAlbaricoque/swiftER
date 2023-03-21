@@ -26,6 +26,8 @@ public interface MemberDAO {
 	public MemberVO selectMember(String uid);
 
 	public List<CommunityArticleVO> selectCaList(String uid);
+	
+	public List<CommunityArticleVO> selectCaListAll(String uid);
 
 	public List<ERReviewVO> selectErReviewList(String uid);
 

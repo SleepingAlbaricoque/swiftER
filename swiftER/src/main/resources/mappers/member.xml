@@ -19,14 +19,17 @@
 		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 3;
 	</select>
 	
+	<!-- 마이페이지 게시판 전체 불러오기 -->
+	<select id="selectCaListAll" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 10;
+	</select>
+	
 	<!-- 마이페이지 리뷰 불러오기 -->
 	<select id="selectErReviewList" resultType="kr.co.swiftER.vo.ERReviewVO">
-		SELECT a.*,c.subregion,c.region FROM `search_er_review` AS a 
-		JOIN `search_er_cate` AS b 
-		ON a.region_code=b.region_code 
-		JOIN `search_er_subcate` AS c 
-		on b.region_code=c.region_code 
-		WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 3;
+		SELECT a.*,b.region,b.subregion FROM `search_er_review` as a
+		JOIN `search_er_subcate` AS b 
+		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code` 
+		WHERE `member_uid` = #{uid};
 	</select>
 	
 	<!-- 회원가입 -->
