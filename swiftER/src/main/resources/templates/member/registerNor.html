@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script th:src="@{/js/validation.js}"></script>
+    <script th:src="@{/js/validation_nor.js}"></script>
     <script th:src="@{/js/postcode.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
@@ -66,6 +66,12 @@
 <body>
     <div id="wrapper">
         <header>
+        <p class="p_Header">
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+       	</p>
             <div class="centerName">
                 <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
                 </div>
@@ -160,13 +166,13 @@
                             <td>
                                 <div>
                                     <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
+                                    <span class="resultZip"></span>
                                 </div>
                                 <div>
                                     <input type="text" name="addr1" id="addr1" required>
                                 </div>
                                 <div>
                                     <input type="text" name="addr2" id="addr2" required>
-                                    <span class="resultZip"></span>
                                 </div>
                             </td>
                         </tr>

@@ -108,13 +108,33 @@
             }
             return value;
         }
+        
+        $(document).ready(function(){
+        	$('.logout').click(function(){
+        		var check_logout = confirm("정말로 로그아웃 하시겠습니까?");
+        		if(check_logout == true){
+        		  location.href="/swiftER/member/logout"
+        		}
+        		else if(check_logout == false){
+        		  return false;
+        		}
+        	});
+        });
+        
     </script>
 </head>
 <body>
     <div id="wrapper">
         <header>
+        <p class="p_Header">
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+       	</p>
             <div class="centerName">
-                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
+                <div>
+                	<img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
                 </div>
                 <div>
                     <h1>
@@ -126,21 +146,30 @@
         </header>
         <main>
             <h2>
-                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+            	<a th:href="@{#}" class="logout"><img th:src="@{/img/member/logout.png}" alt="로그아웃" width="50px" height="50px"></a>
+                <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article>
                 <section>
                     <h4 class="article_name">내정보</h4>
                     <table id="myInfo">
                         <tr>
-                            <th>
+                            <th th:if="${vo.grade == 1}">
                                 활동명
                             </th>
-                            <td>
+                            <th th:if="${vo.grade == 2}">
+                                인증여부
+                            </th>
+                            <td th:if="${vo.grade == 1}">
                                 [[${vo.nickname}]]
                             </td>
-                            <th>가입일</th>
-                            <td>2023.03.07</td>
+                            <td th:if="${vo.grade == 2}">
+                                O
+                            </td>
+                            <th th:if="${vo.grade == 1}">가입일</th>
+                            <th th:if="${vo.grade == 2}">의사구분</th>
+                            <td th:if="${vo.grade == 1}">[[${vo.rdate}]]</td>
+                            <td th:if="${vo.grade == 2}">가정의학과<br>전문의</td>
                         </tr>
                         <tr>
                             <th>
@@ -152,8 +181,11 @@
                             <th>
                                 회원구분
                             </th>
-                            <td>
-                                [[${vo.grade}]]
+                            <td th:if="${vo.grade == 1}">
+                                일반회원
+                            </td>
+                            <td th:if="${vo.grade == 2}">
+                                의사회원
                             </td>
                         </tr>
                         <tr>
@@ -213,7 +245,9 @@
                             </th>
                         </tr>
                         <tr th:each="cas : ${cas}">
-                            <td>[[${cas.cateCode}]]</td>
+                            <td th:if="${cas.cateCode == 10}">자유 게시판</td>
+                            <td th:if="${cas.cateCode == 11}">질문 게시판</td>
+                            <td th:if="${cas.cateCode == 12}">내가 사는 동네</td>
                             <td><a th:href="@{#}">[[${cas.title}]]</a></td>
                             <td>[[${cas.comments}]]</td>
                             <td>[[${cas.view}]]</td>
@@ -222,12 +256,13 @@
                     </table>
                 </section>
                 <div>
-                    <button class="submit">
+                    <button class="submit" id="articleListAll" th:onclick="|location.href='@{articleList(uid=${vo.uid})}'|">
                         더보기
                     </button>
                 </div>
             </article>
             <div class="calendarborder">
+            	<h4 id="name">간편 이력</h4>
                 <div id="newCalendar">
                     <table class="Calendar">
                         <thead>

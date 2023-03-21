@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.co.swiftER.vo.ERCateVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 
 @Mapper
@@ -14,5 +15,6 @@ public interface ERDAO {
 	
 	public List<ERCateVO> selectErCate();
 	public List<ERSubcateVO> selectErSubCate(String city);
+	public List<ERReviewVO> selectErReview(String code);
 	
 }

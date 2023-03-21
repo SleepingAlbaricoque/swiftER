@@ -54,6 +54,12 @@ public class MemberService {
 		
 		return dao.selectCaList(uid);
 	}
+	
+	/* 마이페이지 게시판 리스트 전체 불러오기 */
+	public List<CommunityArticleVO> selectCaListAll(String uid) {
+		
+		return dao.selectCaListAll(uid);
+	}
 
 	/* 마이페이지 리뷰 리스트 불러오기 */
 	public List<ERReviewVO> selectErReviewList(String uid) {
@@ -61,8 +67,8 @@ public class MemberService {
 		return dao.selectErReviewList(uid);
 	}
 
+	/* 내가 작성한 글 갯수 */
 	public int countCa(String uid) {
-		// 
 		return dao.countCa(uid);
 	}
 	

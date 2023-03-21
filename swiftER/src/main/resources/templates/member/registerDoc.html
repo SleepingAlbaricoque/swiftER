@@ -9,10 +9,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/js/validation_doc.js}"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+	$(document).ready(function(){
+		$('#btnEmailCheck').click(function(){
+			let email = $('input[name=email]').val();
+			
+			$.ajax({
+				url : '/swiftER/member/checkEmail',
+   				method : 'get',
+   				data : {"email":email},
+   				dataType : 'json',
+   				success : function(data){
+   					console.log(email);
+   				}
+			});
+		});
+		
+		$('#btncheckCode').click(function(){
+			let code = $('input[name=code]').val();
+			
+			$.ajax({
+				url : '/swiftER/member/checkCode',
+				method : 'get',
+				data : {"code":code},
+				dataType : 'json',
+				success : function(data){
+					
+					console.log('data : ' + data);
+					
+					if(data.result != 0){
+						$('.resultCode').css('color', 'red').text('사용할수 없는 이메일입니다');
+						console.log(data.result);
+					}else{
+						$('.resultCode').css('color', 'green').text('사용 가능한 이메일입니다');
+						$('input[name=code]').attr('readonly', true);
+						isEmailAuthOk = true;
+						console.log(data.result);
+					}
+				}
+				
+			})
+		});
+		
+		$('').submit(function(){
+			
+		});
+		
+	});
+	
+	</script>
 </head>
 <body>
     <div id="wrapper">
         <header>
+        <p class="p_Header">
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+       	</p>
             <div class="centerName">
                 <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
                 </div>
@@ -38,7 +97,7 @@
                             </th>
                             <td>
                                 <input type="text" name="uid" placeholder="아이디 입력">
-                                <span>영문, 숫자로 4~12자까지 설정해 주세요.</span>
+                                <span class="resultUid">영문, 숫자로 5~12자까지 설정해 주십시오</span>
                             </td>
                         </tr>
                         <tr>
@@ -56,7 +115,7 @@
                             </th>
                             <td>
                                 <input type="text" name="pass2" placeholder="비밀번호 확인">
-                                <span>비밀번호 재입력</span>
+                                <span class="resultPass">비밀번호 재입력</span>
                             </td>
                         </tr>
                     </table>
@@ -68,18 +127,22 @@
                             <th>이름</th>
                             <td>
                                 <input type="text" name="name" placeholder="이름 입력">
+                                <span class="resultName">한글 2~6자를 입력해 주십시오</span>
                             </td>
                         </tr>
                         <tr class="docCate">
                             <th>의사 분류</th>
                             <td>
-                                <input type="text" name="cate1" placeholder="의사분류">
+                                <select name="kind" class="kind">
+                                	<option value="일반의">일반의</option>
+                                	<option value="전문의">전문의</option>
+                                </select>
                             </td>
                             <td> 
                                 <input type="text" name="cate2" placeholder="과">
                             </td>
                             <td>
-                                <input type="file">
+                                <input type="file" name="fname" multiple>
                                 <span>의사임을 증명할 파일을 첨부하십시오</span>
                             </td>
                         </tr>
@@ -92,33 +155,34 @@
                         <tr>
                             <th>E-mail</th>
                             <td>
-                                <input type="text" name="email" placeholder="이메일 입력">
-                                <span>
-                                    <button>인증번호 전송</button>
+                                <input type="text" name="email" placeholder="이메일 입력" required>
+                                    <button id="btnEmailCheck">인증번호 전송</button>
+                                    <span class="resultEmail">수신가능한 이메일을 입력해 주십시오</span>
                                     <br>
-                                    <input type="text" name="key" placeholder="인증번호 입력">
-                                    <button>인증번호 확인 </button>
-                                </span>
+                                    <input type="text" name="code" placeholder="인증번호 입력" required>
+                                    <button id="btncheckCode">인증번호 확인 </button>
+                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
                                 <input type="text" name="phone" placeholder="휴대전화">
-                                <span> - 포함 13자리를 입력해주세요</span>
+                                <span class="resultHp"> - 포함 13자리를 입력해주세요</span>
                             </td>
                         </tr>
                         <tr>
                             <th>주소</th>
                             <td>
                                 <div>
-                                    <input type="text" name="zip" placeholder="우편번호 입력">
+                                    <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
+                                    <span class="resultZip"></span>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr1">
+                                    <input type="text" name="addr1" id="addr1" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr2">
+                                    <input type="text" name="addr2" id="addr2" required>
                                 </div>
                             </td>
                         </tr>

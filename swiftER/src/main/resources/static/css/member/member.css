@@ -20,6 +20,19 @@ main {
     display: block;
 }
 
+.p_Header {
+    width: 100%;
+    height: 20px;
+    margin: 0 auto;
+}
+
+.p_Header > a {
+	padding: 5px;
+	float: right;
+	font-size: 14px;
+	text-decoration: none;
+}
+
 .header_login {
     width: 100%;
     height: auto;
@@ -275,6 +288,14 @@ main > div > div > form > div > button {
 
 /* register */
 
+.kind {
+	width: 150px;
+	padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
 article {
     width: 900px;
     height: 100%;
@@ -521,7 +542,7 @@ article > section > table > tbody > tr > td > div:first-child > input {
 
 .page > .prev {
     font-size: 0px;
-    background-image: url(../img/sprites.png);
+    background-image: url("/swiftER/img/member/sprites.png");
     background-position: -706px -659px;
 }
 
@@ -529,7 +550,7 @@ article > section > table > tbody > tr > td > div:first-child > input {
 
 .page > .next {
     font-size: 0px;
-    background-image: url(../img/sprites.png);
+    background-image: url("/swiftER/img/member/sprites.png");
     background-position: -635px -659px;
 }
 
