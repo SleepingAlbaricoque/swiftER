@@ -59,6 +59,12 @@
             )
             .catch(err => console.error(err));
         }
+        
+    	window.onload = () => {
+    		// index 페이지에서 faq 카테고리 버튼 눌러서 들어왔을 경우 사용자가 선택한 카테고리 버튼 하이라이트하기
+    		let m = parseInt([[${subcateCode}]] / 10) -1;
+    		document.querySelectorAll(".faq-table-tabs > input[type='button']")[m].classList.add('on');
+    	}
     </script>
         <main class="faq-page">
             <div class="faq-banner">

@@ -39,8 +39,8 @@ public class CSService {
 		return result;
 	}
 	
-	public List<CSQuestionsVO> selectArticles(String cateCode, String subcateCode, int start){
-		return dao.selectArticles(cateCode, subcateCode, start);
+	public List<CSQuestionsVO> selectArticles(String cateCode, String subcateCode, int start, String keyword){
+		return dao.selectArticles(cateCode, subcateCode, start, keyword);
 	}
 	
 	public List<CSQuestionsVO> selectArticle(String parent) {
@@ -51,6 +51,21 @@ public class CSService {
 	public int updateArticleView(String no) {
 		return dao.updateArticleView(no);
 	}
+	
+	// notice view에서 이전글, 다음글 표시하기 위해 해당글의 이전글, 다음글 가져오기
+	public List<CSQuestionsVO> selectArticlesPriorAndNext(String no){
+		return dao.selectArticlesPriorAndNext(no);
+	}
+	
+	// 내가 쓴 글 조회를 위한 메서드
+	public int selectMyCountTotal(String cateCode, String subcateCode, String id) {
+		return dao.selectMyCountTotal(cateCode, subcateCode, id);
+	}
+	
+	public List<CSQuestionsVO> selectMyArticles(String cateCode, String subcateCode ,int start, String id){
+		return dao.selectMyArticles(cateCode, subcateCode, start, id);
+	}
+	
 	
 	// 파일 업로드
 	// applicaton.properties에서 설정한 파일 저장 경로 주입받기
@@ -116,8 +131,8 @@ public class CSService {
 	
 	// 페이징
 	// 글 총 갯수(total)
-	public int selectCountTotal(String cateCode, String subcateCode) {
-		return dao.selectCountTotal(cateCode, subcateCode);
+	public int selectCountTotal(String cateCode, String subcateCode, String keyword) {
+		return dao.selectCountTotal(cateCode, subcateCode, keyword);
 	}
 	
 	// 현재 페이지 버튼 번호

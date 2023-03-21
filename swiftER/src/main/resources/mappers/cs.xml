@@ -27,14 +27,20 @@
 		<if test="subcateCode != 0">
 			and a.subcateCode = #{subcateCode}
 		</if>
-		order by rdate desc
+		<if test="keyword != ''">
+			and title like CONCAT('%', #{keyword}, '%')
+		</if>
+		order by no desc
 		limit #{start}, 10;
 	</select>
 	
 	<select id="selectCountTotal" resultType="int">
 		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode}
 		<if test="subcateCode != 0">
-			and `subcateCode` = #{subcateCode};
+			and `subcateCode` = #{subcateCode}
+		</if>
+		<if test="keyword != ''">
+			and title like CONCAT('%', #{keyword}, '%');
 		</if>
 	</select>
 	
@@ -69,4 +75,30 @@
 	<update id="updateArticleView">
 		update `cs_questions` set `view` = `view` +1 where `no` = #{no};
 	</update>
+	
+	<select id="selectArticlesPriorAndNext" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		(select * from `cs_questions` where `no` &lt; #{no} and `cateCode`=1  order by `no` desc limit 1)
+		union all(
+			select * from `cs_questions` where `no` &gt; #{no} and `cateCode`=1 order by `no` asc limit 1
+		);
+	</select>
+	
+	<select id="selectMyCountTotal" resultType="int">
+		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode} and `member_uid`=#{id} 
+		<if test="subcateCode != 0">
+			and `subcateCode` = #{subcateCode};
+		</if>
+	</select>
+	
+	<select id="selectMyArticles" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		select a.*, b.subcate from `cs_questions` as a 
+		join `cs_subcate` as b 
+		on a.subcateCode = b.subcode
+		where a.cateCode = #{cateCode} and a.member_uid = #{id}
+		<if test="subcateCode != 0">
+			and a.subcateCode = #{subcateCode}
+		</if>
+		order by no desc
+		limit #{start}, 10;
+	</select>
 </mapper>

@@ -20,7 +20,7 @@
     
     function search(){
     	let keyword = document.querySelector('.notice-search-bar').value;
-    	alert(keyword);
+    	location.href = "/swiftER/cs/notice?subcateCode=" + [[${subcateCode}]] + "&keyword=" + keyword; // 여기서 pg값을 보내도 어차피 keyword 포함한 글 갯수 다시 세서 다시 pg값 산정하므로 보낼 필요는 없음
     }
     
     window.onload = () => {
@@ -38,7 +38,12 @@
                <p>swiftER의 공지사항을 알려드립니다</p>
            </div>
            <div class="notice-search">
+           	   <th:block th:if="${#strings.isEmpty(keyword)}">
                <input type="text" value="키워드를 검색하세요" class="notice-search-bar" onfocus="this.value=''">
+               </th:block>
+               <th:block th:unless="${#strings.isEmpty(keyword)}">
+               <input type="text" th:value="${keyword}" class="notice-search-bar">
+               </th:block>
                <input type="button" value="검색" class="notice-search-button" onclick="search()">
            </div>
             <div style="text-align:right; padding-right:30px;">

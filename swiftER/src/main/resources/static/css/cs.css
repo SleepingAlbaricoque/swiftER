@@ -182,7 +182,7 @@
     }
     .notice-table > tbody > tr > td:first-child{
         width: 60px;
-        text-align: right;
+        text-align: left;
     }
     .notice-table > tbody > tr > td:nth-of-type(2){
         width: 800px;
@@ -416,6 +416,7 @@
     .notice-view-table > tbody > tr:nth-child(2) > td{
         padding-top: 50px;
         padding-bottom: 50px;
+        text-align: center;
     }
     .notice-view-table > tbody > tr:nth-child(2) > td >p{
         width: 1000px;
