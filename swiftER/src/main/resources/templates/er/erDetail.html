@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>응급실 정보</title>
@@ -102,33 +103,16 @@
                         <h1>고객님의 의견을 들려주세요</h1>
                     </nav>
                     <ul>
+                    <th:block th:each="review : ${reviews}">
                         <li>
                             <div>
-                                <h5 class="rating star4">별점</h5>
-                                <span>adm** / 내원일 2023.03.06</span>
+                                <h5 class="rating star" th:attrappend="class= '${review.rating}'">별점</h5>
+                                <span>[[${review.member_uid}]] / 작성일 [[${review.rdate}]]</span>
                             </div>
-                            <p>
-                                시설이 좋고 병원밥 맛은 여기가 최고입니다
+                            <p th:text="${review.content}">
                             </p>
                         </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">별점</h5>
-                                <span>adm** / 내원일 2023.03.06</span>
-                            </div>
-                            <p>
-                                코로나 확진자라고 한겨울에 칼바람 맞으면서 밖에서 대기하게 하더라고요. 실망
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">별점</h5>
-                                <span>adm** / 내원일 2023.03.06</span>
-                            </div>
-                            <p>
-                                코로나 확진자라고 한겨울에 칼바람 맞으면서 밖에서 대기하게 하더라고요. 실망
-                            </p>
-                        </li>
+                    </th:block>
                     </ul>
                     <div class="paging">
                         <span class="prev"><a href="#">&lt;이전</a></span>

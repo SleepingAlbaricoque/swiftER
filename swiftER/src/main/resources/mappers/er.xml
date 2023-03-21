@@ -15,6 +15,8 @@
     	select * from `search_er_subcate` where `region` = #{city};
     </select>
 
-	
+	<select id="selectErReview" resultType="kr.co.swiftER.vo.ERReviewVO">
+		select * from `search_er_review` where `hospital_code` = #{code};
+	</select>
 	
 </mapper>

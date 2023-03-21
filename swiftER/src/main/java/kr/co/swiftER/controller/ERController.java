@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import kr.co.swiftER.service.ERService;
 import kr.co.swiftER.vo.ERCateVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 
 @Controller
