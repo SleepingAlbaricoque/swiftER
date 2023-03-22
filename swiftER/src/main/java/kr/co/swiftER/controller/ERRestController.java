@@ -32,6 +32,9 @@ public class ERRestController {
     
     @Value("${restApi.erlistUrl}")
     private String erlistUrl;
+    
+    @Value("${restApi.erUserfulUrl}")
+    private String erUserfulUrl;
 
     private String pageNo = "1";
     private String numOfRows = "1000";
@@ -41,14 +44,22 @@ public class ERRestController {
     public String erSearch(Model model, String city, String town) throws IOException {
         
     	String deurl = erlistUrl;
+    	String Userfulurl = erUserfulUrl;
     	
         // RestTemplate 생성            
         RestTemplate restTemplate = new RestTemplate();
          
         // 오브젝트로 결과값 받아오기
-        String url = deurl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
-        System.out.println("url : "+url);        
-        String response = restTemplate.getForObject(url, String.class);
+        String url1 = deurl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        System.out.println("url1 : "+url1);        
+        String response1 = restTemplate.getForObject(url1, String.class);
+        
+        //오브젝트로 결과값 받아오기
+        String url2 = Userfulurl + restApiKey + "&STAGE1=" + city + "&STAGE2=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        System.out.println("url2 : "+url2);        
+        String response2 = restTemplate.getForObject(url2, String.class);
+        
+        String response = response1 + response2;
         
         return response;
     }
