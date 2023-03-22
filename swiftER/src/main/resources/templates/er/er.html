@@ -17,6 +17,10 @@
 <script>
 $(document).ready(function () {
 	let er = [];
+	let erChk = [];
+	let erChk2 = [];
+	let combined = [];
+	let combinedFiltered = [];
 	
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -38,16 +42,15 @@ $(document).ready(function () {
 		let city = $('select[name=city]').val();
 		let town = $('select[name=town]').val();
 		
-		console.log('city : {}, town: {}', city, town);
-		
 		let jsonData = {
 				"city": city,
 				"town": town
 		};
 		
+		console.log('data', jsonData);
+		
 		$.ajax({
 			url: '/swiftER/er/erSearch',
-			async: false,
 			method: 'POST',
 			data: jsonData,
 			success: function(data){
@@ -59,22 +62,154 @@ $(document).ready(function () {
 				}
 				
 				
-				console.log(json);
-				
 				let items = json.response.body.items.item;
 				let er = items;
-				console.log("er : ", er);
+				let chk = false;
+				
+				$.ajax({
+					url:"/swiftER/er/erSearch2",
+					async:false,
+					method:'POST',
+					data:jsonData,
+					success:function(data){
+						let json = JSON.parse(data);
+						let check = json.response.body.totalCount;
+						if(check == 0){
+							alert("검색한 결과가 없습니다.");
+							false;
+						}
+						
+						let items = json.response.body.items.item;
+						erChk = items;
+						
+					}
+					
+				});
+				
+				$.ajax({
+					url:"/swiftER/er/erSearch3",
+					async:false,
+					method:'POST',
+					data:jsonData,
+					success:function(data){
+						let json = JSON.parse(data);
+						let check = json.response.body.totalCount;
+						if(check == 0){
+							alert("검색한 결과가 없습니다.");
+							false;
+						}
+						
+						let items = json.response.body.items.item;
+						erChk2 = items;
+						
+					}
+					
+				});
+
+				let common = $('input[name=일반]').prop("checked");
+				let medicien = $('input[name=내과]').prop("checked");
+				let surgery = $('input[name=외과]').prop("checked");
+				let neurosurgery = $('input[name=신경외과]').prop("checked");
+				console.log('common', common);
+				console.log('medicien', medicien);
+				console.log('surgery', surgery);
+				console.log('neurosurgery', neurosurgery);
+				
+				let CT = $('input[name=CT]').prop("checked");
+				let MRI = $('input[name=MRI]').prop("checked");
+				let camera = $('input[name=조영촬영기]').prop("checked");
+				let respirator = $('input[name=인공호흡기]').prop("checked");
+				let incubator = $('input[name=인큐베이터]').prop("checked");
+				console.log('CT', CT);
+				console.log('MRI', MRI);
+				console.log('camera', camera);
+				console.log('respirator', respirator);
+				console.log('incubator', incubator);
+
+				// 배열 합치기
+				erChk.sort((a, b) => a.hpid.localeCompare(b.hpid));
+				er.sort((a, b) => a.hpid.localeCompare(b.hpid));
+
+				let mergedArray = erChk.map((obj, index) => {
+					  return obj.hpid === er[index].hpid
+					    ? Object.assign({}, obj, er[index])
+					    : obj;
+					});
+				
+				er.slice(erChk.length).forEach(obj => mergedArray.push(obj));
+	
+				let erMerged = mergedArray.map(obj => {
+					  return {
+					    dutyAddr: obj.dutyAddr,
+					    dutyEmcls: obj.dutyEmcls,
+					    dutyEmclsName: obj.dutyEmclsName,
+					    dutyName: obj.dutyName,
+					    dutyTel1: obj.dutyTel1,
+					    dutyTel3: obj.dutyTel3,
+					    hpid: obj.hpid,
+					    hv11: obj.hv11,
+					    hvctayn: obj.hvctayn,
+					    hvmriayn: obj.hvmriayn,
+					    hvangioayn: obj.hvangioayn,
+					    hvventiayn: obj.hvventiayn,
+					    wgs84Lat: obj.wgs84Lat,
+					    wgs84Lon: obj.wgs84Lon
+					  };
+					});
+
+				console.log('erMerged', erMerged);
+				console.log('erChk2', erChk2);
+				if(CT || MRI || camera || respirator || incubator || 
+						common || medicien || surgery || neurosurgery){
+					
+					combined = erMerged.map((erItem) => {
+					let matchingChk = erChk2.find((chkItem) => chkItem.dutyName === erItem.hpid);
+					  if (matchingChk) {
+					    return {
+					      ...erItem,
+					      ...matchingChk,
+					      dutyName: erItem.dutyName
+					    };
+					  }
+					  return null;
+					}).filter(Boolean);
+
+				console.log('combined', combined);
+				let filtered = combined.filter(item => {
+					  let passesAllConditions = true;
+
+					  if (CT && item.hvctayn !== "Y") passesAllConditions = false;
+					  if (MRI && item.hvmriayn !== "Y") passesAllConditions = false;
+					  if (camera && item.hvangioayn !== "Y") passesAllConditions = false;
+					  if (respirator && item.hvventiayn !== "Y") passesAllConditions = false;
+					  if (incubator && item.hv11 !== 0) passesAllConditions = false;
+					  if (common && item.mkioskty1 !== "Y") passesAllConditions = false;
+					  if (medicien && item.mkioskty2 !== "Y") passesAllConditions = false;
+					  if (surgery && item.mkioskty3 !== "Y") passesAllConditions = false;
+					  if (neurosurgery && item.mkioskty8 !== "Y") passesAllConditions = false;
+
+					  return passesAllConditions;
+					});
+
+					// Combine the arrays to get the final result
+					combinedFiltered = filtered.reduce((accumulator, current) => accumulator.concat(current), []);
+
+					console.log('combinedFiltered', combinedFiltered);
+
+				}else{
+					combinedFiltered = erMerged;
+				}
+				
+				
+				
 				
 				// 마커 이미지의 이미지 주소입니다
 				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 			    
 			    // 마커 이미지의 이미지 크기 입니다
 			    var imageSize = new kakao.maps.Size(24, 35); 
-			    var LatLng = new kakao.maps.LatLng(er[0].wgs84Lat, er[0].wgs84Lon);
-			    
-			    er.forEach(function (item) {
-			    	console.log("items : ", item);
-			    	
+			    var LatLng = new kakao.maps.LatLng(combinedFiltered[0].wgs84Lat, combinedFiltered[0].wgs84Lon);
+			    combinedFiltered.forEach(function (item) {
 				    // 마커 이미지를 생성합니다    
 				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 				    
@@ -165,13 +300,13 @@ $(document).ready(function () {
 			            
 						$('.link').attr("href", hf);
 					});
-					
-
-		            
 				
 			    });
+				
 			}
+		
 		});
+		
 	});
 	
 });	
@@ -254,11 +389,11 @@ function subregion(city){
                             </select>
                             </fieldset>
                             <fieldset class="med-department">
-                                <legend>진료 과목</legend>
-                                <input type="checkbox" name="일반" value="common"><label for="common">일반</label>
-                                <input type="checkbox" name="내과" value="medicine"><label for="medicine">내과</label>
-                                <input type="checkbox" name="외과" value="surgery"><label for="surgery">외과</label>
-                                <input type="checkbox" name="신경외과" value="neurosurgery"><label for="neurosurgery">신경외과</label>
+                                <legend>응급 수술(해당 수술 가능 병원)</legend>
+                                <input type="checkbox" name="일반" value="common"><label for="common">뇌출혈수술</label>
+                                <input type="checkbox" name="내과" value="medicine"><label for="medicine">뇌경색의재관류</label>
+                                <input type="checkbox" name="외과" value="surgery"><label for="surgery">심근경색의재관류</label>
+                                <input type="checkbox" name="신경외과" value="neurosurgery"><label for="neurosurgery">조산산모</label>
                             </fieldset>
                             <fieldset class="med-equipment">
                                 <legend>장비 정보(가용여부)</legend>
@@ -276,7 +411,7 @@ function subregion(city){
                     </form>
                 </div>
                 <div class="search_map">
-                    <h2>선택하신 조건을 기반으로 한 검색 결과 입니다.</h2>
+                    <h2>선택하신 조건을 기반으로 한 검색 결과 입니다.<span class="totalER"></span></h2>
                     <div id="map">
                     </div>
                 </div>
