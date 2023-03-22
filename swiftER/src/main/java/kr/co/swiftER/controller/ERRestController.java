@@ -20,7 +20,7 @@ import kr.co.swiftER.vo.ERReviewVO;
 
 @Controller
 public class ERRestController {
-	
+	/*
 	@Autowired
 	private ERService service;
 	
@@ -117,7 +117,7 @@ public class ERRestController {
         
         return "er/erDetail";
     }
-    
+    */
     
     
     
