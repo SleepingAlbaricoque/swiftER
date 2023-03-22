@@ -32,32 +32,39 @@
             }
             
             function checkboxresult(){
-				    //배열 선언
-                    var chkarr = new Array();
-                    $('input:checkBox[name="${bd1.symptom}"]:checked').each(function(){//체크된 리스트 저장
-                    	chkarr.push($(this).val());
-                    });
-                    
-                    console.log(chkarr);	
-                    
-                    let chks = chkarr.toString();
-                    
-                    var param = {"chks" : chks};// 체크박스 배열 저장
-                    
-                    //ajax 호출
-                    $.ajax({
-                        url:"/swiftER/symptoms/symptoms",
-                        type:'post',
-                        data:JSON.stringify(param),
-                        dataType:'json',
-                        traditional: true,
-                        contentType:'application/json; charset=UTF-8',
-                        success:function(data){
-                            console.log(chkarr);
-                             
-                        }
-                    });
-                    
+            	
+            	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
+                const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.name);
+                console.log(checkedValues);
+                
+                if(checkedValues.length == 0) {
+                	alert("체크해주세요!");
+                }
+                
+                /*
+                $.ajax({
+                    url:"/swiftER/symptoms/symptoms",
+                    type:'post',
+                    data:JSON.stringify(checkedValues),
+                    dataType:'json',
+                    traditional: true,
+                    contentType:'application/json; charset=UTF-8',
+                    success:function(data){
+                        location.href="/swiftER/symptoms/resultsymptoms?body1_code="+body1_code;
+                        
+                    }
+                });
+         	*/
+                let chks = checkedValues.toString();
+         		
+         		let ischk = confirm('검색하시겠습니까?');
+         		
+         		if(ischk){
+         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+chks;
+         		}else{
+         			return false;
+         		}
             }
         </script>
 </head>
