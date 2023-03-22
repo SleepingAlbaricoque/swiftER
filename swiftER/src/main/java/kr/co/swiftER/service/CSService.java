@@ -66,6 +66,11 @@ public class CSService {
 		return dao.selectMyArticles(cateCode, subcateCode, start, id);
 	}
 	
+	// 내가 쓴 qna 답변 여부 체크
+	public int selectCountQnaAnswer(int no) {
+		return dao.selectCountQnaAnswer(no);
+	}
+	
 	
 	// 파일 업로드
 	// applicaton.properties에서 설정한 파일 저장 경로 주입받기

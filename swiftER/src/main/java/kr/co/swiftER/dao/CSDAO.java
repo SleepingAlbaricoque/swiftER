@@ -27,6 +27,9 @@ public interface CSDAO {
 	public int selectMyCountTotal(@Param(value="cateCode") String cateCode, @Param(value="subcateCode") String subcateCode, @Param(value="id") String id);
 	public List<CSQuestionsVO> selectMyArticles(@Param(value="cateCode") String cateCode, @Param(value="subcateCode") String subcateCode, @Param(value="start") int start, @Param(value="id") String id);
 	
+	// 내가 쓴 qna 답변 여부 체크
+	public int selectCountQnaAnswer(int no);
+	
 	// 파일 처리
 	// FileVO를 file 테이블에 업로드
 	public int insertFile(FileVO fvo);

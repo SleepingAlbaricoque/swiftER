@@ -32,4 +32,7 @@ public class CSQuestionsVO {
 	
 	// 파일 다운로드를 위해 추가
 	private List<FileVO> fvoList;
+	
+	// 내가 쓴 qna 답변 여부 체크위해 추가
+	private String isAnswered;
 }

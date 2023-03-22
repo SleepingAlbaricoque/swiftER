@@ -52,54 +52,19 @@
                                 <th>가입일자</th>
                                 <th></th>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
+                            <tr th:each="member, status:${members}">
+                                <td>[[${status.index + 1}]]</td>
+                                <td>[[${member.member.uid}]]</td>
+                                <th:block th:switch="${member.member.grade}">
+                                	<td th:case="0">관리자</td>
+                                	<td th:case="1">일반</td>
+                                	<td th:case="2">의사</td>
+                                	<td th:case="3">탈퇴</td>
+                                </th:block>
+                                <td>[[${member.member.name}]]</td>
+                                <td>[[${member.member.rdate}]]</td>
                                 <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>test10</td>
-                                <td>의사</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                    <input type="button" value="상세보기" class="details-button" th:onclick="|location.href='@{/admin/member/view?(uid=${member.member.uid})}'|">
                                 </td>
                             </tr>
                         </table>
@@ -130,15 +95,17 @@
                                 <th>가입일자</th>
                                 <th></th>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>test10</td>
-                                <td>김의사</td>
-                                <td>2023.03.10</td>
-                                <td>
-                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
-                                </td>
-                            </tr>
+                            <th:block th:each="member, status:${members}">
+	                            <tr th:if="${member.doctor != null and member.doctor.verified == 0}">
+	                                <td>[[${status.index}]]</td>
+	                                <td>[[${member.member.uid}]]</td>
+	                                <td>[[${member.member.name}]]</td>
+	                                <td>[[${member.member.rdate}]]</td>
+	                                <td>
+	                                    <input type="button" value="상세보기" class="details-button" th:onclick="|location.href='@{/admin/member/view?(uid=${member.member.uid})}'|">
+	                                </td>
+	                            </tr>
+                            </th:block>
                         </table>
                         <div class="member-list-table-buttons">
                             <input type="button" value="이전" class="before">

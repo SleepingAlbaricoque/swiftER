@@ -52,7 +52,8 @@ public class SecurityConfig {
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
-				.requestMatchers("/er/**").permitAll();
+				.requestMatchers("/er/**").permitAll()
+				.requestMatchers("/admin/**").hasRole("0");
 
 		
 		/*
