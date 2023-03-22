@@ -27,4 +27,5 @@ public interface CommunityDAO {
 	public int insertComment(CommunityArticleVO vo);
 	public List<CommunityArticleVO> selectComments(@Param("parent")String parent); 
 	public int selectCommentCountTotal(@Param("parent")String parent);
+	public int updateComments(@Param("parent") Integer parent);
 }

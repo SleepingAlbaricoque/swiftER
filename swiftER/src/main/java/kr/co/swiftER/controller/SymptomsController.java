@@ -1,5 +1,6 @@
 package kr.co.swiftER.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,16 +44,27 @@ public class SymptomsController {
 	
 	@PostMapping(value="symptoms/symptoms")
 	@ResponseBody
-	public Map<String, Integer> symptoms(@RequestBody SymptomsSymptomsVO symptom) {
+	public String symptoms(Model model, @RequestParam(value="checkedValues[]") ArrayList<SymptomsSymptomsVO> checkBoxArr) {
 		
+		List<SymptomsSymptomsVO> symp = new ArrayList<>();
 		
-		Map<String, Integer> map = new HashMap<>();
-
-		return map;
+		model.addAttribute("symp", symp);
+		model.addAttribute("checkBoxArr", checkBoxArr);
+		
+		return "symptoms/symptoms";
 	}
 	
 	@GetMapping("symptoms/resultsymptoms")
-	public String resultsymptoms() {
+	public String resultsymptoms(Model model, String body1_code, String code) {
+		
+		List<SymptomsSymptomsVO> checkBoxArr = service.selectBody1(code);
+		
+
+		model.addAttribute("checkBoxArr", checkBoxArr);
+		
+		model.addAttribute("body1_code", body1_code);
+		model.addAttribute("code", code);
+		
 		return "symptoms/resultsymptoms";
 	}
 	

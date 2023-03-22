@@ -20,7 +20,7 @@ import kr.co.swiftER.vo.ERReviewVO;
 
 @Controller
 public class ERRestController {
-	
+	/*
 	@Autowired
 	private ERService service;
 	
@@ -33,24 +33,58 @@ public class ERRestController {
     @Value("${restApi.erlistUrl}")
     private String erlistUrl;
 
+    @Value("${restApi.erUserfulUrl}")
+    private String erUserfulUrl;
+    
+    @Value("${restApi.erSmTypeUrl}")
+    private String erSmTypeUrl;
+
     private String pageNo = "1";
     private String numOfRows = "1000";
     
     @ResponseBody
     @PostMapping("er/erSearch")    
-    public String erSearch(Model model, String city, String town) throws IOException {
+    public String erSearch(String city, String town) throws IOException {
         
-    	String deurl = erlistUrl;
-    	
         // RestTemplate 생성            
         RestTemplate restTemplate = new RestTemplate();
          
         // 오브젝트로 결과값 받아오기
-        String url = deurl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        String url = erlistUrl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
         System.out.println("url : "+url);        
         String response = restTemplate.getForObject(url, String.class);
         
         return response;
+    }
+    
+    @ResponseBody
+    @PostMapping("er/erSearch2")    
+    public String erSearch2(String city, String town) throws IOException {
+    	
+    	// RestTemplate 생성            
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	// 오브젝트로 결과값 받아오기
+    	String url = erUserfulUrl + restApiKey + "&STAGE1=" + city + "&STAGE2=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+    	System.out.println("url : "+url);        
+    	String response = restTemplate.getForObject(url, String.class);
+    	
+    	return response;
+    }
+    
+    @ResponseBody
+    @PostMapping("er/erSearch3")    
+    public String erSearch3(String city, String town) throws IOException {
+    	
+    	// RestTemplate 생성            
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	// 오브젝트로 결과값 받아오기
+    	String url = erSmTypeUrl + restApiKey + "&STAGE1=" + city + "&STAGE2=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+    	System.out.println("url : "+url);        
+    	String response = restTemplate.getForObject(url, String.class);
+    	
+    	return response;
     }
     
 	@GetMapping("er/erDetail")
@@ -83,7 +117,7 @@ public class ERRestController {
         
         return "er/erDetail";
     }
-    
+    */
     
     
     
