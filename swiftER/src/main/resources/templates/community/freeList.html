@@ -58,7 +58,7 @@ window.onload = () => {
             <table>
             <th:block th:if="${cateCode}== 10 or ${cateCode}== 12">
               <tr th:each="cates:${cates}">
-	              <td><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no},parent=${cates.no})}" th:text="${cates.title}"></a></td>
+	              <td><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no},parent=${cates.no},comments=${cates.comments})}" th:text="${cates.title}"></a></td>
 	              <td>[[${(cates.member_uid)}]]</td>
 	              <td>[[${(cates.view)}]] views</td>	
 	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>

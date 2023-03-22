@@ -67,6 +67,8 @@
     <insert id="insertComment" useGeneratedKeys="true" keyProperty="no">
         insert into `community_article` set 
 			`parent`=#{parent},
+			`cateCode`=#{cateCode},
+            `regionCode`=#{regionCode},
 			`content`=#{content},
 			`member_uid`=#{member_uid},
 			`regip`=#{regip},
@@ -86,7 +88,16 @@
     <update id="updateArticleView">
 		UPDATE `community_article` SET `view` = `view` + 1 WHERE `no`= #{no};    
     </update>
+    
     <update id="updateComments">
-		UPDATE `community_article` SET `comments` = (select count(`no`) from `community_article` where `parent` = #{parent});    
+		UPDATE `community_article` AS a
+		JOIN (
+		    SELECT `parent`, COUNT(`no`) AS `comments`
+		    FROM `community_article`
+		    WHERE `parent` = #{parent}
+		    GROUP BY `parent`
+		) AS b
+		ON a.`no` = b.`parent`
+		SET a.`comments` = b.`comments`;
     </update>
 </mapper>
