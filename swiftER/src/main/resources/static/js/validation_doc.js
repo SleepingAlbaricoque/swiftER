@@ -187,6 +187,7 @@
     		let zip = $('input[name=zip]').val();
     		let addr1 = $('input[name=addr1]').val();
     		let addr2 = $('input[name=addr2]').val();
+    		let grade = $('input[name=grade]').val();
     		
     		let jsonData = {
 				"uid" : uid,
@@ -198,7 +199,8 @@
 				"contact" : contact,
 				"zip" : zip,
 				"addr1" : addr1,
-				"addr2" : addr2
+				"addr2" : addr2,
+				"grade" : grade
 			}
     		
     		console.log(jsonData);
@@ -213,6 +215,29 @@
 					if(data.result == 1){
 						alert("회원가입이 완료되었습니다!")
 						location.href="/swiftER/member/login";	
+					}else{
+						alert("오류 발생!");
+					}
+					
+						}
+			});
+			
+			let kind = $('input[name=kind]').val();
+			let specialty = $('input[name=specialty]').val();
+			
+			let jsonData2 = {
+				"kind" : kind,
+				"specialty" : specialty
+			}
+			$.ajax({
+				
+				url : '/swiftER/member/insertDoctor',
+				method : 'post',
+				data : jsonData2,
+				dataType : 'json',
+				success : function(data){
+					if(data.result == 1){
+							alert("!");
 					}else{
 						alert("오류 발생!");
 					}
