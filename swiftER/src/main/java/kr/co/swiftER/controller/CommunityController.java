@@ -82,7 +82,7 @@ public class CommunityController {
     }
 
     @GetMapping(value = {"community/freeView"})
-    public String FreeView(Model model, String pg, int no, String cateCode, String parent){
+    public String FreeView(Model model, String pg, int no, String cateCode, String parent, String comments){
     	
     	 pg = (pg == null) ? "1" : pg;
 
@@ -110,14 +110,29 @@ public class CommunityController {
          model.addAttribute("cm", cm);
          model.addAttribute("cateCode", cateCode);
          model.addAttribute("parent", parent);
-
+         model.addAttribute("no", no);
+         
          return "community/freeView";
     }
     
     @PostMapping(value = {"community/freeView"})
-    public String FreeComment(Model model) {
+    public String FreeComment(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
+    		Integer cateCode, Integer regionCode, Integer parent, String no , String comment) {
     	
-    	return "community/freeView";
+    	MemberEntity member = myUser.getMember();
+    	
+    	 //log.info("no : "+ no);
+    	 
+    	 vo.setMember_uid(member.getUid());
+         vo.setCateCode(String.valueOf(cateCode));
+         vo.setRegionCode(String.valueOf(regionCode));
+         vo.setParent(String.valueOf(parent));
+         vo.setRegip(req.getRemoteAddr());
+         
+         service.insertComment(vo);
+         service.updateComments(parent);
+         
+         return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
     @GetMapping(value = {"community/freeWrite"})

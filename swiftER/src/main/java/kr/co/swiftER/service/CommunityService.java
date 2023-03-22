@@ -31,7 +31,9 @@ public class CommunityService {
 	public List<CommunityArticleVO> selectComments(String parent){
         return dao.selectComments(parent);
     }
-	
+	public int updateComments(Integer parent) {
+		return dao.updateComments(parent);
+	}
 	/* Free */
 	public int insertFreeArticle(CommunityArticleVO vo){	
         int result = dao.insertFreeArticle(vo);

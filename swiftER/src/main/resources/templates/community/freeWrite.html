@@ -7,7 +7,7 @@
              <ul>
               <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
               <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
-              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=12}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList(cateCode=12, regionCode=100)}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
