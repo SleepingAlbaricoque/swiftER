@@ -45,7 +45,7 @@
 			`zip`=#{zip},
 			`addr1`=#{addr1},
 			`addr2`=#{addr2},
-			`grade`=1,
+			`grade`=#{grade},
 			`regip`=#{regip},
 			`rdate`=NOW();
 			
