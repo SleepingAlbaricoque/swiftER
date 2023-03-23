@@ -43,8 +43,8 @@ $(document).ready(function () {
 				let json = JSON.parse(data);
 				let check = json.response.body.totalCount;
 				if(check == 0){
-					alert("검색한 결과가 없습니다.");
-					false;
+					alert("검색한 결과가 없습니다, 다른 조건으로 검색하시길 바랍니다.");
+					location.reload();
 				}
 				
 				
@@ -61,8 +61,8 @@ $(document).ready(function () {
 						let json = JSON.parse(data);
 						let check = json.response.body.totalCount;
 						if(check == 0){
-							alert("검색한 결과가 없습니다.");
-							false;
+							alert("검색한 결과가 없습니다, 다른 조건으로 검색하시길 바랍니다.");
+							location.reload();
 						}
 						
 						let items = json.response.body.items.item;
@@ -81,8 +81,8 @@ $(document).ready(function () {
 						let json = JSON.parse(data);
 						let check = json.response.body.totalCount;
 						if(check == 0){
-							alert("검색한 결과가 없습니다.");
-							false;
+							alert("검색한 결과가 없습니다, 다른 조건으로 검색하시길 바랍니다.");
+							location.reload();
 						}
 						
 						let items = json.response.body.items.item;
@@ -187,17 +187,17 @@ $(document).ready(function () {
 			        if (ct) {
 			          filters.push((arr) => {
 					    console.log('hvCtayn filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['hvCtayn'] == "Y");
+					    return arr.filter(item => item['hvctayn'] == "Y");
 					  });
 			        }
 			        if (mri) {
-			          filters.push((arr) => arr.filter(item => item['hvMriayn'] == "Y"));
+			          filters.push((arr) => arr.filter(item => item['hvmriayn'] == "Y"));
 			        }
 			        if (camera) {
-			          filters.push((arr) => arr.filter(item => item['hvAngioayn'] == "Y"));
+			          filters.push((arr) => arr.filter(item => item['hvangioayn'] == "Y"));
 			        }
 			        if (respirator) {
-			          filters.push((arr) => arr.filter(item => item['hvVentilayn'] == 'Y'));
+			          filters.push((arr) => arr.filter(item => item['hvventilayn'] == 'Y'));
 			        }
 			        if (incubator) {
 			          filters.push((arr) => arr.filter(item => item['hv11'] > 0));
@@ -212,10 +212,17 @@ $(document).ready(function () {
 					  });
 					}
 					
+					if(filtered.length > 0){
+						alert('선택하신 조건을 모두 충족하는 결과가 없습니다, 선택하신 지역을 기반으로 한 검색 결과 입니다.');
+						combinedFiltered = combined;
+					}else{
+						combinedFiltered = filtered;	
+					}
+					
 					console.log('filters', filters);
 					console.log('filtered', filtered);
 					
-					combinedFiltered = filtered;
+					
 					
 					console.log('combinedFiltered', combinedFiltered);
 
