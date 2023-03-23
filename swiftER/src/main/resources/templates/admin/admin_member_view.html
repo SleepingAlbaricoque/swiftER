@@ -80,6 +80,14 @@
             }
 
         }
+        
+        function certPopup(uid){
+        	let width = 800;
+        	let height = 700;
+        	let left = screen.width/2 - width/2;
+        	let top = screen.width/2 - height/2;
+        	window.open("/swiftER/admin/member/popup?uid=" + uid, "certificate", 'width='+width+', height='+height+', top='+top+', left='+left);
+        }
     </script>
             <div class="admin-content">
                 <div class="member-view-panel-main shadow">
@@ -138,7 +146,7 @@
                             </tr>
                             <tr>
                                 <td class="key">인증서</td>
-                                <td><a th:href="@{/download}">[[${member.doctor.cert_oriName}]]</a></td>
+                                <td><a href="#"  th:uid="${member.member.uid}" onclick="certPopup(this.getAttribute('uid'))">a[[${member.doctor.cert_oriName}]]</a></td>
                                 <td class="key">관리자 인증 메시지</td>
                                 <td colspan="3"><input type="text" th:value="${member.doctor.veriMsg}" readonly></td>
                             </tr>

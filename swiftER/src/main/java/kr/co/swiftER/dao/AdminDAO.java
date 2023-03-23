@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
 @Mapper
@@ -24,4 +25,8 @@ public interface AdminDAO {
 	
 	// 회원 영구 정지 시키기(member 테이블 grade가 4로, wdate 기록)
 	public int banMember(String uid);
+	
+	// 의사 회원 uid값으로 첨부한 면허증 사진 정보 가져오기
+	public FileVO selectDocCert(String uid);
+
 }

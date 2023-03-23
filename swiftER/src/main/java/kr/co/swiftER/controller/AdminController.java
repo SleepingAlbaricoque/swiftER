@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.swiftER.service.AdminService;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
 @Controller
@@ -104,6 +105,19 @@ public class AdminController {
 		resultMap.put("result", result);
 		
 		return resultMap;
+	}
+	
+	@GetMapping("admin/member/popup")
+	public String memberPopup(String uid, Model model) {
+		// uid값에 해당하는 의사 회원의 면허증 사진 정보 가져오기
+		FileVO cert = service.selectDocCert(uid);
+		
+		// src 폴더에는 newName으로 저장되어 있으므로 newName 값을 저장하기
+		//String newName = cert.getNewName();
+		//model.addAttribute("newName", newName);
+		model.addAttribute("newName", "7bc520e9-f7d8-40d2-aa1e-fae10abf1611.jpg");
+		
+		return "admin/admin_member_popup";
 	}
 	
 	@GetMapping("admin/cs/notice")

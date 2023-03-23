@@ -1,12 +1,16 @@
 package kr.co.swiftER.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.swiftER.dao.AdminDAO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
 @Service
@@ -36,6 +40,11 @@ public class AdminService {
 			return 1;
 		
 		return 0;
+	}
+	
+	// 의사 회원 uid값으로 첨부한 면허증 사진 정보 가져오기
+	public FileVO selectDocCert(String uid) {
+		return dao.selectDocCert(uid);
 	}
 	
 	
