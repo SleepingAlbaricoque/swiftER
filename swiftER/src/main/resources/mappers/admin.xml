@@ -35,8 +35,30 @@
 	<select id="selectMembers" resultMap="selectMembersAllResultMap">
 		select * from `member` as a
 		left join `member_doctor` as b 
-		on a.uid = b.member_uid 
-		order by no desc
+		on a.uid = b.member_uid
+		<if test="isDoc != 0">
+			where b.verified =0
+		</if> 
+		order by rdate desc
 		limit #{start}, 5;
 	</select>
+	
+	<select id="selectCountTotal" resultType="int">
+		select count(`uid`) from `member`;
+	</select>
+
+	<select id="selectDocCountTotal" resultType="int">
+		select count(`member_uid`) from `member_doctor` where `verified`=0;
+	</select>
+	
+	<select id="selectMember" resultMap="selectMembersAllResultMap">
+		select * from `member` as a
+		left join `member_doctor` as b 
+		on a.uid = b.member_uid
+		where a.uid=#{uid};
+	</select>
+	
+	<update id="banMember">
+		update `member` set `grade`=4, `wdate`=NOW() where `uid`=#{uid};
+	</update>
 </mapper>

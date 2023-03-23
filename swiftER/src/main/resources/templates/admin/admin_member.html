@@ -18,17 +18,21 @@
         }
 
         function numHightlight(i){
+        		i -= 1; // 버튼 시작 value가 1이고, 첫번째 버튼을 여기서 가리키려면 document.querySelectorAll(".num")[0]이기 때문
                 let num = document.querySelectorAll(".num")[i];
                 let numLength = document.querySelectorAll(".num").length;
-
+					
                 for(let j =0; j < numLength; j++){
                     document.querySelectorAll(".num")[j].classList.remove('on');    
                 }
 
                 num.classList.add('on');
+                
+                location.href = "/swiftER/admin/member?pg=" + (i + 1) + "&docPg=" + [[${docPg}]];
             }
 
         function numHightlight2(i){
+        		i -= 1; // 버튼 시작 value가 1이고, 첫번째 버튼을 여기서 가리키려면 document.querySelectorAll(".num")[0]이기 때문
                 let num = document.querySelectorAll(".num2")[i];
                 let numLength = document.querySelectorAll(".num2").length;
 
@@ -37,7 +41,18 @@
                 }
 
                 num.classList.add('on');
+                
+                location.href = "/swiftER/admin/member?pg=" + [[${pg}]] + "&docPg=" + (i + 1);
             }
+        
+        window.onload = () => {
+        	let pg = [[${pg}]];
+        	let docPg = [[${docPg}]];
+        	
+        	// 페이지 로드 시 파라미터로 넘어온 pg 페이지 버튼이 highlight 되도록
+        	document.querySelectorAll('.num')[pg - 1].classList.add('on');
+        	document.querySelectorAll('.num2')[docPg - 1].classList.add('on');
+        }
     </script>
             <div class="admin-content">
                 <div class="member-panel-main shadow">
@@ -53,13 +68,14 @@
                                 <th></th>
                             </tr>
                             <tr th:each="member, status:${members}">
-                                <td>[[${status.index + 1}]]</td>
+                                <td>[[${start + status.index + 1}]]</td>
                                 <td>[[${member.member.uid}]]</td>
                                 <th:block th:switch="${member.member.grade}">
                                 	<td th:case="0">관리자</td>
                                 	<td th:case="1">일반</td>
                                 	<td th:case="2">의사</td>
                                 	<td th:case="3">탈퇴</td>
+                                	<td th:case="4">영구 정지</td>
                                 </th:block>
                                 <td>[[${member.member.name}]]</td>
                                 <td>[[${member.member.rdate}]]</td>
@@ -69,18 +85,17 @@
                             </tr>
                         </table>
                         <div class="member-list-table-buttons">
-                            <input type="button" value="이전" class="before">
-                            <input type="button" value="1" class="num" onclick="numHightlight(0)">
-                            <input type="button" value="2" class="num" onclick="numHightlight(1)">
-                            <input type="button" value="3" class="num" onclick="numHightlight(2)">
-                            <input type="button" value="4" class="num" onclick="numHightlight(3)">
-                            <input type="button" value="5" class="num" onclick="numHightlight(4)">
-                            <input type="button" value="6" class="num" onclick="numHightlight(5)">
-                            <input type="button" value="7" class="num" onclick="numHightlight(6)">
-                            <input type="button" value="8" class="num" onclick="numHightlight(7)">
-                            <input type="button" value="9" class="num" onclick="numHightlight(8)">
-                            <input type="button" value="10" class="num" onclick="numHightlight(9)">
-                            <input type="button" value="다음" class="next">
+                        	<th:block th:if="${groups[0]>1}">
+                            	<input type="button" value="이전" class="before" th:onclick="|location.href='@{/admin/member(pg=${groups[0]-1}, docPg=${docPg})}'|">
+                            </th:block>
+                            <th:block th:if="${groups[1] != 0}">
+                            	<th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
+                            		<input type="button" th:value="${num}" class="num" onclick="numHightlight(value)">
+                            	</th:block>
+                            </th:block>
+                            <th:block th:if="${groups[1]<lastPageNum}">
+                            	<input type="button" value="다음" class="next" th:onclick="|location.href='@{/admin/member(pg=${groups[1]+1}, docPg=${docPg})}'|">
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -95,31 +110,30 @@
                                 <th>가입일자</th>
                                 <th></th>
                             </tr>
-                            <th:block th:each="member, status:${members}">
-	                            <tr th:if="${member.doctor != null and member.doctor.verified == 0}">
-	                                <td>[[${status.index}]]</td>
-	                                <td>[[${member.member.uid}]]</td>
-	                                <td>[[${member.member.name}]]</td>
-	                                <td>[[${member.member.rdate}]]</td>
+                            <th:block th:each="doc, status:${docs}">
+	                            <tr>
+	                                <td>[[${docStart + status.index + 1}]]</td>
+	                                <td>[[${doc.member.uid}]]</td>
+	                                <td>[[${doc.member.name}]]</td>
+	                                <td>[[${doc.member.rdate}]]</td>
 	                                <td>
-	                                    <input type="button" value="상세보기" class="details-button" th:onclick="|location.href='@{/admin/member/view?(uid=${member.member.uid})}'|">
+	                                    <input type="button" value="상세보기" class="details-button" th:onclick="|location.href='@{/admin/member/view?(uid=${doc.member.uid})}'|">
 	                                </td>
 	                            </tr>
                             </th:block>
                         </table>
                         <div class="member-list-table-buttons">
-                            <input type="button" value="이전" class="before">
-                            <input type="button" value="1" class="num2" onclick="numHightlight2(0)">
-                            <input type="button" value="2" class="num2" onclick="numHightlight2(1)">
-                            <input type="button" value="3" class="num2" onclick="numHightlight2(2)">
-                            <input type="button" value="4" class="num2" onclick="numHightlight2(3)">
-                            <input type="button" value="5" class="num2" onclick="numHightlight2(4)">
-                            <input type="button" value="6" class="num2" onclick="numHightlight2(5)">
-                            <input type="button" value="7" class="num2" onclick="numHightlight2(6)">
-                            <input type="button" value="8" class="num2" onclick="numHightlight2(7)">
-                            <input type="button" value="9" class="num2" onclick="numHightlight2(8)">
-                            <input type="button" value="10" class="num2" onclick="numHightlight2(9)">
-                            <input type="button" value="다음" class="next">
+                        	<th:block th:if="${docGroups[0]>1}">
+                            	<input type="button" value="이전" class="before" th:onclick="|location.href='@{/admin/member(pg=${pg}, docPg=${docGroups[0]-1})}'|">
+                            </th:block>
+                            <th:block th:if="${docGroups[1] != 0}">
+                            	<th:block th:each="num2:${#numbers.sequence(docGroups[0], docGroups[1])}">
+                            		<input type="button" th:value="${num2}" class="num2" onclick="numHightlight2(value)">
+                            	</th:block>
+                            </th:block>
+                            <th:block th:if="${docGroups[1]<docLastPageNum}">
+                            	<input type="button" value="다음" class="next" th:onclick="|location.href='@{/admin/member(pg=${pg}, docPg=${docGroups[1]+1})}'|">
+                            </th:block>
                         </div>
                     </div>
                 </div>
