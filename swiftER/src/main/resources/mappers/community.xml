@@ -49,7 +49,8 @@
     </select>
     
     <select id="selectCountTotal" resultType="int">
-        select count(`no`) from `community_article` where `cateCode` = #{cateCode};
+        select count(`no`) from `community_article` where `cateCode` = #{cateCode}
+        and `parent` = 0;
     </select>
     
     <select id="selectFindTitleSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
@@ -60,6 +61,7 @@
 	    <if test="regionCode!=100">
         AND regionCode = #{regionCode}
         </if>
+        and `parent` = 0
 	    order BY `no` desc 
 	    LIMIT #{start}, 10;
     </select>
@@ -76,6 +78,12 @@
     </insert>
     
     <select id="selectComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+         SELECT a.*, b.uid FROM `community_article` AS a 
+		 JOIN `member` AS b ON a.member_uid = b.uid 
+		 WHERE `parent` =#{parent} ORDER BY `no` DESC
+		 LIMIT #{start}, 10;	
+    </select>
+     <select id="selectQnaComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
          SELECT a.*, b.uid FROM `community_article` AS a 
 		 JOIN `member` AS b ON a.member_uid = b.uid 
 		 WHERE `parent` =#{parent} ORDER BY `no` DESC;	
@@ -100,4 +108,12 @@
 		ON a.`no` = b.`parent`
 		SET a.`comments` = b.`comments`;
     </update>
+    
+    <delete id="deleteArticle">
+    	delete from `community_article` where `no`=#{no} or `parent`=#{parent};
+    </delete>
+    
+    <delete id="deleteComment">
+    	delete from `community_article` where `no`=#{no};
+    </delete>
 </mapper>
