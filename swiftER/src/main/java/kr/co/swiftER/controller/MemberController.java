@@ -1,5 +1,6 @@
 package kr.co.swiftER.controller;
 
+import java.net.http.HttpHeaders;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import kr.co.swiftER.service.MemberService;
 import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
@@ -34,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	
 	@Autowired MemberService service;
+	
 	
 	/* 로그인 페이지 */
 	
@@ -182,5 +186,20 @@ public class MemberController {
 		return "member/articleList";
 	}
 	
+	/* 2차에서 하자 
+	
+	
+	// 카카오 
+	@ResponseBody
+	@GetMapping("member/callbackKakao")
+	public void kakaoCallback(@RequestParam String code) {
+		
+		System.out.println("code : " + code);
+		
+		// service.getKakaoAccesToken(code);
+		
+	}
+	*/
+
 	
 }
