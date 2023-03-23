@@ -168,58 +168,48 @@ $(document).ready(function () {
 					
 					if (common) {
 					  filters.push((arr) => {
-					    console.log('common filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['mkioskTy1'] === 'Y');
+					    console.log('mkioskTy1 filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['MKioskTy1'] == "Y");
 					  });
 					}
 			        if (medicine) {
-			          filters.push((arr) => arr.filter(item => item['mkioskTy2'] === 'Y'));
+			          filters.push((arr) => arr.filter(item => item['MKioskTy2'] == "Y"));
 			        }
 			        if (surgery) {
 			          filters.push((arr) => {
-					    console.log('common filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['mkioskTy3'] === 'Y');
+					    console.log('mkioskTy3 filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['MKioskTy3'] == "Y");
 					  });
 			        }
 			        if (neurosurgery) {
-			          filters.push((arr) => arr.filter(item => item['mkioskTy8'] === 'Y'));
+			          filters.push((arr) => arr.filter(item => item['MKioskTy8'] == "Y"));
 			        }
 			        if (ct) {
 			          filters.push((arr) => {
-					    console.log('common filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['hvCtayn'] === 'Y');
+					    console.log('hvCtayn filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['hvCtayn'] == "Y");
 					  });
 			        }
 			        if (mri) {
-			          filters.push((arr) => arr.filter(item => item['hvMriayn'] === 'Y'));
+			          filters.push((arr) => arr.filter(item => item['hvMriayn'] == "Y"));
 			        }
 			        if (camera) {
-			          filters.push((arr) => arr.filter(item => item['hvAngioayn'] === 'Y'));
+			          filters.push((arr) => arr.filter(item => item['hvAngioayn'] == "Y"));
 			        }
 			        if (respirator) {
-			          filters.push((arr) => arr.filter(item => item['hvVentilayn'] === 'Y'));
+			          filters.push((arr) => arr.filter(item => item['hvVentilayn'] == 'Y'));
 			        }
 			        if (incubator) {
-			          filters.push((arr) => arr.filter(item => item['hv11'] === 0));
+			          filters.push((arr) => arr.filter(item => item['hv11'] > 0));
 			        }
 					
 					let filtered = combined;
 
-					for (let i = 0; i < filters.length; i++) {
-					  try {
-					    filtered = filters[i](filtered);
-					  } catch (error) {
-					    console.log(`An error occurred while executing filter function ${i}: ${error.message}`);
-					  }
-					}
 
 					if (filters.length > 0) {
-					  filtered = filters.reduce((acc, curr) => {
-					    return acc.reduce((resultArr, currItem) => {
-					      const filteredArr = curr(currItem);
-					      return [...resultArr, ...filteredArr];
-					    }, []);
-					  }, filtered);
+					  filters.forEach(filterFn => {
+					    filtered = filterFn(filtered);
+					  });
 					}
 					
 					console.log('filters', filters);
