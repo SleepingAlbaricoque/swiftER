@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>응급실 정보</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
@@ -55,16 +57,16 @@
             <section class="Detail">
                  <div class="ErInfo">
                     <nav>
-                        <h1>한사랑 병원 응급실</h1>
+                        <h1 id="hospi_name"></h1>
                     </nav>
                     <article class="part1">
+                    <input type="hidden" name="hpid" th:value="${code}"/>
                         <article>
                             <div class="border1">
                                 <h2>위치</h2>
                             </div>
                             <div class="border2"></div>
-                            <p>
-                                • 부산광역시 중구 광복로 27번길
+                            <p id="addr">
                             </p>
                         </article>
                         <article>
@@ -72,17 +74,15 @@
                                 <h2>진료과목</h2>
                             </div>
                             <div class="border2"></div>
-                            <p>
-                                • 안과, 내과, 정형외과
+                            <p id="dep">
                             </p>
                         </article>
                         <article>
                             <div class="border1">
-                                <h2>공지사항?</h2>
+                                <h2>찾아오시는 길</h2>
                             </div>
                             <div class="border2"></div>
-                            <p>
-                                • 성형외과 수술 불가(당직의 부재)
+                            <p id="etc">
                             </p>
                         </article>
                     </article>
@@ -92,8 +92,8 @@
                                 <h2>연락처 정보</h2>
                             </nav>
                             <nav>
-                                <span><i class="fas fa-home"></i> 전화번호 : 051-125-3464</span><br/>
-                                <span><i class="fas fa-home"></i> 웹사이트 : hansarang.org/</span>
+                                <span id="tel"><i class="fas fa-home"></i></span><br/>
+                                <span id="etc1"><i class="fas fa-home"></i></span>
                             </nav>
                         </div>
                     </article>
@@ -168,6 +168,7 @@
                 </p>
             </div>
         </footer>
-    </div>    
+    </div>
+    <script src="/swiftER/js/erDetail.js"></script>    
 </body>
 </html>
