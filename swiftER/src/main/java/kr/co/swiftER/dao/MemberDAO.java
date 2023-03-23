@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.FileDoctorVO;
+import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -32,4 +34,9 @@ public interface MemberDAO {
 	public List<ERReviewVO> selectErReviewList(String uid);
 
 	public int countCa(String uid);
+	
+	// 파일 처리
+	public void insertDoctorFile(MemberDoctorVO vo);
+
+	public int insertMemberDoctor(MemberDoctorVO dvo);
 }
