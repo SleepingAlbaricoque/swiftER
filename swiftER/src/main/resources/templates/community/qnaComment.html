@@ -7,16 +7,20 @@
              <ul>
               <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
               <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
-              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=12}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList(cateCode=12, regionCode=100)}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
-              <form action="#">
+              <form th:action="@{/community/qnaComment}" method="POST">
+              <input type="hidden" name="no" th:value="${no}">
+          	  <input type="hidden" name="cateCode" th:value="${cateCode}">
+			  <input type="hidden" name="regionCode" th:value="0">
+			  <input type="hidden" name="parent" th:value="${parent}">
                 <table>
                   <tr>
                     <td>제목</td>                  
                     <td>
-                      <h2 class="title">고양이 키우고 싶다</h2>
+                      <h2 class="title">[[${vo.title}]]</h2>
                     </td>
                   </tr>                
                   <tr>
@@ -27,7 +31,7 @@
                   </tr>
                 </table>
                 <div>
-                  <a th:href="@{./qnaView}" class="btnCancle">취소하기</a>
+                  <a th:href="@{./qnaView(cateCode=${cateCode},no=${no},parent=${parent})}" class="btnCancle">취소하기</a>
                   <input type="submit" class="btnSubmit" value="답변하기"/>
                 </div>
               </form>

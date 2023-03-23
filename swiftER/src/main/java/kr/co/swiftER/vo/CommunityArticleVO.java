@@ -38,4 +38,10 @@ public class CommunityArticleVO {
     public void setRegionCode(String regionCode) {
         this.regionCode = Integer.parseInt(regionCode);
     }
+    public int getParent() {
+        return parent;
+    }
+    public void setParent(String parent) {
+        this.parent = Integer.parseInt(parent);
+    }
 }

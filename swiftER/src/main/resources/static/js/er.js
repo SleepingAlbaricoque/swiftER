@@ -1,22 +1,6 @@
-<!DOctYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>응급실 검색</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
- 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/swiftER/css/common.css"/>
-    <link rel="stylesheet" href="/swiftER/css/er.css"/>
-    <link rel="stylesheet" href="/swiftER/css/er.css"/>
-</head>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b25c276d476675ddffb5920e680cf36"></script>
-<<<<<<< HEAD
-<script>
+/**
+ * 
+ */
 $(document).ready(function () {
 	let er = [];
 	let erChk = [];
@@ -109,21 +93,21 @@ $(document).ready(function () {
 				});
 
 				let common = $('input[name=일반]').prop("checked");
-				let medicien = $('input[name=내과]').prop("checked");
+				let medicine = $('input[name=내과]').prop("checked");
 				let surgery = $('input[name=외과]').prop("checked");
 				let neurosurgery = $('input[name=신경외과]').prop("checked");
 				console.log('common', common);
-				console.log('medicien', medicien);
+				console.log('medicine', medicine);
 				console.log('surgery', surgery);
 				console.log('neurosurgery', neurosurgery);
 				
-				let CT = $('input[name=CT]').prop("checked");
-				let MRI = $('input[name=MRI]').prop("checked");
+				let ct = $('input[name=ct]').prop("checked");
+				let mri = $('input[name=mri]').prop("checked");
 				let camera = $('input[name=조영촬영기]').prop("checked");
 				let respirator = $('input[name=인공호흡기]').prop("checked");
 				let incubator = $('input[name=인큐베이터]').prop("checked");
-				console.log('CT', CT);
-				console.log('MRI', MRI);
+				console.log('ct', ct);
+				console.log('mri', mri);
 				console.log('camera', camera);
 				console.log('respirator', respirator);
 				console.log('incubator', incubator);
@@ -161,11 +145,13 @@ $(document).ready(function () {
 
 				console.log('erMerged', erMerged);
 				console.log('erChk2', erChk2);
-				if(CT || MRI || camera || respirator || incubator || 
-						common || medicien || surgery || neurosurgery){
+				
+				// 검색 옵션을 선택한 경우
+				if(ct || mri || camera || respirator || incubator || 
+						common || medicine || surgery || neurosurgery){
 					
 					combined = erMerged.map((erItem) => {
-					let matchingChk = erChk2.find((chkItem) => chkItem.dutyName === erItem.hpid);
+					  let matchingChk = erChk2.find((chkItem) => chkItem.dutyName === erItem.hpid);
 					  if (matchingChk) {
 					    return {
 					      ...erItem,
@@ -174,27 +160,77 @@ $(document).ready(function () {
 					    };
 					  }
 					  return null;
-					}).filter(Boolean);
+					}).filter(item => item !== null); // null 값을 제외하는 필터링 추가
+					
+					console.log('combined', combined);
+					
+					let filters = [];
+					
+					if (common) {
+					  filters.push((arr) => {
+					    console.log('common filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['mkioskTy1'] === 'Y');
+					  });
+					}
+			        if (medicine) {
+			          filters.push((arr) => arr.filter(item => item['mkioskTy2'] === 'Y'));
+			        }
+			        if (surgery) {
+			          filters.push((arr) => {
+					    console.log('common filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['mkioskTy3'] === 'Y');
+					  });
+			        }
+			        if (neurosurgery) {
+			          filters.push((arr) => arr.filter(item => item['mkioskTy8'] === 'Y'));
+			        }
+			        if (ct) {
+			          filters.push((arr) => {
+					    console.log('common filter arr:', arr); // arr 출력
+					    return arr.filter(item => item['hvCtayn'] === 'Y');
+					  });
+			        }
+			        if (mri) {
+			          filters.push((arr) => arr.filter(item => item['hvMriayn'] === 'Y'));
+			        }
+			        if (camera) {
+			          filters.push((arr) => arr.filter(item => item['hvAngioayn'] === 'Y'));
+			        }
+			        if (respirator) {
+			          filters.push((arr) => arr.filter(item => item['hvVentilayn'] === 'Y'));
+			        }
+			        if (incubator) {
+			          filters.push((arr) => arr.filter(item => item['hv11'] === 0));
+			        }
+					
+					let filtered = combined;
 
-				console.log('combined', combined);
-				
-				// 필터링 조건 설정
-				let filters = [];
-				if (CT) filters.push(filterByCT);
-				if (MRI) filters.push(filterByMRI);
-				if (camera) filters.push(filterByCamera);
-				if (respirator) filters.push(filterByRespirator);
-				if (incubator) filters.push(filterByIncubator);
-				if (common) filters.push(filterByCommon);
-				if (medicien) filters.push(filterByMedicien);
-				if (surgery) filters.push(filterBySurgery);
-				if (neurosurgery) filters.push(filterByNeurosurgery);
-				
-				// 필터링 조건 적용
-				combinedFiltered = applyFilters(combined, filters);
-				console.log('combinedFiltered', combinedFiltered);
+					for (let i = 0; i < filters.length; i++) {
+					  try {
+					    filtered = filters[i](filtered);
+					  } catch (error) {
+					    console.log(`An error occurred while executing filter function ${i}: ${error.message}`);
+					  }
+					}
+
+					if (filters.length > 0) {
+					  filtered = filters.reduce((acc, curr) => {
+					    return acc.reduce((resultArr, currItem) => {
+					      const filteredArr = curr(currItem);
+					      return [...resultArr, ...filteredArr];
+					    }, []);
+					  }, filtered);
+					}
+					
+					console.log('filters', filters);
+					console.log('filtered', filtered);
+					
+					combinedFiltered = filtered;
+					
+					console.log('combinedFiltered', combinedFiltered);
 
 				}else{
+					// 지역만 선택한 경우
 					combinedFiltered = erMerged;
 				}
 				
@@ -326,133 +362,3 @@ function subregion(city){
 		}
 	});
 }
-function filterByCT(items) {
-  return items.filter(item => item.hvctayn === "Y");
-}
-function filterByMRI(items) {
-  return items.filter(item => item.hvmriayn === "Y");
-}
-function filterByCamera(items) {
-  return items.filter(item => item.hvangioayn === "Y");
-}
-function filterByRespirator(items) {
-  return items.filter(item => item.hvventiayn === "Y");
-}
-function filterByIncubator(items) {
-  return items.filter(item => item.hv11 === 0);
-}
-function filterByCommon(items) {
-  return items.filter(item => item.mkioskty1 === "Y");
-}
-function filterByMedicien(items) {
-  return items.filter(item => item.mkioskty2 === "Y");
-}
-function filterBySurgery(items) {
-  return items.filter(item => item.mkioskty3 === "Y");
-}
-function filterByNeurosurgery(items) {
-  return items.filter(item => item.mkioskty8 === "Y");
-}
-// 조건에 따라 필터링된 배열을 계속해서 연결하는 함수
-function applyFilters(items, filters) {
-  return filters.reduce((acc, filter) => filter(acc), items);
-}
-
-</script>
-<script></script>
-=======
->>>>>>> 35fde10cf3db84c7ebef845a9c68090920605bb6
-<body>
-	<script src="/swiftER/js/er.js"></script>
-    <div id="wrapper">
-        <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                </div>
-            </div>
-            <div class="logo">
-                <div>
-                    <a href="#">
-                        <img src="/swiftER/img/swifter_logo.png" alt="logo" class="logoImage">
-                    </a>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">증상검색</a>
-                        </li>
-                        <li>
-                            <a href="#">응급실검색</a>
-                        </li>
-                        <li>
-                            <a href="#">약국검색</a>
-                        </li>
-                        <li>
-                            <a href="#">커뮤니티</a>
-                        </li>
-                        <li>
-                            <a href="#">고객센터</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        <main id="search">
-            <section class="er">
-                <div class="title">
-                    <h2 class="er-search">응급실 검색</h2>
-                </div>
-                <div class="selectBox">
-                    <form action="#" method="post">
-                        <div>
-                            <fieldset class="location">
-                            <legend>위치 조건</legend>
-                            <select name="city">	
-                            <option value="전체">전체</option>
-                            <th:block th:each="region, i:${region}">
-                                <option th:value="${region.region}" id="region">[[${region.region}]]</option>
-                            </th:block>
-                            </select>
-                            <select name="town">		
-                            </select>
-                            </fieldset>
-                            <fieldset class="med-department">
-                                <legend>응급 수술(해당 수술 가능 병원)</legend>
-                                <input type="checkbox" name="일반" value="common"><label for="common">뇌출혈수술</label>
-                                <input type="checkbox" name="내과" value="medicine"><label for="medicine">뇌경색의재관류</label>
-                                <input type="checkbox" name="외과" value="surgery"><label for="surgery">심근경색의재관류</label>
-                                <input type="checkbox" name="신경외과" value="neurosurgery"><label for="neurosurgery">조산산모</label>
-                            </fieldset>
-                            <fieldset class="med-equipment">
-                                <legend>장비 정보(가용여부)</legend>
-                                <input type="checkbox" name="ct" value="ct"><label for="ct">CT</label>
-                                <input type="checkbox" name="mri" value="mri"><label for="mri">MRI</label>
-                                <input type="checkbox" name="조영촬영기" value="camera"><label for="camera">조영촬영기</label>
-                                <input type="checkbox" name="인공호흡기" value="respirator"><label for="respirator">인공호흡기</label>
-                                <input type="checkbox" name="인큐베이터" value="incubator"><label for="incubator">인큐베이터</label>
-                            </fieldset>
-                        </div>
-                        <div class="btn">
-                            <input type="reset" value="초기화" class="resetBtn">
-                            <input type="button" value="검색" class="subBtn">
-                        </div>
-                    </form>
-                </div>
-                <div class="search_map">
-                    <h2>선택하신 조건을 기반으로 한 검색 결과 입니다.<span class="totalER"></span></h2>
-                    <div id="map">
-                    </div>
-                </div>
-                <div class="info">
-                    <p>
-                        본 페이지에서 제공하는 내용은 참고사항일 뿐 게시물에 대한 법적책임은 없음을 밝혀드립니다. <br>
-                        자세한 내용은 전문가와 상담하시기 바랍니다.
-                    </p>
-                </div>
-            </section>
-        </main>
-        <th:block th:insert="~{@{_footer.html}}"/>

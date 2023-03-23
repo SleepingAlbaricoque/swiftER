@@ -140,6 +140,7 @@
     	});
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
+    	
     	$('.submit').click(function(){
 
     		////////////////////////////////////
@@ -187,6 +188,7 @@
     		let zip = $('input[name=zip]').val();
     		let addr1 = $('input[name=addr1]').val();
     		let addr2 = $('input[name=addr2]').val();
+    		let grade = $('input[name=grade]').val();
     		
     		let jsonData = {
 				"uid" : uid,
@@ -198,7 +200,8 @@
 				"contact" : contact,
 				"zip" : zip,
 				"addr1" : addr1,
-				"addr2" : addr2
+				"addr2" : addr2,
+				"grade" : grade
 			}
     		
     		console.log(jsonData);
@@ -209,9 +212,62 @@
 				method : 'post',
 				data : jsonData,
 				dataType : 'json',
+				async    : false,
 				success : function(data){
 					if(data.result == 1){
+						
+						let member_uid = $('input[name=uid]').val();
+						let kind = $('select[name=kind]').val();
+						let specialty = $('input[name=specialty]').val();
+						
+						let jsonData2 = {
+							"member_uid" : member_uid,
+							"kind" : kind,
+							"specialty" : specialty,
+						}
+						$.ajax({
+							
+							url : '/swiftER/member/insertDoctor',
+							method : 'post',
+							data : jsonData2,
+							dataType : 'json',
+							async    : false,
+							success : function(data){
+								if(data.result == 1){
+									/*
+										var formData = new FormData();
+										
+										var inputFile = $("input[name='uploadFile']");
+										
+										var files = inputFile[0].files;
+										
+										console.log(files);
+										
+										for(var i = 0; i < files.length; i++) {
+											formData.append('uploadFile', files[i]);
+										}
+										
+										$.ajax({
+											url : '/swiftER/member/doctorFile',
+											processData : false,
+											contentType : false,
+											data : formData,
+											type : "POST",
+											success : function(result){
+												alert("!");
+											}
+										});
+									*/
+										    
+								}else{
+									alert("오류 발생!");
+								}
+								
+									}
+						});
+						
 						alert("회원가입이 완료되었습니다!")
+						
 						location.href="/swiftER/member/login";	
 					}else{
 						alert("오류 발생!");
@@ -219,5 +275,8 @@
 					
 						}
 			});
+			
+			
     	});
+
     });

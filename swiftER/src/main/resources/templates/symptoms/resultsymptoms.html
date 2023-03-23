@@ -9,10 +9,9 @@
                 </div>
                 <nav class="disease">
                     <ul>
-                        <li><a th:href="@{#wrapper0}">목감기</a></li>
-                        <li><a th:href="@{#wrapper1}">감기몸살</a></li>
-                        <li><a th:href="@{#wrapper2}">외이도염</a></li>
-                        <li><a th:href="@{#wrapper3}">조현병</a></li>
+	                    <th:block th:each="chk : ${checkBoxArr}">
+	                        <li><a th:href="@{#wrapper0}">[[${chk.symptom}]]</a></li>
+	                    </th:block>
                     </ul>
                 </nav>
                 <section id="wrapper0">

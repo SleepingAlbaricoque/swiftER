@@ -46,13 +46,18 @@ public class SecurityConfig {
 				.requestMatchers("/member/registerNor").permitAll()
 				.requestMatchers("/member/registerDoc").permitAll()
 				.requestMatchers("/error/**").permitAll()
-				.requestMatchers("/community/**").permitAll()
+				.requestMatchers("/community/freeList").permitAll()
+				.requestMatchers("/community/freeView").permitAll()
+				.requestMatchers("/community/qnaView").permitAll()
+				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/mytownWrite").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/qnaComment").hasAnyRole("2")
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
-				.requestMatchers("/community/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
-				.requestMatchers("/er/**").permitAll();
+				.requestMatchers("/er/**").permitAll()
+				.requestMatchers("/admin/**").hasRole("0");
 
 		
 		/*

@@ -3,5 +3,62 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.swiftER.dao.AdminDAO">
+	<resultMap type="kr.co.swiftER.vo.MemberVO" id="selectMemberResultMap">
+		<id column="uid" property="uid"/>
+		<result column="pass" property="pass"/>
+		<result column="name" property="name"/>
+		<result column="nickname" property="nickname"/>
+		<result column="birth" property="birth"/>
+		<result column="email" property="email"/>
+		<result column="contact" property="contact"/>
+		<result column="zip" property="zip"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="grade" property="grade"/>
+		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+		<result column="wdate" property="wdate"/>
+	</resultMap>
+	<resultMap type="kr.co.swiftER.vo.MemberDoctorVO" id="selectDoctorResultMap">
+		<id column="member_uid" property="member_uid"/>
+		<result column="kind" property="kind"/>	
+		<result column="specialty" property="specialty"/>	
+		<result column="cert_oriName" property="cert_oriName"/>	
+		<result column="cert_newName" property="cert_newName"/>	
+		<result column="verified" property="verified"/>	
+		<result column="veriMsg" property="veriMsg"/>	
+	</resultMap>
+	<resultMap type="kr.co.swiftER.vo.AdminMemberSearchVO" id="selectMembersAllResultMap">
+		<collection property="member" resultMap="selectMemberResultMap"/>
+		<collection property="doctor" resultMap="selectDoctorResultMap"/>
+	</resultMap>
+	<select id="selectMembers" resultMap="selectMembersAllResultMap">
+		select * from `member` as a
+		left join `member_doctor` as b 
+		on a.uid = b.member_uid
+		<if test="isDoc != 0">
+			where b.verified =0
+		</if> 
+		order by rdate desc
+		limit #{start}, 5;
+	</select>
 	
+	<select id="selectCountTotal" resultType="int">
+		select count(`uid`) from `member`;
+	</select>
+
+	<select id="selectDocCountTotal" resultType="int">
+		select count(`member_uid`) from `member_doctor` where `verified`=0;
+	</select>
+	
+	<select id="selectMember" resultMap="selectMembersAllResultMap">
+		select * from `member` as a
+		left join `member_doctor` as b 
+		on a.uid = b.member_uid
+		where a.uid=#{uid};
+	</select>
+	
+	<update id="banMember">
+		update `member` set `grade`=4, `wdate`=NOW() where `uid`=#{uid};
+	</update>
 </mapper>

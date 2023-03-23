@@ -101,4 +101,8 @@
 		order by no desc
 		limit #{start}, 10;
 	</select>
+	
+	<select id="selectCountQnaAnswer" resultType="int">
+		select count(`no`) from `cs_questions` where `qno`=#{no};
+	</select>
 </mapper>

@@ -1,0 +1,88 @@
+<th:block th:include="@{admin/admin_header.html}"/>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+
+        function deleteConfirm(element){
+            if(confirm("정말로 삭제하시겠습니까?")){
+                location.href = "#";
+            }
+        }
+    </script>
+            <div class="admin-content">
+                <div class="community-panel-main shadow">
+                    <p>커뮤니티 글 보기</p>
+                    <form class="admin-community-form">
+                        <table class="admin-community-form-table">
+                            <tr>
+                                <td class="key">제목</td>
+                                <td>한사랑 응급실 시설 괜찮나요?</td>
+                                <td class="key cate">유형</td>
+                                <td>ER</td>
+                            </tr>
+                            <tr>
+                                <td class="key">작성자</td>
+                                <td>admin</td>
+                                <td class="key">작성일자</td>
+                                <td>2023-03-14</td>
+                            </tr>
+                            <tr>
+                                <td class="key">내용</td>
+                                <td colspan="3">
+                                    <textarea name="admin-community-write-content" id="admin-community-write-content" cols="30" rows="10" readonly>업데이트 예정입니다</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="admin-community-control-buttons">
+                            <input type="button" value="목록으로" class="admin-community-back-to-list" onclick="location.href='#'">
+                            <input type="button" value="삭제하기" class="admin-community-delete-article" onclick="deleteConfirm(this)">
+                        </div>
+                    </form>
+                </div>
+                <div class="community-view-panel-main doc-community-panel shadow">
+                    <p>커뮤니티 댓글 보기</p>
+                    <div class="community-view-table-wrapper doc-community">
+                        <table class="community-view-table doc-community">
+                            <tr>
+                                <tr>
+                                    <th><i class="fa-sharp fa-regular fa-square"></i></th>
+                                    <th class="key">번호</th>
+                                    <th class="key" colspan="3">내용</th>
+                                    <th class="key">날짜</th>
+                                    <th class="key">작성자</th>
+                                    <th></th>
+                                </tr>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td colspan="3"><textarea name="admin-community-review-content" id="admin-community-review-content" cols="20" readonly>한사랑 응급실 시설 좋아요</textarea></td>
+                                <td>2023-03-14</td>
+                                <td>admin</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="control-buttons">
+                        <input type="button" value="목록으로" class="admin-community-back-to-list" onclick="location.href='#'">
+                        <input type="button" value="삭제하기" class="admin-community-delete-article" onclick="deleteConfirm(this)">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

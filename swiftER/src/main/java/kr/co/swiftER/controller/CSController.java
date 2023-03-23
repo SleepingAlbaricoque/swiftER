@@ -237,6 +237,12 @@ public class CSController {
 		for(CSQuestionsVO qna : myQnaList) {
 			// rdate 날짜까지만 표시하기
 			qna.setRdate(qna.getRdate().substring(0, 11));
+			
+			int answer = service.selectCountQnaAnswer(qna.getNo());
+			if(answer > 0)
+				qna.setIsAnswered("답변 완료");
+			else
+				qna.setIsAnswered("대기중");
 		}
 
 		// 화면에 출력할 글들 저장

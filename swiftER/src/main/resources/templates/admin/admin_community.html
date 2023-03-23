@@ -1,0 +1,148 @@
+<th:block th:include="@{admin/admin_header.html}"/>
+    <script>
+        function searchBar(){
+            let bar = document.querySelector('.search-bar');
+
+            bar.classList.toggle('on');
+        }
+
+        function revealSubCate(i){
+            let subcate = document.querySelectorAll('.subcate')[i];
+            let subcateLength = document.querySelectorAll('.subcate').length;
+
+            for(let j =0; j <subcateLength; j++ ){
+                document.querySelectorAll('.subcate')[j].classList.remove('on');
+            }
+
+            subcate.classList.toggle('on');
+        }
+
+        function numHightlight(i){
+                let num = document.querySelectorAll(".num")[i];
+                let numLength = document.querySelectorAll(".num").length;
+
+                for(let j =0; j < numLength; j++){
+                    document.querySelectorAll(".num")[j].classList.remove('on');    
+                }
+
+                num.classList.add('on');
+            }
+
+        function numHightlight2(i){
+                let num = document.querySelectorAll(".num2")[i];
+                let numLength = document.querySelectorAll(".num2").length;
+
+                for(let j =0; j < numLength; j++){
+                    document.querySelectorAll(".num2")[j].classList.remove('on');    
+                }
+
+                num.classList.add('on');
+            }
+    </script>
+            <div class="admin-content">
+                <div class="community-panel-main shadow">
+                    <p>커뮤니티 리스트</p>
+                    <div class="selectbox">
+                        <select name="유형" id="">
+                            <option value="전체">전체</option>
+                            <option value="내가사는동네">내가사는동네</option>
+                        </select>
+                        <select name="city" id="city">
+                            <option value="부산">부산</option>
+                            <option value="울산">울산</option>
+                            <option value="대구">대구</option>
+                            <option value="대전">대전</option>
+                            <option value="광주">광주</option>
+                        </select>
+                    </div>
+                    <div class="community-table-wrapper">
+                        <table class="community-table">
+                            <tr>
+                                <th><i class="fa-sharp fa-regular fa-square"></i></th>
+                                <th>번호</th>
+                                <th>유형</th>
+                                <th>제목</th>
+                                <th>날짜</th>
+                                <th>작성자</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>5</td>
+                                <td>내가사는동네</td>
+                                <td>제목</td>
+                                <td>2023.03.13</td>
+                                <td>작성자</td>
+                                <td>
+                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>5</td>
+                                <td>내가사는동네</td>
+                                <td>제목</td>
+                                <td>2023.03.13</td>
+                                <td>작성자</td>
+                                <td>
+                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>5</td>
+                                <td>내가사는동네</td>
+                                <td>제목</td>
+                                <td>2023.03.13</td>
+                                <td>작성자</td>
+                                <td>
+                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>5</td>
+                                <td>내가사는동네</td>
+                                <td>제목</td>
+                                <td>2023.03.13</td>
+                                <td>작성자</td>
+                                <td>
+                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>5</td>
+                                <td>내가사는동네</td>
+                                <td>제목</td>
+                                <td>2023.03.13</td>
+                                <td>작성자</td>
+                                <td>
+                                    <input type="button" value="상세보기" class="details-button" onClick="location.href='#'">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="remove">
+                            <a href="#">선택삭제</a>
+                        </div>
+                        <div class="community-list-table-buttons">
+                            <input type="button" value="이전" class="before">
+                            <input type="button" value="1" class="num" onclick="numHightlight(0)">
+                            <input type="button" value="2" class="num" onclick="numHightlight(1)">
+                            <input type="button" value="3" class="num" onclick="numHightlight(2)">
+                            <input type="button" value="4" class="num" onclick="numHightlight(3)">
+                            <input type="button" value="5" class="num" onclick="numHightlight(4)">
+                            <input type="button" value="6" class="num" onclick="numHightlight(5)">
+                            <input type="button" value="7" class="num" onclick="numHightlight(6)">
+                            <input type="button" value="8" class="num" onclick="numHightlight(7)">
+                            <input type="button" value="9" class="num" onclick="numHightlight(8)">
+                            <input type="button" value="10" class="num" onclick="numHightlight(9)">
+                            <input type="button" value="다음" class="next">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

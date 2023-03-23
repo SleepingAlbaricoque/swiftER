@@ -7,7 +7,7 @@
              <ul>
               <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
               <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
-              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=12}">내가 사는 동네</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList(cateCode=12, regionCode=100)}">내가 사는 동네</a></li>
             </ul>
           </aside>
           <article>
@@ -34,18 +34,28 @@
               </div>
               </div>
               <!-- // 아티클 부가 기능 -->
-              <a th:href="@{./qnaComment}" class="btnComment">답변하기</a>
-             <nav class="commentContents">
+              <a th:href="@{./qnaComment(cateCode=${cateCode},no=${no},parent=${parent})}" class="btnComment">답변하기</a>
+	          <div th:each = "cm:${cm}">
+	          <nav class="commentContents">
                   <h2 class="commentTitle">답변☞ [[${vo.title}]]</h2>
                   <p>
-                      <span>이수만 내과 의사</span>
-                      <span>2023.01.11 13:11</span>
+                      <span>[[${(cm.member_uid)}]]</span>
+                      <span>[[${(cm.rdate).substring(2, 10)}]]</span>
                   </p>
               </nav>
               <div class="commentContent">
                   <p>
-                  맹장염일 가능성이 있습니다. 빠른시일내에 병원에 꼭 가셔서 검사받아보세요.<br/>
+                  [[${(cm.content)}]]
                   </p>
+              </div>
+              <!-- 아티클 부가 기능 -->
+              <div class="article__ext">
+              <div class="article__button">
+                  <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
+                  <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+              </div>
+              </div>
+              <!-- // 아티클 부가 기능 -->
               </div>
           </article>
           

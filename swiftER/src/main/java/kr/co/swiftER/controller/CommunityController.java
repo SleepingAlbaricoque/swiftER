@@ -41,32 +41,26 @@ public class CommunityController {
          int pageStartNum = service.getPageStartNum(total, start);
          int groups[] = service.getPageGroup(currentPage, lastPage);
          
-         
          CommunityCateVO ccv = service.selectCate(cateCode);
          
          List<CommunityArticleVO> cates = null;
          
          if(keyword.equals("")) {
-        	// log.info("here1...");
         	 cates = service.selectFreeArticles(start, cateCode, regionCode);        	 
          }else {
-        	 // log.info("here2...");
         	 cates = service.selectFindTitleSearch(start, title, cateCode, keyword, regionCode);
          }
-         
-           //log.info("here3... : " + cates);
          
          //List<CommunityArticleVO> cates = service.selectFreeArticles(start, cateCode);
          //List<CommunityArticleVO> serchfree = service.selectFindTitleSearch(title, cateCode, keyword);
          
-         /*log.info("currentPage : " + currentPage);
-         log.info("lastPage : " + lastPage);
-         log.info("pageStartNum : " + pageStartNum);
-         log.info("groups : " + groups);
-         log.info("ccv : " + ccv);
-         log.info("cates : " + cates);
-         log.info("cateCode : " + cateCode);
-         */
+         //log.info("currentPage : " + currentPage);
+         //log.info("lastPage : " + lastPage);
+         //log.info("pageStartNum : " + pageStartNum);
+         //log.info("groups : " + groups);
+         //log.info("ccv : " + ccv);
+         //log.info("cates : " + cates);
+         //log.info("cateCode : " + cateCode);
          
          model.addAttribute("currentPage", currentPage);
          model.addAttribute("lastPage", lastPage);
@@ -82,7 +76,7 @@ public class CommunityController {
     }
 
     @GetMapping(value = {"community/freeView"})
-    public String FreeView(Model model, String pg, int no, String cateCode, String parent){
+    public String FreeView(Model model, String pg, String no, String cateCode, String parent, String comments){
     	
     	 pg = (pg == null) ? "1" : pg;
 
@@ -95,11 +89,8 @@ public class CommunityController {
     	
     	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
-         List<CommunityArticleVO> cm = service.selectComments(parent);
+         List<CommunityArticleVO> cm = service.selectComments(start, parent);
          service.updateArticleView(no);
-         
-         //log.info("parent : " + parent);
-         //log.info("cm : " + cm);
          
          model.addAttribute("currentPage", currentPage);
          model.addAttribute("lastPage", lastPage);
@@ -110,14 +101,29 @@ public class CommunityController {
          model.addAttribute("cm", cm);
          model.addAttribute("cateCode", cateCode);
          model.addAttribute("parent", parent);
-
+         model.addAttribute("no", no);
+         
          return "community/freeView";
     }
     
     @PostMapping(value = {"community/freeView"})
-    public String FreeComment(Model model) {
+    public String FreeComment(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
+    		Integer cateCode, Integer regionCode, Integer parent, String no , String comment) {
     	
-    	return "community/freeView";
+    	MemberEntity member = myUser.getMember();
+    	
+    	 //log.info("no : "+ no);
+    	 
+    	 vo.setMember_uid(member.getUid());
+         vo.setCateCode(String.valueOf(cateCode));
+         vo.setRegionCode(String.valueOf(regionCode));
+         vo.setParent(String.valueOf(parent));
+         vo.setRegip(req.getRemoteAddr());
+         
+         service.insertComment(vo);
+         service.updateComments(parent);
+         
+         return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
     @GetMapping(value = {"community/freeWrite"})
@@ -139,47 +145,57 @@ public class CommunityController {
         vo.setRegip(req.getRemoteAddr());
         service.insertFreeArticle(vo);
         
-        
         return "redirect:/community/freeList?cateCode="+cateCode;
-        
     }
-    
     
     /* Qna */
     @GetMapping(value = {"community/qnaView"})
-    public String QnaView(Model model, int no, String cateCode ){
+    public String QnaView(Model model, String no, String cateCode , String parent, String comments){
     	
     	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
-
+         List<CommunityArticleVO> cm = service.selectQnaComments(parent);
+         service.updateArticleView(no);
+         
          model.addAttribute("ccv", ccv);
          model.addAttribute("vo", vo);
          model.addAttribute("cateCode", cateCode);
-
+         model.addAttribute("parent", parent);
+         model.addAttribute("no", no);
+         model.addAttribute("cm", cm);
+         
+         
          return "community/qnaView";
     }
   
     @GetMapping(value = {"community/qnaComment"})
-    public String QnaComment(Model model, @RequestParam("cateCode") String cateCode){
+    public String QnaComment(Model model, @RequestParam("cateCode") String cateCode, String no, String parent){
 
+    	CommunityArticleVO vo = service.selectFreeArticle(no);
+    	
         model.addAttribute("cateCode", cateCode);
+        model.addAttribute("parent", parent);
+        model.addAttribute("no", no);
+        model.addAttribute("vo", vo);
 
         return "community/qnaComment";
     }
     @PostMapping(value = {"community/qnaComment"})
     public String QnaComment(Model model,HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
-    		Integer cateCode,Integer regionCode){
+    		Integer cateCode,Integer regionCode, String no, String parent){
     	
         MemberEntity member = myUser.getMember();
         
         vo.setMember_uid(member.getUid());
         vo.setCateCode(String.valueOf(cateCode));
         vo.setRegionCode(String.valueOf(regionCode));
+        vo.setParent(String.valueOf(parent));
         vo.setRegip(req.getRemoteAddr());
-        service.insertFreeArticle(vo);
+        
+        service.insertComment(vo);
         
         
-        return "redirect:/community/freeList?cateCode="+cateCode;
+        return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
         
     }
     

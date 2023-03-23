@@ -16,15 +16,19 @@ public interface CommunityDAO {
 	/* Free */
 	public int insertFreeArticle(CommunityArticleVO vo);
 	public CommunityCateVO selectCate(@Param("cateCode")String cateCode);
-	public CommunityArticleVO selectFreeArticle(@Param("no")int no);
+	public CommunityArticleVO selectFreeArticle(@Param("no")String no);
 	public List<CommunityArticleVO> selectFreeArticles(@Param("start")int start,@Param("cateCode") String cateCode, @Param("regionCode") String regionCode);
-	public CommunityArticleVO selectCommunityFreeNo(int no);
+	public CommunityArticleVO selectCommunityFreeNo(String no);
 	public int selectCountTotal(@Param("cateCode")String cateCode);
 	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode,@Param("regionCode") String regionCode, @Param("keyword")String keyword);
-	public int updateArticleView(int no);
+	public int updateArticleView(String no);
+	public int deleteArticle(String no);
 	
 	/* Comment */
 	public int insertComment(CommunityArticleVO vo);
-	public List<CommunityArticleVO> selectComments(@Param("parent")String parent); 
+	public List<CommunityArticleVO> selectComments(@Param("start")int start,@Param("parent")String parent); 
+	public List<CommunityArticleVO> selectQnaComments(@Param("parent")String parent); 
 	public int selectCommentCountTotal(@Param("parent")String parent);
+	public int updateComments(@Param("parent") Integer parent);
+	public int deleteComment(@Param("no")String no);
 }

@@ -28,10 +28,18 @@ public class CommunityService {
 	public long getCommentTotalCount(String parent){
         return dao.selectCommentCountTotal(parent);
     }
-	public List<CommunityArticleVO> selectComments(String parent){
-        return dao.selectComments(parent);
+	public List<CommunityArticleVO> selectComments(int start,String parent){
+        return dao.selectComments(start, parent);
     }
-	
+	public List<CommunityArticleVO> selectQnaComments(String parent){
+        return dao.selectQnaComments(parent);
+    }
+	public int updateComments(Integer parent) {
+		return dao.updateComments(parent);
+	}
+	public int deleteComment(String no) {
+		return dao.deleteComment(no);
+	}
 	/* Free */
 	public int insertFreeArticle(CommunityArticleVO vo){	
         int result = dao.insertFreeArticle(vo);
@@ -40,19 +48,19 @@ public class CommunityService {
 	public CommunityCateVO selectCate(String cateCode){
         return dao.selectCate(cateCode);
     }
-	public CommunityArticleVO selectFreeArticle(int no){
+	public CommunityArticleVO selectFreeArticle(String no){
         return dao.selectFreeArticle(no);
     }
 	public List<CommunityArticleVO> selectFreeArticles(int start, String cateCode,String regionCode){
         return dao.selectFreeArticles(start, cateCode, regionCode);
     }
-	public CommunityArticleVO selectCommunityFreeNo(int no){
+	public CommunityArticleVO selectCommunityFreeNo(String no){
         return dao.selectCommunityFreeNo(no);
     }
 	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword,String regionCode){
 		return dao.selectFindTitleSearch(start, title, cateCode, regionCode, keyword);
 	}
-	public int updateArticleView(int no) {
+	public int updateArticleView(String no) {
 		return dao.updateArticleView(no);
 	}
 	public int getLimitStart(int currentPage){

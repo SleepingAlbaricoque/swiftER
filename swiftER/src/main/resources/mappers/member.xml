@@ -45,7 +45,7 @@
 			`zip`=#{zip},
 			`addr1`=#{addr1},
 			`addr2`=#{addr2},
-			`grade`=1,
+			`grade`=#{grade},
 			`regip`=#{regip},
 			`rdate`=NOW();
 			
@@ -62,4 +62,12 @@
 	<select id="countCa" resultType="Integer">
 		SELECT COUNT(*) FROM `community_article` WHERE `member_uid`=#{uid};
 	</select>
+	
+	<!-- 의사회원 가입 -->
+	<insert id="insertMemberDoctor">
+		insert into `member_doctor` set
+			`member_uid`=#{member_uid},
+			`kind`=#{kind},
+			`specialty`=#{specialty}
+	</insert>
 </mapper>
