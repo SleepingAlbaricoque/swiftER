@@ -84,8 +84,8 @@ window.onload = () => {
             <th:block th:if="${groups[1] < lastPage}">
                 <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[1] + 1})}" class="next">다음</a>
             </th:block>
-            
-          </div>
+          	</div>
+          
             <th:block th:if="${cateCode}== 10 or ${cateCode}== 11">
 	            <a th:href="@{/community/freeWrite(cateCode=${cateCode})}" class="btnWrite">글쓰기</a>
             </th:block>

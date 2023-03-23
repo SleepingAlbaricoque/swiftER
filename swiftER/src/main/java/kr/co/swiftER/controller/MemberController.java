@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.MemberService;
 import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +79,17 @@ public class MemberController {
 		vo.setRegip(regip);
 		
 		int result = service.insertMember(vo);
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	
+	/* 의사회원 가입(파일 제외)*/
+	@ResponseBody
+	@PostMapping("/member/insertDoctor")
+    public Map<String, Integer> insertMemberDoctor(@ModelAttribute("MemberDoctorVO") MemberDoctorVO vo, HttpServletRequest req) {
+		int result = service.insertMemberDoctor(vo);
 		Map<String, Integer> map = new HashMap<>();
 		
 		map.put("result", result);
@@ -167,4 +181,6 @@ public class MemberController {
 		model.addAttribute("cas", cas);
 		return "member/articleList";
 	}
+	
+	
 }

@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberDoctorVO {
+public class FileDoctorVO {
 	private String member_uid;
-	private String kind;
-	private String specialty;
-	private String cert_oriName;
-	private String cert_newName;
-	private int verified;
-	private String veriMsg;
+	private String newName;
+	private String oriName;
+	private String rdate;
 }

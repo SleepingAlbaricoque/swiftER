@@ -29,8 +29,8 @@
               <!-- 아티클 부가 기능 -->
               <div class="article__ext">
               <div class="article__button">
-                  <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
-                  <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                  <span><a href="#" onclick="" role="button" class="button--article-modify">수정</a> |</span>
+                  <span><a href="#" onclick="" role="button" class="button--article-delete">삭제</a></span>
               </div>
               </div>
               <!-- // 아티클 부가 기능 -->
@@ -71,20 +71,16 @@
                       </li>
                   </ul>
                   <div class="paging">
-                      <span class="prev">
-                          <a href="#">&lt;&nbsp;이전</a>
-                      </span>
-                      <span class="num">
-                          <a href="#" class="on">1</a>
-                          <a href="#" class="on">2</a>
-                          <a href="#">3</a>
-                          <a href="#">4</a>
-                          <a href="#">5</a>
-                      </span>
-                      <span class="next">
-                          <a href="#">다음&nbsp;&gt;</a>
-                      </span>
-                  </div>
+		          <th:block th:if="${groups[0] > 1}">
+		             <a th:href="@{/community/freeView(cateCode=${cateCode},pg=${groups[0]- 1})}" class="prev">이전</a>
+		          </th:block>
+		          <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
+		             <a th:href="@{/community/freeView(cateCode=${cateCode},pg=${num},no=${no},parent=${parent})}" th:class="${num == currentPage ? 'num current' : 'num'}">[[${num}]]</a>
+		          </th:block>
+		          <th:block th:if="${groups[1] < lastPage}">
+		             <a th:href="@{/community/freeView(cateCode=${cateCode},pg=${groups[1] + 1})}" class="next">다음</a>
+		          </th:block>
+          		  </div>
                   </ul>
                   
               </div>
