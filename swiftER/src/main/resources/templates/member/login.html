@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>Kakao.init("74f5c3ca986c88f3d4df978bd57d6cbb");</script>
     <style>
 
         /*footer*/
@@ -143,15 +145,12 @@
                             </span>
 
                             <h2>또는</h2>
-                            <button>
-                                <img th:src="@{/img/member/naver.jpg}" alt="네이버" width="60px" height="60px">
-                            </button>
-                            <button>
-                                <img th:src="@{/img/member/kakao.jpg}" alt="카카오" width="60px" height="60px">
-                            </button>
-                            <button>
-                                <img th:src="@{/img/member/google.jpg}" alt="구글" width="60px" height="60px">
-                            </button>
+                            <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=b59782950c07b248fe9ef97eacdd98a1&redirect_uri=http://localhost:8181/swiftER/member/callbackKakao&response_type=code}">
+                            	<img alt="네이버" th:src="@{/img/member/naver.jpg}" width="60px" height="60px"></a>
+                            <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=b59782950c07b248fe9ef97eacdd98a1&redirect_uri=http://localhost:8181/swiftER/member/callbackKakao&response_type=code}">
+                            	<img alt="카카오" th:src="@{/img/member/kakao.jpg}" width="60px" height="60px"></a>
+                            <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=b59782950c07b248fe9ef97eacdd98a1&redirect_uri=http://localhost:8181/swiftER/member/callbackKakao&response_type=code}">
+                            	<img alt="구글" th:src="@{/img/member/google.jpg}" width="60px" height="60px"></a>
 
                             <h2 class="go_home">
                                 <a th:href="@{/}" class="home">홈으로</a>
