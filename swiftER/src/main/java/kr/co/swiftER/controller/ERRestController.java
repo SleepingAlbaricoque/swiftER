@@ -20,7 +20,7 @@ import kr.co.swiftER.vo.ERReviewVO;
 /*
 @Controller
 public class ERRestController {
-	
+	/*
 	@Autowired
 	private ERService service;
 	
@@ -43,7 +43,7 @@ public class ERRestController {
     private String numOfRows = "1000";
     
     @ResponseBody
-    @PostMapping("er/erSearch")    
+    @PostMapping(value = "er/erSearch", produces = "application/text; charset=utf8")    
     public String erSearch(String city, String town) throws IOException {
         // RestTemplate 생성            
         RestTemplate restTemplate = new RestTemplate();
@@ -57,7 +57,7 @@ public class ERRestController {
     }
     
     @ResponseBody
-    @PostMapping("er/erSearch2")    
+    @PostMapping(value = "er/erSearch2", produces = "application/text; charset=utf8")    
     public String erSearch2(String city, String town) throws IOException {
     	
     	// RestTemplate 생성            
@@ -99,7 +99,7 @@ public class ERRestController {
     }
 
 	@ResponseBody
-    @PostMapping("er/erDetailInfo")    
+    @PostMapping(value = "er/erDetailInfo", produces = "application/text; charset=utf8")    
     public String erDetailInfo(@RequestParam("code") String code) throws IOException {
 		String deurl = erdetailUrl;
 		System.out.println("code : "+code);
@@ -113,5 +113,7 @@ public class ERRestController {
     	String response = restTemplate.getForObject(url, String.class);
     	
     	return response;
-    }
-}*/
+
+    }*/
+}
+

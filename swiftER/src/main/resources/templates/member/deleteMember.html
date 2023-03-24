@@ -8,6 +8,67 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    	let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
+    	let isPassOk  = false;
+    	
+	    $('input[name=pass2]').focusout(function(){
+			let pass1 = $('input[name=pass1]').val();
+			let pass2 = $(this).val();
+	
+			if(pass1 == pass2){
+	
+				if(pass2.match(regPass)){
+					isPassOk = true;
+					$('.resultPass').css('color', 'green').text('비밀번호가 일치합니다.');
+				}else{
+					isPassOk = false;
+					$('.resultPass').css('color', 'red').text('영문, 숫자, 특수문자 조합하여 8~16자이어야 합니다.');
+				}
+			}else{
+				isPassOk = false;
+				$('.resultPass').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
+			}
+		});
+	    
+	    $('#delete').click(function(){
+    		let checkAgree = $('input[type=checkbox]').is(':checked');
+	    	
+    		if(checkAgree == false){
+    			alert('동의를 체크하셔야 회원탈퇴를 진행할 수 있습니다');
+    		} else {
+    			// 비밀번호 검증
+    	    	
+        		if(!isPassOk){
+        			alert('비밀번호를 확인하십시오.');
+        			return false;
+        		}else{
+        			let pass2 = $('input[name=pass2]').val();
+    				
+    				$.ajax({
+    					url : '/swiftER/member/deleteMember',
+    					method : 'post',
+    					data : {
+    						"pass2":pass2,
+    						},
+    					dataType : 'json',
+    					success : function(data){
+    						if(data.result == 1){
+    							alert('회원탈퇴 처리가 완료되었습니다');
+    							location.href="/swiftER/";
+    						}else{
+    							alert('오류 발생!');
+    						}
+    					}
+    				});
+        		}
+    		}
+	    	
+	    });
+    });	
+    </script>
     <title>회원 탈퇴</title>
 </head>
 <body>
@@ -52,7 +113,7 @@
                                 비밀번호
                             </th>
                             <td>
-                                <input type="text" name="pass1" placeholder="비밀번호 입력">
+                                <input type="password" name="pass1" placeholder="비밀번호 입력">
                                 <span>사용중인 비밀번호를 입력하여 주십시오</span>
                             </td>
                         </tr>
@@ -61,25 +122,30 @@
                                 비밀번호 재확인
                             </th>
                             <td>
-                                <input type="text" name="pass2" placeholder="비밀번호 재확인">
+                                <input type="password" name="pass2" placeholder="비밀번호 재확인">
                                 <span>다시 한번 비밀번호를 입력하여 주십시오</span>
                             </td>
                         </tr>
                     </table>
-                    <ul id="deleteUl">
+                    <ul id="deleteUl" style="list-style-type: none;">
                         회원탈퇴 안내
+                        <li></li>
+                        <br>
                         <li>
                             지금까지 swiftER 서비스를 이용해주셔서 감사합니다.
-                            <br>
-                            회원을 탈퇴하면 swiftER 서비스 내 나의 계정 정보가 <strong>삭제</strong>되고 <strong>복구</strong> 할 수 없습니다.
                         </li>
+                        <br>
                         <li>
-                            <input type="checkbox">위 내용을 숙지 하였으며, 동의합니다
+                            회원을 탈퇴하면 swiftER 서비스 내 나의 계정 정보가 <strong style="color: red;">삭제</strong>되고 <strong style="color: red;">복구</strong> 할 수 없습니다.
+                        </li>
+                        <br>
+                        <li>
+                            <input type="checkbox">&nbsp;위 내용을 숙지 하였으며, 이에 동의합니다
                         </li>
                     </ul>
                 </section>
                 <div>
-                    <button class="submit">
+                    <button class="submit" id="delete">
                         탈퇴하기
                     </button>
                 </div>

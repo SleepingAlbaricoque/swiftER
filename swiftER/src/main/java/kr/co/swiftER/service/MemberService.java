@@ -1,36 +1,15 @@
 package kr.co.swiftER.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import kr.co.swiftER.dao.MemberDAO;
-import kr.co.swiftER.exceptions.CustomErrorCode;
-import kr.co.swiftER.exceptions.CustomException;
 import kr.co.swiftER.repo.MemberRepo;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
-import kr.co.swiftER.vo.FileDoctorVO;
-import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -101,4 +80,20 @@ public class MemberService {
 		return result;
 		
 	}
+
+	public int deleteMember(String uid) {
+		int result = dao.deleteMember(uid);
+		
+		return result;
+	}
+
+	public int checkGrade(String uid) {
+		int grade = dao.checkGrade(uid);
+		return grade;
+	}
+
+	public void deleteDoctor(String uid) {
+		dao.deleteDoctor(uid);
+	}
+
 }

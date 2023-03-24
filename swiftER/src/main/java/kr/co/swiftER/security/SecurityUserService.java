@@ -24,7 +24,10 @@ public class SecurityUserService implements UserDetailsService{
 		
 		if(member == null) {
 			throw new UsernameNotFoundException(username); // 사용자 없을 경우 예외처리
-		} UserDetails userDts = MyUserDetails.builder().member(member).build();
+		} 
+		
+		UserDetails userDts = MyUserDetails.builder().member(member).build();
+		
 		return userDts;
 	}
 

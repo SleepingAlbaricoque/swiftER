@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>응급실 정보</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="/SwiftER/화면구현/er/css/style.css"/>
+    <link rel="stylesheet" href="/SwiftER/화면구현/er/search/css/rating.css"/>
+    <script src="./js/rating.js"></script>
+    <script src="./js/popup.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -130,6 +135,11 @@
                             </p>
                         </li>
                     </ul>
+                    <div class="write">
+                        <div>
+                            <a href="#" class="reviewbtn">리뷰 작성</a>
+                        </div>
+                    </div>
                     <div class="paging">
                         <span class="prev"><a href="#">&lt;이전</a></span>
                         <span class="num">
@@ -182,6 +192,38 @@
                     <br>
                     Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr
                 </p>
+            </div>
+            <div id="popReview" class="popup">
+                <div>
+                    <nav>
+                        <h2>리뷰 작성하기</h2>
+                        <button class="btnClose">X</button>
+                    </nav>
+                    <section>
+                        <form action="#">
+                            <table border="0">
+                                <tr>
+                                    <th>제목</th>
+                                    <td><textarea class="title" name="title" placeholder="제목 입력"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>만족도</th>
+                                    <td class="rating">
+                                        <div class="my-rating"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <td><textarea class="content" name="content" placeholder="내용 입력"></textarea></td>
+                                </tr>
+                            </table>
+                            <div>
+                                <input type="submit" class="btnPositive" value="작성하기">
+                                <button class="btnNegative btnClose">취소</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
             </div>
         </footer>
     </div>    

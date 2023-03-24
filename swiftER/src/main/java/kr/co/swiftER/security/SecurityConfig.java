@@ -57,13 +57,18 @@ public class SecurityConfig {
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
+				.requestMatchers("/member/myPage").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/articleList").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/deleteMember").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/changePw").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/reviewList").hasAnyRole("0", "1", "2")
 				.requestMatchers("/er/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0");
 		
 		/*
 		// 자동로그인 설정
-		http.rememberMe()
+		http.rememberMe()`
 			.userDetailsService(userService)
 			.tokenRepository(tokenRepository());
 		*/

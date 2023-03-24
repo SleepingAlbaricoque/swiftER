@@ -10,9 +10,6 @@ import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 
-
-
-
 @Service
 public class ERService {
 	
@@ -31,6 +28,9 @@ public class ERService {
 		return dao.selectErReview(code);
 	}
 	
+	public int insertErReview(String code, String title, String content) {
+		return dao.insertErReview(code, title, content);
+	}
 
 	
 }
