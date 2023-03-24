@@ -62,11 +62,31 @@
             }
         }
 
-        function permaBan(element){
-            if(confirm("정말 탈퇴시키시겠습니까?")){
-                location.href = "#";
+        function permaBan(uid){
+            if(confirm("정말 영구 정지시키시겠습니까?")){
+                let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+                fetch("/swiftER/admin/member/ban?uid=" + uid, {headers:headers, method:"GET"})
+                .then(response => response.json())
+                .then(function(json){
+                	if(json.result == 1){
+                		alert(uid + '님을 성공적으로 영구 정지하였습니다');
+                		location.href = "/swiftER/admin/member";
+                	}else{
+                		alert('작업에 실패하였습니다. 다시 시도해주세요');
+                	}
+                })
+                .catch(err => console.error(err));
             }
 
+        }
+        
+        function certPopup(uid){
+        	let width = 800;
+        	let height = 700;
+        	let left = screen.width/2 - width/2;
+        	let top = screen.width/2 - height/2;
+        	window.open("/swiftER/admin/member/popup?uid=" + uid, "certificate", 'width='+width+', height='+height+', top='+top+', left='+left);
         }
     </script>
             <div class="admin-content">
@@ -76,36 +96,36 @@
                         <table class="member-view-table">
                             <tr>
                                 <td class="key">아이디</td>
-                                <td><input type="text" value="test10" readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.uid}" readonly class="member-detail"></td>
                                 <td class="key">이름</td>
-                                <td><input type="text" value="김의사" readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.name}" readonly class="member-detail"></td>
                                 <td class="key">별명</td>
-                                <td><input type="text" value="김닥터" readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.nickname}" readonly class="member-detail"></td>
                             </tr>
                             <tr>
                                 <td class="key">생년월일</td>
-                                <td>94.05.23</td>
+                                <td>[[${member.member.birth}]]</td>
                                 <td class="key">가입날짜</td>
-                                <td>23.03.10</td>
+                                <td>[[${member.member.rdate}]]</td>
                                 <td class="key">탈퇴날짜</td>
-                                <td></td>
+                                <td>[[${member.member.wdate}]]</td>
                             </tr>
                             <tr>
                                 <td class="key" rowspan="2">연락처</td>
                                 <td class="key">전화번호</td>
-                                <td><input type="text" value="010-2234-3434" readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.contact}" readonly class="member-detail"></td>
                                 <td class="key" rowspan="2">&nbsp;&nbsp;주소</td>
-                                <td colspan="2"><input type="text" value=" 23432 부산광역시 광복로 21번길 35" readonly class="member-detail"></td>
+                                <td colspan="2"><input type="text" th:value="${member.member.zip + '  '+ member.member.addr1}" readonly class="member-detail"></td>
                             </tr>
                             <tr>
                                 <td class="key">이메일</td>
-                                <td><input type="text" value="test10@gmail.com" readonly class="member-detail"></td>
-                                <td colspan="2"><input type="text" value=" 405동 1011호 " readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.email}" readonly class="member-detail"></td>
+                                <td colspan="2"><input type="text" th:value="${member.member.addr2}" readonly class="member-detail"></td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div class="member-view-panel-main doc-member-panel shadow">
+                <div class="member-view-panel-main doc-member-panel shadow" th:if="${member.doctor != null}">
                     <p>의사 회원 전용</p>
                     <div class="member-view-table-wrapper doc-member">
                         <table class="member-view-table doc-member">
@@ -113,23 +133,30 @@
                                 <td class="key">면허 번호</td>
                                 <td><input type="text" value="234321" readonly></td>
                                 <td class="key">전문과</td>
-                                <td><input type="text" value="흉부외과" readonly></td>
+                                <td><input type="text" th:value="${member.doctor.kind}" readonly></td>
                                 <td class="key">인증여부</td>
-                                <td>보류 <input type="button" value="승인하기" class="verify-doc"></td>
+                                <td>
+                                	<th:block th:switch="${member.doctor.verified}">
+                                		<span th:case="0">승인 대기</span>
+                                		<span th:case="1">승인 보류</span>
+                                		<span th:case="2">인증 완료</span>
+                                	</th:block>
+									<input type="button" value="승인하기" class="verify-doc">
+								</td>
                             </tr>
                             <tr>
                                 <td class="key">인증서</td>
-                                <td><input type="text" value="test10_cert.jpeg" readonly></td>
+                                <td><a href="#"  th:uid="${member.member.uid}" onclick="certPopup(this.getAttribute('uid'))">a[[${member.doctor.cert_oriName}]]</a></td>
                                 <td class="key">관리자 인증 메시지</td>
-                                <td colspan="3"><input type="text" value="면허 번호가 보이게 다시 촬영해서 업로드 부탁드립니다" readonly></td>
+                                <td colspan="3"><input type="text" th:value="${member.doctor.veriMsg}" readonly></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="control-buttons">
-                    <input type="button" value="목록으로" class="back-to-member-list" onclick="location.href='#'">
+                    <input type="button" value="목록으로" class="back-to-member-list" th:onclick="|location.href='@{/admin/member}'|">
                     <input type="button" value="수정하기" class="modify-member" onclick="modifyMember(this)">
-                    <input type="button" value="탈퇴시키기" class="modify-member" onclick="permaBan(this)">
+                    <input type="button" value="탈퇴시키기" class="modify-member" th:uid="${member.member.uid}" th:onclick="permaBan(this.getAttribute('uid'))">
                 </div>
             </div>
         </main>

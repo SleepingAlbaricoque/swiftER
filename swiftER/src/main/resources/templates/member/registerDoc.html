@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/member/swifter_logo.ico}">
+    <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/js/validation_doc.js}"></script>
     <script th:src="@{/js/postcode.js}"></script>
@@ -143,14 +143,14 @@
                                 <input type="text" name="specialty" placeholder="과">
                             </td>
                             <td>
-                                <input type="file" name="fname" multiple>
+                                <input type="file" name="uploadFile" multiple>
                                 <span>의사임을 증명할 파일을 첨부하십시오</span>
                             </td>
                         </tr>
                         <tr>
                             <th>생년월일</th>
                             <td>
-                                <input type="date" name="date">
+                                <input type="date" name="birth">
                             </td>
                         </tr>
                         <tr>
@@ -168,7 +168,7 @@
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <input type="text" name="phone" placeholder="휴대전화">
+                                <input type="text" name="hp" placeholder="휴대전화">
                                 <span class="resultHp"> - 포함 13자리를 입력해주세요</span>
                             </td>
                         </tr>
