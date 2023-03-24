@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.SymptomsService;
+import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.SymptomsCateVO;
+import kr.co.swiftER.vo.SymptomsIllnessesVO;
 import kr.co.swiftER.vo.SymptomsSubcateVO;
 import kr.co.swiftER.vo.SymptomsSymptomsVO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,17 +55,21 @@ public class SymptomsController {
 		
 		return "symptoms/symptoms";
 	}
+
 	
 	@GetMapping("symptoms/resultsymptoms")
-	public String resultsymptoms(Model model, String body1_code, String code) {
+	public String resultsymptoms(Model model, String body1_code, String symptom, ArrayList<SymptomsSymptomsVO> checkBoxArr, String illness) {
 		
-		List<SymptomsSymptomsVO> checkBoxArr = service.selectBody1(code);
+		List<SymptomsSymptomsVO> ill = service.selectillness(symptom);
+		List<SymptomsIllnessesVO> dep = service.selectdep(illness);
 		
 
 		model.addAttribute("checkBoxArr", checkBoxArr);
-		
 		model.addAttribute("body1_code", body1_code);
-		model.addAttribute("code", code);
+		model.addAttribute("ill", ill);
+		model.addAttribute("dep", dep);
+		model.addAttribute("symptom", symptom);
+		model.addAttribute("illness", illness);
 		
 		return "symptoms/resultsymptoms";
 	}

@@ -57,6 +57,7 @@ public class SecurityConfig {
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
 				.requestMatchers("/er/**").permitAll()
+				.requestMatchers("/symptoms/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0");
 		

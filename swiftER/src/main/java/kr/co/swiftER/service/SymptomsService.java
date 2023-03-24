@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.swiftER.dao.SymptomsDAO;
 import kr.co.swiftER.vo.SymptomsCateVO;
+import kr.co.swiftER.vo.SymptomsIllnessesVO;
 import kr.co.swiftER.vo.SymptomsSubcateVO;
 import kr.co.swiftER.vo.SymptomsSymptomsVO;
 
@@ -25,8 +26,12 @@ public class SymptomsService {
 		return dao.selectBody1(code);
 	}
 	
-	public int insertsymptoms(List<SymptomsSymptomsVO> symptom) {
-		return dao.insertsymptoms(symptom);
+	public List<SymptomsSymptomsVO> selectillness(String symptom) {
+		return dao.selectillness(symptom);
+	}
+	
+	public List<SymptomsIllnessesVO> selectdep(String illness) {
+		return dao.selectdep(illness);
 	}
 
 }
