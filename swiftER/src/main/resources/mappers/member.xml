@@ -58,9 +58,45 @@
 			where `uid`=#{uid};
 	</update>
 	
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember">
+		UPDATE `member` set
+			`pass`=null,
+			`name`=null,
+			`nickname`=null,
+			`birth`=null,
+			`email`=null,
+			`contact`=null,
+			`zip`=null,
+			`addr1`=null,
+			`addr2`=null,
+			`grade`=3,
+			`regip`=null,
+			`rdate`=null,
+			`wdate`=NOW()
+			where `uid`=#{uid};
+	</update>
+	
+	<!-- 회원탈퇴 의사 테이블 -->
+	<update id="deleteDoctor">
+		UPDATE `member_doctor` set 
+			`kind`=null,
+			`specialty`=null,
+			`cert_oriName`=null,
+			`cert_newName`=null,
+			`verified`=0,
+			`veriMsg`=null,
+			where `member_uid`=#{uid};
+	</update>
+	
 	<!-- 마이페이지 회원정보에서 내가 작성한 게시물 수 -->
 	<select id="countCa" resultType="Integer">
 		SELECT COUNT(*) FROM `community_article` WHERE `member_uid`=#{uid};
+	</select>
+	
+	<!-- 회원 탈퇴시 의사회원인지 확인 -->
+	<select id="checkGrade" resultType="Integer">
+		select `grade` from `member` where `uid`=#{uid};
 	</select>
 	
 	<!-- 의사회원 가입 -->

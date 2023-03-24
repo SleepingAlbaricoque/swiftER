@@ -126,6 +126,20 @@ public class CommunityController {
          return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
+    @GetMapping(value = {"community/deleteComment"})
+    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comment) {
+    	
+    	service.deleteComment(no);
+    	
+    	model.addAttribute("cateCode", cateCode);
+    	model.addAttribute("regionCode", regionCode);
+    	model.addAttribute("parent", parent);
+    	model.addAttribute("comment", comment);
+    	model.addAttribute("no", no);
+    	
+    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
+    }
+    
     @GetMapping(value = {"community/freeWrite"})
     public String FreeWrite(Model model, @RequestParam("cateCode") String cateCode){
 
@@ -146,6 +160,18 @@ public class CommunityController {
         service.insertFreeArticle(vo);
         
         return "redirect:/community/freeList?cateCode="+cateCode;
+    }
+    
+    @GetMapping(value = {"community/deleteArticle"})
+    public String DeleteArticle(Model model,@RequestParam("cateCode") String cateCode, String no,String regionCode) {
+    	
+    	service.deleteArticle(no);
+    	
+    	model.addAttribute("cateCode", cateCode);
+    	model.addAttribute("regionCode", regionCode);
+    	model.addAttribute("no", no);
+    	
+    	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
     
     /* Qna */
@@ -220,7 +246,7 @@ public class CommunityController {
         service.insertFreeArticle(vo);
         
         
-        return "redirect:/community/freeList?cateCode="+cateCode;
-        
+        return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
+    
 }

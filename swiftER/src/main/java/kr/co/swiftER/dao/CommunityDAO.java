@@ -22,7 +22,7 @@ public interface CommunityDAO {
 	public int selectCountTotal(@Param("cateCode")String cateCode);
 	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode,@Param("regionCode") String regionCode, @Param("keyword")String keyword);
 	public int updateArticleView(String no);
-	public int deleteArticle(String no);
+	public int deleteArticle(@Param("no")String no);
 	
 	/* Comment */
 	public int insertComment(CommunityArticleVO vo);

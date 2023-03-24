@@ -31,6 +31,7 @@
                 }
             }
             
+            // 검색 버튼 클릭시 Jquery 전송
             function checkboxresult(){
             	
             	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -42,26 +43,13 @@
                 	alert("체크해주세요!");
                 }
                 
-                /*
-                $.ajax({
-                    url:"/swiftER/symptoms/symptoms",
-                    type:'post',
-                    data:JSON.stringify(checkedValues),
-                    dataType:'json',
-                    traditional: true,
-                    contentType:'application/json; charset=UTF-8',
-                    success:function(data){
-                        location.href="/swiftER/symptoms/resultsymptoms?body1_code="+body1_code;
-                        
-                    }
-                });
-         	*/
-                let chks = checkedValues.toString();
+
+                let checkBoxArr = checkedValues.toString();
          		
          		let ischk = confirm('검색하시겠습니까?');
          		
          		if(ischk){
-         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+chks;
+         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+checkBoxArr;
          		}else{
          			return false;
          		}
