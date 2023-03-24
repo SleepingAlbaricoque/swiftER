@@ -26,7 +26,6 @@ public class ERController {
 	public String er(Model model) {
 		List<ERCateVO> region = service.selectErCate();
 		
-		
 		model.addAttribute("region",region);
 		
 		return "er/er";
@@ -35,11 +34,25 @@ public class ERController {
 	@PostMapping("er/subregion")
 	@ResponseBody
 	public List<ERSubcateVO> cate(String city) {
-//		System.out.println("city :" + city);
 		
 		List<ERSubcateVO> sub = service.selectErSubCate(city);
 		
 		return sub;
+	}
+	
+	@PostMapping("er/erReview")
+	@ResponseBody
+	public String erReview(Model model, String code, String title, String content){
+		
+		int result = service.insertErReview(code, title, content); 
+		
+		if(result > 0) {
+			List<ERReviewVO> reviews = service.selectErReview(code);
+			model.addAttribute("reviews", reviews);
+			model.addAttribute("code", code);
+		}
+       
+        return "er/erDetail";
 	}
 	
 }
