@@ -17,7 +17,7 @@ import kr.co.swiftER.dto.ErDTO;
 import kr.co.swiftER.dto.ItemDTO;
 import kr.co.swiftER.service.ERService;
 import kr.co.swiftER.vo.ERReviewVO;
-
+/*
 @Controller
 public class ERRestController {
 	
@@ -114,4 +114,4 @@ public class ERRestController {
     	
     	return response;
     }
-}
+}*/

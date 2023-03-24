@@ -63,6 +63,9 @@ public class CommunityService {
 	public int updateArticleView(String no) {
 		return dao.updateArticleView(no);
 	}
+	public int deleteArticle(String no) {
+		return dao.deleteArticle(no);
+	}
 	public int getLimitStart(int currentPage){
         return (currentPage - 1) * 10;
     }
