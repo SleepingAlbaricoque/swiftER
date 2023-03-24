@@ -9,18 +9,22 @@
                 </div>
                 <nav class="disease">
                     <ul>
-	                    <th:block th:each="chk : ${checkBoxArr}">
-	                        <li><a th:href="@{#wrapper0}">[[${chk.symptom}]]</a></li>
-	                    </th:block>
+                    <th:block th:each="ill :${ill}" th:if="${ill.symptom} eq ${symptom}">
+                        <li th:if="${ill.illness} ne '' "><a href="#wrapper0">[[${ill.illness}]]</a></li>
+                        <li th:if="${ill.illness2} ne '' "><a href="#wrapper0">[[${ill.illness2}]]</a></li>
+                        <li th:if="${ill.illness3} ne '' "><a href="#wrapper0">[[${ill.illness3}]]</a></li>
+                        <li th:if="${ill.illness4} ne '' "><a href="#wrapper0">[[${ill.illness4}]]</a></li>
+                    </th:block>
                     </ul>
                 </nav>
+                <th:block th:each="ill : ${ill}" th:if="${ill.symptom} eq ${symptom}">
                 <section id="wrapper0">
                     <div class="imgbox">
                         <img src="../img/00001.jpg" alt="목감기">
                     </div>  
                     <article class="contBox">
                         <div class="dis_title">
-                            <h3>목감기<b>(laryngopharyngitis)</b></h3>
+                            <h3>[[${ill.illness}]]<b></b></h3>
                         </div>
                         <div class="symp_wrapper">  
                             <div class="symp_title">
@@ -28,7 +32,7 @@
                             </div>
                             <div class="symp_content">
                                 <p>
-                                    감기 바이러스에 노출된 지 1~3일 후에 증상이 나타난다.<br/>
+                                    [[${ill.symptom}]]<br/>
                                     증상은 감기 바이러스가 상부 호흡기계에 어느 정도 침투했는가에 따라 다양하게 나타난다.<br/>
                                     콧물, 코막힘, 목 부위의 통증, 기침과 근육통이 흔하게 나타나는 증상이다.<br/>
                                     성인에게서 열이 나는 경우는 드물거나 미열에 그치지만, 소아에게서는 발열 증상이 흔하게 나타난다.<br/>
@@ -43,15 +47,18 @@
                             </div>
                             <div class="symp_sub">
                                 <ul>
-                                    <li><p>내과</p></li>
-                                    <li><p>내과</p></li>
-                                    <li><p>내과</p></li>
-                                    <li><p>내과</p></li>
+                                <th:block th:each="dep : ${dep}" th:if="${ill.illness} eq ${dep.illness}">
+                                    <li th:if="${dep.dept1} ne '' "><p>[[${dep.dept1}]]</p></li>
+                                    <li th:if="${dep.dept2} ne '' "><p>[[${dep.dept2}]]</p></li>
+                                    <li th:if="${dep.dept3} ne '' "><p>[[${dep.dept3}]]</p></li>
+                                    <li th:if="${dep.dept4} ne '' "><p>[[${dep.dept4}]]</p></li>
+                                </th:block>
                                 </ul>
                             </div>
                         </div>
                     </article>
                 </section>
+				</th:block>
                 <section id="wrapper1">
                     <div class="imgbox">
                         <img src="../img/00001.jpg" alt="목감기">

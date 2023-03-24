@@ -63,6 +63,7 @@ public class SecurityConfig {
 				.requestMatchers("/member/changePw").hasAnyRole("0", "1", "2")
 				.requestMatchers("/member/reviewList").hasAnyRole("0", "1", "2")
 				.requestMatchers("/er/**").permitAll()
+				.requestMatchers("/symptoms/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0");
 		
