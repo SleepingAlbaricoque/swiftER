@@ -88,6 +88,33 @@
         	let top = screen.width/2 - height/2;
         	window.open("/swiftER/admin/member/popup?uid=" + uid, "certificate", 'width='+width+', height='+height+', top='+top+', left='+left);
         }
+        
+        function certVerify(uid){
+        	if(confirm('승인하시겠습니까?')){
+        		let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+                fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=2", {headers:headers, method:"GET"})
+        		.then(response => response.json())
+        		.then(function(json){
+        			if(json.result == 1){
+        				alert(uid + '님의 인증을 승인하였습니다');
+        			}
+        		})
+        		.catch(err => console.error(err));
+                
+        	}else{
+        		let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+                fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=1", {headers:headers, method:"GET"})
+        		.then(response => response.json())
+        		.then(function(json){
+        			if(json.result == 1){
+        				alert(uid + '님의 인증을 보류하였습니다');
+        			}
+        		})
+        		.catch(err => console.error(err));
+        	}
+        }
     </script>
             <div class="admin-content">
                 <div class="member-view-panel-main shadow">
@@ -141,12 +168,12 @@
                                 		<span th:case="1">승인 보류</span>
                                 		<span th:case="2">인증 완료</span>
                                 	</th:block>
-									<input type="button" value="승인하기" class="verify-doc">
+									<input type="button" value="승인하기" class="verify-doc" th:uid="${member.member.uid}" th:onclick="certVerify(this.getAttribute('uid'))">
 								</td>
                             </tr>
                             <tr>
                                 <td class="key">인증서</td>
-                                <td><a href="#"  th:uid="${member.member.uid}" onclick="certPopup(this.getAttribute('uid'))">a[[${member.doctor.cert_oriName}]]</a></td>
+                                <td><a href="#"  th:uid="${member.member.uid}" onclick="certPopup(this.getAttribute('uid'))">[[${member.doctor.cert_oriName}]]</a></td>
                                 <td class="key">관리자 인증 메시지</td>
                                 <td colspan="3"><input type="text" th:value="${member.doctor.veriMsg}" readonly></td>
                             </tr>

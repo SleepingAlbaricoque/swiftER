@@ -113,11 +113,22 @@ public class AdminController {
 		FileVO cert = service.selectDocCert(uid);
 		
 		// src 폴더에는 newName으로 저장되어 있으므로 newName 값을 저장하기
-		//String newName = cert.getNewName();
-		//model.addAttribute("newName", newName);
-		model.addAttribute("newName", "7bc520e9-f7d8-40d2-aa1e-fae10abf1611.jpg");
+		String newName = cert.getNewName();
+		model.addAttribute("newName", newName);
+		System.out.println(newName);
 		
 		return "admin/admin_member_popup";
+	}
+	
+	@ResponseBody
+	@GetMapping("admin/member/verify")
+	public Map<String, Integer> certVerify(String uid, int status){
+		int result = service.certVerify(uid, status);
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", result);
+		
+		return resultMap;
 	}
 	
 	@GetMapping("admin/cs/notice")

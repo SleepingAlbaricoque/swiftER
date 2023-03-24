@@ -29,4 +29,6 @@ public interface AdminDAO {
 	// 의사 회원 uid값으로 첨부한 면허증 사진 정보 가져오기
 	public FileVO selectDocCert(String uid);
 
+	// 의사 회원 승인하기
+	public int certVerify(@Param(value="uid") String uid, @Param(value="status") int status);
 }

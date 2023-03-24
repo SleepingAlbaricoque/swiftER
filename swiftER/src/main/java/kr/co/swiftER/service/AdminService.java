@@ -47,6 +47,11 @@ public class AdminService {
 		return dao.selectDocCert(uid);
 	}
 	
+	// 의사 회원 승인하기
+	public int certVerify(String uid, int status) {
+		return dao.certVerify(uid, status);
+	}
+	
 	
 	// 페이징
 	// 글 총 갯수(total)

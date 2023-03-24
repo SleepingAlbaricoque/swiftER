@@ -63,6 +63,16 @@
 	</update>
 	
 	<select id="selectDocCert" resultType="kr.co.swiftER.vo.FileVO">
-		select `cert_oriName`, `cert_newName` from `member_doctor` where `member_uid` = #{uid};
+		select `cert_oriName` as oriName, `cert_newName` as newName from `member_doctor` where `member_uid` = #{uid};
 	</select>
+	
+	<update id="certVerify">
+		update `member_doctor` set 
+		<if test="#{status} == 2">
+		`verified` =2
+		</if>
+		<if test="#{status} == 1">
+		`verified` =1;
+		</if>
+	</update>
 </mapper>
