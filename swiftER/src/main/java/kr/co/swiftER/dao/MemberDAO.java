@@ -39,4 +39,10 @@ public interface MemberDAO {
 	public void insertDoctorFile(MemberDoctorVO vo);
 
 	public int insertMemberDoctor(MemberDoctorVO dvo);
+
+	public int deleteMember(String uid);
+
+	public int checkGrade(String uid);
+
+	public void deleteDoctor(String uid);
 }

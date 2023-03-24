@@ -90,7 +90,7 @@ main > h2 {
     margin-bottom: 20px;
 }
 
-.login_user > table > tbody > tr > td > input[type=text]{
+.login_user > table > tbody > tr > td > input{
     position: relative;
     width: 300px;
     height: 60px;

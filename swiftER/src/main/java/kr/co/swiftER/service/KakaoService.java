@@ -11,15 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-
+/*
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+*/
 
 @Service
 public class KakaoService {
-     public String getReturnAccessToken(String code) {
+     /*public String getReturnAccessToken(String code) {
          String access_token = "";
          String refresh_token = "";
          String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -110,5 +110,5 @@ public class KakaoService {
                  e.printStackTrace();
              }
              return resultMap;
-         }
+         }*/
 }
