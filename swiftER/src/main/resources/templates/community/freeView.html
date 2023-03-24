@@ -1,4 +1,35 @@
 <th:block th:insert="~{@{_header.html}}"/>
+<script>
+	$(document).ready(function(){
+		
+		// 삭제하기
+		$(document).on('click', '.button--comment-delete', function(e){
+			e.preventDefault();
+			
+			let tag = $(this);
+			let result = confirm('정말 삭제 하시겠습니까?');
+			
+			if(result){
+				
+				let no = $(this).attr('data-no');
+				
+				$.ajax({
+					url: '/community/comment'
+					type: 'GET',
+					dataType: 'json',
+					success: function(data){
+						
+						if(data.result > 0){
+							alert('댓글이 삭제 되었습니다.');
+							
+							// 화면삭제
+							tag.closest('').hide();
+						}
+					}
+				});
+			}
+		});
+</script>
   <section id="community">
       <div class="free">
         <section class="view">
@@ -29,8 +60,8 @@
               <!-- 아티클 부가 기능 -->
               <div class="article__ext">
               <div class="article__button">
-                  <span><a href="#" onclick="" role="button" class="button--article-modify">수정</a> |</span>
-                  <span><a href="#" onclick="" role="button" class="button--article-delete">삭제</a></span>
+                  <span><a href="#" class="button--article-modify">수정</a> |</span>
+                  <span><a th:href="@{/community/deleteArticle(cateCode=${cateCode}, no=${no}, regionCode=100)}" onclick="delete_Article" class="button--article-delete">삭제</a></span>
               </div>
               </div>
               <!-- // 아티클 부가 기능 -->
@@ -63,8 +94,8 @@
                           <!-- 댓글 아티클 부가 기능 -->
                           <div class="comment__ext">
                           <div class="comment__button">
-                              <span><a href="#" onclick="" class="button--article-modify">수정</a> |</span>
-                              <span><a href="#" onclick="" class="button--article-delete">삭제</a></span>
+                              <span><a href="#" onclick="" class="button--comment-modify">수정</a> |</span>
+                              <span><a href="#" onclick="" class="button--comment-delete">삭제</a></span>
                           </div>
                           </div>
                            <!-- // 댓글 아티클 부가 기능 -->

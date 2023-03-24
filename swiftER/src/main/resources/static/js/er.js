@@ -1,6 +1,3 @@
-/**
- * 
- */
 $(document).ready(function () {
 	let er = [];
 	let erChk = [];
@@ -20,7 +17,6 @@ $(document).ready(function () {
 		let city =$(this).val();
 		subregion(city);
 	});
-	
 	
 	$('.subBtn').click(function(e){
 		e.preventDefault();
@@ -47,10 +43,9 @@ $(document).ready(function () {
 					location.reload();
 				}
 				
-				
 				let items = json.response.body.items.item;
-				let er = items;
-				let chk = false;
+				er = items;
+				console.log('er', er);
 				
 				$.ajax({
 					url:"/swiftER/er/erSearch2",
@@ -67,9 +62,8 @@ $(document).ready(function () {
 						
 						let items = json.response.body.items.item;
 						erChk = items;
-						
+						console.log('erChk', erChk);
 					}
-					
 				});
 				
 				$.ajax({
@@ -87,9 +81,7 @@ $(document).ready(function () {
 						
 						let items = json.response.body.items.item;
 						erChk2 = items;
-						
 					}
-					
 				});
 
 				let common = $('input[name=일반]').prop("checked");
@@ -115,12 +107,20 @@ $(document).ready(function () {
 				// 배열 합치기
 				erChk.sort((a, b) => a.hpid.localeCompare(b.hpid));
 				er.sort((a, b) => a.hpid.localeCompare(b.hpid));
-
-				let mergedArray = erChk.map((obj, index) => {
-					  return obj.hpid === er[index].hpid
-					    ? Object.assign({}, obj, er[index])
-					    : obj;
-					});
+				
+				let mergedArray = [];
+				
+				let shorterLength = Math.min(erChk.length, er.length);
+				
+				for (let i = 0; i < shorterLength; i++) {
+				  if (erChk[i].hpid === er[i].hpid) {
+				    mergedArray.push(Object.assign({}, erChk[i], er[i]));
+				  } else {
+				    break;
+				  }
+				}
+				
+				console.log('mergedArray',mergedArray);
 				
 				er.slice(erChk.length).forEach(obj => mergedArray.push(obj));
 	
@@ -205,7 +205,6 @@ $(document).ready(function () {
 					
 					let filtered = combined;
 
-
 					if (filters.length > 0) {
 					  filters.forEach(filterFn => {
 					    filtered = filterFn(filtered);
@@ -213,16 +212,15 @@ $(document).ready(function () {
 					}
 					
 					if(filtered.length > 0){
+						alert('선택하신 조건을 기반으로 한 검색 결과 입니다.');
+						combinedFiltered = filtered;	
+					}else{
 						alert('선택하신 조건을 모두 충족하는 결과가 없습니다, 선택하신 지역을 기반으로 한 검색 결과 입니다.');
 						combinedFiltered = combined;
-					}else{
-						combinedFiltered = filtered;	
 					}
 					
 					console.log('filters', filters);
 					console.log('filtered', filtered);
-					
-					
 					
 					console.log('combinedFiltered', combinedFiltered);
 
@@ -230,9 +228,6 @@ $(document).ready(function () {
 					// 지역만 선택한 경우
 					combinedFiltered = erMerged;
 				}
-				
-				
-				
 				
 				// 마커 이미지의 이미지 주소입니다
 				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -331,15 +326,10 @@ $(document).ready(function () {
 			            
 						$('.link').attr("href", hf);
 					});
-				
 			    });
-				
 			}
-		
 		});
-		
 	});
-	
 });	
 function subregion(city){
 	let jsonData = {"city":city}

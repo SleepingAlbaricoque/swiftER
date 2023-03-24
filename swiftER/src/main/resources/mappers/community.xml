@@ -110,7 +110,7 @@
     </update>
     
     <delete id="deleteArticle">
-    	delete from `community_article` where `no`=#{no} or `parent`=#{parent};
+    	delete from `community_article` where `no`=#{no};
     </delete>
     
     <delete id="deleteComment">

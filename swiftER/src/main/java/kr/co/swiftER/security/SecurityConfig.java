@@ -48,6 +48,7 @@ public class SecurityConfig {
 				.requestMatchers("/error/**").permitAll()
 				.requestMatchers("/community/freeList").permitAll()
 				.requestMatchers("/community/freeView").permitAll()
+				.requestMatchers("/community/deleteArticle").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/qnaView").permitAll()
 				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/mytownWrite").hasAnyRole("0", "1", "2")
@@ -56,6 +57,11 @@ public class SecurityConfig {
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/member/**").permitAll()
+				.requestMatchers("/member/myPage").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/articleList").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/deleteMember").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/changePw").hasAnyRole("0", "1", "2")
+				.requestMatchers("/member/reviewList").hasAnyRole("0", "1", "2")
 				.requestMatchers("/er/**").permitAll()
 				.requestMatchers("/symptoms/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
@@ -63,7 +69,7 @@ public class SecurityConfig {
 		
 		/*
 		// 자동로그인 설정
-		http.rememberMe()
+		http.rememberMe()`
 			.userDetailsService(userService)
 			.tokenRepository(tokenRepository());
 		*/
