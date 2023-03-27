@@ -135,10 +135,12 @@ public class MemberController {
 			int grade = service.checkGrade(vo.getUid());
 			System.out.println(grade);
 			if(grade == 2) {
+				System.out.println("의사회원 회원 탈퇴 진행");
 				service.deleteDoctor(vo.getUid());
 				int result = service.deleteMember(vo.getUid());
 				map.put("result", result);
 			}else {
+				System.out.println("일반회원 회원 탈퇴 진행");
 				int result = service.deleteMember(vo.getUid());
 				map.put("result", result);
 			}
