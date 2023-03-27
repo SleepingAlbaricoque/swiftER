@@ -406,6 +406,9 @@
     padding: 16px 0;
     text-align: center;                
 }
+.popup > div > section > form > div.hide {
+	padding: 0;
+}
 
 .btnPositive {
     padding: 6px 12px;

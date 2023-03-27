@@ -30,13 +30,25 @@ $(document).ready(function () {
 			let info = document.getElementById('etc');
 			let tel = document.getElementById('tel');
 			let etc1 = document.getElementById('etc1');
+			let hide = document.getElementById('hide');
 			
   			name.innerText = ''+detail.dutyName;
   			addr.innerText = '• '+detail.dutyAddr;
   			dep.innerText = '• '+detail.dgidIdName;
   			info.innerText = '• '+detail.dutyMapimg;
+  			
+  			tel.appendChild = '<i class="fas fa-home"></i>';
   			tel.innerText = '응급실 전화 : '+detail.dutyTel3;
+  			etc1.appendChild = '<i class="fas fa-home"></i>';
   			etc1.innerText = '내용이 없습니다.';
+  			
+  			var input   = document.createElement('input'); 
+			input.type   = 'hidden'; 
+			input.name  = 'hosName'; 
+			input.value  = detail.dutyName;
+			console.log(input);
+			hide.appendChild = input;
+			console.log(hide);
 				
 		}
 		

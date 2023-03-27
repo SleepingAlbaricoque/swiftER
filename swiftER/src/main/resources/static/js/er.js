@@ -319,10 +319,9 @@ $(document).ready(function () {
 		            
 					// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 					kakao.maps.event.addListener(marker, 'click', function() {
-						console.log("marker : %o", marker);
 					    overlay.setMap(map);
 					    var hpid = $('input[name=code]').val();
-						var hf = '/swiftER/er/erDetail?code='+hpid;
+						var hf = '/swiftER/er/erDetail?code='+hpid+'&city='+city+'&town='+town;
 			            
 						$('.link').attr("href", hf);
 					});
