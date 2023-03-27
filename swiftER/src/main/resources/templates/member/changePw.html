@@ -33,7 +33,6 @@
 		});
 	    
 	    $('#changePwSubmit').click(function(){
-	    	alert('!');
 			let pass2 = $('input[name=pass2]').val();
 			let uid = $('input[name=id]').val();
 			$.ajax({
@@ -79,7 +78,7 @@
         </header>
         <main>
             <h2>
-                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+                <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="findId">
                 <section>
@@ -90,7 +89,8 @@
                                 ID
                             </th>
                             <td>
-                                <input type="text" name="id" disabled th:value="${uid}">
+                                <input type="text" name="id" placeholder="아이디 입력">
+                                <span>가입할 때 사용하신 ID를 입력하여 주십시오</span>
                             </td>
                         </tr>
                         <tr>

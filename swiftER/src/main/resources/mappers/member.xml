@@ -14,6 +14,11 @@
 		SELECT * FROM `member` WHERE `uid`=#{uid};
 	</select>
 	
+	<!-- 마이페이지 의사정보 불러오기 -->
+	<select id="selectDoctor" resultType="kr.co.swiftER.vo.MemberDoctorVO">
+		SELECT * FROM `member_doctor` WHERE `member_uid`=#{uid};
+	</select>
+	
 	<!-- 마이페이지 게시판 불러오기 -->
 	<select id="selectCaList" resultType="kr.co.swiftER.vo.CommunityArticleVO">
 		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 3;
@@ -106,4 +111,30 @@
 			`kind`=#{kind},
 			`specialty`=#{specialty}
 	</insert>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="kr.co.swiftER.vo.MemberVO">
+		select * from `member` where `name`=#{name} and `email`=#{email};
+	</select>
+	
+	<!-- 회원정보수정(일반) -->
+	<update id="changeNor">
+		UPDATE `member` set
+			`pass`=#{pass},
+			`name`=#{name},
+			`nickname`=#{nickname},
+			`contact`=#{contact},
+			`zip`=#{zip},
+			`addr1`=#{addr1},
+			`addr2`=#{addr2}
+			where `uid`=#{uid};
+	</update>
+	
+	<!-- 회원정보수정(일반) -->
+	<update id="changeDoc">
+		UPDATE `member_doctor` set
+			`kind`=#{kind},
+			`specialty`=#{specialty}
+			where `member_uid`=#{member_uid};
+	</update>
 </mapper>

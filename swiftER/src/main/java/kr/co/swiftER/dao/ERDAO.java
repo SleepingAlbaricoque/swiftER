@@ -3,6 +3,7 @@ package kr.co.swiftER.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.swiftER.vo.ERCateVO;
@@ -17,5 +18,7 @@ public interface ERDAO {
 	public List<ERSubcateVO> selectErSubCate(String city);
 	public List<ERReviewVO> selectErReview(String code);
 	public int insertErReview(String code, String title, String content);
+	public List<ERCateVO> selectErRegion(String city);
+	public List<ERSubcateVO> selectErSubRegion(@Param("town") String town,@Param("city") String city);
 	
 }

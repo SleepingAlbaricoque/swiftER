@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
+    <title>ID 찾기 결과</title>
+    <style>
+    	#wrapper > main > article > section > table {
+    		text-align: center;
+    		margin: 0 auto;
+    	}
+    
+    	#wrapper > main > article > section > table > tbody > tr > td {
+    		font-family: 'IBM Plex Sans KR', sans-serif;
+    	}
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+        <p class="p_Header">
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+			background : red;
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+       	</p>
+            <div class="centerName">
+                <div><img th:src="@{/img/member/swifter_logo.png}" alt="로고" width="200px" height="200px" class="logo">
+                </div>
+                <div>
+                    <h1>
+                        
+                        swiftER <br> ID 찾기 결과
+                    </h1>
+                </div> 
+            </div>
+        </header>
+        <main>
+            <h2>
+                <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+            </h2>
+            <article class="findId">
+                <section>
+                    <h4 class="find">swiftER ID 찾기 결과입니다</h4>
+                    <table>
+                        <tr>
+                            <th>
+                                이름
+                            </th>
+                            <td>
+                                [[${member.name}]]
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <td>
+                                [[${member.uid}]]
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                E-mail
+                            </th>
+                            <td>
+                                [[${member.email}]]
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                회원구분
+                            </th>
+                            <td th:if="${member.grade} == 1">일반회원</td>
+                            <td th:if="${member.grade} == 2">의사회원</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div class="find">
+                        <span>
+                            <a th:href="@{/member/login}">로그인</a>
+                            |
+                            <a th:href="@{/member/findPw}">비밀번호 찾기</a>
+                            |
+                            <a th:href="@{/member/terms}">회원가입</a>
+                        </span>
+                    </div>
+                </section>
+            </article>
+        </main>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>

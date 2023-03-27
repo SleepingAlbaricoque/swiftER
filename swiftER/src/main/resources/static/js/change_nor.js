@@ -5,64 +5,17 @@
 
     let regUid   = /^[a-z0-9]+[a-z0-9]{4,12}$/g;
     let regName  = /^[가-힣]{2,6}$/;
-    let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
     let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
     let regZip = /\d{5}/;
 
 // 폼 데이터 검증 결과 상태변수
-    let isUidOk   = false;
     let isPassOk  = false;
     let isNameOk  = false;
-    let isEmailOk = false;
-    let isEmailAuthOk = false;
     let isHpOk 	  = false;
     let isZipOk = false;
 
     $(function(){
-
-        $('input[name=uid]').focusout(function() {
-        	isUidOk=false;
-        });
-
-    	// 아이디 검증
-    	$('input[name=uid]').focusout(function(){
-    		let uid = $('input[name=uid]').val();
-
-    		if(isUidOk){
-    			return;
-    		}
-    		
-    		if(!uid.match(regUid)){
-    			isUidOk = false;
-    			$('.resultUid').css('color', 'red').text('아이디가 유효하지 않습니다.');
-    			return;
-    		}
-    		
-    		$('.resultUid').css('color', 'black').text('...');
-    			
-    		setTimeout(()=>{
-    			
-    			$.ajax({
-    				url : '/swiftER/member/checkUid',
-    				method : 'get',
-    				data : {"uid":uid},
-    				dataType : 'json',
-    				success : function(data){
-    					if(data.result == 0){
-    						console.log('1');
-    						isUidOk = true;
-    						$('.resultUid').css('color', 'green').text('사용 가능한 아이디입니다.')
-    					}else{
-    						isUidOk = false;
-    						console.log('2');
-    						$('.resultUid').css('color', 'red').text('이미 사용중인 아이디입니다.')
-    					}
-    				}
-    			});
-    			
-    		}, 500);
-    	});
 
     	// 비밀번호 일치여부 확인
     	
@@ -98,20 +51,6 @@
     		}
     	});
 
-    	// 이메일 유효성 검사
-    	$('input[name=email]').focusout(function(){
-    		let email = $(this).val();
-
-    		if(!email.match(regEmail)){
-    			isEmailOk = false;
-    			$('.resultEmail').css('color', 'red').text('이메일이 유효하지 않습니다.');
-    		}else{
-    			isEmailOk = true;
-    			$('.resultEmail').text('O');
-    		}
-
-    	});
-
     	// 휴대폰 유효성 검사
     	$('input[name=hp]').focusout(function(){
     		let hp = $(this).val();
@@ -145,11 +84,6 @@
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
     		////////////////////////////////////
-    		// 아이디 검증
-    		if(!isUidOk){
-    			alert('아이디를 확인하십시오.');
-    			return false;
-    		}
     		// 비밀번호 검증
     		if(!isPassOk){
     			alert('비밀번호를 확인하십시오.');
@@ -160,11 +94,7 @@
     			alert('이름을 확인하십시오.');
     			return false;
     		}
-    		// 이메일 검증
-    		if(!isEmailOk){
-    			alert('이메일을 확인하십시오.');
-    			return false;
-    		}
+    		
     		// 휴대폰 검증
     		if(!isHpOk){
     			alert('휴대폰을 확인하십시오.');
@@ -181,40 +111,34 @@
     		let pass = $('input[name=pass2]').val();
     		let name = $('input[name=name]').val();
     		let nickname = $('input[name=nickname]').val();
-    		let birth = $('input[name=birth]').val();
-    		let email = $('input[name=email]').val();
     		let contact = $('input[name=hp]').val();
     		let zip = $('input[name=zip]').val();
     		let addr1 = $('input[name=addr1]').val();
     		let addr2 = $('input[name=addr2]').val();
-    		let grade = $('input[name=grade]').val();
     		
     		let jsonData = {
 				"uid" : uid,
 				"pass" : pass,
 				"name" : name,
 				"nickname" : nickname,
-				"birth" : birth,
-				"email" : email,
 				"contact" : contact,
 				"zip" : zip,
 				"addr1" : addr1,
 				"addr2" : addr2,
-				"grade" : grade
 			}
     		
     		console.log(jsonData);
     		
     		$.ajax({
 				
-				url : '/swiftER/member/insertMember',
+				url : '/swiftER/member/changeNor',
 				method : 'post',
 				data : jsonData,
 				dataType : 'json',
 				success : function(data){
 					if(data.result == 1){
-						alert("회원가입이 완료되었습니다!")
-						location.href="/swiftER/member/login";	
+						alert("회원수정이 완료되었습니다!")
+						location.href="/swiftER/member/myPage";	
 					}else{
 						alert("오류 발생!");
 					}

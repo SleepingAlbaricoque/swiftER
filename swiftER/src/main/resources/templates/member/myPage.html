@@ -169,7 +169,7 @@
                             <th th:if="${vo.grade == 1}">가입일</th>
                             <th th:if="${vo.grade == 2}">의사구분</th>
                             <td th:if="${vo.grade == 1}">[[${vo.rdate}]]</td>
-                            <td th:if="${vo.grade == 2}">가정의학과<br>전문의</td>
+                            <td th:if="${vo.grade == 2}">[[${dvo.kind}]]</td>
                         </tr>
                         <tr>
                             <th>
@@ -217,8 +217,16 @@
                         </tr>
                     </table>
                 </section>
-                <div>
-                    <button class="submit">
+                <div th:if="${vo.grade == 1}">
+                    <button class="submit" onclick="location.href='changeNor'">
+                        회원정보수정
+                    </button>
+                    <button class="submit" onclick="location.href='deleteMember'">
+                        회원 탈퇴
+                    </button>
+                </div>
+                <div th:if="${vo.grade == 2}">
+                    <button class="submit" onclick="location.href='changeDoc'">
                         회원정보수정
                     </button>
                     <button class="submit" onclick="location.href='deleteMember'">

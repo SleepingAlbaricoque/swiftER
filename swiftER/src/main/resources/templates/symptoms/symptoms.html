@@ -37,19 +37,21 @@
             	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
                 const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.name);
+                const delimiter = "& ";
                 console.log(checkedValues);
                 
                 if(checkedValues.length == 0) {
                 	alert("체크해주세요!");
+                	return false;
                 }
                 
 
-                let checkBoxArr = checkedValues.toString();
+                let symptom = checkedValues.join(delimiter);
          		
          		let ischk = confirm('검색하시겠습니까?');
          		
          		if(ischk){
-         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+checkBoxArr;
+         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+symptom;
          		}else{
          			return false;
          		}

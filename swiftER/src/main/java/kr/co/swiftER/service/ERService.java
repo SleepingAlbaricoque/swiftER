@@ -32,5 +32,12 @@ public class ERService {
 		return dao.insertErReview(code, title, content);
 	}
 
+	public List<ERCateVO> selectErRegion(String city){
+		return dao.selectErRegion(city);
+	}
+	
+	public List<ERSubcateVO> selectErSubRegion(String town, String city){
+		return dao.selectErSubRegion(town, city);
+	}
 	
 }
