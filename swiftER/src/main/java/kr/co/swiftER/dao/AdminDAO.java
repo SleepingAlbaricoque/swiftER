@@ -35,4 +35,7 @@ public interface AdminDAO {
 	
 	// 회원 정보 수정하기
 	public int updateMember(AdminMemberModifyVO member);
+	
+	// 의사 회원의 인증 보류시 보류 메시지 수정하기(회원 정보 수정과 transaction으로 묶을 것)
+	public int updateVeriMsg(AdminMemberModifyVO member);
 }

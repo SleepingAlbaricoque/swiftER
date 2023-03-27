@@ -137,10 +137,10 @@ public class AdminController {
 	@PostMapping("admin/member/modify")
 	@ResponseBody
 	public Map<String, Integer> modifyMember(@RequestBody AdminMemberModifyVO member){
-		
+		int result = service.updateMember(member);
 		
 		Map<String, Integer> resultMap = new HashMap<>();
-		resultMap.put("result", 1);
+		resultMap.put("result", result);
 		return resultMap;
 	}
 	

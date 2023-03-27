@@ -3,10 +3,12 @@ package kr.co.swiftER.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.swiftER.dao.AdminDAO;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
@@ -19,6 +21,9 @@ public class AdminService {
 
 	@Autowired
 	private AdminDAO dao;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	// 전체 회원의 수
 	public List<AdminMemberSearchVO> selectMembers(int start, int isDoc){
@@ -53,9 +58,21 @@ public class AdminService {
 		return dao.certVerify(uid, status);
 	}
 	
-	// 회원 정보 수정하기
+	// 회원 정보 수정하기 + 의사 회원의 인증 보류시 보류 메시지 수정하기 transaction
+	@Transactional
 	public int updateMember(AdminMemberModifyVO member) {
-		return dao.updateMember(member);
+		int result1 = sqlSession.update("kr.co.swiftER.dao.AdminDAO.updateMember", member);
+		
+		if(member.getVeriMsg() != null) {
+			int result2 = sqlSession.update("kr.co.swiftER.dao.AdminDAO.updateVeriMsg", member);
+			
+			if(result1 == 1 && result2 ==1)
+				return 1;
+			else
+				return 0;
+		}
+		
+		return result1;
 	}
 	
 	
