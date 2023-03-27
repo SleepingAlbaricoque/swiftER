@@ -45,4 +45,14 @@ public interface MemberDAO {
 	public int checkGrade(String uid);
 
 	public void deleteDoctor(String uid);
+
+	public int checkMember(String uid);
+
+	public MemberVO findId(@Param(value="name")String name, @Param(value="email") String email);
+
+	public MemberDoctorVO selectDoctor(String uid);
+
+	public int changeNor(MemberVO vo);
+
+	public int changeDoc(MemberDoctorVO dvo);
 }
