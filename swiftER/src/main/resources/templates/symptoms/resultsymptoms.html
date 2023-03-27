@@ -9,12 +9,12 @@
                 </div>
                 <nav class="disease">
                     <ul>
-                    <th:block th:each="ill :${ill}" th:if="${ill.symptom} eq ${symptom}">
+					<th:block th:each="ill :${ill}" th:if="${#strings.arrayContainsIgnoreCase(symptom, ill.symptom)}">
                         <li th:if="${ill.illness} ne '' "><a href="#wrapper0">[[${ill.illness}]]</a></li>
                         <li th:if="${ill.illness2} ne '' "><a href="#wrapper0">[[${ill.illness2}]]</a></li>
                         <li th:if="${ill.illness3} ne '' "><a href="#wrapper0">[[${ill.illness3}]]</a></li>
                         <li th:if="${ill.illness4} ne '' "><a href="#wrapper0">[[${ill.illness4}]]</a></li>
-                    </th:block>
+					</th:block>
                     </ul>
                 </nav>
                 <th:block th:each="ill : ${ill}" th:if="${ill.symptom} eq ${symptom}">

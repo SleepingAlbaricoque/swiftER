@@ -185,11 +185,12 @@ main > div > .title > h3{
     background: #01b1ff;
     border-radius: 30px;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     margin: 0 auto;
     color: #fff;
 }
+
 section {
     display: block;
     width: 1160px;
