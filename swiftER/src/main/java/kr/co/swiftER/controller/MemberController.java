@@ -1,42 +1,31 @@
 package kr.co.swiftER.controller;
 
-import java.net.http.HttpHeaders;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapProperties.Credential;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.swiftER.entity.MemberEntity;
 import kr.co.swiftER.security.MyUserDetails;
 import kr.co.swiftER.service.MemberService;
-import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 public class MemberController {
@@ -166,10 +155,7 @@ public class MemberController {
 	
 	/* 비밀번호 변경 get */
 	@GetMapping("member/changePw")
-	public String changePw(Model model, Principal principal) {
-		String uid = principal.getName();
-		System.out.println(uid);
-		model.addAttribute("uid", uid);
+	public String changePw() {
 		return "member/changePw";
 	}
 	
@@ -191,6 +177,7 @@ public class MemberController {
 		String uid = principal.getName();
 		
 		MemberVO vo = service.selectMember(uid);
+		MemberDoctorVO dvo = service.selectDoctor(uid);
 		
 		List<CommunityArticleVO> cas = service.selectCaList(uid);
 		
@@ -206,6 +193,7 @@ public class MemberController {
 		int ca = service.countCa(uid);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("dvo", dvo);
 		model.addAttribute("ca", ca);
 		model.addAttribute("cas", cas);
 		model.addAttribute("ers", ers);
@@ -224,6 +212,81 @@ public class MemberController {
 			ca.setRdate(vo.getRdate().substring(0,10));
 		model.addAttribute("cas", cas);
 		return "member/articleList";
+	}
+	
+	/* 아이디 찾기(get) */
+	@GetMapping("member/findId")
+	public String findId() {
+		return "member/findId";
+	}
+	
+	/* 아이디 찾기(Post) */
+	@ResponseBody
+	@PostMapping("member/findId")
+	public Map<String, MemberVO> findId(@RequestParam(value="name") String name, @RequestParam(value="email") String email, HttpSession sess) throws Exception {
+		MemberVO vo = service.findId(name, email);
+		Map<String, MemberVO> map = new HashMap<>();
+		map.put("vo", vo);
+		if(vo != null) {
+			sess.setAttribute("member", vo);
+		}
+		return map;
+	}
+	
+	/* 아이디 찾기 결과*/
+	@GetMapping("member/findIdResult")
+	public String findIdResult(Model model, HttpSession sess) {
+		MemberVO member = (MemberVO) sess.getAttribute("member");
+		//System.out.println("memberuid :" + member.getUid());
+		model.addAttribute("member", member);
+		return "member/findIdResult";
+	}
+	
+	/* 회원정보수정(일반 get) */
+	@GetMapping("member/changeNor")
+	public String changeNor(Principal principal, Model model) {
+		String uid = principal.getName();
+		
+		MemberVO vo = service.selectMember(uid);
+		model.addAttribute("vo", vo);
+		
+		return "member/changeNor";
+	}
+	
+	/* 회원정보수정(의사 get) */
+	@GetMapping("member/changeDoc")
+	public String changeDoc(Principal principal, Model model) {
+		String uid = principal.getName();
+		
+		MemberVO vo = service.selectMember(uid);
+		MemberDoctorVO dvo = service.selectDoctor(uid);
+		
+		model.addAttribute("dvo", dvo);
+		model.addAttribute("vo", vo);
+		
+		return "member/changeDoc";
+	}
+	
+	/* 회원정보수정(일반 post) */
+	@ResponseBody
+	@PostMapping("member/changeNor")
+	public Map<String, Integer> changeNor(@ModelAttribute("MemberVO") MemberVO vo) {
+		int result = service.changeNor(vo);
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	
+	/* 회원정보수정(의사 post) */
+	@ResponseBody
+	@PostMapping("member/changeDoc")
+	public Map<String, Integer> changeDoc(@ModelAttribute("MemberDoctorVO") MemberDoctorVO dvo) {
+		int result = service.changeDoc(dvo);
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
 	}
 	
 	/* 2차에서 하자 

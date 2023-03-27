@@ -45,7 +45,7 @@
 					}else{
 						$('.resultCode').css('color', 'green').text('인증 되었습니다');
 						$('input[name=code]').attr('readonly', true);
-						isEmailAuthOk = true;
+						isEmailOk = true;
 						console.log(data.result);
 					}
 				}
@@ -89,7 +89,7 @@
         </header>
         <main>
             <h2>
-                <a th:href="@{#}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
+                <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="findId">
                 <section>
@@ -110,7 +110,7 @@
                             </th>
                             <td>
                                 <input type="text" name="email" placeholder="E-mail 입력">
-                                <span><button id="findPwEmailCheck">인증번호 전송</button></span>
+                                <span class="chkEmail"><button id="findPwEmailCheck">인증번호 전송</button></span>
                             </td>
                         </tr>
                         <tr>
@@ -118,8 +118,8 @@
                                 인증번호
                             </th>
                             <td>
-                                <input type="text" name="code" placeholder="비밀번호 확인">
-                                <span class="resultCode"><button id="findPwCheckCode">인증번호 확인</button>&nbsp;&nbsp;&nbsp;전송받은 인증번호를 입력해 주십시오</span>
+                                <input type="text" name="code" placeholder="인증번호 확인">
+                                <span class="resultCode"><button id="findPwCheckCode">인증번호 확인</button>&nbsp;&nbsp;&nbsp;</span>
                             </td>
                         </tr>
                     </table>
@@ -134,7 +134,7 @@
                     </div>
                 </section>
                 <div>
-                    <button id="findPwSubmit">
+                    <button class="submit" id="findPwSubmit">
                         비밀번호 찾기
                     </button>
                 </div>

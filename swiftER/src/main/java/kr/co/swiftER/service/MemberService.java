@@ -95,5 +95,31 @@ public class MemberService {
 	public void deleteDoctor(String uid) {
 		dao.deleteDoctor(uid);
 	}
+	
+	// 회원 확인
+	public int checkMember(String uid) {
+		int result = dao.checkMember(uid);
+		return result;
+	}
+
+	// 아이디 찾기 정보 출력
+	public MemberVO findId(String name, String email) {
+		return dao.findId(name, email);
+	}
+
+	// 마이페이지 의사회원 정보
+	public MemberDoctorVO selectDoctor(String uid) {
+		return dao.selectDoctor(uid);
+	}
+
+	// 일반회원 수정
+	public int changeNor(MemberVO vo) {
+		vo.setPass(passwordEncoder.encode(vo.getPass()));
+		return dao.changeNor(vo);
+	}
+
+	public int changeDoc(MemberDoctorVO dvo) {
+		return dao.changeDoc(dvo);
+	}
 
 }

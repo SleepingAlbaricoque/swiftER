@@ -3,65 +3,16 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>일반 회원가입</title>
+    <title>의사 회원정보수정</title>
     <link rel="stylesheet" th:href="@{/css/member/member.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script th:src="@{/js/validation_nor.js}"></script>
+    <script th:src="@{/js/change_doc.js}"></script>
     <script th:src="@{/js/postcode.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-	$(document).ready(function(){
-		$('#btnEmailCheck').click(function(){
-			let email = $('input[name=email]').val();
-			
-			$.ajax({
-				url : '/swiftER/member/checkEmail',
-   				method : 'get',
-   				data : {"email":email},
-   				dataType : 'json',
-   				success : function(data){
-   					console.log(email);
-   				}
-			});
-		});
-		
-		$('#btncheckCode').click(function(){
-			let code = $('input[name=code]').val();
-			
-			$.ajax({
-				url : '/swiftER/member/checkCode',
-				method : 'get',
-				data : {"code":code},
-				dataType : 'json',
-				success : function(data){
-					
-					console.log('data : ' + data);
-					
-					if(data.result != 0){
-						$('.resultCode').css('color', 'red').text('사용할수 없는 이메일입니다');
-						console.log(data.result);
-					}else{
-						$('.resultCode').css('color', 'green').text('사용 가능한 이메일입니다');
-						$('input[name=code]').attr('readonly', true);
-						isEmailAuthOk = true;
-						console.log(data.result);
-					}
-				}
-				
-			})
-		});
-		
-		$('').submit(function(){
-			
-		});
-		
-	});
-	
-	</script>
 </head>
 <body>
     <div id="wrapper">
@@ -78,7 +29,7 @@
                 <div>
                     <h1>
                         
-                        일반회원 <br> 가입
+                        의사회원 <br> 회원정보수정
                     </h1>
                 </div> 
             </div>
@@ -91,15 +42,13 @@
                 <section>
                     <h4>필수 정보입력</h4>
                     <table>
-                    
                         <tr>
                             <th>
+                            <input type="hidden" name="grade" value="2">
                                 아이디
                             </th>
                             <td>
-                            	<input type="hidden" name="grade" value="1">
-                                <input type="text" name="uid" id="uid" placeholder="아이디 입력" required>
-                                <span class="resultUid">영문, 숫자로 5~12자까지 설정해 주십시오</span>
+                                <input type="text" name="uid" id="uid" th:value="${vo.uid}" readonly>
                             </td>
                         </tr>
                         <tr>
@@ -107,8 +56,8 @@
                                 비밀번호
                             </th>
                             <td>
-                                <input type="password" name="pass1" placeholder="비밀번호 입력" required>
-                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주십시오</span>
+                                <input type="password" name="pass1" placeholder="비밀번호 입력">
+                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
                             </td>
                         </tr>
                         <tr>
@@ -116,7 +65,7 @@
                                 비밀번호 확인
                             </th>
                             <td>
-                                <input type="password" name="pass2" placeholder="비밀번호 확인" required>
+                                <input type="password" name="pass2" placeholder="비밀번호 확인">
                                 <span class="resultPass">비밀번호 재입력</span>
                             </td>
                         </tr>
@@ -128,38 +77,42 @@
                         <tr>
                             <th>이름</th>
                             <td>
-                                <input type="text" name="name" placeholder="이름 입력" required>
+                                <input type="text" name="name" th:value="${vo.name}" required>
                                 <span class="resultName">한글 2~6자를 입력해 주십시오</span>
                             </td>
                         </tr>
-                        <tr>
-                            <th>별명</th>
+                        <tr class="docCate">
+                            <th>의사 분류</th>
+                            <td th:if="${dvo.kind == '일반의'}">
+                                <select name="kind" class="kind" th:selected="${dvo.kind}">
+                                	<option value="전문의">전문의</option>
+                                	<option th:selected="${dvo.kind}">[[${dvo.kind}]]</option>
+                                </select>
+                            </td>
+                            <td th:if="${dvo.kind == '전문의'}">
+                                <select name="kind" class="kind" th:selected="${dvo.kind}">
+                                	<option value="일반의">일반의</option>
+                                	<option th:selected="${dvo.kind}">[[${dvo.kind}]]</option>
+                                </select>
+                            </td>
+                            <td> 
+                                <input type="text" name="specialty" th:value="${dvo.specialty}">
+                            </td>
                             <td>
-                                <input type="text" name="nickname" placeholder="별명 입력" required>
+                                <input type="file" name="uploadFile" multiple>
+                                <span>의사임을 증명할 파일을 첨부하십시오</span>
                             </td>
                         </tr>
                         <tr>
                             <th>생년월일</th>
                             <td>
-                                <input type="date" name="birth" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>E-mail</th>
-                            <td>
-                                <input type="text" name="email" placeholder="이메일 입력" required>
-                                    <button id="btnEmailCheck">인증번호 전송</button>
-                                    <span class="resultEmail">이메일은 수정불가하니 신중히 입력해 주십시오</span>
-                                    <br>
-                                    <input type="text" name="code" placeholder="인증번호 입력" required>
-                                    <button id="btncheckCode">인증번호 확인 </button>
-                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
+                                <input type="date" name="nickname" th:value="${vo.birth}" readonly>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <input type="text" name="hp" placeholder="휴대전화" required>
+                                <input type="text" name="hp" th:value="${vo.contact}" required>
                                 <span class="resultHp"> - 포함 13자리를 입력해 주십시오</span>
                             </td>
                         </tr>
@@ -167,14 +120,14 @@
                             <th>주소</th>
                             <td>
                                 <div>
-                                    <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
+                                    <input type="text" name="zip" id="zip" th:value="${vo.zip}" th:onclick="postcode()" required>
                                     <span class="resultZip"></span>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr1" id="addr1" required>
+                                    <input type="text" name="addr1" id="addr1" th:value="${vo.addr1}" required>
                                 </div>
                                 <div>
-                                    <input type="text" name="addr2" id="addr2" required>
+                                    <input type="text" name="addr2" id="addr2" th:value="${vo.addr2}" required>
                                 </div>
                             </td>
                         </tr>
@@ -182,7 +135,7 @@
                 </section>
                 <div>
                     <button class="submit">
-                        회원가입
+                        회원정보수정
                     </button>
                 </div>
             </article>
