@@ -16,11 +16,11 @@ import org.springframework.web.client.RestTemplate;
 import kr.co.swiftER.dto.ErDTO;
 import kr.co.swiftER.dto.ItemDTO;
 import kr.co.swiftER.service.ERService;
+import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
-/*
+import kr.co.swiftER.vo.ERSubcateVO;
 @Controller
 public class ERRestController {
-	/*
 	@Autowired
 	private ERService service;
 	
@@ -87,12 +87,18 @@ public class ERRestController {
     }
     
 	@GetMapping("er/erDetail")
-    public String erDetail(Model model,@RequestParam("code") String code) {
-    	System.out.println("code : "+code);
-    	
+    public String erDetail(Model model,@RequestParam("code") String code,@RequestParam("city") String city,@RequestParam("town") String town) {
 		List<ERReviewVO> reviews = service.selectErReview(code);
+		List<ERCateVO> region = service.selectErRegion(city);
+		List<ERSubcateVO> subregion = service.selectErSubRegion(town,city);
+
+		System.out.println("region : "+region);
+		System.out.println("subregion : "+subregion);
+		
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("code", code);
+		model.addAttribute("region", region);
+		model.addAttribute("subregion", subregion);
         
        
         return "er/erDetail";
@@ -114,6 +120,5 @@ public class ERRestController {
     	
     	return response;
 
-    }*/
+	}
 }
-

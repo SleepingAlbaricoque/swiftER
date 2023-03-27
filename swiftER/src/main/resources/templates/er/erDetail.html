@@ -87,8 +87,8 @@
                         <div>
                             <nav><h2>연락처 정보</h2></nav>
                             <nav>
-                                <span id="tel"><i class="fas fa-home"></i></span><br/>
-                                <span id="etc1"><i class="fas fa-home"></i></span>
+                                <span id="tel"></span><br/>
+                                <span id="etc1"></span>
                             </nav>
                         </div>
                     </article>
@@ -99,7 +99,7 @@
                     <th:block th:each="review : ${reviews}">
                         <li>
                             <div>
-                                <h5 class="rating star" th:attrappend="class= '${review.rating}'">별점</h5>
+                                <h5 th:class="rating star${review.rating}">별점</h5>
                                 <span>[[${review.member_uid}]] / 작성일 [[${review.rdate}]]</span>
                             </div>
                             <p th:text="${review.content}">
@@ -163,6 +163,13 @@
                     </nav>
                     <section>
                         <form th:action="@{er/erReview}">
+                        	<div id="hide">
+                        		<input type="hidden" name="code" th:value="${code}">
+                        		<!-- 
+                        		<input type="hidden" name="region" th:value="${region.region_code}">
+                        		<input type="hidden" name="subregion" th:value="${subregion.subregion_code}">
+                        		 -->
+                        	</div>
                             <table border="0">
                                 <tr>
                                     <th>제목</th>
