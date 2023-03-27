@@ -1,5 +1,8 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
+	    let headers = new Headers();
+	    headers.append("Content-Type", "application/json; charset=utf-8");
+    
         function searchBar(){
             let bar = document.querySelector('.search-bar');
 
@@ -41,7 +44,9 @@
 
         function modifyMember(element){
             let details = document.querySelectorAll(".member-detail");
-
+            let zip = details[3].value.substring(0, 6);
+            let addr1 = details[3].value.substring(6);
+            
             if(element.value === '수정하기'){
 
                 for(let i=0; i < details.length; i++){
@@ -57,6 +62,28 @@
                     document.querySelectorAll(".member-detail")[i].readOnly = true;
                     document.querySelectorAll(".member-detail")[i].style.border = 'none';
                 }
+                
+                // 수정 사항 DB에 저장하기
+                fetch("/swiftER/admin/member/modify", {
+                	method: 'POST',
+                	headers: {
+                		"Content-Type": "application/json; charset=utf-8",
+                	},
+                	body: JSON.stringify({
+                		uid: document.querySelector('.member-uid').value,
+                		name: details[0].value,
+                		nickname: details[1].value,
+                		contact : details[2].value,
+                		zip: zip,
+                		addr1: addr1,
+                		email: details[4].value,
+                		addr2: details[5].value,
+                		veriMsg: document.querySelector('.veriMsg').value
+                	}),
+                }).then(response => response.json())
+                .then(function(json){
+                	alert(1);
+                })
 
                 element.value = "수정하기";
             }
@@ -64,8 +91,6 @@
 
         function permaBan(uid){
             if(confirm("정말 영구 정지시키시겠습니까?")){
-                let headers = new Headers();
-                headers.append("Content-Type", "application/json; charset=utf-8");
                 fetch("/swiftER/admin/member/ban?uid=" + uid, {headers:headers, method:"GET"})
                 .then(response => response.json())
                 .then(function(json){
@@ -90,29 +115,43 @@
         }
         
         function certVerify(uid){
-        	if(confirm('승인하시겠습니까?')){
-        		let headers = new Headers();
-                headers.append("Content-Type", "application/json; charset=utf-8");
-                fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=2", {headers:headers, method:"GET"})
-        		.then(response => response.json())
-        		.then(function(json){
-        			if(json.result == 1){
-        				alert(uid + '님의 인증을 승인하였습니다');
-        			}
-        		})
-        		.catch(err => console.error(err));
-                
+        	let verifyState = document.querySelector('.verifyState').innerText; // 회원의 현재 승인 상태
+
+        	if(verifyState !== '인증 완료'){
+        		if(confirm('승인하시겠습니까?')){
+                    fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=2", {headers:headers, method:"GET"})
+            		.then(response => response.json())
+            		.then(function(json){
+            			if(json.result > 0){
+            				alert(uid + '님의 인증을 승인하였습니다');
+            			}
+            		})
+            		.catch(err => console.error(err));
+                    
+                    location.href = "/swiftER/admin/member/view?uid=" + uid;
+                    
+            	}else{
+                    fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=1", {headers:headers, method:"GET"})
+            		.then(response => response.json())
+            		.then(function(json){
+            			if(json.result > 0){
+            				alert(uid + '님의 인증을 보류하였습니다');
+            			}
+            		})
+            		.catch(err => console.error(err));
+                    
+                    location.href = "/swiftER/admin/member/view?uid=" + uid;
+            	}
         	}else{
-        		let headers = new Headers();
-                headers.append("Content-Type", "application/json; charset=utf-8");
-                fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=1", {headers:headers, method:"GET"})
-        		.then(response => response.json())
-        		.then(function(json){
-        			if(json.result == 1){
-        				alert(uid + '님의 인증을 보류하였습니다');
-        			}
-        		})
-        		.catch(err => console.error(err));
+        		alert('이미 인증이 완료된 회원입니다');	
+        	}
+        }
+        
+        window.onload = () =>{
+        	let verifyState = document.querySelector('.verifyState').innerText; // 회원의 현재 승인 상태
+        	
+        	if(verifyState === '인증 완료'){
+        		document.querySelector('.veriMsg').style.color = 'grey';
         	}
         }
     </script>
@@ -123,7 +162,7 @@
                         <table class="member-view-table">
                             <tr>
                                 <td class="key">아이디</td>
-                                <td><input type="text" th:value="${member.member.uid}" readonly class="member-detail"></td>
+                                <td><input type="text" th:value="${member.member.uid}" readonly class="member-uid"></td>
                                 <td class="key">이름</td>
                                 <td><input type="text" th:value="${member.member.name}" readonly class="member-detail"></td>
                                 <td class="key">별명</td>
@@ -164,9 +203,9 @@
                                 <td class="key">인증여부</td>
                                 <td>
                                 	<th:block th:switch="${member.doctor.verified}">
-                                		<span th:case="0">승인 대기</span>
-                                		<span th:case="1">승인 보류</span>
-                                		<span th:case="2">인증 완료</span>
+                                		<span th:case="0" class="verifyState">승인 대기</span>
+                                		<span th:case="1" class="verifyState">승인 보류</span>
+                                		<span th:case="2" class="verifyState">인증 완료</span>
                                 	</th:block>
 									<input type="button" value="승인하기" class="verify-doc" th:uid="${member.member.uid}" th:onclick="certVerify(this.getAttribute('uid'))">
 								</td>
@@ -175,7 +214,7 @@
                                 <td class="key">인증서</td>
                                 <td><a href="#"  th:uid="${member.member.uid}" onclick="certPopup(this.getAttribute('uid'))">[[${member.doctor.cert_oriName}]]</a></td>
                                 <td class="key">관리자 인증 메시지</td>
-                                <td colspan="3"><input type="text" th:value="${member.doctor.veriMsg}" readonly></td>
+                                <td colspan="3"><input type="text" th:value="${member.doctor.veriMsg}" readonly class="member-detail veriMsg"></td>
                             </tr>
                         </table>
                     </div>

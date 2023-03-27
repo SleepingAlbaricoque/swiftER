@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.swiftER.dao.AdminDAO;
+import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -48,8 +49,13 @@ public class AdminService {
 	}
 	
 	// 의사 회원 승인하기
-	public int certVerify(String uid, int status) {
+	public int certVerify(String uid, String status) {
 		return dao.certVerify(uid, status);
+	}
+	
+	// 회원 정보 수정하기
+	public int updateMember(AdminMemberModifyVO member) {
+		return dao.updateMember(member);
 	}
 	
 	

@@ -68,11 +68,18 @@
 	
 	<update id="certVerify">
 		update `member_doctor` set 
-		<if test="#{status} == 2">
+		<if test="status == 2">
 		`verified` =2
 		</if>
-		<if test="#{status} == 1">
-		`verified` =1;
+		<if test="status == 1">
+		`verified` =1
 		</if>
+		where `member_uid` = #{uid};
+	</update>
+	
+	<update id="updateMember" parameterType="kr.co.swiftER.vo.AdminMemberModifyVO">
+		update `member` set `name` = #{name}, `nickname`=#{nickname}, `email`=#{email}, `contact`=#{contact}, `zip` =#{zip}, `addr1`= #{addr1}, `addr2` =#{addr2} where `uid`=#{uid};
+		
+		update `member_doctor` set `veriMsg` = #{veriMsg} where `member_uid`=#{uid};
 	</update>
 </mapper>

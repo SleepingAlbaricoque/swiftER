@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -30,5 +31,8 @@ public interface AdminDAO {
 	public FileVO selectDocCert(String uid);
 
 	// 의사 회원 승인하기
-	public int certVerify(@Param(value="uid") String uid, @Param(value="status") int status);
+	public int certVerify(@Param(value="uid") String uid, @Param(value="status") String status);
+	
+	// 회원 정보 수정하기
+	public int updateMember(AdminMemberModifyVO member);
 }

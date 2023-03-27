@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.swiftER.service.AdminService;
+import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -122,12 +125,22 @@ public class AdminController {
 	
 	@ResponseBody
 	@GetMapping("admin/member/verify")
-	public Map<String, Integer> certVerify(String uid, int status){
+	public Map<String, Integer> certVerify(String uid, String status){
 		int result = service.certVerify(uid, status);
 		
 		Map<String, Integer> resultMap = new HashMap<>();
 		resultMap.put("result", result);
 		
+		return resultMap;
+	}
+	
+	@PostMapping("admin/member/modify")
+	@ResponseBody
+	public Map<String, Integer> modifyMember(@RequestBody AdminMemberModifyVO member){
+		
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", 1);
 		return resultMap;
 	}
 	
