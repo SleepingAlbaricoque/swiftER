@@ -78,7 +78,7 @@
 			`grade`=3,
 			`regip`=null,
 			`rdate`=null,
-			`wdate`=NOW()
+			`wdate`=NOW() 
 			where `uid`=#{uid};
 	</update>
 	
@@ -90,7 +90,7 @@
 			`cert_oriName`=null,
 			`cert_newName`=null,
 			`verified`=0,
-			`veriMsg`=null,
+			`veriMsg`=null
 			where `member_uid`=#{uid};
 	</update>
 	
