@@ -19,7 +19,7 @@ $(function(){
         minRating: 1,
         ratedColors: ['#ffa400', '#ffa400', '#ffa400', '#ffa400', '#ffa400'],
         callback: function(currentRating, $el){
-            alert('rated ' + currentRating);
+            alert('별점을 입력하시겠습니까? 선택하신 별점 수 ' + currentRating);
             console.log('DOM element ', $el);
         }
     });

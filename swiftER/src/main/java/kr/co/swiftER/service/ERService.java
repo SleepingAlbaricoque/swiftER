@@ -28,8 +28,8 @@ public class ERService {
 		return dao.selectErReview(code);
 	}
 	
-	public int insertErReview(String code, String title, String content) {
-		return dao.insertErReview(code, title, content);
+	public int insertErReview(ERReviewVO vo) {
+		return dao.insertErReview(vo);
 	}
 
 	public List<ERCateVO> selectErRegion(String city){
@@ -39,5 +39,6 @@ public class ERService {
 	public List<ERSubcateVO> selectErSubRegion(String town, String city){
 		return dao.selectErSubRegion(town, city);
 	}
+
 	
 }

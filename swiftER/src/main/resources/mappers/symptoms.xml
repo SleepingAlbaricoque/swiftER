@@ -22,4 +22,8 @@
 		select * from `search_illnesses`;
 	</select>
 	
+	<select id="selectsymp1" resultType="kr.co.swiftER.vo.SymptomsSymptomsVO">
+		select * from `search_symptoms` ;
+	</select>
+
 </mapper>

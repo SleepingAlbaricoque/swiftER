@@ -21,6 +21,7 @@ public class SymptomsSymptomsVO {
 	private String illness7;
 	private String illness8;
 	private String illness9;
+	private String illness10;
 	private String illness11;
 	private String illness12;
 	private String illness13;
