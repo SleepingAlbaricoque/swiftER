@@ -17,7 +17,7 @@ public interface ERDAO {
 	public List<ERCateVO> selectErCate();
 	public List<ERSubcateVO> selectErSubCate(String city);
 	public List<ERReviewVO> selectErReview(String code);
-	public int insertErReview(String code, String title, String content);
+	public int insertErReview(ERReviewVO vo);
 	public List<ERCateVO> selectErRegion(String city);
 	public List<ERSubcateVO> selectErSubRegion(@Param("town") String town,@Param("city") String city);
 	

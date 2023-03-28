@@ -6,16 +6,16 @@
 	
 	<insert id="insertErReview" useGeneratedKeys="true" keyProperty="no">
         insert into `search_er_review` set
-            `member_uid`= 'admin',
-            `hospital_code`=#{code},
-            `hospital_name`='한사랑 응급실',
-            `region_code`= 11,
-            `subregion_code`=11,
+            `member_uid`= #{member_uid},
+            `hospital_code`=#{hospital_code},
+            `hospital_name`=#{hospital_name},
+            `region_code`= #{region_code},
+            `subregion_code`=#{subregion_code},
             `title`=#{title},
             `rating`=#{rating},
             `content`=#{content},
-            `regip`=123123123;
-            `rdate`=NOW(),
+            `regip`=#{regip},
+            `rdate`=NOW();
     </insert>
 
     <select id="selectErCate" resultType="kr.co.swiftER.vo.ERCateVO">

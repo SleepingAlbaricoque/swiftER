@@ -1,6 +1,7 @@
 package kr.co.swiftER.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,18 +88,23 @@ public class ERRestController {
     }
     
 	@GetMapping("er/erDetail")
-    public String erDetail(Model model,@RequestParam("code") String code,@RequestParam("city") String city,@RequestParam("town") String town) {
+    public String erDetail(Model model,Principal principal ,@RequestParam("code") String code,@RequestParam("city") String city,@RequestParam("town") String town) {
 		List<ERReviewVO> reviews = service.selectErReview(code);
 		List<ERCateVO> region = service.selectErRegion(city);
 		List<ERSubcateVO> subregion = service.selectErSubRegion(town,city);
-
-		System.out.println("region : "+region);
-		System.out.println("subregion : "+subregion);
 		
+		if(principal != null) {
+			//로그인 체크
+			String uid = principal.getName();
+			model.addAttribute("uid", uid);
+		}
+
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("code", code);
 		model.addAttribute("region", region);
 		model.addAttribute("subregion", subregion);
+		model.addAttribute("city", city);
+		model.addAttribute("town", town);
         
        
         return "er/erDetail";
