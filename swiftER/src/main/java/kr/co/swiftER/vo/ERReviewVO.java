@@ -11,6 +11,7 @@ public class ERReviewVO {
 	private int no;
 	private String member_uid;
 	private String hospital_code;
+	private String hospital_name;
 	private int region_code;
 	private int subregion_code;
 	private String title;
@@ -19,7 +20,14 @@ public class ERReviewVO {
 	private String regip;
 	private String rdate;
 	
-	//추가
-	private String region;
-	private String subregion;
+	public void setRegion_code(String region_code) {
+		this.region_code = Integer.parseInt(region_code);
+	}
+	public void setSubregion_code(String subregion_code) {
+		this.subregion_code = Integer.parseInt(subregion_code);;
+	}
+	public void setRating(String rating) {
+		this.rating = Integer.parseInt(rating);
+	}
+	
 }

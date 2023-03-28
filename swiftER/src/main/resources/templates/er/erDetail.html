@@ -1,59 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>응급실 정보</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/swiftER/css/common.css"/>
-    <link rel="stylesheet" href="/swiftER/css/er.css"/>
-    <link rel="stylesheet" href="/swiftER/css/rating.css"/>
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <header>
-                <div class="top">
-                    <div>
-                        <a href="#">로그인</a>
-                        <a href="#">회원가입</a>
-                    </div>
-                </div>
-                <div class="logo">
-                    <div>
-                        <a href="#">
-                            <img src="/swiftER/img/swifter_logo.png" alt="logo" class="logoImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="menu">
-                    <div>
-                        <ul>
-                            <li>
-                                <a href="#">증상검색</a>
-                            </li>
-                            <li>
-                                <a href="#">응급실검색</a>
-                            </li>
-                            <li>
-                                <a href="#">약국검색</a>
-                            </li>
-                            <li>
-                                <a href="#">커뮤니티</a>
-                            </li>
-                            <li>
-                                <a href="#">고객센터</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-        </header>
+<th:block th:insert="~{@{_header.html}}"/>
         <main id="search">
             <section class="Detail">
                  <div class="ErInfo">
@@ -162,13 +107,16 @@
                         <button class="btnClose">X</button>
                     </nav>
                     <section>
-                        <form th:action="@{er/erReview}">
+                        <form th:action="@{/er/erReview}" method="POST">
                         	<div id="hide">
+                        	<th:block th:if="${uid != null}">
+                        		<input type="hidden" name="uid" th:value="${uid}">
+                        	</th:block>
                         		<input type="hidden" name="code" th:value="${code}">
-                        		<!-- 
-                        		<input type="hidden" name="region" th:value="${region.region_code}">
-                        		<input type="hidden" name="subregion" th:value="${subregion.subregion_code}">
-                        		 -->
+                        		<input type="hidden" name="city" th:value="${city}">
+                        		<input type="hidden" name="town" th:value="${town}">
+                        		<input type="hidden" name="region" th:value="${region[0].region_code}">
+                        		<input type="hidden" name="subregion" th:value="${subregion[0].subregion_code}">
                         	</div>
                             <table border="0">
                                 <tr>
