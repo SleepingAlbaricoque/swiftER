@@ -17,5 +17,7 @@ public interface SymptomsDAO {
 	public List<SymptomsSubcateVO> selectCate(String body1_code);
 	public List<SymptomsSymptomsVO> selectBody1(String code);
 	public List<SymptomsSymptomsVO> selectillness(String symptom);
+	public List<SymptomsSymptomsVO> selectsymp1(String illness);
+
 	public List<SymptomsIllnessesVO> selectdep(String illness);
 }
