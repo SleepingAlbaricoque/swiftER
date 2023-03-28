@@ -179,8 +179,8 @@ main > div > .title > h3{
 }
 .disease > ul > li > a {
     display: block;
-    width: 200px;
-    padding: 20px;
+    width: 250px;
+    padding: 20px 5px;
     border: 1px solid #01b1ff;
     background: #01b1ff;
     border-radius: 30px;
@@ -204,7 +204,7 @@ section {
 }
 .imgbox {
     float: left;
-    margin-right: 30px;
+    margin-right: 20px;
     width: 210px;
     height: 210px;
     border: 1px solid #ddd;
@@ -215,7 +215,7 @@ section {
 }
 .contBox {
     float: left;
-    width: 678px;
+    width: 900px;
     position: relative;
     margin: 0 auto;
 }
@@ -239,12 +239,12 @@ section {
 }
 .symp_wrapper {
     display: flex;
-    width: 880px;
-    
+    width: 920px;
+    margin: 40px 0px;
 }
 .symp_title {
-    width: 103px;
-    padding-right: 15px;
+    width: 73px;
+    padding-right: 20px;
 }
 .symp_title > h4{
     font-size: 22px;
@@ -252,15 +252,22 @@ section {
     width: 103px;
 }
 .symp_content {
-    
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
+    width:100%;
 }
 .symp_content > p {
-    font-size: 15px;
+	font-size: 16px;
+    margin-right: 15px;
+    text-align: right;
 }
 .department {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 30px;
+    width: 900px;
 }
 .department > h5{
     width: 100px;
@@ -271,7 +278,8 @@ section {
 
 .department > .symp_sub{
     width: 100%;
-    height: auto;            
+    height: auto;
+	margin-left: -10px;
 }
 .department > .symp_sub > ul{
     width: 100%;
@@ -281,13 +289,13 @@ section {
     padding: 0;
 }
 .department > .symp_sub > ul > li{
-    width: 100%;
+    margin-right: 5px;
     box-sizing: border-box;
 }
 .department > .symp_sub > ul > li > p{
     float: left;
-    width: 100px;
-    padding: 10px;
+    width: 200px;
+    padding: 10px 5px;
     border: 1px solid #01b1ff;
     background: #01b1ff;
     border-radius: 15px;
