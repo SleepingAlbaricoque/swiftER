@@ -67,12 +67,9 @@ public class SecurityConfig {
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0");
 		
-		/*
 		// 자동로그인 설정
-		http.rememberMe()`
-			.userDetailsService(userService)
-			.tokenRepository(tokenRepository());
-		*/
+		http.rememberMe()
+			.userDetailsService(userService);
 		
 		// 로그인 설정
 		http.formLogin()
