@@ -84,4 +84,24 @@
 	<update id="updateVeriMsg" parameterType="kr.co.swiftER.vo.AdminMemberModifyVO">
 		update `member_doctor` set `veriMsg` =#{veriMsg} where `member_uid`=#{uid};
 	</update>
+	
+	<select id="selectArticles" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		select a.*, b.subcate from `cs_questions` as a 
+		join `cs_subcate` as b 
+		on a.subcateCode = b.subcode
+		where a.cateCode = #{cateCode}
+		<if test="subcateCode != 0">
+			and a.subcateCode = #{subcateCode}
+		</if>
+		order by no desc
+		limit #{start}, 10;
+	</select>
+	
+	<delete id="deleteArticles">
+		delete from `cs_questions` where `no` in
+		<foreach item="no" collection="array" open="(" close=")" separator=",">
+			 #{no}
+		</foreach>
+		;
+	</delete>
 </mapper>

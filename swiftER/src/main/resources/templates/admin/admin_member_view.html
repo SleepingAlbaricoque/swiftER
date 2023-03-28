@@ -3,23 +3,6 @@
 	    let headers = new Headers();
 	    headers.append("Content-Type", "application/json; charset=utf-8");
     
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function numHightlight(i){
             let num = document.querySelectorAll(".num")[i];
             let numLength = document.querySelectorAll(".num").length;
@@ -82,7 +65,7 @@
                 	}),
                 }).then(response => response.json())
                 .then(function(json){
-                	alert(1);
+                	alert('수정 사항이 저장되었습니다');
                 })
 
                 element.value = "수정하기";

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -15,6 +16,7 @@ import kr.co.swiftER.vo.MemberVO;
 @Repository
 public interface AdminDAO {
 
+	// member
 	public List<AdminMemberSearchVO> selectMembers(@Param(value="start") int start, @Param(value="isDoc")int isDoc);
 	public AdminMemberSearchVO selectMember(String uid);
 	
@@ -38,4 +40,11 @@ public interface AdminDAO {
 	
 	// 의사 회원의 인증 보류시 보류 메시지 수정하기(회원 정보 수정과 transaction으로 묶을 것)
 	public int updateVeriMsg(AdminMemberModifyVO member);
+	
+	
+	// cs
+	public List<CSQuestionsVO> selectArticles(@Param(value="cateCode") String cateCode, @Param(value="subcateCode") String subcateCode, @Param(value="start") int start);
+	
+	// 선택한 글 삭제
+	public int deleteArticles(@Param(value="array")String[] checkedNo);
 }

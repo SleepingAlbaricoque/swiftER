@@ -3,6 +3,7 @@ package kr.co.swiftER.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.swiftER.dao.AdminDAO;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -25,6 +27,7 @@ public class AdminService {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	// member
 	// 전체 회원의 수
 	public List<AdminMemberSearchVO> selectMembers(int start, int isDoc){
 		return dao.selectMembers(start, isDoc);
@@ -74,6 +77,13 @@ public class AdminService {
 		
 		return result1;
 	}
+	
+	// cs
+	// 선택한 글 삭제
+	public int deleteArticles(String[] checkedNo) {
+		return dao.deleteArticles(checkedNo);
+	}
+	
 	
 	
 	// 페이징
@@ -125,5 +135,10 @@ public class AdminService {
 		
 		int[] groups = {groupStart, groupEnd};
 		return groups;
+	}
+	
+	// cs
+	public List<CSQuestionsVO> selectArticles(String cateCode, String subcateCode, int start){
+		return dao.selectArticles(cateCode, subcateCode, start);
 	}
 }

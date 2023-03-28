@@ -1,6 +1,8 @@
 package kr.co.swiftER.controller;
 
+import java.net.http.HttpRequest;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.AdminService;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
+import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -29,6 +33,8 @@ public class AdminController {
 	public String main() {
 		return "admin/admin_main";
 	}
+	
+	// 멤버
 	
 	@GetMapping("admin/member")
 	public String member(@RequestParam(value="pg", defaultValue="1") String pg, @RequestParam(value="docPg", defaultValue="1") String docPg, Model model) {		
@@ -144,8 +150,44 @@ public class AdminController {
 		return resultMap;
 	}
 	
+	
+	// CS
+	
+	@GetMapping("admin/cs/delete")
+	@ResponseBody
+	public Map<String, Integer> deleteArticles(String[] checkedNo){
+		int result = service.deleteArticles(checkedNo);
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", 1);
+		return resultMap;
+	}
+	
 	@GetMapping("admin/cs/notice")
-	public String noticeList() {
+	public String noticeList(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
+		// 페이징 처리 
+		int total = service.selectCountTotal();
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+	    
+	    // 모든 공지사항 글 불러오기
+	    List<CSQuestionsVO> noticeList = service.selectArticles("1", subcateCode, start);
+	    
+	    // 화면에 출력할 글들 저장
+	    model.addAttribute("noticeList", noticeList);
+	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+	    model.addAttribute("pg", pg);
+	    // select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 subcateCode값 저장해야 함
+	 	model.addAttribute("subcateCode", subcateCode);
+		
 		return "admin/admin_cs_notice_list";
 	}
 	

@@ -1,23 +1,7 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function numHightlight(i){
+        	i -= 1;
             let num = document.querySelectorAll(".num")[i];
             let numLength = document.querySelectorAll(".num").length;
 
@@ -26,6 +10,8 @@
             }
 
             num.classList.add('on');
+            
+            location.href = "/swiftER/admin/cs/notice?subcateCode=" + [[${subcateCode}]] + "&pg=" + (i + 1);
         }
 
         function checkAll(element){
@@ -46,19 +32,68 @@
 
         function deleteConfirm(element){
             if(confirm("정말로 삭제하시겠습니까?")){
-                location.href = "#";
+            	let checkboxes = Array.from(document.getElementsByName("individualItem"));
+            	let checkedNo = [];
+            	
+            	// 체크박스 중 체크된 박스의 index 번호로(총 체크박스 중 i 번째) 글 번호 가져와서 array에 저장
+            	checkboxes.forEach(function(checkbox){
+            		if(checkbox.checked){
+            			let i = checkboxes.indexOf(checkbox);
+            			let no = document.querySelectorAll(".notice-no")[i].value;
+            			checkedNo.push(no);
+            		}
+            	});
+            	
+            	console.log(checkedNo);
+            	
+            	// ajax로 delete 컨트롤러로 배열 보내기
+            	/* fetch("/swiftER/admin/cs/delete", {
+            		method: 'POST',
+            		headers: {
+            			"Content-Type": "application/json; charset=utf-8",
+            		},
+            		body: JSON.stringify({
+            			checkedNo: checkedNo
+            		})
+            	}).then(response => response.json())
+            	.then(function(json){
+            		alert(1);
+            	})
+            	*/
+            	let headers = new Headers();
+                headers.append("Content-Type", "applicatoin/json; charset=utf-8");
+            	fetch("/swiftER/admin/cs/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
+            	.then(response => response.json())
+            	.then(function(json){
+            		location.href = "/swiftER/admin/cs/notice?subcateCode=" + [[${subcateCode}]];
+            	})
+            	.catch(err => console.error(err));
             }
+        }
+        
+        function selectCate(code){
+        	location.href = "/swiftER/admin/cs/notice?subcateCode=" + code;
+        }
+        
+        window.onload = () => {
+        	let pg = [[${pg}]];
+        	// 사용자가 선택한 subcate(옵션)을 select 박스 맨 위에 놓기
+        	document.querySelector('#cs-cate').value = [[${subcateCode}]];
+        	
+        	// 페이지 로드 시 페이지 파라미터로 넘어온 pg 페이지 버튼이 highlight 되도록
+        	document.querySelectorAll('.num')[pg - 1].classList.add('on');
         }
     </script>
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
                     <p>공지사항 목록
-                        <select name="cate" id="cs-cate">
-                            <option value="member">회원정보</option>
-                            <option value="symptoms">증상검색</option>
-                            <option value="er">응급실검색</option>
-                            <option value="community">커뮤니티</option>
-                            <option value="etc">기타</option>
+                        <select name="cate" id="cs-cate" onchange="selectCate(value);">
+                            <option value="0">전체</option>
+                            <option value="10">회원정보</option>
+                            <option value="20">증상검색</option>
+                            <option value="30">응급실검색</option>
+                            <option value="40">커뮤니티</option>
+                            <option value="50">기타</option>
                         </select>
                     </p>
                     <div class="admin-cs-table-wrapper">
@@ -70,115 +105,34 @@
                                 <th>제목</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr>
+                            <tr th:each="notice, status:${noticeList}">
+                            	<input type="hidden" class="notice-no" th:value="${notice.no}">
                                 <td><input type="checkbox" name="individualItem"></td>
-                                <td>10</td>
-                                <td>ER</td>
+                                <td>[[${status.index + 1}]]</td>
+                                <td>[[${notice.subcate}]]</td>
                                 <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
+                                    <a th:href="@{/admin/cs/notice/view?no=__${notice.no}__}">[[${notice.title}]]</a>
                                 </td>
-                                <td>23.03.13</td>
+                                <td>[[${notice.rdate}]]</td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>9</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>8</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>7</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>6</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>5</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>4</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>3</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>2</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="individualItem"></td>
-                                <td>1</td>
-                                <td>ER</td>
-                                <td>
-                                    <a href="#">응급실 검색 시 결과가 나오지 않을 때 해결책</a>
-                                </td>
-                                <td>23.03.13</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
+                                <td colspan="5" class="admin-list-delete-wrap">
                                     <input type="button" value="삭제하기" class="admin-list-delete" onclick="deleteConfirm(this)">
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-cs-list-table-buttons">
-                            <input type="button" value="이전" class="before">
-                            <input type="button" value="1" class="num" onclick="numHightlight(0)">
-                            <input type="button" value="2" class="num" onclick="numHightlight(1)">
-                            <input type="button" value="3" class="num" onclick="numHightlight(2)">
-                            <input type="button" value="4" class="num" onclick="numHightlight(3)">
-                            <input type="button" value="5" class="num" onclick="numHightlight(4)">
-                            <input type="button" value="6" class="num" onclick="numHightlight(5)">
-                            <input type="button" value="7" class="num" onclick="numHightlight(6)">
-                            <input type="button" value="8" class="num" onclick="numHightlight(7)">
-                            <input type="button" value="9" class="num" onclick="numHightlight(8)">
-                            <input type="button" value="10" class="num" onclick="numHightlight(9)">
-                            <input type="button" value="다음" class="next">
+                        	<th:block th:if="${groups[0]>1}">
+                            	<input type="button" value="이전" class="before"  th:onclick="|location.href='@{/admin/cs/notice(subcateCode=${subcateCode},pg=${groups[0]-1})}'|">
+                            </th:block>
+                            <th:block th:if="${groups[1] != 0}">
+	        					<th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                            		<input type="button" th:value="${num}" class="num" onclick="numHightlight(value)">
+                            	</th:block>
+                            </th:block>
+                            <th:block th:if="${groups[1]<lastPageNum}">
+                            	<input type="button" value="다음" class="next" th:onclick="|location.href='@{/admin/cs/notice(subcateCode=${subcateCode},pg=${groups[1]+1})}'|">
+                            </th:block>
                         </div>
                     </div>
                 </div>
