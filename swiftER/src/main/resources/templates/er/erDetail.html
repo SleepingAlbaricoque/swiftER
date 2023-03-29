@@ -40,30 +40,43 @@
                  </div>
                  <article class="review">
                     <nav><h1>고객님의 의견을 들려주세요</h1></nav>
-                    <ul>
-                    <th:block th:each="review : ${reviews}">
-                        <li>
-                            <div>
-                                <h5 th:class="rating star${review.rating}">별점</h5>
-                                <span>[[${review.member_uid}]] / 작성일 [[${review.rdate}]]</span>
-                            </div>
-                            <p th:text="${review.content}">
-                            </p>
-                        </li>
+                    <th:block th:unless="${#strings.isEmpty(reviews)}">
+					    <ul>
+					        <th:block th:each="review : ${reviews}">
+					            <li>
+					                <div>
+					                    <h5 class="rating star" th:attrappend="class=${review.rating}">별점</h5>
+					                    <span>[[${review.member_uid.substring(0,3)}]]**** / 작성일 [[${review.rdate}]]</span>
+					                </div>
+					                <p th:text="${review.title}" class="tit">
+					                </p>
+					                <p th:text="${review.content}" class="cont">
+					                </p>
+					            </li>
+					        </th:block>
+					    </ul>
+					</th:block>
+                    <th:block th:if="${#strings.isEmpty(reviews)}">
+                    	<p class="none">해당 병원의 리뷰가 없습니다. 리뷰를 등록해 주세요!</p>
                     </th:block>
-                    </ul>
                     <div class="write">
                         <div>
                             <a href="#" class="reviewbtn">리뷰 작성</a>
                         </div>
                     </div>
+                    
                     <div class="paging">
-                        <span class="prev"><a href="#">&lt;이전</a></span>
-                        <span class="num">
-                            <a href="#" class="on">1</a>
-                            <a href="#">2</a>
-                        </span>
-                        <span class="prev"><a href="#">다음&gt;</a></span>
+                    <th:block th:unless="${#strings.isEmpty(reviews)}">
+                        <th:block th:if="${groups[0] > 1}">
+			                <a th:href="@{/er/erDetail(code=${code},city=${city},town=${town},pg=${groups[0]- 1}))}" class="prev">이전</a>
+			            </th:block>
+			            <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
+			                <a th:href="@{/er/erDetail(code=${code},city=${city},town=${town},pg=${num})}" th:class="${num == currentPage ? 'num current' : 'num'}">[[${num}]]</a>
+			            </th:block>
+			            <th:block th:if="${groups[1] < lastPage}">
+			                <a th:href="@{/er/erDetail(code=${code},city=${city},town=${town},pg=${groups[1] + 1}))}" class="next">다음</a>
+			            </th:block>
+	           		</th:block>	
                     </div>
                 </article>
             </section>
@@ -104,14 +117,13 @@
                 <div>
                     <nav>
                         <h2>리뷰 작성하기</h2>
-                        <button class="btnClose">X</button>
+                        <button id="btnClose" class="btnClose">X</button>
                     </nav>
                     <section>
-                        <form th:action="@{/er/erReview}" method="POST">
+                        <form id="form" th:action="@{/er/erReview}" method="POST">
                         	<div id="hide">
-                        	<th:block th:if="${uid != null}">
                         		<input type="hidden" name="uid" th:value="${uid}">
-                        	</th:block>
+                        		<input type="hidden" name="pg" th:value="${pg}">
                         		<input type="hidden" name="code" th:value="${code}">
                         		<input type="hidden" name="city" th:value="${city}">
                         		<input type="hidden" name="town" th:value="${town}">
@@ -135,8 +147,8 @@
                                 </tr>
                             </table>
                             <div>
-                                <input type="submit" class="btnPositive" value="작성하기">
-                                <button class="btnNegative btnClose">취소</button>
+                                <input type="button" class="btnPositive" value="작성하기">
+                                <button id="btnClose" class="btnNegative btnClose">취소</button>
                             </div>
                         </form>
                     </section>
@@ -146,6 +158,6 @@
     </div>
     <script src="/swiftER/js/erDetail.js"></script>
     <script src="/swiftER/js/rating.js"></script>
-    <script src="/swiftER/js/popup.js"></script>    
+    <script src="/swiftER/js/popup.js"></script>
 </body>
 </html>

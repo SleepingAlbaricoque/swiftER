@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
 	let code = $('input[name=hpid]').val();
 	let detail = [];
 
@@ -35,12 +36,21 @@ $(document).ready(function () {
   			name.innerText = ''+detail.dutyName;
   			addr.innerText = '• '+detail.dutyAddr;
   			dep.innerText = '• '+detail.dgidIdName;
-  			info.innerText = '• '+detail.dutyMapimg;
+  			
+  			let maping = detail.dutyMapimg;
+  			let empty = "해당 내용을 제공받지 못했습니다.";
+  			
+  			if(maping != null && ''){
+  				info.innerText = '• '+maping;
+			}else{
+  				info.innerText = '• '+empty;
+			}
+  			
   			
   			tel.innerHTML = '<i class="fas fa-home"></i> ';
   			tel.innerHTML += ' 응급실 전화 : '+detail.dutyTel3;
 			etc1.innerHTML = '<i class="fas fa-home"></i> ';
-  			etc1.innerHTML += ' 내용이 없습니다.(진료시간 출력)';
+  			etc1.innerHTML += ' 내용이 없습니다.(진료시간 출력 예정)';
   			
   			var input = document.createElement('input'); 
 			input.type = 'hidden'; 
@@ -50,31 +60,24 @@ $(document).ready(function () {
 			hide.appendChild(input);
 			console.log(hide);
 			
-			$('.btnPositive').click(function(e){
+			$(document).on('click', '.btnPositive', function(e){
 				e.preventDefault();
-				const form = document.querySelector('form');
-				console.log(form);
-				  let uid = $('input[name=uid]');
-				  
-				  // memberentity에 uid가 널이 아닌지 체크하고 필요한 처리 수행
-				  if (uid !== null) {
-				    // 폼 전송 처리 등 수행
-				    form.submit();
-				  } else {
-				    // uid가 널이면 알림창 띄우기 등 처리
-				    if(alert('로그인이 필요합니다. 로그인 화면으로 이동하시겠습니까?')){
-					    //location.href('/swiftER/member/login');
-					}else{
-						location.reload();
-					}
-				    
-				  }
-			});
+				const formtag = document.getElementById('form');
+	       	    let rating = $('input[name=rating]').val();
 				
+				// 폼 전송 처리 등 수행
+				if(rating != ''){
+				 	formtag.submit();
+				}else{
+				 	alert('별점을 입력해 주십시오.');
+				}
+				
+			});
+			
 		}
 		
 	});
-	
-	
 
 });
+
+

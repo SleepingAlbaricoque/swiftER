@@ -11,9 +11,9 @@
                     <ul>
 					<th:block th:each="ill :${ill}" th:if="${#strings.arrayContainsIgnoreCase(symptom, ill.symptom)}">
                         <li th:if="${ill.illness} ne '' "><a class = "ill" href="#wrapper0">[[${ill.illness}]]</a></li>
-                        <li th:if="${ill.illness2} ne '' "><a class = "ill" href="#wrapper0">[[${ill.illness2}]]</a></li>
-                        <li th:if="${ill.illness3} ne '' "><a class = "ill" href="#wrapper0">[[${ill.illness3}]]</a></li>
-                        <li th:if="${ill.illness4} ne '' "><a class = "ill" href="#wrapper0">[[${ill.illness4}]]</a></li>
+                        <li th:if="${ill.illness2} ne '' "><a class = "ill" href="#wrapper1">[[${ill.illness2}]]</a></li>
+                        <li th:if="${ill.illness3} ne '' "><a class = "ill" href="#wrapper2">[[${ill.illness3}]]</a></li>
+                        <li th:if="${ill.illness4} ne '' "><a class = "ill" href="#wrapper3">[[${ill.illness4}]]</a></li>
 					</th:block>
                     </ul>
                 </nav>

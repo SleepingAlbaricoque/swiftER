@@ -1,122 +1,7 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>swiftER</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/symptoms.css}">
-        <script>
-            // 반려동물 정보 체크박스 둘중하나 선택
-            function handleCheckboxClick(event, containerId) {
-                var clickedCheckbox = event.target;
-                if (clickedCheckbox.checked) {
-                    var checkboxes = document.querySelectorAll('#' + containerId + ' input[type="checkbox"]');
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i] !== clickedCheckbox) {
-                            checkboxes[i].checked = false;
-                        }
-                    }
-                }
-		    }
 
-            // 체크박스 해제 (초기화 버튼)
-            function uncheckAllCheckboxes() {
-                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                for (var i = 0; i < checkboxes.length; i++) {
-                    checkboxes[i].checked = false;
-                }
-            }
-            
-            function checkboxresult() {
-          	  const div1Checkbox1 = document.getElementById('div1-checkbox1');
-          	  const div1Checkbox2 = document.getElementById('div1-checkbox2');
-          	  
-          	  const div2Checkbox1 = document.getElementById('div2-checkbox1');
-          	  const div2Checkbox2 = document.getElementById('div2-checkbox2');
-          	  
-          	  const div3Checkbox1 = document.getElementById('div3-checkbox1');
-          	  const div3Checkbox2 = document.getElementById('div3-checkbox2');
-
-          	  if (!div1Checkbox1.checked && !div1Checkbox2.checked && !div2Checkbox1.checked && !div2Checkbox2.checked && !div3Checkbox1.checked && !div3Checkbox2.checked) {
-          	    alert('동물 접촉 여부란에 체크하셔야 합니다!');
-          	    return false;
-          	  }
-
-          	  return true;
-          	}
-            
-            
-            // 검색 버튼 클릭시 Jquery 전송
-            function checkboxresult(){
-            	
-            	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
-                const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.name);
-                const delimiter = "& ";
-                console.log(checkedValues);
-                
-
-                
-                if(checkedValues.length == 0) {
-                	alert("증상을 체크해주세요!");
-                	return false;	
-                }
-                
-
-                let symptom = checkedValues.join(delimiter);
-         		
-         		let ischk = confirm('검색하시겠습니까?');
-         		
-         		if(ischk){
-         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+symptom;
-         		}else{
-         			return false;
-         		}
-            }
-        </script>
-</head>
-<body>
-    <div class="wrapper">
-        <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                </div>
-            </div>
-            <div class="logo">
-                <div>
-                    <a href="#">
-                        <img src="../img/swifter_logo.png" alt="logo" class="logoImage">
-                    </a>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">증상검색</a>
-                        </li>
-                        <li>
-                            <a href="#">응급실검색</a>
-                        </li>
-                        <li>
-                            <a href="#">약국검색</a>
-                        </li>
-                        <li>
-                            <a href="#">커뮤니티</a>
-                        </li>
-                        <li>
-                            <a href="#">고객센터</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+<th:block th:insert="~{@{symptoms/_header.html}}"/>
         <main>
             <div>
                 <div class="title">
@@ -212,20 +97,20 @@
                             <div class="search_animal" id="checkbox-container-1">
                                 <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
-                                    <input type="checkbox" id="div1-checkbox1" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
-                                    <input type="checkbox" id="div1-checkbox2" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk2">아니요</label>
+                                    <input type="radio" name="chk1" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="radio" name="chk1" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk2">아니요</label>
                             </div>
                             <div class="search_animal" id="checkbox-container-2">
-                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
+                                <p>최근 일 주일 내 야생동물 또는 개, 강아지에게 물린적이 있습니까?</p><br/>
                                 
-                                    <input type="checkbox" id="div2-checkbox1" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk1" style="margin-right:50px;">예</label>
-                                    <input type="checkbox" id="div1-checkbox2" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk2">아니요</label>
+                                    <input type="radio" name="chk2" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="radio" name="chk2" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk2">아니요</label>
                             </div>
                             <div class="search_animal" id="checkbox-container-3">
-                                <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
+                                <p>최근 일 주일 내 닭고기 또는 돼지고기, 소고기를 섭취하신적이 있습니까?</p><br/>
                                 
-                                    <input type="checkbox" id="div3-checkbox1" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
-                                    <input type="checkbox" id="div3-checkbox2" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
+                                    <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
                             </div>
                         </div>
                         <div class="searchbtn">

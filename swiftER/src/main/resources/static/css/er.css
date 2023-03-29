@@ -324,7 +324,7 @@
     height: auto;
 }
 #search > .Detail > div.ErInfo > article.part2 > div{
-    margin-top: 100px;
+    margin-top: -10px;
 }
 #search > .Detail > div.ErInfo > article.part2 > div  > nav{
     width: 400px;
@@ -344,6 +344,11 @@
     height: auto;
     margin: 0 auto;
     overflow: hidden;
+}
+#search > .Detail > article.review > p.none{
+	font-size: 20px;
+	line-height: 55px;
+	padding: 20px
 }
 #search > .Detail > article.review > nav{
     margin: 30px 0 10px;
@@ -380,7 +385,18 @@
     color: #555;
     margin-top: 6px;
 }
-#search > .Detail > .review > ul > li > p{
+#search > .Detail > .review > ul > li > p.tit{
+    width: 100%;
+    height: 100%;
+    color: #555;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 19px;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-top: 10px;
+}
+#search > .Detail > .review > ul > li > p.cont{
     width: 100%;
     height: 60px;
     color: #555;
@@ -388,8 +404,10 @@
     line-height: 19px;
     word-break: break-all;
     word-wrap: break-word;
-    margin-top: 10px;
+    margin-top: 3px;
+    padding-left: 1px
 }
+
 #search > .Detail > .review > .write{
     width: 100%;
     margin-top: 10px;
@@ -422,15 +440,15 @@
 #search > .Detail > .review > .paging > .prev{}
 #search > .Detail > .review > .paging > .next{}
 #search > .Detail > .review > .paging > .num{}
-#search > .Detail > .review > .paging > span > a{
+#search > .Detail > .review > .paging > a{
     color: #777;
     font-size: 11px;
     letter-spacing: -1px;
 }
-#search > .Detail > .review > .paging > span > a:hover{
+#search > .Detail > .review > .paging > a:hover{
     text-rendering: underline;
 }
-#search > .Detail > .review > .paging > .num > a{
+#search > .Detail > .review > .paging > .num {
     display: inline-block;
     min-width: 14px;
     margin: 0 2px;
@@ -442,11 +460,11 @@
     text-align: center;
     text-decoration: none;
 }
-#search > .Detail > .review > .paging > .num > a:hover{
+#search > .Detail > .review > .paging > .num {
     border: 1px solid #454c5f;
     text-decoration: none;
 }
-#search > .Detail > .review > .paging > .num > a:on{
+#search > .Detail > .review > .paging > .num:hover {
     color: #fe434c;
     font-weight: bold;
 }
