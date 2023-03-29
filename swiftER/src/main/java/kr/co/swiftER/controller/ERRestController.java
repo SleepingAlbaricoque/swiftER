@@ -88,10 +88,20 @@ public class ERRestController {
     }
     
 	@GetMapping("er/erDetail")
-    public String erDetail(Model model,Principal principal ,@RequestParam("code") String code,@RequestParam("city") String city,@RequestParam("town") String town) {
-		List<ERReviewVO> reviews = service.selectErReview(code);
+    public String erDetail(Model model,Principal principal ,@RequestParam("code") String code,@RequestParam("city") String city,@RequestParam("town") String town, String pg) {
+		
+		int currentPage = service.getCurrentPage(pg);
+        int start = service.getLimitStart(currentPage);
+        long total = service.getTotalCount(code);
+        int lastPage = service.getLastPageNum(total);
+        int pageStartNum = service.getPageStartNum(total, start);
+        int groups[] = service.getPageGroup(currentPage, lastPage);
+		
+		List<ERReviewVO> reviews = service.selectErReview(code,start);
 		List<ERCateVO> region = service.selectErRegion(city);
 		List<ERSubcateVO> subregion = service.selectErSubRegion(town,city);
+		
+		System.out.println("reviews"+reviews);
 		
 		if(principal != null) {
 			//로그인 체크
@@ -105,7 +115,12 @@ public class ERRestController {
 		model.addAttribute("subregion", subregion);
 		model.addAttribute("city", city);
 		model.addAttribute("town", town);
-        
+		model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageStartNum", pageStartNum);
+        model.addAttribute("groups", groups);
+        model.addAttribute("pg", pg);
+		
        
         return "er/erDetail";
     }
