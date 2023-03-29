@@ -161,7 +161,7 @@
 		delete from `file` where `fno` =#{fno};
 	</delete>
 	
-	<update id="subtractFileByOne">
-		update `cs_questions` set `file` = `file` -1 where `no` =#{no};
-	</update>
+	<select id="selectFnos" resultType="int">
+		select `fno` from `file` where `parent` =#{no};
+	</select>
 </mapper>

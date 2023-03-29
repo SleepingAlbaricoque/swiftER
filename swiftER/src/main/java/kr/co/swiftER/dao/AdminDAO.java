@@ -57,6 +57,9 @@ public interface AdminDAO {
 	// 글 업데이트
 	public int updateArticle(CSQuestionsVO article);
 	
+	// 글 새로 작성하기
+	public int insertArticle(CSQuestionsVO article);
+	
 	
 	// 파일 처리
 	// FileVO를 file 테이블에 업로드
@@ -65,6 +68,6 @@ public interface AdminDAO {
 	// 파일 삭제
 	public int deleteFile(String fno);
 	
-	// 파일 삭제 후 원글의 file 숫자 -1 하기
-	public int subtractFileByOne(int no);
+	// 선택한 글의 기존 첨부파일 fno 불러오기
+	public List<Integer> selectFnos(String no);
 }

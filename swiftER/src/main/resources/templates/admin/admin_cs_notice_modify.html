@@ -20,19 +20,20 @@
 
         function deleteConfirm(element){
             if(confirm("정말로 삭제하시겠습니까?")){
-                location.href = "#";
+            	
             }
-        }
-
-        function titleFocus(element){
-            titleFocus = function(){}; // 단 한 번만 실행되도록 실행 직후 빈 함수로 교체
-            element.style.color = "black";
         }
         
         function deleteFile(fno){
         	// 사용자가 이미 업로드한 파일 중 삭제 버튼을 누른 파일값이 담긴 input 태그를 삭제 => 폼 submit시 삭제 파일 제외
-        	let uploadedFile = document.querySelectorAll('.uploadedFile')[fno];
-     		uploadedFile.remove();
+        	let uploadedFile = document.getElementsByClassName('uploadedFile');
+        	let length = uploadedFile.length;
+        	
+        	for(let i =0; i < length; i++){
+        		if(uploadedFile[i].value === fno){
+        			uploadedFile[i].parentElement.remove();
+        		}
+        	}
         }
         
         window.onload = () =>{
@@ -45,17 +46,19 @@
     		});
         }
         
+        
     </script>
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
                     <p>공지사항 수정하기</p>
                     <form class="admin-cs-form" th:action="@{/admin/cs/notice/modify}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="no" th:value="${article.no}">
+                        <input type="hidden" name="file" th:value="${article.file}">
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>
                                 <td>
-                                    <input type="text" th:value="${article.title}" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)" name="title">
+                                    <input type="text" th:value="${article.title}" class="admin-cs-write-title" name="title">
                                 </td>
                                 <td class="key">카테고리</td>
                                 <td>
@@ -74,9 +77,10 @@
                                     <input type="file" class="admin-cs-write-file" name="fname" multiple>
                                     <th:block th:if="${files != null}">
                                     	<th:block th:each="file, status:${files}">
-		                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;<span th:fno="${file.fno}" onclick="deleteFile(fno)">삭제</span></a>
-		                    				<input type="hidden" name="uploadedFile" class="uploadedFile" th:value="${file.fno}">
-		                    				<br>
+                                    		<div>
+			                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a> <a href="#" th:fno="${file.fno}" onclick="deleteFile(this.getAttribute('fno'))"><span>삭제</span></a> 
+			                    				<input type="hidden" name="uploadedFile" class="uploadedFile" th:value="${file.fno}">
+		                    				</div>
 		                    			</th:block>
                                     </th:block>
                                 </td>

@@ -118,7 +118,10 @@ public class AdminService {
 		return dao.updateArticle(article);
 	}
 	
-	
+	// 글 새로 작성하기
+	public int insertArticle(CSQuestionsVO article) {
+		return dao.insertArticle(article);
+	}
 	
 	
 	
@@ -216,8 +219,8 @@ public class AdminService {
 		return dao.deleteFile(fno);
 	}
 	
-	// 파일 삭제 후 원글의 file 숫자 -1 하기
-	public int subtractFileByOne(int no) {
-		return dao.subtractFileByOne(no);
+	// 선택한 글의 기존 첨부파일 fno 불러오기
+	public List<Integer> selectFnos(String no){
+		return dao.selectFnos(no);
 	}
 }

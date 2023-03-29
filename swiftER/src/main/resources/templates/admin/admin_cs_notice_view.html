@@ -51,17 +51,18 @@
                             </tr>
                             <tr>
                                 <th:block th:if="${files != null}">
-		                    		<td>첨부파일&nbsp;&nbsp;
+		                    		<td colspan="2" class="key">첨부파일&nbsp;&nbsp;
 		                    			<th:block th:each="file, status:${files}">
-		                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a>
+		                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}" style="font-weight:normal !important;">[[${file.oriName}]]&nbsp;</a>
 		                    			</th:block>
 		                    		</td>
                    				</th:block>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
-                                <td colspan="3">
-                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly>[(${article.content})]</textarea>
+                                <td colspan="3" style="padding-left:20px; padding-top:60px;">
+                                	[(${article.content})]
+                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly ></textarea>
                                 </td>
                             </tr>
                         </table>

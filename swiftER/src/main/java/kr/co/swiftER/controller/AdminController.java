@@ -2,6 +2,7 @@ package kr.co.swiftER.controller;
 
 import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -229,6 +230,39 @@ public class AdminController {
 		return "admin/admin_cs_notice_write";
 	}
 		
+	@PostMapping("admin/cs/notice/write")
+	public String noticeWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal) {
+		// 작성자(현재 로그인 되어있는 사용자)의 정보 가져오려면 principal 객체를 현재 메서드의 파라미터로 줘서 principal 객체에 .getName()하면 됨
+		// 관리자 권한(grade 0)을 가진 사람만 관리자 페이지에 접근할 수 있으므로 여기서는 따로 권한 체크 하지 않음 
+		String username = principal.getName();
+		
+		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
+		article.setMember_uid(username);
+		article.setRegip(req.getRemoteAddr());
+		
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			article.setFile(files.size());
+			
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			for(MultipartFile file : files) {
+				// DB에 파일 업로드
+				service.uploadFile(file, article);
+			}
+		}else { // 첨부 파일이 없는 경우
+			
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			article.setFile(0);
+		}
+		
+		return "redirect:/admin/cs/notice";
+	}
+	
 	@GetMapping("admin/cs/notice/modify")
 	public String noticeModify(String no, Model model) {
 		// 글번호 argument를 이용해 글 정보 불러오기
@@ -255,51 +289,57 @@ public class AdminController {
 		// XSS 공격을 방지하기위해 Jsoup import해서 safelist에 등록된 태그만 허용 ex.<script> 태그 등은 허용하지 않음 - 화면에는 <script>로 출력되지만 db에는 &lt;script&gt;로 저장됨
 		article.setContent(Jsoup.clean(article.getContent(), Safelist.basic())); 
 		
+		// 사용자가 기존 첨부파일을 삭제할 경우 원래 첨부파일 리스트와 대조하기 위하여 원래 첨부파일 리스트 가져오기
+		List<Integer> uploadedFnos = service.selectFnos(String.valueOf(article.getNo()));
+		
 		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
 		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
 			List<MultipartFile> files = req.getFiles("fname");
-			article.setFile(files.size() + article.getFile()); // 원래 첨부파일이 있는 경우 기존의 첨부파일 갯수도 더해주기
+			article.setFile(article.getFile() + files.size()); // 해당 글의 file 속성은 '기존 파일 갯수(getFile()) + 새로 첨부한 파일 갯수(files.size())'로 설정
 			
-			// 사용자가 작성한 notice DB에 update
-			service.updateArticle(article);
-			
+			// file 테이블에 첨부파일 업로드
 			for(MultipartFile file : files) {
-				// DB에 파일 업로드
 				service.uploadFile(file, article);
 			}
 			
-			// 사용자가 기존 첨부파일을 삭제한 경우 DB에서도 삭제해주기
-			if(article.getFile() > 0) {
-				List<String> oriFilesFnos = new ArrayList<>();
-				List<FileVO> oriFiles = service.selectArticle(String.valueOf(article.getNo())).getFvoList();
-				
-				for(FileVO file : oriFiles)
-					oriFilesFnos.add(String.valueOf(file.getFno())); // 불러온 글의 기존 첨부파일 fno만 모아서 리스트 만들기
-				
-				for(String fno : oriFilesFnos) {
-					if(!uploadedFile.contains(fno)) // 폼에서 보내온 값이 기존 글 fno 리스트에 없다면 파일 삭제하기
-						service.deleteFile(fno);
-						service.subtractFileByOne(article.getNo());
+			// 해당 글에 첨부된 기존 파일들의 fno와 수정 폼에서 submit 된 파일들의 fno를 비교해서 submit된 파일 fno 리스트에 없는 기존 파일은 삭제하기
+			if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+				List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+				for(Integer f : uploadedFnos) {
+					if(!filesNotToDelete.contains(String.valueOf(f))) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+					}
+				}
+			}else { // 기존 첨부파일을 모두 삭제한 경우
+				for(Integer f : uploadedFnos) {
+					service.deleteFile(String.valueOf(f));
+					article.setFile(article.getFile() - 1);
 				}
 			}
-				
-		}else { // 첨부 파일이 없는 경우
 			
-			// 사용자가 작성한 notice DB에 update
+			
+			// 수정된 글 DB에 업로드하기
 			service.updateArticle(article);
 			
-			// 사용자가 기존 첨부파일을 삭제한 경우 DB에서도 삭제해주기
-			if(article.getFile() > 0) {
-				List<String> oriFiles = new ArrayList<>();
-				for(FileVO file : article.getFvoList())
-					oriFiles.add(String.valueOf(file.getFno())); // 불러온 글의 기존 첨부파일 fno만 모아서 리스트 만들기
-				
-				for(String fno : oriFiles) {
-					if(!uploadedFile.contains(fno)) // 폼에서 보내온 값이 기존 글 fno 리스트에 없다면 파일 삭제하기
-						service.deleteFile(fno);
-						service.subtractFileByOne(article.getNo());
+		}else { // 새로운 첨부파일이 없는 경우
+			if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+				List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+				for(Integer f : uploadedFnos) {
+					if(!filesNotToDelete.contains(String.valueOf(f))) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+					}
+				}
+			}else { // 기존 첨부파일을 모두 삭제한 경우
+				for(Integer f : uploadedFnos) {
+					service.deleteFile(String.valueOf(f));
+					article.setFile(article.getFile() - 1);
 				}
 			}
+			
+			// 수정된 글 DB에 업로드하기
+			service.updateArticle(article);
 		}
 		
 		return "redirect:/admin/cs/notice/view?no=" + article.getNo();

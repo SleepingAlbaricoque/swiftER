@@ -24,6 +24,16 @@
     color: #fff;
     cursor: pointer;
 }
+.admin-list-write{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background: #01b1ff;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 15px;
+}
 
 /* list */
 .cs-panel-main{
