@@ -17,9 +17,22 @@
             subcate.classList.toggle('on');
         }
 
-        function deleteConfirm(element){
+        function deleteConfirm(){
             if(confirm("정말로 삭제하시겠습니까?")){
-                location.href = "#";
+                let checkedNo = [];
+                let no = [[${article.no}]];
+                checkedNo.push(no);
+                
+            	// ajax로 delete 컨트롤러로 배열 보내기
+            	let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+            	fetch("/swiftER/admin/cs/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
+            	.then(response => response.json())
+            	.then(function(json){
+            		location.href = "/swiftER/admin/cs/notice";
+            	})
+            	.catch(err => console.error(err));
+            	
             }
         }
     </script>
@@ -31,26 +44,31 @@
                             <tr>
                                 <td class="key">제목</td>
                                 <td>
-                                    <input type="text" value="응급실 위치정보 업데이트 안내" class="admin-cs-write-title" readonly>
+                                    <input type="text" th:value="${article.title}" class="admin-cs-write-title" readonly>
                                 </td>
                                 <td class="key">카테고리</td>
-                                <td>ER</td>
+                                <td>[[${article.subcate}]]</td>
                             </tr>
                             <tr>
-                                <td class="key">첨부파일</td>
-                                <td colspan="3">swiftERimg.png</td>
+                                <th:block th:if="${files != null}">
+		                    		<td>첨부파일&nbsp;&nbsp;
+		                    			<th:block th:each="file, status:${files}">
+		                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a>
+		                    			</th:block>
+		                    		</td>
+                   				</th:block>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
                                 <td colspan="3">
-                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly>업데이트 예정입니다</textarea>
+                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly>[(${article.content})]</textarea>
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-cs-control-buttons admin-cs-notice-control-buttons">
-                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
-                            <input type="button" value="수정하기" class="admin-cs-modify-article" onclick="location.href='#'">
-                            <input type="button" value="삭제하기" class="admin-cs-delete-article" onclick="deleteConfirm(this)">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" th:onclick="|location.href='@{/admin/cs/notice}'|">
+                            <input type="button" value="수정하기" class="admin-cs-modify-article" th:onclick="|location.href='@{/admin/cs/notice/modify(no=${article.no})}'|">
+                            <input type="button" value="삭제하기" class="admin-cs-delete-article" onclick="deleteConfirm()">
                         </div>
                     </form>
                 </div>

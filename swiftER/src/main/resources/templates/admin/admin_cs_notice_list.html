@@ -47,21 +47,8 @@
             	console.log(checkedNo);
             	
             	// ajax로 delete 컨트롤러로 배열 보내기
-            	/* fetch("/swiftER/admin/cs/delete", {
-            		method: 'POST',
-            		headers: {
-            			"Content-Type": "application/json; charset=utf-8",
-            		},
-            		body: JSON.stringify({
-            			checkedNo: checkedNo
-            		})
-            	}).then(response => response.json())
-            	.then(function(json){
-            		alert(1);
-            	})
-            	*/
             	let headers = new Headers();
-                headers.append("Content-Type", "applicatoin/json; charset=utf-8");
+                headers.append("Content-Type", "application/json; charset=utf-8");
             	fetch("/swiftER/admin/cs/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
             	.then(response => response.json())
             	.then(function(json){
@@ -108,7 +95,7 @@
                             <tr th:each="notice, status:${noticeList}">
                             	<input type="hidden" class="notice-no" th:value="${notice.no}">
                                 <td><input type="checkbox" name="individualItem"></td>
-                                <td>[[${status.index + 1}]]</td>
+                                <td>[[${start + status.index + 1}]]</td>
                                 <td>[[${notice.subcate}]]</td>
                                 <td>
                                     <a th:href="@{/admin/cs/notice/view?no=__${notice.no}__}">[[${notice.title}]]</a>

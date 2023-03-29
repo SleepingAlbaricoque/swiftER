@@ -173,8 +173,8 @@
 }
 
 .admin-list-delete-wrap{
-	text-align: right;
-	padding-right: 35px;
+	text-align: right !important;
+	padding-right: 35px !important;
 }
 
 /* view, modify, write */

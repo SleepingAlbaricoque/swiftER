@@ -1,19 +1,29 @@
 package kr.co.swiftER.controller;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.service.AdminService;
@@ -166,7 +176,7 @@ public class AdminController {
 	@GetMapping("admin/cs/notice")
 	public String noticeList(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
 		// 페이징 처리 
-		int total = service.selectCountTotal();
+		int total = service.selectCountArticlesTotal("1", subcateCode);
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage, 10);
 		int lastPageNum = service.getLastPageNum(total, 10);
@@ -181,18 +191,36 @@ public class AdminController {
 	    // 모든 공지사항 글 불러오기
 	    List<CSQuestionsVO> noticeList = service.selectArticles("1", subcateCode, start);
 	    
+	    // rdate 날짜만 나오게 substring하기
+	    for(CSQuestionsVO notice : noticeList)
+	    	notice.setRdate(notice.getRdate().substring(0, 10));
+	    
 	    // 화면에 출력할 글들 저장
 	    model.addAttribute("noticeList", noticeList);
 	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
 	    model.addAttribute("pg", pg);
 	    // select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 subcateCode값 저장해야 함
 	 	model.addAttribute("subcateCode", subcateCode);
+	 	// 글에 인덱스 번호 매기기 위해서 필요
+	 	model.addAttribute("start", start);
 		
 		return "admin/admin_cs_notice_list";
 	}
 	
 	@GetMapping("admin/cs/notice/view")
-	public String noticeView() {
+	public String noticeView(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+		
 		return "admin/admin_cs_notice_view";
 	}
 	
@@ -200,10 +228,81 @@ public class AdminController {
 	public String noticeWrite() {
 		return "admin/admin_cs_notice_write";
 	}
-	
+		
 	@GetMapping("admin/cs/notice/modify")
-	public String noticeModify() {
+	public String noticeModify(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		model.addAttribute("subcateCode", article.getSubcateCode());
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+				
 		return "admin/admin_cs_notice_modify";
+	}
+	
+	@PostMapping("admin/cs/notice/modify")
+	public String noticeModify(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, String uploadedFile, MultipartHttpServletRequest req) {
+		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
+		article.setRegip(req.getRemoteAddr());
+		
+		// XSS 공격을 방지하기위해 Jsoup import해서 safelist에 등록된 태그만 허용 ex.<script> 태그 등은 허용하지 않음 - 화면에는 <script>로 출력되지만 db에는 &lt;script&gt;로 저장됨
+		article.setContent(Jsoup.clean(article.getContent(), Safelist.basic())); 
+		
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			article.setFile(files.size() + article.getFile()); // 원래 첨부파일이 있는 경우 기존의 첨부파일 갯수도 더해주기
+			
+			// 사용자가 작성한 notice DB에 update
+			service.updateArticle(article);
+			
+			for(MultipartFile file : files) {
+				// DB에 파일 업로드
+				service.uploadFile(file, article);
+			}
+			
+			// 사용자가 기존 첨부파일을 삭제한 경우 DB에서도 삭제해주기
+			if(article.getFile() > 0) {
+				List<String> oriFilesFnos = new ArrayList<>();
+				List<FileVO> oriFiles = service.selectArticle(String.valueOf(article.getNo())).getFvoList();
+				
+				for(FileVO file : oriFiles)
+					oriFilesFnos.add(String.valueOf(file.getFno())); // 불러온 글의 기존 첨부파일 fno만 모아서 리스트 만들기
+				
+				for(String fno : oriFilesFnos) {
+					if(!uploadedFile.contains(fno)) // 폼에서 보내온 값이 기존 글 fno 리스트에 없다면 파일 삭제하기
+						service.deleteFile(fno);
+						service.subtractFileByOne(article.getNo());
+				}
+			}
+				
+		}else { // 첨부 파일이 없는 경우
+			
+			// 사용자가 작성한 notice DB에 update
+			service.updateArticle(article);
+			
+			// 사용자가 기존 첨부파일을 삭제한 경우 DB에서도 삭제해주기
+			if(article.getFile() > 0) {
+				List<String> oriFiles = new ArrayList<>();
+				for(FileVO file : article.getFvoList())
+					oriFiles.add(String.valueOf(file.getFno())); // 불러온 글의 기존 첨부파일 fno만 모아서 리스트 만들기
+				
+				for(String fno : oriFiles) {
+					if(!uploadedFile.contains(fno)) // 폼에서 보내온 값이 기존 글 fno 리스트에 없다면 파일 삭제하기
+						service.deleteFile(fno);
+						service.subtractFileByOne(article.getNo());
+				}
+			}
+		}
+		
+		return "redirect:/admin/cs/notice/view?no=" + article.getNo();
 	}
 	
 	@GetMapping("admin/cs/faq")

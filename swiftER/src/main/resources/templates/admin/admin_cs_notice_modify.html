@@ -1,4 +1,5 @@
 <th:block th:include="@{admin/admin_header.html}"/>
+<script th:src="@{/js/ckeditor/ckeditor.js}"></script>
     <script>
         function searchBar(){
             let bar = document.querySelector('.search-bar');
@@ -23,55 +24,73 @@
             }
         }
 
-        function textFocus(element){
-            textFocus = function(){}; // 단 한 번만 실행되도록 실행 직후 빈 함수로 교체
-            element.value = "";
-            element.style.color = "black";
-        }
-
         function titleFocus(element){
             titleFocus = function(){}; // 단 한 번만 실행되도록 실행 직후 빈 함수로 교체
-            element.value = "";
             element.style.color = "black";
         }
+        
+        function deleteFile(fno){
+        	// 사용자가 이미 업로드한 파일 중 삭제 버튼을 누른 파일값이 담긴 input 태그를 삭제 => 폼 submit시 삭제 파일 제외
+        	let uploadedFile = document.querySelectorAll('.uploadedFile')[fno];
+     		uploadedFile.remove();
+        }
+        
+        window.onload = () =>{
+        	// 사용자가 선택한 subcate(옵션)을 select 박스 맨 위에 놓기
+        	document.querySelector('#cs-cate').value = [[${subcateCode}]];
+        	
+        	// CKEditor 삽입
+        	CKEDITOR.replace('admin-cs-write-content', {
+    			filebrowserUploadMethod : 'form'
+    		});
+        }
+        
     </script>
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
                     <p>공지사항 수정하기</p>
-                    <form class="admin-cs-form">
+                    <form class="admin-cs-form" th:action="@{/admin/cs/notice/modify}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="no" th:value="${article.no}">
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>
                                 <td>
-                                    <input type="text" value="로드된 제목" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)">
+                                    <input type="text" th:value="${article.title}" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)" name="title">
                                 </td>
                                 <td class="key">카테고리</td>
                                 <td>
-                                    <select name="cate" id="cs-cate">
-                                        <option value="member">회원정보</option>
-                                        <option value="symptoms">증상검색</option>
-                                        <option value="er">응급실검색</option>
-                                        <option value="community">커뮤니티</option>
-                                        <option value="etc">기타</option>
+                                    <select name="subcateCode" id="cs-cate">
+                                        <option value="10">회원정보</option>
+                                        <option value="20">증상검색</option>
+                                        <option value="30">응급실검색</option>
+                                        <option value="40">커뮤니티</option>
+                                        <option value="50">기타</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="key">첨부파일</td>
                                 <td colspan="3">
-                                    <input type="file" class="admin-cs-write-file">
+                                    <input type="file" class="admin-cs-write-file" name="fname" multiple>
+                                    <th:block th:if="${files != null}">
+                                    	<th:block th:each="file, status:${files}">
+		                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;<span th:fno="${file.fno}" onclick="deleteFile(fno)">삭제</span></a>
+		                    				<input type="hidden" name="uploadedFile" class="uploadedFile" th:value="${file.fno}">
+		                    				<br>
+		                    			</th:block>
+                                    </th:block>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
                                 <td colspan="3">
-                                    <textarea name="admin-cs-write-content" class="text-gray" id="admin-cs-write-content" cols="30" rows="10" onfocus="textFocus(this)">로드된 내용</textarea>
+                                    <textarea name="content" class="text-gray" id="admin-cs-write-content" cols="30" rows="10" onfocus="textFocus(this)">[[${article.content}]]</textarea>
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-cs-control-buttons">
-                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
-                            <input type="button" value="수정완료" class="admin-cs-modify-article" onclick="location.href='#'">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" th:onclick="|location.href='@{/admin/cs/notice}'|">
+                            <input type="submit" value="수정완료" class="admin-cs-modify-article" onclick="location.href='#'">
                         </div>
                     </form>
                 </div>

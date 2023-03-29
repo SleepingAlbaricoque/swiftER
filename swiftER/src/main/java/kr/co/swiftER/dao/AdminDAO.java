@@ -47,4 +47,24 @@ public interface AdminDAO {
 	
 	// 선택한 글 삭제
 	public int deleteArticles(@Param(value="array")String[] checkedNo);
+	
+	// cate, subcate별 글 총 갯수 구하기
+	public int selectCountArticlesTotal(@Param(value="cateCode") String cateCode, @Param(value="subcateCode") String subcateCode);
+	
+	// 선택한 글 불러오기
+	public CSQuestionsVO selectArticle(String no);
+	
+	// 글 업데이트
+	public int updateArticle(CSQuestionsVO article);
+	
+	
+	// 파일 처리
+	// FileVO를 file 테이블에 업로드
+	public int insertFile(FileVO fvo);
+	
+	// 파일 삭제
+	public int deleteFile(String fno);
+	
+	// 파일 삭제 후 원글의 file 숫자 -1 하기
+	public int subtractFileByOne(int no);
 }

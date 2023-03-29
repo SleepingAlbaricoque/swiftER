@@ -104,4 +104,64 @@
 		</foreach>
 		;
 	</delete>
+	
+	<select id="selectCountArticlesTotal" resultType="int">
+		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode}
+		<if test="subcateCode != 0">
+			and `subcateCode` = #{subcateCode}
+		</if>
+	</select>
+	
+	<resultMap id="selectArticleResultMap" type="kr.co.swiftER.vo.CSQuestionsVO">
+		<id column="no" property="no"/>
+		<result column="qno" property="qno"/>
+		<result column="member_uid" property="member_uid"/>
+		<result column="cateCode" property="cateCode"/>
+		<result column="subcateCode" property="subcateCode"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="file" property="file"/>
+		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+		<result column="subcate" property="subcate"/>
+		<collection column="no" property="fvoList" ofType="kr.co.swiftER.vo.FileVO" select="selectFile" javaType="List"/>
+	</resultMap>
+	<select id="selectArticle" resultMap="selectArticleResultMap">
+		select a.*, b.subcate from `cs_questions` as a 
+		join `cs_subcate` as b 
+		on a.subcateCode = b.subcode
+		where a.no=#{no};
+	</select>
+	<select id="selectFile" resultType="kr.co.swiftER.vo.FileVO">
+		select * from `file` where `parent`=#{no} and `board`=1;
+	</select>
+	
+	<update id="updateArticle" parameterType="kr.co.swiftER.vo.CSQuestionsVO">
+		update `cs_questions` set `subcateCode` = #{subcateCode}, `title` =#{title}, `content`=#{content}, `file`=#{file}, `regip` =#{regip}, `rdate` =NOW() 
+		where `no` = #{no};
+	</update>
+	
+	<insert id="insertArticle" parameterType="kr.co.swiftER.vo.CSQuestionsVO" useGeneratedKeys="true" keyProperty="no">
+		insert into `cs_questions` set 
+			`qno`=#{qno}, `member_uid` = #{member_uid}, `cateCode` =#{cateCode}, `subcateCode`=#{subcateCode}, 
+			`title`=#{title}, `content`=#{content}, `file` =#{file}, 
+			`regip`=#{regip}, `rdate`=NOW();
+	</insert>
+	<insert id="insertFile">
+		insert into `file` set
+			`board`=1,
+			`cate`=#{cate},
+			`parent`= #{parent},
+			`newName`= #{newName},
+			`oriName`= #{oriName},
+			`rdate`= NOW();
+	</insert>
+	
+	<delete id="deleteFile">
+		delete from `file` where `fno` =#{fno};
+	</delete>
+	
+	<update id="subtractFileByOne">
+		update `cs_questions` set `file` = `file` -1 where `no` =#{no};
+	</update>
 </mapper>
