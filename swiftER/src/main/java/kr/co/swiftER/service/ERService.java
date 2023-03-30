@@ -44,14 +44,14 @@ public class ERService {
         return (currentPage - 1) * 10;
     }
 	public int getCurrentPage(String pg){
-	        int currentPage = 1;
-	        if (pg != null){
-	            currentPage = Integer.parseInt(pg);
-	        }
-	        return currentPage;
+        int currentPage = 1;
+        if (pg != null){
+            currentPage = Integer.parseInt(pg);
+        }
+        return currentPage;
 	 }
 	public long getTotalCount(String code){
-	        return dao.selectCountTotal(code);
+        return dao.selectCountTotal(code);
 	}
 	public int getLastPageNum(long total){
         int lastPage = 0;
@@ -64,7 +64,7 @@ public class ERService {
         return lastPage;
     }
 	public int getPageStartNum(long total, int start){
-	        return (int) (total - start);
+        return (int) (total - start);
 	}
 	public int[] getPageGroup(int currentPage, int lastPage){
         int groupCurrent = (int) Math.ceil(currentPage/10.0);
