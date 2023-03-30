@@ -48,7 +48,7 @@ public class ERController {
 	@PostMapping(value="er/erReview",produces = "application/text; charset=utf8")
 	public String erReview(HttpServletRequest req, Model model,@RequestParam("uid") String uid,@RequestParam("region") String region, @RequestParam("subregion") String subregion,
 								@RequestParam("code") String code, @RequestParam("city") String city, @RequestParam("town") String town, @RequestParam("hosName") String hosName,
-								@RequestParam("title") String title,@RequestParam("content") String content,@RequestParam("rating") String rating ,ERReviewVO vo, String pg) throws UnsupportedEncodingException{
+								@RequestParam("title") String title,@RequestParam("content") String content,@RequestParam("rating") String rating ,ERReviewVO vo ,String pg) throws UnsupportedEncodingException{
 		
 		vo.setMember_uid(uid);
 		vo.setHospital_code(code);
@@ -59,6 +59,7 @@ public class ERController {
 		vo.setRating(rating);
 		vo.setRegip(req.getRemoteAddr());
 		
+		System.out.println("pg"+ pg);
 		
 		int result = service.insertErReview(vo); 
 		System.out.println("result"+ result);
@@ -80,6 +81,7 @@ public class ERController {
 		model.addAttribute("code", code);
 		model.addAttribute("city", city);
 		model.addAttribute("town", town);
+		model.addAttribute("pg", pg);
        
 		return "redirect:/er/erDetail?code="+code+"&city="+encodedParam1+"&town="+encodedParam2;
 	}
