@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import kr.co.swiftER.dto.ErDTO;
-import kr.co.swiftER.dto.ItemDTO;
 import kr.co.swiftER.service.ERService;
 import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
