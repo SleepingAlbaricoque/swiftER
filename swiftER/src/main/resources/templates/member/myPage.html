@@ -164,12 +164,13 @@
                                 [[${vo.nickname}]]
                             </td>
                             <td th:if="${vo.grade == 2}">
-                                O
+                                <span th:if="${dvo.verified == 0}">[[${dvo.veriMsg}]]</span>
+                                <span th:if="${dvo.verified == 1}">O</span>
                             </td>
                             <th th:if="${vo.grade == 1}">가입일</th>
                             <th th:if="${vo.grade == 2}">의사구분</th>
                             <td th:if="${vo.grade == 1}">[[${vo.rdate}]]</td>
-                            <td th:if="${vo.grade == 2}">[[${dvo.kind}]]</td>
+                            <td th:if="${vo.grade == 2}">[[${dvo.specialty}]]<br>[[${dvo.kind}]]</td>
                         </tr>
                         <tr>
                             <th>
