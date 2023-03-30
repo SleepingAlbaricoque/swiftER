@@ -9,14 +9,14 @@
                     <tr>
                         <th colspan="2">[[${article.title}]]</th>
                     </tr>
-                    <tr th:if="${files != null}">
+                    <tr th:if="${files != null}" class="notice-view-table-attachment">
                     	<td>첨부파일&nbsp;&nbsp;
                    			<th:block th:each="file, status:${files}">
                    				<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a>
                    			</th:block>
                     	</td>
                     </tr>
-                    <tr>
+                    <tr class="notice-view-table-content">
                         <td colspan="2">
                         	[(${article.content})]
                         </td>

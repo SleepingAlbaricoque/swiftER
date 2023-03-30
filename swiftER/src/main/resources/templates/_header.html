@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link rel="stylesheet" th:href="@{/css/cs.css?v=3}">
+    <link rel="stylesheet" th:href="@{/css/cs.css?v=8}">
     <link rel="stylesheet" th:href="@{/css/community.css}" />
     <link rel="stylesheet" th:href="@{/css/er.css}"/>
     <link rel="stylesheet" th:href="@{/css/rating.css}"/>
@@ -29,7 +29,7 @@
                 </div>
                 <div sec:authorize="isAuthenticated()">
                 	<a th:href="@{/index}">HOME</a>
-                	<a th:href="@{/member/myPage}"><span sec:authentication="principal.member.nickname"> 님 환영합니다</span></a>
+                	<a th:href="@{/member/myPage}"><span>마이페이지</span></a>
                 	<a th:href="@{/member/logout}">로그아웃</a>
                 	<a th:href="@{/cs/index}">고객센터</a>
                 </div>

@@ -113,7 +113,7 @@ public class CSController {
 	}
 	
 	@GetMapping("cs/notice/view")
-	public String noticeView(String no, Model model) {
+	public String noticeView(String no, Model model, Principal principal) {
 		// 해당 no를 가진 notice 글 조회하기
 		List<CSQuestionsVO> articles = service.selectArticle(no);
 		CSQuestionsVO article = articles.get(0);
@@ -137,7 +137,9 @@ public class CSController {
 		}
 		
 		// 글 조회수 카운터 올리기
-		service.updateArticleView(no);
+		if(principal.getName() != article.getMember_uid()) { // 현재 로그인된 유저와 글 작성자가 일치하지 않을 때만 카운트 올리기
+			service.updateArticleView(no);
+		}
 		
 		// 화면에 출력할 글 저장
 		model.addAttribute("article", article);
@@ -148,12 +150,12 @@ public class CSController {
 	}
 	
 	@GetMapping("cs/faq")
-	public String faq(@RequestParam(value="subcateCode", defaultValue = "10") String subcateCode, Model model) {
+	public String faq(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="keyword", defaultValue="") String keyword, Model model) {
 		// faq 글들 불러오기
 		List<CSQuestionsVO> faqList = new ArrayList<>();
 		
 		// FAQ 글 들 중 사용자가 선택한 subCate에 해당하는 글들을 가져오기(페이지 첫 로드시 subCate값은 회원정보로 고정)
-		faqList = service.selectArticles("2", subcateCode, 0, "");
+		faqList = service.selectArticles("2", subcateCode, 0, keyword);
 		
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("subcateCode", subcateCode);

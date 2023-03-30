@@ -409,47 +409,54 @@
         border-bottom: 1.5px solid #2ce97b;
         text-align: center;
     }
-    .notice-view-table > tbody > tr:nth-child(2){
+    .notice-view-table .notice-view-table-content{
         height: auto;
         border-bottom: 1.5px solid #2ce97b;
     }
-    .notice-view-table > tbody > tr:nth-child(2) > td{
+    .notice-view-table-content > td{
         padding-top: 50px;
         padding-bottom: 50px;
         text-align: center;
     }
-    .notice-view-table > tbody > tr:nth-child(2) > td >p{
+    .notice-view-table-content > td >p{
         width: 1000px;
         margin: 0 auto;
         font-size: 15px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td{
+    .notice-view-table > tbody > tr:last-child > td{
         padding-top: 5px;
         padding-bottom: 5px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td >p:nth-child(1){
+    .notice-view-table > tbody > tr:last-child > td >p:nth-child(1){
         font-size: 17px;
         font-family: 'IBM Plex Sans KR', sans-serif;
         margin-bottom: 3px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td >p:nth-child(2){
+    .notice-view-table > tbody > tr:last-child > td >p:nth-child(2){
         font-size: 14px;
         font-family: 'IBM Plex Sans KR', sans-serif;
         margin-bottom: 3px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td > p> a{
+    .notice-view-table > tbody > tr:last-child > td > p> a{
         font-size: 14px;
         font-family: 'IBM Plex Sans KR', sans-serif;
         margin-bottom: 3px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td:nth-child(1){
+    .notice-view-table > tbody > tr:last-child > td:nth-child(1){
         padding-left: 15px;
     }
-    .notice-view-table > tbody > tr:nth-child(3) > td:nth-child(2){
+    .notice-view-table > tbody > tr:last-child > td:nth-child(2){
         text-align: right;
         border-left: 1.5px solid #2ce97b;
         width: 50%;
         padding-right: 15px;
+    }
+    .notice-view-table .notice-view-table-attachment{
+    	height: 35px;
+        border-bottom: 1.5px solid #2ce97b;
+    }
+    .notice-view-table-attachment > td{
+    	padding-left: 30px;
     }
 
     .back-to-notice-list{
