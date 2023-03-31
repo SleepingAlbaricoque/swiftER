@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
     <link rel="stylesheet" th:href="@{/css/symptoms.css}">
     <script th:src="@{/js/symptoms.js}"></script>
 </head>
@@ -15,15 +16,23 @@
     <div class="wrapper">
         <header>
             <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
+                <div sec:authorize="!isAuthenticated()">
+                	<a th:href="@{/}">HOME</a>
+                    <a th:href="@{/member/login}">로그인</a>
+                    <a th:href="@{/member/terms}">회원가입</a>
+                	<a th:href="@{/cs/index}">고객센터</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                	<a th:href="@{/}">HOME</a>
+                	<a th:href="@{/member/myPage}">마이페이지</a>
+                	<a th:href="@{/member/logout}">로그아웃</a>
+                	<a th:href="@{/cs/index}">고객센터</a>
                 </div>
             </div>
             <div class="logo">
                 <div>
-                    <a href="#">
-                        <img src="../img/swifter_logo.png" alt="logo" class="logoImage">
+                    <a th:href="@{/}">
+                        <img th:src="@{/img/swifter_logo.png}" alt="logo" class="logoImage">
                     </a>
                 </div>
             </div>
@@ -31,19 +40,19 @@
                 <div>
                     <ul>
                         <li>
-                            <a href="#">증상검색</a>
+                            <a th:href="@{/symptoms/symptoms}">증상검색</a>
                         </li>
                         <li>
-                            <a href="#">응급실검색</a>
+                            <a th:href="@{/er/er}">응급실검색</a>
                         </li>
                         <li>
                             <a href="#">약국검색</a>
                         </li>
                         <li>
-                            <a href="#">커뮤니티</a>
+                            <a th:href="@{/community/freeList}">커뮤니티</a>
                         </li>
                         <li>
-                            <a href="#">고객센터</a>
+                            <a th:href="@{/cs/index}">고객센터</a>
                         </li>
                     </ul>
                 </div>
