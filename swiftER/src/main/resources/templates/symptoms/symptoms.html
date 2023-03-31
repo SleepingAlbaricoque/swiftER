@@ -21,6 +21,65 @@
                                     <li th:classappend="${body1_code} eq 50 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=50}">정신</a></li>
                                     <li th:classappend="${body1_code} eq 60 ? 'on':'off'"><a th:href="@{/symptoms/symptoms?body1_code=60}">신경</a></li>
                                 </ul>
+                                <th:block th:if="${body1_code} eq null">
+                                <div class="search_body_subcate">
+                                	<h4>자주 찾는 증상</h4>
+                                	<table>
+	                                	<tr>
+	                                		<th><img src="../img/ico_symptomIndex_18.gif" alt="골반아이콘"><span>골반</span></th>
+	                                		<td>
+	                                			<div>
+	                                				<ul>
+	                                					<li>거품있는 소변</li>
+	                                					<li>긴박뇨</li>
+	                                					<li>거대자궁</li>
+	                                					<li>골반통증</li>
+	                                					<li>다뇨</li>
+	                                				</ul>		
+	                                			</div>
+	                                		</td>
+	                                		<th><img src="../img/ico_symptomIndex_09.gif" alt="귀 아이콘"><span>귀</span></th>
+	                                		<td>
+	                                			<div>
+	                                				<ul>
+	                                					<li>고막 충혈</li>
+	                                					<li>고막에 수표형성</li>
+	                                					<li>귀에서 냄새가남</li>
+	                                					<li>귀 모양의 변형</li>
+	                                					<li>귀 상부가 두피에 매몰됨</li>
+	                                				</ul>		
+	                                			</div>
+	                                		</td>
+	                                	</tr>
+	                                	<tr>
+	                                		<th><img src="../img/ico_symptomIndex_19.gif" alt="기타아이콘"><span>기타</span></th>
+	                                		<td>
+	                                			<div>
+	                                				<ul>
+	                                					<li>걸핏하면 눈물지음</li>
+	                                					<li>고정된 믿음</li>
+	                                					<li>감정 변화</li>
+	                                					<li>가학증</li>
+	                                					<li>거짓 증상 호소</li>
+	                                				</ul>		
+	                                			</div>
+	                                		</td>
+	                                		<th><img src="../img/ico_symptomIndex_08.gif" alt="다리아이콘"><span>다리</span></th>
+	                                		<td>
+	                                			<div>
+	                                				<ul>
+	                                					<li>관절 운동성 감소</li>
+	                                					<li>X자 다리</li>
+	                                					<li>O자 다리</li>
+	                                					<li>관절 불안정증</li>
+	                                					<li>가늘어지는 팔다리</li>
+	                                				</ul>		
+	                                			</div>
+	                                		</td>
+	                                	</tr>
+                                	</table>
+                                </div>
+                                </th:block>
                                 <th:block th:if="${body1_code} eq 10">
                                 <div th:class="'search_body_subcate-' + ${cate.code}"  th:each="cate : ${cate}" >
                                 <input type="hidden" th:value="${cate.code}">
