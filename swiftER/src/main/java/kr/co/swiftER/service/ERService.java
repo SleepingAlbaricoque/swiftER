@@ -46,8 +46,12 @@ public class ERService {
 	public int getCurrentPage(String pg){
         int currentPage = 1;
         if (pg != null){
-            currentPage = Integer.parseInt(pg);
-        }
+        	try {
+        		currentPage = Integer.parseInt(pg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        } 
         return currentPage;
 	 }
 	public long getTotalCount(String code){
