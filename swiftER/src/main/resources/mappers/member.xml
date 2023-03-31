@@ -77,7 +77,6 @@
 			`addr2`=null,
 			`grade`=3,
 			`regip`=null,
-			`rdate`=null,
 			`wdate`=NOW() 
 			where `uid`=#{uid};
 	</update>

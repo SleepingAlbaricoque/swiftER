@@ -44,15 +44,16 @@ public class ERService {
         return (currentPage - 1) * 10;
     }
 	public int getCurrentPage(String pg){
-		 int currentPage = 1;
-	        if (pg != null){
-		try {
-		currentPage = Integer.parseInt(pg);
-		} catch (Exception e) {
-		e.printStackTrace();
-		}
-		}
-	        return currentPage;
+        int currentPage = 1;
+        if (pg != null){
+        	try {
+        		currentPage = Integer.parseInt(pg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        } 
+        return currentPage;
+
 	 }
 	public long getTotalCount(String code){
         return dao.selectCountTotal(code);

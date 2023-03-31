@@ -32,13 +32,13 @@ public class MemberController {
 	
 	@Autowired MemberService service;
 	
-	
+	/********************************************************************************************************/
 	/* 로그인 페이지 */
 	
 	@GetMapping("member/login")
 	public String loginError(@RequestParam(value = "error", required = false)
-										String error, @RequestParam(value = "exception", required = false )
-										String exception,Model model) {
+							String error, @RequestParam(value = "exception", required = false )
+							String exception,Model model) {
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "member/login";
@@ -305,8 +305,5 @@ public class MemberController {
 		
 	}
 	*/
-	
-	/* 회원정보수정 페이지 */
-	//@GetMapping("member/")
 	
 }
