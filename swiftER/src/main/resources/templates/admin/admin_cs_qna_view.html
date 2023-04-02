@@ -1,27 +1,23 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
-        function deleteConfirm(element){
-            if(confirm("정말로 삭제하시겠습니까?")){
-                location.href = "#";
-            }
-        }
+	    function deleteConfirm(){
+	        if(confirm("정말로 삭제하시겠습니까?")){
+	            let checkedNo = [];
+	            let no = [[${article.no}]];
+	            checkedNo.push(no);
+	            
+	        	// ajax로 delete 컨트롤러로 배열 보내기
+	        	let headers = new Headers();
+	            headers.append("Content-Type", "application/json; charset=utf-8");
+	        	fetch("/swiftER/admin/cs/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
+	        	.then(response => response.json())
+	        	.then(function(json){
+	        		location.href = "/swiftER/admin/cs/qna";
+	        	})
+	        	.catch(err => console.error(err));
+	        	
+	        }
+	    }
 
         window.onload = function(){ // 답변 내용이 있을 때에만 답변 레이아웃 출력
             let answer = document.getElementById("admin-cs-answer-content");
@@ -37,6 +33,7 @@
             }
             
         }
+        
     </script>
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
@@ -46,35 +43,49 @@
                             <tr>
                                 <td class="key">제목</td>
                                 <td>
-                                    <input type="text" value="응급실 위치정보 업데이트 안내" class="admin-cs-write-title" readonly>
+                                    <input type="text" th:value="${article.title}" class="admin-cs-write-title" readonly>
                                 </td>
                                 <td class="key">카테고리</td>
-                                <td>ER</td>
+                                <td>[[${article.subcate}]]</td>
                             </tr>
                             <tr>
-                                <td class="key admin-cs-qna-view-td-key" rowspan="2">첨부파일</td>
-                                <td colspan="3"> <span>질문자 |</span> swiftERimg.png</td>
+                            	<th:block th:if="${files != null}">
+                                	<td class="key admin-cs-qna-view-td-key" rowspan="2">첨부파일</td>
+                                </th:block>
+                                <th:block th:if="${files != null}">
+                                	<td colspan="3"> <span>질문자 |</span> 
+                                		<th:block th:each="file, status:${files}">
+                                			<a th:href="@{/download(parent=${article.no}, num=${status.index})}">[[${file.oriName}]]&nbsp;</a>
+                                		</th:block>
+                                	</td>
+                                </th:block>
                             </tr>
                             <tr>
-                                <td colspan="3" class="admin_cs_qna_view_td"> <span>관리자 |</span> sdfsd</td>
+                                <td colspan="3" class="admin_cs_qna_view_td"  th:if="${answerFiles != null}"> <span>관리자 |</span>
+                                	<th:block th:each="answerFile, status:${answerFiles}">
+                               			<a th:href="@{/download(parent=${answer.no}, num=${status.index})}">[[${answerFile.oriName}]]&nbsp;</a>
+                               		</th:block>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
-                                <td colspan="3">
-                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly>업데이트 예정입니까?</textarea>
+                                <td colspan="3" style="padding-left:20px; padding-top:60px;">
+                                	[(${article.content})]
+                                    <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly></textarea>
                                 </td>
                             </tr>
-                            <tr class="admin-cs-answer" style="display:none;">
+                            <tr class="admin-cs-answer" style="display:none;" th:if="${answer != null}">
                                 <td class="key">답변</td>
                                 <td colspan="3">
+                                	[(${answer.content})]
                                     <textarea name="admin-cs-write-content" id="admin-cs-answer-content" cols="30" rows="10" readonly></textarea>
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-cs-control-buttons admin-cs-qna-control-buttons">
-                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
-                            <input type="button" value="답변하기" class="admin-cs-modify-article" onclick="location.href='#'">
-                            <input type="button" value="삭제하기" class="admin-cs-delete-article" onclick="deleteConfirm(this)">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" th:onclick="|location.href='@{/admin/cs/qna}'|">
+                            <input type="button" value="답변하기" class="admin-cs-modify-article" th:onclick="|location.href='@{/admin/cs/qna/write(no=${article.no})}'|">
+                            <input type="button" value="삭제하기" class="admin-cs-delete-article" onclick="deleteConfirm()">
                         </div>
                     </form>
                 </div>

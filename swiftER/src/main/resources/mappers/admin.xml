@@ -164,4 +164,8 @@
 	<select id="selectFnos" resultType="int">
 		select `fno` from `file` where `parent` =#{no};
 	</select>
+	
+	<select id="selectAnswer" resultMap="selectArticleResultMap">
+		select * from `cs_questions` where `qno` = #{no};
+	</select>
 </mapper>

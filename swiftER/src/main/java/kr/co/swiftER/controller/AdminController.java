@@ -366,18 +366,111 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/cs/qna")
-	public String qnaList() {
+	public String qnaList(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
+		// 페이징 처리 
+		int total = service.selectCountArticlesTotal("3", subcateCode);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+	    
+	    // 모든 공지사항 글 불러오기
+	    List<CSQuestionsVO> qnaList = service.selectArticles("3", subcateCode, start);
+	    
+	    // rdate 날짜만 나오게 substring하기
+	    for(CSQuestionsVO qna : qnaList)
+	    	qna.setRdate(qna.getRdate().substring(0, 10));
+	    
+	    // 화면에 출력할 글들 저장
+	    model.addAttribute("qnaList", qnaList);
+	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+	    model.addAttribute("pg", pg);
+	    // select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 subcateCode값 저장해야 함
+	 	model.addAttribute("subcateCode", subcateCode);
+	 	// 글에 인덱스 번호 매기기 위해서 필요
+	 	model.addAttribute("start", start);
+		
 		return "admin/admin_cs_qna_list";
 	}
 	
 	@GetMapping("admin/cs/qna/view")
-	public String qnaView() {
+	public String qnaView(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+		
+		// 글번호를 이용해 답변글 정보 불러오기
+		CSQuestionsVO answer = service.selectAnswer(no);
+		List<FileVO> answerFiles = new ArrayList<>();
+		
+		// 답변글 정보 저장하기
+				model.addAttribute("answer", answer);
+		
+		if(answer != null) {
+			answerFiles = answer.getFvoList();
+			
+			// 답변글 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+			if(answer.getFile() > 0) {
+				model.addAttribute("answerFiles", answerFiles);
+			}
+		}
+		
 		return "admin/admin_cs_qna_view";
 	}
 	
 	@GetMapping("admin/cs/qna/write")
-	public String qnaWrite() {
+	public String qnaWrite(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+		
+		// 글번호를 이용해 답변글 정보 불러오기 
+		CSQuestionsVO answer = service.selectAnswer(no);
+		List<FileVO> answerFiles = new ArrayList<>();
+		
+		// 답변글 정보 저장하기
+				model.addAttribute("answer", answer);
+		
+		if(answer != null) {
+			answerFiles = answer.getFvoList();
+			
+			// 답변글 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+			if(answer.getFile() > 0) {
+				model.addAttribute("answerFiles", answerFiles);
+			}
+		}
+		
 		return "admin/admin_cs_qna_write";
+	}
+	
+	@PostMapping("admin/cs/qna/write")
+	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal) {
+		// 이미 답변글이 있는 경우 답변 수정, 답변글이 없는 경우 답변 작성 기능
+		
+		
+		return "redirect:/admin/cs/qna";
 	}
 	
 	@GetMapping("/admin/er/review")

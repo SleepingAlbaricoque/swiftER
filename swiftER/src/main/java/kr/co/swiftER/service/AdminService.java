@@ -123,6 +123,11 @@ public class AdminService {
 		return dao.insertArticle(article);
 	}
 	
+	// qna 답변글 불러오기
+	public CSQuestionsVO selectAnswer(String no) {
+		return dao.selectAnswer(no);
+	}
+	
 	
 	
 	// 페이징

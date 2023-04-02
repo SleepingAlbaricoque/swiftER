@@ -60,6 +60,9 @@ public interface AdminDAO {
 	// 글 새로 작성하기
 	public int insertArticle(CSQuestionsVO article);
 	
+	// 답변글 불러오기
+	public CSQuestionsVO selectAnswer(String no);
+	
 	
 	// 파일 처리
 	// FileVO를 file 테이블에 업로드
