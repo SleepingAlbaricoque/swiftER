@@ -360,6 +360,44 @@ div[class*=search_body_subcate] > h3 {
     font-size: 45px;
     font-weight: bold;
 }
+.search_body_subcate > h4 {
+	font-size: 30px;
+	padding: 20px;
+}
+.search_body_subcate > table {
+}
+.search_body_subcate > table > tbody > tr {}
+.search_body_subcate > table > tbody > tr > th {
+	padding-top: 20px;
+    border: 1px solid #ccc;
+}
+.search_body_subcate > table > tbody > tr > th > img {}
+.search_body_subcate > table > tbody > tr > th > span {
+	font-size: 15px;
+}
+.search_body_subcate > table > tbody > tr > td {}
+.search_body_subcate > table > tbody > tr > td > div {}
+.search_body_subcate > table > tbody > tr > td > div > ul {
+	width:100%;
+}
+.search_body_subcate > table > tbody > tr > td > div > ul > li {
+	width: 124px;
+    margin-bottom: 4px;
+	padding-left: 8px;
+	padding: 2px 0 2px;
+    line-height: 1.5;
+    text-align: left;
+}
+.search_body_subcate > table > tbody > tr > td > div > ul > li > a {
+	letter-spacing: -1px;
+	color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+.search_body_subcate > table > tbody > tr > td > div > ul > li > a:hover {
+	color: #0e787c;
+    text-decoration: underline;
+}
 .subcateBox {
 	margin-left: 10%;
     padding-bottom: 20px;
