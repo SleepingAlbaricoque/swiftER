@@ -74,9 +74,9 @@
                                     <textarea name="admin-cs-write-content" id="admin-cs-write-content" cols="30" rows="10" readonly></textarea>
                                 </td>
                             </tr>
-                            <tr class="admin-cs-answer" style="display:none;" th:if="${answer != null}">
+                            <tr class="admin-cs-answer" th:if="${answer != null}">
                                 <td class="key">답변</td>
-                                <td colspan="3">
+                                <td colspan="3" style="padding-left:20px; padding-top:60px;">
                                 	[(${answer.content})]
                                     <textarea name="admin-cs-write-content" id="admin-cs-answer-content" cols="30" rows="10" readonly></textarea>
                                 </td>

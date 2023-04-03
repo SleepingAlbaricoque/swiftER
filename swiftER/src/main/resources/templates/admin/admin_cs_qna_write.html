@@ -19,6 +19,18 @@
             }
         }
         
+        function deleteFile(fno){
+        	// 사용자가 이미 업로드한 파일 중 삭제 버튼을 누른 파일값이 담긴 input 태그를 삭제 => 폼 submit시 삭제 파일 제외
+        	let uploadedFile = document.getElementsByClassName('uploadedFile');
+        	let length = uploadedFile.length;
+        	
+        	for(let i =0; i < length; i++){
+        		if(uploadedFile[i].value === fno){
+        			uploadedFile[i].parentElement.remove();
+        		}
+        	}
+        }
+        
         window.onload = function(){
         	document.body.style.height = 'auto'; // body를 지정해 height를 auto로
             document.documentElement.style.height = 'auto'; // html을 지정해 height를 auto로 해야 overflow-y: auto 했을 때 요소 안이 아닌 화면에 세로 스크롤이 생김
@@ -34,9 +46,10 @@
                     <p>QnA 보기</p>
                     <form class="admin-cs-form" th:action="@{/admin/cs/qna/write}" method="post" enctype="multipart/form-data">
                     	<input type="hidden" name="qno" th:value="${article.no}">
-                    	<input type="hidden" name="isAnswered" th:value="${article.answer}">
+                    	<input type="hidden" name="answer" th:value="${article.answer}">
                     	<input type="hidden" name="cateCode" value="3">
                     	<input type="hidden" name="subcateCode" th:value="${article.subcateCode}">
+                    	<input type="hidden" name="file" th:value="${answer.file}">
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>
@@ -59,7 +72,10 @@
                             <tr>
                                 <td colspan="3" class="admin_cs_qna_write_td"  th:if="${answerFiles != null}"> <span>관리자 |</span>
                                 	<th:block th:each="answerFile, status:${answerFiles}">
-                               			<a th:href="@{/download(parent=${answer.no}, num=${status.index})}">[[${answerFile.oriName}]]&nbsp;</a>
+                                		<div style="display:inline-block;">
+	                               			<a th:href="@{/download(parent=${answer.no}, num=${status.index})}">[[${answerFile.oriName}]]</a> <a href="#" th:fno="${answerFile.fno}" onclick="deleteFile(this.getAttribute('fno'))"><span class="delete-file">삭제</span></a>&nbsp;
+	                               			<input type="hidden" name="uploadedFile" class="uploadedFile" th:value="${answerFile.fno}">
+	                               		</div>
                                		</th:block>
                                 </td>
                             </tr>
@@ -77,7 +93,9 @@
                             <tr class="admin-cs-answer">
                                 <td class="key">답변</td>
                                 <td colspan="3">
-                                    <textarea name="content" id="admin-cs-answer-content" cols="30" rows="10"></textarea>
+                                    <textarea name="content" id="admin-cs-answer-content" cols="30" rows="10">
+                                    	<th:block th:if="${answer != null}">[(${answer.content})]</th:block>
+                                    </textarea>
                                 </td>
                             </tr>
                         </table>

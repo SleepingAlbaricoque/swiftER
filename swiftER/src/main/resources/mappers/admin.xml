@@ -89,7 +89,7 @@
 		select a.*, b.subcate from `cs_questions` as a 
 		join `cs_subcate` as b 
 		on a.subcateCode = b.subcode
-		where a.cateCode = #{cateCode}
+		where a.cateCode = #{cateCode} and `qno`=0 
 		<if test="subcateCode != 0">
 			and a.subcateCode = #{subcateCode}
 		</if>
@@ -138,7 +138,7 @@
 	</select>
 	
 	<update id="updateArticle" parameterType="kr.co.swiftER.vo.CSQuestionsVO">
-		update `cs_questions` set `subcateCode` = #{subcateCode}, `title` =#{title}, `content`=#{content}, `file`=#{file}, `regip` =#{regip}, `rdate` =NOW() 
+		update `cs_questions` set `qno`=#{qno}, `subcateCode` = #{subcateCode}, `title` =#{title}, `content`=#{content}, `file`=#{file}, `regip` =#{regip}, `rdate` =NOW() 
 		where `no` = #{no};
 	</update>
 	

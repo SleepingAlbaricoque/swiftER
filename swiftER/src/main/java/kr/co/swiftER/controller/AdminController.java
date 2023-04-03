@@ -33,7 +33,9 @@ import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Controller
 public class AdminController {
 
@@ -451,7 +453,7 @@ public class AdminController {
 		List<FileVO> answerFiles = new ArrayList<>();
 		
 		// 답변글 정보 저장하기
-				model.addAttribute("answer", answer);
+		model.addAttribute("answer", answer);
 		
 		if(answer != null) {
 			answerFiles = answer.getFvoList();
@@ -466,7 +468,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("admin/cs/qna/write")
-	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal) {
+	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, String uploadedFile, Principal principal) {
 		// article 객체에 속성값 채우기
 		article.setMember_uid(principal.getName());
 		article.setRegip(req.getRemoteAddr());
@@ -492,11 +494,81 @@ public class AdminController {
 				}
 				
 				// 원 질문글 DB answer 속성값 1로 바꿔주기
-				//service.updateAnswerCount(article.getNo());
+				service.updateAnswerCount(String.valueOf(article.getQno()));
 				
 			}else { // 첨부 파일이 없는 경우
 				
+				// 사용자가 작성한 QnA DB에 insert
+				service.insertArticle(article);
+				
+				// 원 질문글 DB answer 속성값 1로 바꿔주기
+				service.updateAnswerCount(String.valueOf(article.getQno()));
 			}
+		// 답변글이 있는 경우 답변 modify - notice_modify와 같은 로직
+		}else { 
+			
+			// 이전에 업로드한 답변글의 no 가져와서 article의 no값에 대입하기
+			int answerNo = service.selectAnswer(String.valueOf(article.getQno())).getNo();
+			article.setNo(answerNo);
+
+			// 사용자가 기존 첨부파일을 삭제할 경우 원래 첨부파일 리스트와 대조하기 위하여 원래 첨부파일 리스트 가져오기
+			List<Integer> uploadedFnos = service.selectFnos(String.valueOf(article.getNo()));
+			
+			// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+			if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+				List<MultipartFile> files = req.getFiles("fname");
+				article.setFile(article.getFile() + files.size()); // 해당 글의 file 속성은 '기존 파일 갯수(getFile()) + 새로 첨부한 파일 갯수(files.size())'로 설정
+				
+				// file 테이블에 첨부파일 업로드
+				for(MultipartFile file : files) {
+					service.uploadFile(file, article);
+				}
+				
+				// 해당 글에 첨부된 기존 파일들의 fno와 수정 폼에서 submit 된 파일들의 fno를 비교해서 submit된 파일 fno 리스트에 없는 기존 파일은 삭제하기
+				if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+					List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+					for(Integer f : uploadedFnos) {
+						if(!filesNotToDelete.contains(String.valueOf(f))) {
+							service.deleteFile(String.valueOf(f));
+							article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+						}
+					}
+				}else { // 기존 첨부파일을 모두 삭제한 경우
+					for(Integer f : uploadedFnos) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1);
+					}
+				}
+				
+				// 수정된 글 DB에 업로드하기
+				service.updateArticle(article);
+				
+				// 원 질문글 DB answer 속성값 1로 바꿔주기
+				service.updateAnswerCount(String.valueOf(article.getQno()));
+				
+			}else { // 새로운 첨부파일이 없는 경우
+				if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+					List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+					for(Integer f : uploadedFnos) {
+						if(!filesNotToDelete.contains(String.valueOf(f))) {
+							service.deleteFile(String.valueOf(f));
+							article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+						}
+					}
+				}else { // 기존 첨부파일을 모두 삭제한 경우
+					for(Integer f : uploadedFnos) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1);
+					}
+				}
+				
+				// 수정된 글 DB에 업로드하기
+				service.updateArticle(article);
+				
+				// 원 질문글 DB answer 속성값 1로 바꿔주기
+				service.updateAnswerCount(String.valueOf(article.getQno()));
+			}
+				
 		}
 		
 		return "redirect:/admin/cs/qna";
