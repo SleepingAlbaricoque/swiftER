@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>일반 회원가입</title>
-    <link rel="stylesheet" th:href="@{/css/member/member.css}">
+    <link rel="stylesheet" th:href="@{/css/member/register.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
@@ -88,103 +88,105 @@
                 <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="register">
-                <section>
-                    <h4>필수 정보입력</h4>
-                    <table>
-                    
-                        <tr>
-                            <th>
-                                아이디
-                            </th>
-                            <td>
-                            	<input type="hidden" name="grade" value="1">
-                                <input type="text" name="uid" id="uid" placeholder="아이디 입력" required>
-                                <span class="resultUid">영문, 숫자로 5~12자까지 설정해 주십시오</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                비밀번호
-                            </th>
-                            <td>
-                                <input type="password" name="pass1" placeholder="비밀번호 입력" required>
-                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주십시오</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                비밀번호 확인
-                            </th>
-                            <td>
-                                <input type="password" name="pass2" placeholder="비밀번호 확인" required>
-                                <span class="resultPass">비밀번호 재입력</span>
-                            </td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h4>기본 정보입력</h4>
-                    <table>
-                        <tr>
-                            <th>이름</th>
-                            <td>
-                                <input type="text" name="name" placeholder="이름 입력" required>
-                                <span class="resultName">한글 2~6자를 입력해 주십시오</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>별명</th>
-                            <td>
-                                <input type="text" name="nickname" placeholder="별명 입력" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>생년월일</th>
-                            <td>
-                                <input type="date" name="birth" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>E-mail</th>
-                            <td>
-                                <input type="text" name="email" placeholder="이메일 입력" required>
-                                    <button id="btnEmailCheck">인증번호 전송</button>
-                                    <span class="resultEmail">이메일은 수정불가하니 신중히 입력해 주십시오</span>
-                                    <br>
-                                    <input type="text" name="code" placeholder="인증번호 입력" required>
-                                    <button id="btncheckCode">인증번호 확인 </button>
-                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>휴대전화</th>
-                            <td>
-                                <input type="text" name="hp" placeholder="휴대전화" required>
-                                <span class="resultHp"> - 포함 13자리를 입력해 주십시오</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>주소</th>
-                            <td>
-                                <div>
-                                    <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
-                                    <span class="resultZip"></span>
-                                </div>
-                                <div>
-                                    <input type="text" name="addr1" id="addr1" required>
-                                </div>
-                                <div>
-                                    <input type="text" name="addr2" id="addr2" required>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>        
-                </section>
-                <div>
-                    <button class="submit">
-                        회원가입
-                    </button>
-                </div>
+            	<form action="#" method="post">
+	                <section>
+	                    <h4>필수 정보입력</h4>
+	                    <table>
+	                    
+	                        <tr>
+	                            <th>
+	                                아이디
+	                            </th>
+	                            <td>
+	                            	<input type="hidden" name="grade" value="1">
+	                                <input type="text" name="uid" id="uid" placeholder="아이디 입력" required>
+	                                <span class="resultUid">영문, 숫자로 5~12자까지 설정해 주십시오</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>
+	                                비밀번호
+	                            </th>
+	                            <td>
+	                                <input type="password" name="pass1" placeholder="비밀번호 입력" required>
+	                                <span>영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주십시오</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>
+	                                비밀번호 확인
+	                            </th>
+	                            <td>
+	                                <input type="password" name="pass2" placeholder="비밀번호 확인" required>
+	                                <span class="resultPass">비밀번호 재입력</span>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                </section>
+	                <section>
+	                    <h4>기본 정보입력</h4>
+	                    <table>
+	                        <tr>
+	                            <th>이름</th>
+	                            <td>
+	                                <input type="text" name="name" placeholder="이름 입력" required>
+	                                <span class="resultName">한글 2~6자를 입력해 주십시오</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>별명</th>
+	                            <td>
+	                                <input type="text" name="nickname" placeholder="별명 입력" required>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>생년월일</th>
+	                            <td>
+	                                <input type="date" name="birth" required>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>E-mail</th>
+	                            <td>
+	                                <input type="text" name="email" placeholder="이메일 입력" required>
+	                                    <button id="btnEmailCheck">인증번호 전송</button>
+	                                    <span class="resultEmail">이메일은 수정불가하니 신중히 입력해 주십시오</span>
+	                                    <br>
+	                                    <input type="text" name="code" placeholder="인증번호 입력" required>
+	                                    <button id="btncheckCode">인증번호 확인 </button>
+	                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>휴대전화</th>
+	                            <td>
+	                                <input type="text" name="hp" placeholder="휴대전화" required>
+	                                <span class="resultHp"> - 포함 13자리를 입력해 주십시오</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>주소</th>
+	                            <td>
+	                                <div>
+	                                    <input type="text" name="zip" id="zip" placeholder="우편번호 입력" th:onclick="postcode()" required>
+	                                    <span class="resultZip"></span>
+	                                </div>
+	                                <div>
+	                                    <input type="text" name="addr1" id="addr1" required>
+	                                </div>
+	                                <div>
+	                                    <input type="text" name="addr2" id="addr2" required>
+	                                </div>
+	                            </td>
+	                        </tr>
+	                    </table>        
+	                </section>
+	                <div>
+	                    <button class="submit">
+	                        회원가입
+	                    </button>
+	                </div>
+                </form>
             </article>
         </main>
     </div>
