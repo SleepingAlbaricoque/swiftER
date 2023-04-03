@@ -7,7 +7,7 @@
     let regName  = /^[가-힣]{2,6}$/;
     let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
-    let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
+    let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;
     let regZip = /\d{5}/;
 
 // 폼 데이터 검증 결과 상태변수
@@ -21,7 +21,7 @@
 
     $(function(){
 
-        $('input[name=uid]').focusout(function() {
+        $('input[name=uid]').keydown(function() {
         	isUidOk=false;
         });
 
@@ -91,10 +91,10 @@
 
     		if(!name.match(regName)){
     			isNameOk  = false;
-    			$('.resultName').css('color', 'red').text('이름은 한글 2자 이상이어야 합니다.');
+    			$('.resultName').css('color', 'red').text('이름은 한글 2자 이상, 6자 이하 이어야 합니다.');
     		}else{
     			isNameOk  = true;
-    			$('.resultName').css('color', 'green').text('O');
+    			$('.resultName').css('color', 'green').text('');
     		}
     	});
 
@@ -107,7 +107,7 @@
     			$('.resultEmail').css('color', 'red').text('이메일이 유효하지 않습니다.');
     		}else{
     			isEmailOk = true;
-    			$('.resultEmail').text('O');
+    			$('.resultEmail').text('');
     		}
 
     	});
@@ -121,7 +121,7 @@
     			$('.resultHp').css('color', 'red').text('휴대폰이 유효하지 않습니다.');
     		}else{
     			isHpOk = true;
-    			$('.resultHp').css('color', 'green').text('O');
+    			$('.resultHp').css('color', 'green').text('');
     		}
     	});
     	
@@ -140,7 +140,7 @@
     	});
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
-    	$('.submit').click(function(){
+    	$('.register > form').submit(function(e){
 
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
@@ -177,49 +177,8 @@
     			return false;
     		}
     		
-    		let uid = $('input[name=uid]').val();
-    		let pass = $('input[name=pass2]').val();
-    		let name = $('input[name=name]').val();
-    		let nickname = $('input[name=nickname]').val();
-    		let birth = $('input[name=birth]').val();
-    		let email = $('input[name=email]').val();
-    		let contact = $('input[name=hp]').val();
-    		let zip = $('input[name=zip]').val();
-    		let addr1 = $('input[name=addr1]').val();
-    		let addr2 = $('input[name=addr2]').val();
-    		let grade = $('input[name=grade]').val();
+    		// 최종 전송
+    		return true;
     		
-    		let jsonData = {
-				"uid" : uid,
-				"pass" : pass,
-				"name" : name,
-				"nickname" : nickname,
-				"birth" : birth,
-				"email" : email,
-				"contact" : contact,
-				"zip" : zip,
-				"addr1" : addr1,
-				"addr2" : addr2,
-				"grade" : grade
-			}
-    		
-    		console.log(jsonData);
-    		
-    		$.ajax({
-				
-				url : '/swiftER/member/insertMember',
-				method : 'post',
-				data : jsonData,
-				dataType : 'json',
-				success : function(data){
-					if(data.result == 1){
-						alert("회원가입이 완료되었습니다!")
-						location.href="/swiftER/member/login";	
-					}else{
-						alert("오류 발생!");
-					}
-					
-						}
-			});
     	});
     });

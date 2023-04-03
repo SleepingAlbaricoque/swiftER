@@ -34,7 +34,7 @@
 		SELECT a.*,b.region,b.subregion FROM `search_er_review` as a
 		JOIN `search_er_subcate` AS b 
 		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code` 
-		WHERE `member_uid` = #{uid};
+		WHERE `member_uid` = #{uid} ORDER BY `no` DESC LIMIT 3;
 	</select>
 	
 	<!-- 회원가입 -->
