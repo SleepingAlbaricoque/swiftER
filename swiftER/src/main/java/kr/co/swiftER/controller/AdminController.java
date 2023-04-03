@@ -467,8 +467,37 @@ public class AdminController {
 	
 	@PostMapping("admin/cs/qna/write")
 	public String qnaWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal) {
-		// 이미 답변글이 있는 경우 답변 수정, 답변글이 없는 경우 답변 작성 기능
+		// article 객체에 속성값 채우기
+		article.setMember_uid(principal.getName());
+		article.setRegip(req.getRemoteAddr());
 		
+		// XSS 공격을 방지하기위해 Jsoup import해서 safelist에 등록된 태그만 허용 ex.<script> 태그 등은 허용하지 않음 - 화면에는 <script>로 출력되지만 db에는 &lt;script&gt;로 저장됨
+		article.setContent(Jsoup.clean(article.getContent(), Safelist.basic())); 
+		
+		// 이미 답변글이 있는 경우 답변 수정, 답변글이 없는 경우 답변 작성 기능
+		// 답변글이 없는 경우 답변 write
+		if(article.getAnswer() == 0) {
+			
+			// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+			if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+				List<MultipartFile> files = req.getFiles("fname");
+				article.setFile(files.size());
+				
+				// 사용자가 작성한 QnA DB에 insert
+				service.insertArticle(article);
+				
+				for(MultipartFile file : files) {
+					// DB에 파일 업로드
+					service.uploadFile(file, article);
+				}
+				
+				// 원 질문글 DB answer 속성값 1로 바꿔주기
+				//service.updateAnswerCount(article.getNo());
+				
+			}else { // 첨부 파일이 없는 경우
+				
+			}
+		}
 		
 		return "redirect:/admin/cs/qna";
 	}

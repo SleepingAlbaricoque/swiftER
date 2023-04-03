@@ -36,5 +36,6 @@ public class CSQuestionsVO {
 	// 내가 쓴 qna 답변 여부 체크위해 추가
 	private String isAnswered;
 	
-	
+	// 내가 쓴 qna 답변 여부 DB에서 체크위해 추가 
+	private int answer;
 }

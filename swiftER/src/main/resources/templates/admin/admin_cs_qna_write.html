@@ -32,8 +32,11 @@
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
                     <p>QnA 보기</p>
-                    <form class="admin-cs-form">
+                    <form class="admin-cs-form" th:action="@{/admin/cs/qna/write}" method="post" enctype="multipart/form-data">
                     	<input type="hidden" name="qno" th:value="${article.no}">
+                    	<input type="hidden" name="isAnswered" th:value="${article.answer}">
+                    	<input type="hidden" name="cateCode" value="3">
+                    	<input type="hidden" name="subcateCode" th:value="${article.subcateCode}">
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>

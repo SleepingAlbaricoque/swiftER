@@ -124,6 +124,7 @@
 		<result column="regip" property="regip"/>
 		<result column="rdate" property="rdate"/>
 		<result column="subcate" property="subcate"/>
+		<result column="answer" property="answer"/>
 		<collection column="no" property="fvoList" ofType="kr.co.swiftER.vo.FileVO" select="selectFile" javaType="List"/>
 	</resultMap>
 	<select id="selectArticle" resultMap="selectArticleResultMap">
@@ -168,4 +169,8 @@
 	<select id="selectAnswer" resultMap="selectArticleResultMap">
 		select * from `cs_questions` where `qno` = #{no};
 	</select>
+	
+	<update id="updateAnswerCount">
+		update `cs_questions` set `answer` = 1 where `no`=#{no};
+	</update>
 </mapper>

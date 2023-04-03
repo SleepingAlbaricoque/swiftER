@@ -63,6 +63,8 @@ public interface AdminDAO {
 	// 답변글 불러오기
 	public CSQuestionsVO selectAnswer(String no);
 	
+	// 관리자가 qna 답변글 달 경우 질문글 answer 카운트를 올려주기
+	public int updateAnswerCount(String no);
 	
 	// 파일 처리
 	// FileVO를 file 테이블에 업로드
