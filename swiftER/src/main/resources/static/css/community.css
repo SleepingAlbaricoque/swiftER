@@ -431,6 +431,18 @@ vertical-align: bottom;
 #community > .free > .list > article > .page > .num {}
 #community > .free > .list > article > .page > .on {}
 
+.list-title {
+  width: 580px;
+}
+.list-uid {
+  width: 65px;
+}
+.list-views {
+  width: 80px;
+}
+.list-date {
+  width: 55px;
+}
 /* community - 리스트 검색 */
 .input--list-search {
     transition: border-color .2s;

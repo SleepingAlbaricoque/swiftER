@@ -58,18 +58,18 @@ window.onload = () => {
             <table>
             <th:block th:if="${cateCode}== 10 or ${cateCode}== 12">
               <tr th:each="cates:${cates}">
-	              <td><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no},parent=${cates.no},comments=${cates.comments})}" th:text="${cates.title}"></a></td>
-	              <td>[[${(cates.member_uid)}]]</td>
-	              <td>[[${(cates.view)}]] views</td>	
-	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>
+	              <td class="list-title"><a th:href="@{/community/freeView(cateCode=${cateCode},no=${cates.no},parent=${cates.no},comments=${cates.comments})}" th:text="${cates.title}"></a></td>
+	              <td class="list-uid">[[${(cates.member_uid)}]]</td>
+	              <td class="list-views">[[${(cates.view)}]] views</td>	
+	              <td class="list-date">[[${(cates.rdate).substring(2, 10)}]]</td>
               </tr>
              </th:block>
              <th:block th:if="${cateCode}== 11">
               <tr th:each="cates:${cates}">
-	              <td><a th:href="@{/community/qnaView(cateCode=${cateCode},no=${cates.no},parent=${cates.no},comments=${cates.comments})}" th:text="${cates.title}"></a></td>
-	              <td>[[${(cates.member_uid)}]]</td>
-	              <td>[[${(cates.view)}]] views</td>	
-	              <td>[[${(cates.rdate).substring(2, 10)}]]</td>
+	              <td class="list-title"><a th:href="@{/community/qnaView(cateCode=${cateCode},no=${cates.no},parent=${cates.no},comments=${cates.comments})}" th:text="${cates.title}"></a></td>
+	              <td class="list-uid">[[${(cates.member_uid)}]]</td>
+	              <td class="list-views">[[${(cates.view)}]] views</td>	
+	              <td class="list-date">[[${(cates.rdate).substring(2, 10)}]]</td>
               </tr>
              </th:block>
             </table>
@@ -78,8 +78,10 @@ window.onload = () => {
             <th:block th:if="${groups[0] > 1}">
                 <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[0]- 1})}" class="prev">이전</a>
             </th:block>
+            <th:block th:if="${groups[1] !=0}">
             <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
                 <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${num},keyword=${keyword})}" th:class="${num == currentPage ? 'num current' : 'num'}">[[${num}]]</a>
+            </th:block>
             </th:block>
             <th:block th:if="${groups[1] < lastPage}">
                 <a th:href="@{/community/freeList(cateCode=${cateCode},pg=${groups[1] + 1})}" class="next">다음</a>
