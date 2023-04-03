@@ -357,8 +357,8 @@
                             <th>날짜</th>
                         </tr>
                         <tr th:each="ers : ${ers}">
-                            <td>[[${ers.region}]]</td>
-                            <td>[[${ers.subregion}]]</td>
+                            <td>[[${ers.region_code}]]</td>
+                            <td>[[${ers.subregion_code}]]</td>
                             <td><a th:href="@{#}">[[${ers.title}]]</a></td>
                             <td>[[${ers.rating}]]</td>
                             <td>[[${ers.rdate}]]</td>

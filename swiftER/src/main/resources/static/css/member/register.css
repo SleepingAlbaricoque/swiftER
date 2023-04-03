@@ -1,0 +1,341 @@
+#wrapper {
+    margin: 0 auto;
+    width: 900px;
+    height: 100%;
+}
+
+.home {
+    opacity: 0.5;
+}
+
+.home:hover {
+    transition: 0.5s;
+    opacity: 1;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.p_Header {
+    width: 100%;
+    height: 20px;
+    margin: 0 auto;
+}
+
+.p_Header > a {
+	padding: 5px;
+	float: right;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.header_login {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#h1_login {
+    margin: 0 0 10px;
+}
+
+.centerName {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.centerName > div {
+    width: 50%;
+    height: 200px;
+    float: left;
+    text-align: right;
+}
+
+.centerName > div:last-child {
+    padding: 50px 0px;
+    box-sizing: border-box;
+    text-align: left;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+#wrapper > header > .centerName > div > h1 {
+    margin: 10px 0px;
+}
+
+
+main > h2 {
+    text-align: right;
+}
+
+.login {
+    width: 600px;
+    height: 100%;
+    margin: 0px auto 42px;
+    padding: 70px;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 10px;
+    font-size: 12px;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+}
+
+.login_user > table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.login_user > table > tbody > tr > td > input{
+    position: relative;
+    width: 300px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #222;
+    box-sizing: border-box;
+    float: left;
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    text-indent: 15px;
+}
+
+body > div > main > div > div > form > div > table > tbody > tr:nth-child(3) > td {
+	height:30px;
+}
+
+#error > p {
+	margin: 0 auto;
+}
+
+#errormessage {
+	color:red;
+}
+
+.login_user > table > tbody > tr:nth-child(4) {
+    float: left;
+}
+
+.login_user > table > tbody > tr > td > span > label {
+    font-size: 14px;
+    border: 1px solid black;
+}
+
+.auto {
+    margin: 0 0 20px 0;
+}
+
+#login_button {
+    display: block;
+    width: 100%;
+    padding: 13px 0 13px;
+    border-radius: 6px;
+    border: solid 0px;
+    background: rgb(44,233,123);
+    background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+#login_button:hover {
+    background: rgb(44,233,123);
+    transition: 0.5s;
+}
+
+h2 {
+    color: #d7d7d7;
+}
+
+main > div > div > form > div > span > label > a {
+    color: #222;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+main > div > div > form > div > span > label > a:hover {
+    color: #a1a1a1;
+    transition: 0.5s;
+}
+
+main > div > div > form > div > button {
+    border: 0px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.go_home > a {
+    text-decoration: none;
+    float: right;
+}
+
+.go_home > a:hover {
+    color: #969696;
+    transition: 0.5s;
+}
+
+
+/* terms */
+.terms {
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#terms_header    {
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logoBox {
+    width: 50%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.logoBox > a {
+    width: 100%;
+    height: 100%;
+}
+
+.message {
+    width: 50%;
+    height: 100%;
+    float: right;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 50px;
+    box-sizing: border-box;
+}
+
+/* register */
+
+.kind {
+	width: 150px;
+	padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article {
+    width: 900px;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 10px;
+    display: block;
+    box-sizing: border-box;
+    
+}
+
+article > form > section {
+    margin: 100px 70px 30px;
+}
+
+article > form > section > h4 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 20px;
+}
+
+article > form > section > table > tbody > tr {
+    height: 50px;
+}
+
+article > form > section > table > tbody > tr > th {
+    width: 150px;
+    padding: 10px;
+    border-bottom: 1px solid #dfe5ed;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+article > form > section > table > tbody > tr > td {
+    padding: 10px;
+    border-bottom: 1px solid #dfe5ed;
+}
+
+article > form > section > table > tbody > tr > td > span {
+    margin-left: 10px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+article > form > section > table > tbody > tr > td > span > button {
+    width: 100px;
+    height: 27px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+article > form > section > table > tbody > tr > td > input {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > form > section > table > tbody > tr > td > div > input {
+    width: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > form > section > table > tbody > tr > td > span > input {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    text-indent: 5px;
+}
+
+article > form > section:nth-child(2) > table > tbody > tr:nth-child(4) > td > span > button:nth-child(4) {
+    margin: 10px;
+}
+
+article > form > section > table > tbody > tr > td > div:first-child > input {   
+    width: 40%;
+}
+
+#wrapper > main > article > form > div {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.register > form > section:nth-child(2) > table > tbody > .docCate > td {
+    width: 50%;
+    padding: 11px 10px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.submit {
+    border: 0px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: rgb(44,233,123);
+    background: linear-gradient(61deg, rgba(44,233,123,1) 0%, rgba(1,177,255,1) 100%);
+    cursor: pointer;
+}
+
+.submit:hover {
+    background: rgb(44,233,123);
+    transition: 0.5s;
+}
