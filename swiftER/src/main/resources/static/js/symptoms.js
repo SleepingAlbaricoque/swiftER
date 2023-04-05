@@ -44,6 +44,12 @@
           	  return true;
           	}
             
+            $("#myLink").click(function() {
+
+			  var linkName = $(this).text();
+			  
+			});
+            
             
             // 검색 버튼 클릭시 Jquery 전송
  			function checkboxresult(){
@@ -54,7 +60,7 @@
                 const delimiter = "& ";
                 console.log(checkedValues);
                 
-
+				
                 if(checkedValues.length == 0) {
                 	alert("증상을 체크해주세요!");
                 	return false;	
