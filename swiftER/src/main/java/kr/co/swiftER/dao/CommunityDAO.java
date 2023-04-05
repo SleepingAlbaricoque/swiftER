@@ -21,9 +21,9 @@ public interface CommunityDAO {
 	public CommunityArticleVO selectCommunityFreeNo(String no);
 	public int selectCountTotal(@Param("cateCode")String cateCode);
 	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode,@Param("regionCode") String regionCode, @Param("keyword")String keyword);
+	public int modifyArticle(CommunityArticleVO vo);
 	public int updateArticleView(String no);
 	public int deleteArticle(@Param("no")String no);
-	
 	/* Comment */
 	public int insertComment(CommunityArticleVO vo);
 	public List<CommunityArticleVO> selectComments(@Param("start")int start,@Param("parent")String parent); 
