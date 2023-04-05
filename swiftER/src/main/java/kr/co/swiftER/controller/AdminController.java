@@ -348,18 +348,92 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/cs/faq")
-	public String faqList() {
+	public String faqList(@RequestParam(value="subcateCode", defaultValue = "0") String subcateCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
+		// 페이징 처리 
+		int total = service.selectCountArticlesTotal("2", subcateCode);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+	    
+	    // 모든 공지사항 글 불러오기
+	    List<CSQuestionsVO> faqList = service.selectArticles("2", subcateCode, start);
+	    
+	    // rdate 날짜만 나오게 substring하기
+	    for(CSQuestionsVO faq : faqList)
+	    	faq.setRdate(faq.getRdate().substring(0, 10));
+	    
+	    // 화면에 출력할 글들 저장
+	    model.addAttribute("faqList", faqList);
+	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+	    model.addAttribute("pg", pg);
+	    // select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 subcateCode값 저장해야 함
+	 	model.addAttribute("subcateCode", subcateCode);
+	 	// 글에 인덱스 번호 매기기 위해서 필요
+	 	model.addAttribute("start", start);
+		
 		return "admin/admin_cs_faq_list";
 	}
 	
 	@GetMapping("admin/cs/faq/view")
-	public String faqView() {
+	public String faqView(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+		
 		return "admin/admin_cs_faq_view";
 	}
 	
 	@GetMapping("admin/cs/faq/write")
 	public String faqWrite() {
 		return "admin/admin_cs_faq_write";
+	}
+	
+	@PostMapping("admin/cs/faq/write")
+	public String faqWrite(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, MultipartHttpServletRequest req, Principal principal) {
+		// 작성자(현재 로그인 되어있는 사용자)의 정보 가져오려면 principal 객체를 현재 메서드의 파라미터로 줘서 principal 객체에 .getName()하면 됨
+		// 관리자 권한(grade 0)을 가진 사람만 관리자 페이지에 접근할 수 있으므로 여기서는 따로 권한 체크 하지 않음 
+		String username = principal.getName();
+		
+		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
+		article.setMember_uid(username);
+		article.setRegip(req.getRemoteAddr());
+		
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			article.setFile(files.size());
+			
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			for(MultipartFile file : files) {
+				// DB에 파일 업로드
+				service.uploadFile(file, article);
+			}
+		}else { // 첨부 파일이 없는 경우
+			
+			// 사용자가 작성한 QnA DB에 insert
+			service.insertArticle(article);
+			
+			article.setFile(0);
+		}
+		
+		return "redirect:/admin/cs/faq";
 	}
 	
 	@GetMapping("admin/cs/faq/modify")

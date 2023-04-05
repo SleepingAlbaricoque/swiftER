@@ -1,22 +1,5 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function deleteConfirm(){
             if(confirm("정말로 삭제하시겠습니까?")){
                 let checkedNo = [];

@@ -110,6 +110,8 @@
 }
 .admin-cs-table > tbody> tr td{
     padding-top: 20px;
+    max-width: 600px;
+    overflow: hidden;
 }
 .admin-cs-table > tbody > tr th{
     padding-bottom: 5px;
@@ -206,6 +208,7 @@
 .admin-cs-form-table > tbody > tr > td.key{
     padding-left: 15px;
     font-weight: bold;
+    min-width: 30px;
 }
 .admin-cs-write-title{
     width: 700px;

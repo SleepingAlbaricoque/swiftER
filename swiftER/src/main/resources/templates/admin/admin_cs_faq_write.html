@@ -1,22 +1,6 @@
 <th:block th:include="@{admin/admin_header.html}"/>
+<script th:src="@{/js/ckeditor/ckeditor.js}"></script>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function deleteConfirm(element){
             if(confirm("정말로 삭제하시겠습니까?")){
                 location.href = "#";
@@ -34,44 +18,52 @@
             element.value = "";
             element.style.color = "black";
         }
+        
+        window.onload = () =>{
+        	// CKEditor 삽입
+        	CKEDITOR.replace('admin-cs-write-content', {
+    			filebrowserUploadMethod : 'form'
+    		});
+        }
     </script>
             <div class="admin-content">
                 <div class="cs-panel-main shadow">
                     <p>FAQ 작성하기</p>
-                    <form class="admin-cs-form">
+                    <form class="admin-cs-form" th:action="@{/admin/cs/faq/write}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="cateCode" value="2">
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>
                                 <td>
-                                    <input type="text" value="제목을 입력하세요" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)">
+                                    <input type="text" value="제목을 입력하세요" class="admin-cs-write-title text-gray" onfocus="titleFocus(this)" name="title">
                                 </td>
                                 <td class="key">카테고리</td>
                                 <td>
-                                    <select name="cate" id="cs-cate">
-                                        <option value="member">회원정보</option>
-                                        <option value="symptoms">증상검색</option>
-                                        <option value="er">응급실검색</option>
-                                        <option value="community">커뮤니티</option>
-                                        <option value="etc">기타</option>
+                                    <select name="subcateCode" id="cs-cate">
+                                        <option value="10">회원정보</option>
+                                        <option value="20">증상검색</option>
+                                        <option value="30">응급실검색</option>
+                                        <option value="40">커뮤니티</option>
+                                        <option value="50">기타</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="key">첨부파일</td>
                                 <td colspan="3">
-                                    <input type="file" class="admin-cs-write-file">
+                                    <input type="file" class="admin-cs-write-file" name="fname" multiple>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
                                 <td colspan="3">
-                                    <textarea name="admin-cs-write-content" class="text-gray" id="admin-cs-write-content" cols="30" rows="10" onfocus="textFocus(this)">내용을 입력하세요</textarea>
+                                    <textarea name="content" class="text-gray" id="admin-cs-write-content" cols="30" rows="10" onfocus="textFocus(this)"></textarea>
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-cs-control-buttons">
-                            <input type="button" value="목록으로" class="admin-cs-back-to-list" onclick="location.href='#'">
-                            <input type="button" value="작성완료" class="admin-cs-modify-article" onclick="location.href='#'">
+                            <input type="button" value="목록으로" class="admin-cs-back-to-list" th:onclick="|location.href='@{/admin/cs/faq}'|">
+                            <input type="submit" value="작성완료" class="admin-cs-modify-article" onclick="location.href='#'">
                         </div>
                     </form>
                 </div>
