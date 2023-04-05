@@ -1,23 +1,6 @@
 <th:block th:include="@{admin/admin_header.html}"/>
 <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function deleteConfirm(element){
             if(confirm("정말로 삭제하시겠습니까?")){
             	

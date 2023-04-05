@@ -437,8 +437,86 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/cs/faq/modify")
-	public String faqModify() {
+	public String faqModify(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		CSQuestionsVO article = service.selectArticle(no);
+		List<FileVO> files = article.getFvoList();
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		model.addAttribute("subcateCode", article.getSubcateCode());
+		
+		// 첨부 파일이 있으면 첨부 파일도 불러와서 저장하기
+		if(article.getFile() >0) {
+			model.addAttribute("files", files);
+		}
+		
 		return "admin/admin_cs_faq_modify";
+	}
+	
+	@PostMapping("admin/cs/faq/modify")
+	public String faqModify(@ModelAttribute("CSQuestionsVO") CSQuestionsVO article, String uploadedFile, MultipartHttpServletRequest req) {
+		// CSQuestionsVO 객체에 속성 값 채우기(rdate는 쿼리문에서 처리)
+		article.setRegip(req.getRemoteAddr());
+		
+		// XSS 공격을 방지하기위해 Jsoup import해서 safelist에 등록된 태그만 허용 ex.<script> 태그 등은 허용하지 않음 - 화면에는 <script>로 출력되지만 db에는 &lt;script&gt;로 저장됨
+		article.setContent(Jsoup.clean(article.getContent(), Safelist.basic())); 
+		
+		// 사용자가 기존 첨부파일을 삭제할 경우 원래 첨부파일 리스트와 대조하기 위하여 원래 첨부파일 리스트 가져오기
+		List<Integer> uploadedFnos = service.selectFnos(String.valueOf(article.getNo()));
+		
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!article.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			article.setFile(article.getFile() + files.size()); // 해당 글의 file 속성은 '기존 파일 갯수(getFile()) + 새로 첨부한 파일 갯수(files.size())'로 설정
+			
+			// file 테이블에 첨부파일 업로드
+			for(MultipartFile file : files) {
+				service.uploadFile(file, article);
+			}
+			
+			// 해당 글에 첨부된 기존 파일들의 fno와 수정 폼에서 submit 된 파일들의 fno를 비교해서 submit된 파일 fno 리스트에 없는 기존 파일은 삭제하기
+			if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+				List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+				for(Integer f : uploadedFnos) {
+					if(!filesNotToDelete.contains(String.valueOf(f))) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+					}
+				}
+			}else { // 기존 첨부파일을 모두 삭제한 경우
+				for(Integer f : uploadedFnos) {
+					service.deleteFile(String.valueOf(f));
+					article.setFile(article.getFile() - 1);
+				}
+			}
+			
+			
+			// 수정된 글 DB에 업로드하기
+			service.updateArticle(article);
+			
+		}else { // 새로운 첨부파일이 없는 경우
+			if(uploadedFile != null) { // 기존 첨부파일을 사용자가 수정 시 모두 삭제하지 않은 경우
+				List<String> filesNotToDelete = Arrays.asList(uploadedFile.split(","));
+				for(Integer f : uploadedFnos) {
+					if(!filesNotToDelete.contains(String.valueOf(f))) {
+						service.deleteFile(String.valueOf(f));
+						article.setFile(article.getFile() - 1); // 파일 삭제하고 해당 글의 file 속성값을 1만큼 낮추기
+					}
+				}
+			}else { // 기존 첨부파일을 모두 삭제한 경우
+				for(Integer f : uploadedFnos) {
+					service.deleteFile(String.valueOf(f));
+					article.setFile(article.getFile() - 1);
+				}
+			}
+			
+			// 수정된 글 DB에 업로드하기
+			service.updateArticle(article);
+		}
+		
+		
+		return "redirect:/admin/cs/faq/view?no=" + article.getNo();
 	}
 	
 	@GetMapping("admin/cs/qna")
