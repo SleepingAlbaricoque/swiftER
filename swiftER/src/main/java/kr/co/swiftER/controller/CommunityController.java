@@ -126,20 +126,6 @@ public class CommunityController {
          return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
-    @GetMapping(value = {"community/deleteComment"})
-    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comment) {
-    	
-    	service.deleteComment(no);
-    	
-    	model.addAttribute("cateCode", cateCode);
-    	model.addAttribute("regionCode", regionCode);
-    	model.addAttribute("parent", parent);
-    	model.addAttribute("comment", comment);
-    	model.addAttribute("no", no);
-    	
-    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
-    }
-    
     @GetMapping(value = {"community/freeWrite"})
     public String FreeWrite(Model model, @RequestParam("cateCode") String cateCode){
 
@@ -162,6 +148,16 @@ public class CommunityController {
         return "redirect:/community/freeList?cateCode="+cateCode;
     }
     
+    @GetMapping(value = {"community/freeModify"})
+    public String FreeModify(Model model, CommunityArticleVO vo) {
+    	return "community/freeModify";
+    }
+    @PostMapping(value = {"community/freeModify"})
+    public String FreeModify(Model model, CommunityArticleVO vo,@AuthenticationPrincipal MyUserDetails myUser,
+    		Integer cateCode,Integer regionCode) {
+    	return "redirect:/community/freeView?cateCode=\"+cateCode+\"&no=\"+no+\"&parent=\"+parent+\"&comment=\"+comment";
+    }
+    
     @GetMapping(value = {"community/deleteArticle"})
     public String DeleteArticle(Model model,@RequestParam("cateCode") String cateCode, String no,String regionCode) {
     	
@@ -172,6 +168,19 @@ public class CommunityController {
     	model.addAttribute("no", no);
     	
     	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
+    }
+    @GetMapping(value = {"community/deleteComment"})
+    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comment) {
+    	
+    	service.deleteComment(no);
+    	
+    	model.addAttribute("cateCode", cateCode);
+    	model.addAttribute("regionCode", regionCode);
+    	model.addAttribute("parent", parent);
+    	model.addAttribute("comment", comment);
+    	model.addAttribute("no", no);
+    	
+    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
     /* Qna */

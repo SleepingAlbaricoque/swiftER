@@ -54,7 +54,7 @@
     </select>
     
     <select id="selectFindTitleSearch" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-        SELECT   no, title, comments, cateCode, regionCode, content, member_uid, rdate
+        SELECT   no, title, comments, cateCode, regionCode, content, member_uid, view, rdate
 	    FROM `community_article`	    
 	    WHERE title like CONCAT('%',#{keyword},'%')
 	    AND cateCode = #{cateCode}
@@ -108,6 +108,14 @@
 		ON a.`no` = b.`parent`
 		SET a.`comments` = b.`comments`;
     </update>
+    
+    <update id="modifyArticle" parameterType="kr.co.swiftER.vo.CommunityArticleVO" >
+	 update `community_article`
+	 set
+	   `title` = #{title},
+	   `content` = #{content},
+	 where `no` = #{no}
+	</update>
     
     <delete id="deleteArticle">
     	delete from `community_article` where `no`=#{no};

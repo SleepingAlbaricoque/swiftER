@@ -1,0 +1,40 @@
+<th:block th:insert="~{@{_header.html}}"/>
+  <section id="community">
+      <div class="free">
+        <section class="write">
+          <aside>
+            <h2>커뮤니티</h2>
+             <ul>
+              <li th:classappend="${cateCode} == '10' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=10}">자유 게시판</a></li>
+              <li th:classappend="${cateCode} == '11' ? 'on' : 'off'"><a th:href="@{./freeList?cateCode=11}">질문 게시판</a></li>
+              <li th:classappend="${cateCode} == '12' ? 'on' : 'off'"><a th:href="@{./freeList(cateCode=12, regionCode=100)}">내가 사는 동네</a></li>
+            </ul>
+          </aside>
+          <article>
+              <form th:action="@{/community/freeModify}" method="POST">
+              <input type="hidden" name="cateCode" th:value="${cateCode}">
+              <input type="hidden" name="regionCode" th:value="0">
+                <table>
+                  <tr>
+                    <td>제목</td>                  
+                    <td>
+                      <input type="text" name="title" placeholder="제목을 입력하세요." th:value="${no}"/>
+                    </td>
+                  </tr>                
+                  <tr>
+                    <td>내용</td>                  
+                    <td>
+                      <textarea name="content" placeholder="내용을 입력하세요." th:value="${content}"></textarea>
+                    </td>
+                  </tr>
+                </table>
+                <div>
+                  <a th:href="@{./freeList(cateCode=${cateCode})}" class="btnCancle">취소하기</a>
+                  <input type="submit" class="btnSubmit" value="수정하기"/>
+                </div>
+              </form>
+          </article>
+        </section>
+      </div>
+  </section>
+<th:block th:insert="~{@{_footer.html}}"/>
