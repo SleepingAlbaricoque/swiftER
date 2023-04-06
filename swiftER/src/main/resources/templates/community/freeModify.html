@@ -18,18 +18,18 @@
                   <tr>
                     <td>제목</td>                  
                     <td>
-                      <input type="text" name="title" placeholder="제목을 입력하세요." th:value="${no}"/>
+                      <input type="text" name="title" placeholder="제목을 입력하세요." th:value="${vo.title}"/>
                     </td>
                   </tr>                
                   <tr>
                     <td>내용</td>                  
                     <td>
-                      <textarea name="content" placeholder="내용을 입력하세요." th:value="${content}"></textarea>
+                      <textarea name="content" placeholder="내용을 입력하세요.">[[${vo.content}]]</textarea>
                     </td>
                   </tr>
                 </table>
                 <div>
-                  <a th:href="@{./freeList(cateCode=${cateCode})}" class="btnCancle">취소하기</a>
+                  <a th:href="@{/community/freeView(cateCode=${cateCode},no=${no},parent=${no},comments=${comments})}" class="btnCancle">취소하기</a>
                   <input type="submit" class="btnSubmit" value="수정하기"/>
                 </div>
               </form>

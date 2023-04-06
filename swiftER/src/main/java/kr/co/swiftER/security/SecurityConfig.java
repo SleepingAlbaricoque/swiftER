@@ -48,7 +48,7 @@ public class SecurityConfig {
 				.requestMatchers("/error/**").permitAll()
 				.requestMatchers("/community/freeList").permitAll()
 				.requestMatchers("/community/freeView").permitAll()
-				.requestMatchers("/community/freeModify").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/freeModify").permitAll()
 				.requestMatchers("/community/deleteArticle").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/qnaView").permitAll()
 				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")

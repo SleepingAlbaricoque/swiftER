@@ -149,13 +149,24 @@ public class CommunityController {
     }
     
     @GetMapping(value = {"community/freeModify"})
-    public String FreeModify(Model model, CommunityArticleVO vo) {
+    public String FreeModify(Model model, @RequestParam("cateCode") String cateCode, String no, String title) {
+    	
+    	CommunityArticleVO vo = service.selectFreeArticle(no);
+    	
+    	model.addAttribute("vo", vo);
+    	model.addAttribute("no", no);
+    	model.addAttribute("cateCode", cateCode);
+    	
     	return "community/freeModify";
     }
+    
     @PostMapping(value = {"community/freeModify"})
-    public String FreeModify(Model model, CommunityArticleVO vo,@AuthenticationPrincipal MyUserDetails myUser,
-    		Integer cateCode,Integer regionCode) {
-    	return "redirect:/community/freeView?cateCode=\"+cateCode+\"&no=\"+no+\"&parent=\"+parent+\"&comment=\"+comment";
+    public String FreeModify(Model model, CommunityArticleVO vo, @RequestParam("cateCode") String cateCode,
+    		@RequestParam("regionCode") String regionCode, String no, String parent, String comment, String title, String content) {
+    	
+    		service.modifyArticle(no, title, content);
+    		
+    		return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
     }
     
     @GetMapping(value = {"community/deleteArticle"})
