@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberVO {
 	private String uid;
+	private String pass1;
+	private String pass2;
 	private String pass;
 	private String name;
 	private String nickname;

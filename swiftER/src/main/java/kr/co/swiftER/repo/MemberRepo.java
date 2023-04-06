@@ -6,5 +6,7 @@ import kr.co.swiftER.entity.MemberEntity;
 
 public interface MemberRepo extends JpaRepository<MemberEntity, String> {
 	public int countByUid(String uid);
+
+	public int countByNickname(String nickname);
 }
 
