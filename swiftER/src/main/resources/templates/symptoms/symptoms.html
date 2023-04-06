@@ -26,15 +26,15 @@
                                 	<h4>자주 찾는 증상</h4>
                                 	<table>
 	                                	<tr>
-	                                		<th><img src="../img/ico_symptomIndex_18.gif" alt="골반아이콘"><br><span>골반</span></th>
+	                                		<th><a th:href="@{/symptoms/symptoms?body1_code=40}"><img src="../img/ico_symptomIndex_18.gif" alt="골반아이콘"></a><br><span>골반</span></th>
 	                                		<td>
 	                                			<div>
 	                                				<ul>
-	                                					<li><a id="myLink" th:href="@{#}">거품있는 소변</a></li>
-	                                					<li><a>긴박뇨</a></li>
-	                                					<li><a>거대자궁</a></li>
-	                                					<li><a>골반통증</a></li>
-	                                					<li><a>다뇨</a></li>
+	                                					<li><a id="myLink" th:href="@{/symptoms/resultsymptoms(symptom=${'거품있는 소변'})}">거품있는 소변</a></li거>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'긴박뇨'})}">긴박뇨</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'거대자궁'})}">거대자궁</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'골반 통증'})}">골반통증</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'다뇨'})}">다뇨</a></li>
 	                                				</ul>		
 	                                			</div>
 	                                		</td>
@@ -42,11 +42,11 @@
 	                                		<td>
 	                                			<div>
 	                                				<ul>
-	                                					<li><a>고막 충혈</a></li>
-	                                					<li><a>고막에 수표형성</a></li>
-	                                					<li><a>귀에서 냄새가남</a></li>
-	                                					<li><a>귀 모양의 변형</a></li>
-	                                					<li><a>귀 상부가 두피에 매몰됨</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'고막 충혈'})}">고막 충혈</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'고막에 수포형성'})}">고막에 수포형성</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'귀에서 냄새가 남'})}">귀에서 냄새가 남</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'귀 모양의 변형'})}">귀 모양의 변형</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'귀 상부가 두피에 매몰됨'})}">귀 상부가 두피에 매몰됨</a></li>
 	                                				</ul>		
 	                                			</div>
 	                                		</td>
@@ -56,11 +56,11 @@
 	                                		<td>
 	                                			<div>
 	                                				<ul>
-	                                					<li><a>걸핏하면 눈물지음</a></li>
-	                                					<li><a>고정된 믿음</a></li>
-	                                					<li><a>감정 변화</a></li>
-	                                					<li><a>가학증</a></li>
-	                                					<li><a>거짓 증상 호소</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'걸핏하면 눈물지음'})}">걸핏하면 눈물지음</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'고정된 믿음'})}">고정된 믿음</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'감정 변화'})}">감정 변화</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'강박증'})}">강박증</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'거짓 증상 호소'})}">거짓 증상 호소</a></li>
 	                                				</ul>		
 	                                			</div>
 	                                		</td>
@@ -68,11 +68,11 @@
 	                                		<td>
 	                                			<div>
 	                                				<ul>
-	                                					<li><a>관절 운동성 감소</a></li>
-	                                					<li><a>X자 다리</a></li>
-	                                					<li><a>O자 다리</a></li>
-	                                					<li><a>관절 불안정증</a></li>
-	                                					<li><a>가늘어지는 팔다리</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'관절 운동성 감소'})}">관절 운동성 감소</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'X자 다리'})}">X자 다리</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'O자 다리'})}">O자 다리</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'관절 불안정증'})}">관절 불안정증</a></li>
+	                                					<li><a th:href="@{/symptoms/resultsymptoms(symptom=${'가늘어지는 팔다리'})}">가늘어지는 팔다리</a></li>
 	                                				</ul>		
 	                                			</div>
 	                                		</td>
@@ -153,6 +153,7 @@
                                 </div>
                                 </th:block>
                             </div>
+                            <th:block th:if="${body1_code} ne null">
                             <div class="search_animal" id="checkbox-container-1">
                                 <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
@@ -171,11 +172,15 @@
                                     <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
                                     <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
                             </div>
+							</th:block>
                         </div>
+                        <th:block th:if="${body1_code} ne null"> 
                         <div class="searchbtn">
                             <a href="#" class="btnclear" onclick="uncheckAllCheckboxes()">초기화</a>
                             <a href="#" class="btnresult" onclick="checkboxresult()">검색</a>
                         </div>
+                        </th:block>
+
                     </form>
                 </div>
             </div>
