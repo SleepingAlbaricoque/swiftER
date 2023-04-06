@@ -173,4 +173,38 @@
 	<update id="updateAnswerCount">
 		update `cs_questions` set `answer` = 1 where `no`=#{no};
 	</update>
+	
+	
+	<select id="selectCommunityArticles" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+		select * from `community_article` as a
+		join `community_cate` as b
+		on a.cateCode = b.code
+		where `parent` =0
+		<if test="cateCode != 0">
+			and `cateCode` = #{cateCode}
+		</if>
+		<if test="cateCode == 12 and regionCode != 100">
+			and `regionCode` = #{regionCode}
+		</if>
+		order by no desc
+		limit #{start}, 10;
+	</select>
+	
+	<select id="selectCountCommunityArticlesTotal" resultType="int">
+		select count(`no`) from `community_article` where `parent`=0 
+		<if test="cateCode != 0">
+			and `cateCode` = #{cateCode}
+		</if>
+		<if test="cateCode == 12 and regionCode != 100">
+			and `regionCode` = #{regionCode}
+		</if>
+	</select>
+	
+	<delete id="deleteCommunityArticles">
+		delete from `community_article` where `no` in
+		<foreach item="no" collection="array" open="(" close=")" separator=",">
+			 #{no}
+		</foreach>
+		;
+	</delete>
 </mapper>

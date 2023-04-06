@@ -1,12 +1,6 @@
 <th:block th:include="@{admin/admin_header.html}"/>
 <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
     <script>
-        function deleteConfirm(element){
-            if(confirm("정말로 삭제하시겠습니까?")){
-            	
-            }
-        }
-        
         function deleteFile(fno){
         	// 사용자가 이미 업로드한 파일 중 삭제 버튼을 누른 파일값이 담긴 input 태그를 삭제 => 폼 submit시 삭제 파일 제외
         	let uploadedFile = document.getElementsByClassName('uploadedFile');

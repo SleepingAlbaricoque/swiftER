@@ -31,6 +31,7 @@ import kr.co.swiftER.service.AdminService;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
+import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 import lombok.extern.log4j.Log4j2;
@@ -736,8 +737,50 @@ public class AdminController {
 		return "admin/admin_erReview_view";
 	}
 	
+	
+	// COMMUNITY
+	@GetMapping("admin/community/delete")
+	@ResponseBody
+	public Map<String, Integer> deleteCommunityArticles(String[] checkedNo){
+		int result = service.deleteCommunityArticles(checkedNo);
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", 1);
+		return resultMap;
+	}
+	
 	@GetMapping("/admin/community")
-	public String community() {
+	public String community(@RequestParam(value="cateCode", defaultValue = "0") String cateCode, @RequestParam(value="regionCode", defaultValue="100") String regionCode, @RequestParam(value="pg", defaultValue="1") String pg, Model model) {
+		// 페이징 처리 
+		int total = service.selectCountCommunityArticlesTotal(cateCode, regionCode);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+		
+		// community 전체 글 불러오기
+		List<CommunityArticleVO> communityArticles = service.selectCommunityArticles(cateCode, regionCode, start);
+		
+		// rdate 날짜만 나오게 substring하기
+	    for(CommunityArticleVO article : communityArticles)
+	    	article.setRdate(article.getRdate().substring(0, 10));
+	    
+	    // 화면에 출력할 글들 저장
+	    model.addAttribute("communityArticles", communityArticles);
+	    // 페이지 로드시 pg값에 맞는 페이지 버튼이 하이라이트되도록 pg값 저장
+	    model.addAttribute("pg", pg);
+	    // select 박스에서 사용자가 선택한 옵션이 페이지 로드시 가장 상단에 보이도록 하기 위해서는 code값 저장해야 함
+	 	model.addAttribute("cateCode", cateCode);
+	 	model.addAttribute("regionCode", regionCode);
+	 	// 글에 인덱스 번호 매기기 위해서 필요
+	 	model.addAttribute("start", start);
+		
 		return "admin/admin_community";
 	}
 	
@@ -745,4 +788,6 @@ public class AdminController {
 	public String communityView() {
 		return "admin/admin_community_view";
 	}
+	
+	
 }

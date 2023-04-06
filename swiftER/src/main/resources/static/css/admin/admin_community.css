@@ -19,6 +19,22 @@ input,textarea {outline: none;}
     overflow-y: auto;
 }
 
+#community-cate, #community-region-cate{
+    width: 120px;
+    height: 25px;
+    border: 1px solid #bebcbc;
+    font-size: 14px;
+    outline: none;
+}
+#community-cate:focus, #community-region-cate:focus{ /* 접근성 이슈때문에 추가*/
+    box-shadow:0 0 3px #2ce97b;
+    -moz-box-shadow:0 0 3px #2ce97b;
+    -webkit-box-shadow:0 0 3px #2ce97b;
+}
+#community-cate, #community-region-cate > option{
+    font-size: 13px;
+}
+
 /* header*/
 header{
     width: 100%;
@@ -243,6 +259,9 @@ header{
 }
 .community-table > tbody > tr > th:nth-child(4){
     width: 200px;
+}
+.community-table > tbody > tr > td:nth-child(5){
+    min-width: 450px;
 }
 
 

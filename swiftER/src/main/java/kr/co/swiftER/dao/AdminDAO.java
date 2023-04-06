@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
+import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -65,6 +66,23 @@ public interface AdminDAO {
 	
 	// 관리자가 qna 답변글 달 경우 질문글 answer 카운트를 올려주기
 	public int updateAnswerCount(String no);
+	
+	
+	// community
+	// 모든 글 불러오기
+	public List<CommunityArticleVO> selectCommunityArticles(@Param(value="cateCode") String cateCode, @Param(value="regionCode") String regionCode, @Param(value="start") int start);
+	
+	// cate, region별 글 총 갯수 구하기
+	public int selectCountCommunityArticlesTotal(@Param(value="cateCode") String cateCode, @Param(value="regionCode") String regionCode);
+	
+	// 선택한 글 삭제
+	public int deleteCommunityArticles(@Param(value="array")String[] checkedNo);
+	
+	
+	
+	
+	
+	
 	
 	
 	// 파일 처리

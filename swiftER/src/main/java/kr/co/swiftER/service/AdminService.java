@@ -30,6 +30,7 @@ import kr.co.swiftER.exceptions.CustomException;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
+import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -132,6 +133,38 @@ public class AdminService {
 	public int updateAnswerCount(String no) {
 		return dao.updateAnswerCount(no);
 	}
+	
+	
+	// community
+	// 모든 글 불러오기
+	public List<CommunityArticleVO> selectCommunityArticles(String cateCode, String regionCode, int start){
+		return dao.selectCommunityArticles(cateCode, regionCode, start);
+	}
+	
+	// cate, region별 글 총 갯수 구하기
+	public int selectCountCommunityArticlesTotal(String cateCode, String regionCode) {
+		return dao.selectCountCommunityArticlesTotal(cateCode, regionCode);
+	}
+	
+	// 선택한 글 삭제
+	public int deleteCommunityArticles(String[] checkedNo) {
+		return dao.deleteCommunityArticles(checkedNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// 페이징
