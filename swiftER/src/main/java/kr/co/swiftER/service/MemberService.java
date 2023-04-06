@@ -1,15 +1,25 @@
 package kr.co.swiftER.service;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.swiftER.dao.MemberDAO;
+import kr.co.swiftER.exceptions.CustomErrorCode;
+import kr.co.swiftER.exceptions.CustomException;
 import kr.co.swiftER.repo.MemberRepo;
+import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.FileDoctorVO;
+import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -30,10 +40,15 @@ public class MemberService {
 	public int countUid(String uid) {
 		return repo.countByUid(uid);
 	}
+	
+	/* 회원가입 유효성 검사 nickname */
+	public int countNick(String nickname) {
+		return repo.countByNickname(nickname);
+	}
 
 	/* 회원가입 */
 	public int insertMember(MemberVO vo) {
-		vo.setPass(passwordEncoder.encode(vo.getPass()));
+		vo.setPass(passwordEncoder.encode(vo.getPass2()));
 		int result = dao.insertMember(vo);
 		return result;
 	}
@@ -74,8 +89,8 @@ public class MemberService {
 	}
 	
 	/* 의사 회원가입(이미지 제출 제외) */
-	public int insertMemberDoctor(MemberDoctorVO vo) {
-		int result = dao.insertMemberDoctor(vo);
+	public int insertMemberDoctor(MemberDoctorVO dvo) {
+		int result = dao.insertMemberDoctor(dvo);
 			
 		return result;
 		
@@ -122,4 +137,42 @@ public class MemberService {
 		return dao.changeDoc(dvo);
 	}
 
+	// 파일 업로드
+	// applicaton.properties에서 설정한 파일 저장 경로 주입받기
+	/*
+	@Value("${spring.servlet.multipart.location}")
+	private String uploadPath;
+	
+	public FileDoctorVO uploadFile(MultipartFile file, MemberDoctorVO dvo){
+		// 첨부 파일 정보 가져오기
+		String member_uid= dvo.getMember_uid();
+		FileDoctorVO fvo = null;
+		
+		if(!file.isEmpty()) {
+			// application.properties에서 설정한 파일 저장 경로의 시스템 경로 구하기
+			String path = new File(uploadPath).getAbsolutePath();
+			
+			// 새 파일명 생성
+			String oriName = file.getOriginalFilename();
+			String ext = oriName.substring(oriName.lastIndexOf(".")); // 확장자
+			String newName = UUID.randomUUID().toString() + ext;
+			
+			// 업로드 파일 확장자 제한하기; 그렇지 않으면 web shell이나 악성 파일 업로드할 가능성이 있음
+			String[] safeExts = {".jpg", ".jpeg", ".bmp", ".png", ".gif"};
+			if(!Arrays.asList(safeExts).contains(ext)) {
+				throw new CustomException(CustomErrorCode.WRONG_EXT_ERROR);
+			}
+			
+			// 파일 저장
+			try {
+				file.transferTo(new File(path, newName));
+			}catch(Exception e) {
+				throw new RuntimeException(e);
+			}
+			fvo = new FileDoctorVO().builder().member_uid(dvo.getMember_uid()).oriName(oriName).newName(newName).build();
+			dao.insertFile(fvo);
+		}
+		return fvo;
+	}
+	*/
 }
