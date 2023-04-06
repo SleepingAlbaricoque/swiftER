@@ -317,6 +317,7 @@ main > div > .healthinfo > p{
 .search_body_cate{
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 50px;
 }
 .bodylist{
     height: auto;
@@ -363,13 +364,18 @@ div[class*=search_body_subcate] > h3 {
 .search_body_subcate > h4 {
 	font-size: 30px;
 	padding: 20px;
+	text-align:center;
 }
 .search_body_subcate > table {
+	margin-left: 170px;
+    height: auto;
+    border-spacing: 20px;
 }
 .search_body_subcate > table > tbody > tr {}
 .search_body_subcate > table > tbody > tr > th {
 	padding-top: 20px;
     border: 1px solid #ccc;
+    width: 200px;
 }
 .search_body_subcate > table > tbody > tr > th > img {}
 .search_body_subcate > table > tbody > tr > th > span {
@@ -378,13 +384,12 @@ div[class*=search_body_subcate] > h3 {
 .search_body_subcate > table > tbody > tr > td {}
 .search_body_subcate > table > tbody > tr > td > div {}
 .search_body_subcate > table > tbody > tr > td > div > ul {
-	width:100%;
 }
 .search_body_subcate > table > tbody > tr > td > div > ul > li {
-	width: 124px;
+	width: 155px;
     margin-bottom: 4px;
 	padding-left: 8px;
-	padding: 2px 0 2px;
+	padding: 5px 0 2px;
     line-height: 1.5;
     text-align: left;
 }
@@ -393,6 +398,7 @@ div[class*=search_body_subcate] > h3 {
 	color: #333;
     text-decoration: none;
     cursor: pointer;
+    font-size: 15px;
 }
 .search_body_subcate > table > tbody > tr > td > div > ul > li > a:hover {
 	color: #0e787c;
