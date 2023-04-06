@@ -113,8 +113,9 @@
 	 update `community_article`
 	 set
 	   `title` = #{title},
-	   `content` = #{content},
-	 where `no` = #{no}
+	   `content` = #{content}
+	 where `no` = #{no};
+	 
 	</update>
     
     <delete id="deleteArticle">
