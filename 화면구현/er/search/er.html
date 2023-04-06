@@ -63,14 +63,16 @@
         </header>
         <main id="search">
             <section class="er">
-                <div class="title">
-                    <h2 class="er-search">응급실 검색</h2>
+                <div class="map">
+                    <div class="search_map">
+                    </div>
                 </div>
-                <div class="selectBox">
+                <div class="selectBox on">
+                    <h2>응급실 검색</h2>
                     <form action="#">
                         <div>
                             <fieldset class="location">
-                            <legend>위치 조건</legend>
+                            <legend>위치 조건<Strong>*</Strong></legend>
                             <select name="city" id="city">
                                 <option value="부산">부산</option>
                                 <option value="울산">울산</option>
@@ -87,19 +89,37 @@
                             </select>
                             </fieldset>
                             <fieldset class="med-department">
-                                <legend>진료 과목</legend>
-                                <input type="radio" name="일반" value="common"><label for="common">일반</label>
-                                <input type="radio" name="내과" value="medicine"><label for="medicine">내과</label>
-                                <input type="radio" name="외과" value="surgery"><label for="surgery">외과</label>
-                                <input type="radio" name="신경외과" value="neurosurgery"><label for="neurosurgery">신경외과</label>
+                                <legend>진료 과목<Strong>*</Strong></legend>
+                                <li>
+                                    <input type="checkbox" name="일반" value="common"><label for="common">일반</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="내과" value="medicine"><label for="medicine">내과</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="외과" value="surgery"><label for="surgery">외과</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="신경외과" value="neurosurgery"><label for="neurosurgery">신경외과</label>
+                                </li>
                             </fieldset>
-                            <fieldset class="med-equipment">
-                                <legend>장비 정보(가용여부)</legend>
-                                <input type="radio" name="CT" value="CT"><label for="CT">CT</label>
-                                <input type="radio" name="MRI" value="MRI"><label for="MRI">MRI</label>
-                                <input type="radio" name="조영촬영기" value="camera"><label for="camera">조영촬영기</label>
-                                <input type="radio" name="인공호흡기" value="respirator"><label for="respirator">인공호흡기</label>
-                                <input type="radio" name="인큐베이터" value="incubator"><label for="incubator">인큐베이터</label>
+                            <fieldset class="med-department">
+                                <legend>장비 정보(가용여부)<Strong>*</Strong></legend>
+                                <li>
+                                    <input type="checkbox" name="CT" value="CT"><label for="CT">CT</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="MRI" value="MRI"><label for="MRI">MRI</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="조영촬영기" value="camera"><label for="camera">조영촬영기</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="인큐베이터" value="incubator"><label for="incubator">인큐베이터</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="인공호흡기" value="respirator"><label for="respirator">인공호흡기</label>
+                                </li>
                             </fieldset>
                         </div>
                         <div class="btn">
@@ -107,17 +127,6 @@
                             <input type="submit" value="검색" class="subBtn">
                         </div>
                     </form>
-                </div>
-                <div class="map">
-                    <h2>선택하신 조건을 기반으로 한 검색 결과 입니다.</h2>
-                    <div class="search_map">
-                    </div>
-                </div>
-                <div class="info">
-                    <p>
-                        본 페이지에서 제공하는 내용은 참고사항일 뿐 게시물에 대한 법적책임은 없음을 밝혀드립니다. <br>
-                        자세한 내용은 전문가와 상담하시기 바랍니다.
-                    </p>
                 </div>
             </section>
         </main>

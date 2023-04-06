@@ -55,10 +55,6 @@
 			})
 		});
 		
-		$('').submit(function(){
-			
-		});
-		
 	});
 	
 	</script>
@@ -137,6 +133,7 @@
 	                            <th>별명</th>
 	                            <td>
 	                                <input type="text" name="nickname" placeholder="별명 입력" required>
+	                                <span class="resultNick"></span>
 	                            </td>
 	                        </tr>
 	                        <tr>
@@ -149,11 +146,11 @@
 	                            <th>E-mail</th>
 	                            <td>
 	                                <input type="text" name="email" placeholder="이메일 입력" required>
-	                                    <button id="btnEmailCheck">인증번호 전송</button>
+	                                    <button id="btnEmailCheck" type="button">인증번호 전송</button>
 	                                    <span class="resultEmail">이메일은 수정불가하니 신중히 입력해 주십시오</span>
 	                                    <br>
 	                                    <input type="text" name="code" placeholder="인증번호 입력" required>
-	                                    <button id="btncheckCode">인증번호 확인 </button>
+	                                    <button id="btncheckCode" type="button">인증번호 확인 </button>
 	                                    <span class="resultCode">이메일로 전송받은 인증코드를 입력해 주십시오</span>
 	                            </td>
 	                        </tr>

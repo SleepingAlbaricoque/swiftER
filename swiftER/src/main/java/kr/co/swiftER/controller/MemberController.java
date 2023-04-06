@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -70,8 +72,8 @@ public class MemberController {
 	}
 	
 	/* 일반회원 가입(post) */
-	@PostMapping("member/insertMember")
-	public String insertMember(MemberVO vo, HttpServletRequest req){
+	@PostMapping("member/registerNor")
+	public String registerNor(MemberVO vo, HttpServletRequest req){
 		String regip = req.getRemoteAddr();
 		vo.setRegip(regip);
 		
@@ -81,14 +83,29 @@ public class MemberController {
 	}
 	
 	/* 의사회원 가입(파일 제외)*/
-	@ResponseBody
-	@PostMapping("/member/insertDoctor")
-    public Map<String, Integer> insertMemberDoctor(@ModelAttribute("MemberDoctorVO") MemberDoctorVO vo, HttpServletRequest req) {
-		int result = service.insertMemberDoctor(vo);
-		Map<String, Integer> map = new HashMap<>();
+	@PostMapping("/member/registerDoctor")
+    public String registerDoctor(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req) {
+		String regip = req.getRemoteAddr();
+		vo.setRegip(regip);
 		
-		map.put("result", result);
-		return map;
+		
+		/*
+		// 사용자가 업로드한 파일들 가져오고 dvo 객체의 file 속성값 정하기
+		if(!dvo.getCert_oriName().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			List<MultipartFile> files = req.getFiles("fname");
+			
+			for(MultipartFile file : files) {
+				// DB에 파일 업로드
+				service.insertMember(vo);
+				service.insertMemberDoctor(dvo);
+			}
+		}else { // 첨부 파일이 없는 경우
+			
+			service.insertMember(vo);
+			service.insertMemberDoctor(dvo);
+		}
+		*/
+		return "redirect:/index";
 	}
 	
 	/* 회원가입 유효성 검사 - id*/
@@ -96,6 +113,18 @@ public class MemberController {
 	@GetMapping("member/checkUid")
 	public Map<String, Integer> countUid(String uid){
 		int result = service.countUid(uid);
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	
+	/* 회원가입 유효성 검사 - nickname*/
+	@ResponseBody
+	@GetMapping("member/checkNick")
+	public Map<String, Integer> countNick(String nickname){
+		int result = service.countNick(nickname);
 		
 		Map<String, Integer> map = new HashMap<>();
 		

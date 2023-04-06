@@ -48,7 +48,7 @@ public class SecurityConfig {
 				.requestMatchers("/error/**").permitAll()
 				.requestMatchers("/community/freeList").permitAll()
 				.requestMatchers("/community/freeView").permitAll()
-				.requestMatchers("/community/freeModify").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/freeModify").permitAll()
 				.requestMatchers("/community/deleteArticle").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/qnaView").permitAll()
 				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
@@ -57,6 +57,7 @@ public class SecurityConfig {
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
+				.requestMatchers("/index/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/member/**").permitAll()
 				.requestMatchers("/member/myPage").hasAnyRole("0", "1", "2")
 				.requestMatchers("/member/articleList").hasAnyRole("0", "1", "2")
@@ -75,7 +76,7 @@ public class SecurityConfig {
 		// 로그인 설정
 		http.formLogin()
 		.loginPage("/member/login")
-		.defaultSuccessUrl("/")
+		.defaultSuccessUrl("/index")
 		.failureHandler(customFailureHandler)
 		.usernameParameter("uid")
 		.passwordParameter("pass");
