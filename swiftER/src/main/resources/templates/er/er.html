@@ -3,8 +3,9 @@
 <script th:src="@{/js/er.js}"></script>
 <main id="search">
     <section class="er">
-        <div class="title">
-            <h2 class="er-search">응급실 검색</h2>
+        <div class="search_map">
+            <div id="map">
+            </div>
         </div>
         <div class="selectBox">
             <form action="#" method="post">
@@ -41,17 +42,6 @@
                     <input type="button" value="검색" class="subBtn">
                 </div>
             </form>
-        </div>
-        <div class="search_map">
-            <h2>선택하신 조건을 기반으로 한 검색 결과 입니다.<span class="totalER"></span></h2>
-            <div id="map">
-            </div>
-        </div>
-        <div class="info">
-            <p>
-                본 페이지에서 제공하는 내용은 참고사항일 뿐 게시물에 대한 법적책임은 없음을 밝혀드립니다. <br>
-                자세한 내용은 전문가와 상담하시기 바랍니다.
-            </p>
         </div>
     </section>
 </main>
