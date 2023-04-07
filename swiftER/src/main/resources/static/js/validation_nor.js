@@ -140,7 +140,7 @@
     	});
 
     	// 휴대폰 유효성 검사
-    	$('input[name=hp]').focusout(function(){
+    	$('input[name=contact]').focusout(function(){
     		let hp = $(this).val();
 
     		if(!hp.match(regHp)){

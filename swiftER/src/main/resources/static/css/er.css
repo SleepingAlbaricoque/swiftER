@@ -31,125 +31,35 @@
 #search h5.rating.star4{background-position: 0 -160px;}
 #search h5.rating.star5{background-position: 0 -200px;}
 
-
-/* 검색 페이지 */
-#search > .er{
-    width: 1200px;
-    height: auto;
-    margin: 0 auto;
-    box-sizing: border-box;
+/* select box css */
+select {
+    width: 200px; 
+    border: 1px solid #999;
+    font-family: inherit;  
+    background: url(/swiftER/img/0004.jpg) no-repeat 95% 50%; 
+    border-radius: 0px; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
 }
-
-#search > .er > div.selectBox{
-    width: 1050px;
-    height: auto;
-    margin: 0 auto;
-}
-
-#search > .er > div > h2.er-search{
-    font-size: 33px;
-    font-weight: bold;
-    margin: 30px;
-    padding-top: 20px;
-    box-sizing: border-box;
-    color: #1b9cff;;
-}
-#search > .er > div > form{
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-}
-#search > .er > div > form > div{
-    width: 100%;
-    margin: 0 auto;
-}
-#search > .er > div > form > div > fieldset {
-    border: none;   
-    margin: 20px;
-}
-#search > .er > div > form > div > fieldset > legend{
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #8c8c88;
-}
-#search > .er > div > form > div > fieldset.location{}
-#search > .er > div > form > div > fieldset.location > legend{}
-#search > .er > div > form > div > fieldset.location > select{
-    width: 100px;
-    height: 27px;
-    border: 1px solid #94b7d0;
-    border-radius: 2px;
-}
-#search > .er > div > form > div > fieldset.location > select{
-    margin-right: 5px;
-}
-#search > .er > div > form > div > fieldset.location > select #city{}
-#search > .er > div > form > div > fieldset.location > select #town{}
-#search > .er > div > form > div > fieldset.med-department{}
-#search > .er > div > form > div > fieldset.med-department > legend{}
-#search > .er > div > form > div > fieldset.med-department > input{
-    margin-right: 5px;
-}
-#search > .er > div > form > div > fieldset.med-department > label{
-    color: #454545;
-    font-weight: bold;
-    margin-right: 40px;
-    font-size: 15px;
-}
-#search > .er > div > form > div > fieldset.med-equipment{}
-#search > .er > div > form > div > fieldset.med-equipment > legend{}
-#search > .er > div > form > div > fieldset.med-equipment > input{
-    margin-right: 5px;
-}
-#search > .er > div > form > div > fieldset.med-equipment > label{
-    color: #454545;
-    font-weight: bold;
-    margin-right: 40px;
-    font-size: 15px;
-}
-#search > .er > div > form > div.btn{
-    width: 250px;
-    height: 50px;
-    margin: 0 auto;
-}
-#search > .er > div > form > div.btn > input{
-    width: 100px;
-    height: 40px;
-    border: none;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 2px;
-    color: #fff;
-    margin-top: 7.5px;
-}
-#search > .er > div > form > div > input.resetBtn{
-    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
-}
-#search > .er > div > form > div > input.subBtn{
-    background-color: #1b9cff;
-    float: right;
-}
-#search > .er > div.search_map{
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-}
-#search > .er > div.search_map > h2{
-    font-size: 25px;
-    font-weight: bold;
-    margin: 30px;
+select::-ms-expand {
+    display: none;
 }
 
 /* 맵 크기 값 */
-#search > .er > div.search_map > #map{
-    width: 1000px;
-    height: 550px;
-    border: 1px solid #111;
+#search > .er > div.map{
+    width: 100%;
+    height: auto;
     margin: 0 auto;
-    margin-bottom: 20px;
 }
+#search > .er > div.map > div.search_map{
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+}
+/* info 창 */
 
-#search > .er > div.search_map > #map .wrap {
+#search > .er > div.map > div.search_map  .wrap {
 	position: absolute;
 	left: 0;
 	bottom: 40px;
@@ -162,11 +72,11 @@
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	line-height: 1.5;
 }
-#search > .er > div.search_map > #map .wrap * {
+#search > .er > div.search_map  .wrap * {
 	padding: 0;
 	margin: 0;
 }
-#search > .er > div.search_map > #map .wrap .info {
+#search > .er > div.map > div.search_map  .wrap .info {
 	width: 360px;
 	height: 120px;
 	border-radius: 5px;
@@ -175,11 +85,11 @@
 	overflow: hidden;
 	background: #fff;
 }
-#search > .er > div.search_map > #map .wrap .info:nth-child(1) {
+#search > .er > div.map > div.search_map  .wrap .info:nth-child(1) {
 	border: 0;
 	box-shadow: 0px 1px 2px #888;
 }
-#search > .er > div.search_map > #map .info .title {
+#search > .er > div.map > div.search_map  .info .title {
 	padding: 5px 0 0 10px;
 	height: 30px;
 	background: #eee;
@@ -188,7 +98,7 @@
 	font-weight: bold;
 	line-height: 30px;
 }
-#search > .er > div.search_map > #map .info .close {
+#search > .er > div.map > div.search_map .info .close {
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -197,29 +107,29 @@
 	height: 17px;
 	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
 }
-#search > .er > div.search_map > #map .info .close:hover {
+#search > .er > div.map > div.search_map   .info .close:hover {
 	cursor: pointer;
 }
-#search > .er > div.search_map > #map .info .body {
+#search > .er > div.map > div.search_map   .info .body {
 	position: relative;
 	overflow: hidden;
 }
-#search > .er > div.search_map > #map .info .desc {
+#search > .er > div.map > div.search_map   .info .desc {
 	position: relative;
 	margin: 10px 0 0 15px;
 	height: 75px;
 }
-#search > .er > div.search_map > #map .desc .ellipsis {
+#search > .er > div.map > div.search_map  .desc .ellipsis {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-#search > .er > div.search_map > #map .desc .jibun {
+#search > .er > div.map > div.search_map   .desc .jibun {
 	font-size: 11px;
 	color: #888;
 	margin-top: -2px;
 }
-#search > .er > div.search_map > #map .info:after {
+#search > .er > div.map > div.search_map  .info:after {
 	content: '';
 	position: absolute;
 	margin-left: -12px;
@@ -229,22 +139,171 @@
 	height: 12px;
 	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
 }
-#search > .er > div.search_map > #map .info .link {
+#search > .er > div.map > div.search_map   .info .link {
 	color: #5085BB;
 }
-/* map css 끝 */
 
-#search > .er > div.info{
+
+/* 검색 페이지 */
+#search > .er{
+    position: relative;
     width: 100%;
     height: auto;
+    box-sizing: border-box;
+}
+#search > .er > div.map > div.search_map > div.fixed{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-right: #cdcdcd solid 1px;
+    z-index: 999;
+    background-color: #fff;
+}
+
+#search > .er > div.map > div.search_map > div.selectBox.on{
+    left: 111px;
+}
+
+#search > .er > div.map > div.search_map >  a.btnClose.on{
+    left: 477px;
+    background: url(/swiftER/img/hiraMap_close.png) no-repeat;
+}
+#search > .er > div.map > div.search_map >  a.btnClose{
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 107px;
+    transform: translate(0,-50%);
+    background: url(/swiftER/img/hiraMap_open.png) no-repeat;
+    width: 35px;
+    height: 62px;
+    text-indent: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    transition-duration: .6s;
+}
+
+#search > .er > div.map > div.search_map >  div.selectBox{
+    position: absolute;
+    z-index: 500;
+    left: -260px;
+    top: 0;
+    width: 370px;
+    height: 100vh;
+    border-right: #cdcdcd solid 1px;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 12%) 2px 2px 2px;
+    transition-duration: .6s;
+    overflow: hidden;
+}
+
+#search > .er > div.map > div.search_map > div.selectBox > h2{
+    color: #1b9bfe;
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: #f5f5f5 solid 8px;
+    line-height: 50px;
+    padding: 0 20px;
+}
+
+
+#search > .er > div.map > div.search_map >  div.selectBox > form{
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div{
+    width: 100%;
     margin: 0 auto;
-    margin: 30px;
 }
-#search > .er > div.info > p{
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > h4{
+	width:310px;
+	color: #777777;
+    font-weight: 700;
     font-size: 15px;
-    color: #7f7f7f;
-    line-height: 21px;
+    margin: 0 auto;
+    border-top: #e9e9e9 solid 1px !important;
 }
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset {
+    border: none;   
+    margin: 20px;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset > legend{
+    color: #8c8c88;
+    font-weight: 700;
+    font-size: 17px;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset > legend > strong{
+    color: #e12828 !important;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.location > select{
+    height: 27px;
+    border: 1px solid #e2e2e2;
+    margin: 5px;
+
+}
+
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.med-department > li > input[type="checkbox"]{
+    visibility: hidden;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.med-department > li > input[type="checkbox"]:checked + label {
+    background-image: url(/swiftER/img/checkbox_on.png);
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.med-department > li > input[type="checkbox"] + label {
+    cursor: pointer;
+    padding-left: 25px;
+    background-repeat: no-repeat;
+    background-position: 0 4px;
+    color: #000;
+    background-image: url(/swiftER/img/checkbox.png);
+    display: inline-block;
+}
+
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.med-department > li {
+    float: left;
+    width: 50%;
+    padding: 5px 2px 0 0;
+    list-style: none;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > fieldset.med-department > li > label{
+    font-size: 14px;
+    display: inline-block;
+    line-height: 25px;
+    word-break: break-all;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > p{
+    background: url(/swiftER/img/swifter_logo_resize.png) 0 20px no-repeat;
+    background-size: 50px;
+    padding: 20px 0 0 58px;
+    color: #666;
+    font-size: 12px;
+    min-height: 70px;
+    word-break: keep-all;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div.btn{
+    width: 250px;
+    height: 50px;
+    margin: 0 auto;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div.btn > input{
+    width: 100px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2px;
+    color: #fff;
+    margin-top: 7.5px;
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > input.resetBtn{
+    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+}
+#search > .er > div.map > div.search_map >  div.selectBox > form > div > input.subBtn{
+    background-color: #1b9cff;
+    float: right;
+}
+
 
 /* 응급실 정보 페이지 */
 
@@ -324,7 +383,7 @@
     height: auto;
 }
 #search > .Detail > div.ErInfo > article.part2 > div{
-    margin-top: -10px;
+    margin-top: 100px;
 }
 #search > .Detail > div.ErInfo > article.part2 > div  > nav{
     width: 400px;
@@ -344,11 +403,6 @@
     height: auto;
     margin: 0 auto;
     overflow: hidden;
-}
-#search > .Detail > article.review > p.none{
-	font-size: 20px;
-	line-height: 55px;
-	padding: 20px
 }
 #search > .Detail > article.review > nav{
     margin: 30px 0 10px;
@@ -385,18 +439,7 @@
     color: #555;
     margin-top: 6px;
 }
-#search > .Detail > .review > ul > li > p.tit{
-    width: 100%;
-    height: 100%;
-    color: #555;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 19px;
-    word-break: break-all;
-    word-wrap: break-word;
-    margin-top: 10px;
-}
-#search > .Detail > .review > ul > li > p.cont{
+#search > .Detail > .review > ul > li > p{
     width: 100%;
     height: 60px;
     color: #555;
@@ -404,10 +447,8 @@
     line-height: 19px;
     word-break: break-all;
     word-wrap: break-word;
-    margin-top: 3px;
-    padding-left: 1px
+    margin-top: 10px;
 }
-
 #search > .Detail > .review > .write{
     width: 100%;
     margin-top: 10px;
@@ -431,7 +472,6 @@
     font-size: 15px;
     font-weight: bold;
 }
-
 #search > .Detail > .review > .paging{
     width: 100%;
     padding: 30px 0;
@@ -440,15 +480,15 @@
 #search > .Detail > .review > .paging > .prev{}
 #search > .Detail > .review > .paging > .next{}
 #search > .Detail > .review > .paging > .num{}
-#search > .Detail > .review > .paging > a{
+#search > .Detail > .review > .paging > span > a{
     color: #777;
     font-size: 11px;
     letter-spacing: -1px;
 }
-#search > .Detail > .review > .paging > a:hover{
+#search > .Detail > .review > .paging > span > a:hover{
     text-rendering: underline;
 }
-#search > .Detail > .review > .paging > .num {
+#search > .Detail > .review > .paging > .num > a{
     display: inline-block;
     min-width: 14px;
     margin: 0 2px;
@@ -460,11 +500,11 @@
     text-align: center;
     text-decoration: none;
 }
-#search > .Detail > .review > .paging > .num {
+#search > .Detail > .review > .paging > .num > a:hover{
     border: 1px solid #454c5f;
     text-decoration: none;
 }
-#search > .Detail > .review > .paging > .num:hover {
+#search > .Detail > .review > .paging > .num > a:on{
     color: #fe434c;
     font-weight: bold;
 }

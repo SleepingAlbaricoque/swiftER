@@ -60,7 +60,7 @@ public class CommunityService {
 	public List<CommunityArticleVO> selectFindTitleSearch(int start, String title, String cateCode, String keyword,String regionCode){
 		return dao.selectFindTitleSearch(start, title, cateCode, regionCode, keyword);
 	}
-	public CommunityArticleVO modifyArticle(String no, String title, String content) {
+	public int modifyArticle(String no, String title, String content) {
 		return dao.modifyArticle(no, title, content);
 	}
 	public int updateArticleView(String no) {

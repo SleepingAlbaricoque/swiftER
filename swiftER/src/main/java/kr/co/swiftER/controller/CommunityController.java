@@ -123,7 +123,7 @@ public class CommunityController {
          service.insertComment(vo);
          service.updateComments(parent);
          
-         return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
+         return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
     }
     
     @GetMapping(value = {"community/freeWrite"})
@@ -155,6 +155,7 @@ public class CommunityController {
     	
     	model.addAttribute("vo", vo);
     	model.addAttribute("no", no);
+    	model.addAttribute("title", title);
     	model.addAttribute("cateCode", cateCode);
     	
     	return "community/freeModify";
@@ -162,16 +163,26 @@ public class CommunityController {
     
     @PostMapping(value = {"community/freeModify"})
     public String FreeModify(Model model, CommunityArticleVO vo, @RequestParam("cateCode") String cateCode,
-    		@RequestParam("regionCode") String regionCode, String no, String parent, String comment, String title, String content) {
+    		@RequestParam("regionCode") String regionCode, String no, String parent, String comment,@RequestParam("title") String title, String content) {
     	
+    		//log.info("cateCode : " + cateCode);
+    		//log.info("regionCode : " + regionCode);
+    		//log.info("no : " + no);
+    		//log.info("title : " + title);
+    		//log.info("content : " + content);
+    		
     		service.modifyArticle(no, title, content);
     		
-    		return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
+    		if(cateCode.equals("11")) {
+    			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+    		}else {
+    			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+    		}
     }
     
     @GetMapping(value = {"community/deleteArticle"})
     public String DeleteArticle(Model model,@RequestParam("cateCode") String cateCode, String no,String regionCode) {
-    	
+    	// 글만 삭제하고 글에 달린 댓글은 삭제x, 댓글 db값은 남아있음(조회용)
     	service.deleteArticle(no);
     	
     	model.addAttribute("cateCode", cateCode);
@@ -180,6 +191,7 @@ public class CommunityController {
     	
     	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
+    
     @GetMapping(value = {"community/deleteComment"})
     public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comment) {
     	
@@ -244,7 +256,7 @@ public class CommunityController {
         return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
         
     }
-    
+
     /* Mytown */
     @GetMapping(value = {"community/mytownWrite"})
     public String MytownWrite(Model model, @RequestParam("cateCode") String cateCode){

@@ -15,11 +15,8 @@ import kr.co.swiftER.dao.MemberDAO;
 import kr.co.swiftER.exceptions.CustomErrorCode;
 import kr.co.swiftER.exceptions.CustomException;
 import kr.co.swiftER.repo.MemberRepo;
-import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
-import kr.co.swiftER.vo.FileDoctorVO;
-import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberDoctorVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
@@ -87,14 +84,6 @@ public class MemberService {
 	public int countCa(String uid) {
 		return dao.countCa(uid);
 	}
-	
-	/* 의사 회원가입(이미지 제출 제외) */
-	public int insertMemberDoctor(MemberDoctorVO dvo) {
-		int result = dao.insertMemberDoctor(dvo);
-			
-		return result;
-		
-	}
 
 	public int deleteMember(String uid) {
 		int result = dao.deleteMember(uid);
@@ -139,15 +128,11 @@ public class MemberService {
 
 	// 파일 업로드
 	// applicaton.properties에서 설정한 파일 저장 경로 주입받기
-	/*
 	@Value("${spring.servlet.multipart.location}")
 	private String uploadPath;
-	
-	public FileDoctorVO uploadFile(MultipartFile file, MemberDoctorVO dvo){
-		// 첨부 파일 정보 가져오기
-		String member_uid= dvo.getMember_uid();
-		FileDoctorVO fvo = null;
-		
+
+	// 의사회원 가입
+	public void insertMemberDoctor(MemberDoctorVO dvo, MultipartFile file) {
 		if(!file.isEmpty()) {
 			// application.properties에서 설정한 파일 저장 경로의 시스템 경로 구하기
 			String path = new File(uploadPath).getAbsolutePath();
@@ -169,10 +154,7 @@ public class MemberService {
 			}catch(Exception e) {
 				throw new RuntimeException(e);
 			}
-			fvo = new FileDoctorVO().builder().member_uid(dvo.getMember_uid()).oriName(oriName).newName(newName).build();
-			dao.insertFile(fvo);
+			dao.insertMemberDoctor(dvo);
 		}
-		return fvo;
 	}
-	*/
 }

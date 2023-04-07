@@ -58,14 +58,12 @@ public class SymptomsController {
 
 	
 	@GetMapping("symptoms/resultsymptoms")
-	public String resultsymptoms(Model model, String body1_code, String symptom, ArrayList<SymptomsSymptomsVO> checkBoxArr, String illness) {		
+	public String resultsymptoms(Model model, String body1_code,  String illness, @RequestParam("symptom") List<String> symptom){
+		
 		List<SymptomsSymptomsVO> ill = service.selectillness(symptom);
 		List<SymptomsSymptomsVO> symp1 = service.selectsymp1(illness);
 		List<SymptomsIllnessesVO> dep = service.selectdep(illness);
 		
-		
-		
-		model.addAttribute("checkBoxArr", checkBoxArr);
 		model.addAttribute("body1_code", body1_code);
 		model.addAttribute("ill", ill);
 		model.addAttribute("symp1", symp1);

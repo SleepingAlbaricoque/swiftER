@@ -7,7 +7,8 @@ $(function(){
             
     // 팝업 닫기
     $('.btnClose').click(function(){                
-        $(this).closest('.popup').removeClass('on');                
+        $(this).closest('.popup').removeClass('on');    
+        $('.selectBox').closest('.popup').removeClass('on'); 
     });
 
     // 상품평 작성 레이팅바 기능
