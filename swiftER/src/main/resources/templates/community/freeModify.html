@@ -12,13 +12,15 @@
           </aside>
           <article>
               <form th:action="@{/community/freeModify}" method="POST">
+              <input type="hidden" name="no" th:value="${no}">
               <input type="hidden" name="cateCode" th:value="${cateCode}">
               <input type="hidden" name="regionCode" th:value="0">
+              <input type="hidden" name="parent" th:value="${no}">
                 <table>
                   <tr>
                     <td>제목</td>                  
                     <td>
-                      <input type="text" name="title" placeholder="제목을 입력하세요." th:value="${vo.title}"/>
+						<input type="text" name="title" placeholder="제목을 입력하세요." th:if="${vo != null}" th:value="${vo.title}" />
                     </td>
                   </tr>                
                   <tr>
