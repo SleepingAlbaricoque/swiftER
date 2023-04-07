@@ -152,11 +152,25 @@ public class AdminService {
 	}
 	
 	
+	// 선택한 글 불러오기
+	public CommunityArticleVO selectCommunityArticle(String no) {
+		return dao.selectCommunityArticle(no);
+	}
 	
+	// 선택한 글의 댓글 불러오기
+	public List<CommunityArticleVO> selectComments(String no){
+		return dao.selectComments(no);
+	}
 	
+	// 선택한 글이 글인지 댓글인지 체크
+	public int selectIsComment(String no) {
+		return dao.selectIsComment(no);
+	}
 	
-	
-	
+	// 댓글 삭제 시 원글의 comment 카운터 -1 하기
+	public int updateArticleCommentByMinusOne(int parent) {
+		return dao.updateArticleCommentByMinusOne(parent);
+	}
 	
 	
 	

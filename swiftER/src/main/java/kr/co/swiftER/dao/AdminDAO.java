@@ -78,10 +78,17 @@ public interface AdminDAO {
 	// 선택한 글 삭제
 	public int deleteCommunityArticles(@Param(value="array")String[] checkedNo);
 	
+	// 선택한 글 불러오기
+	public CommunityArticleVO selectCommunityArticle(String no);
 	
+	// 선택한 글의 댓글 불러오기
+	public List<CommunityArticleVO> selectComments(String no);
 	
+	// 선택한 글이 글인지 댓글인지 체크
+	public int selectIsComment(String no);
 	
-	
+	// 댓글 삭제 시 원글의 comment 카운터 -1 하기
+	public int updateArticleCommentByMinusOne(int parent);
 	
 	
 	

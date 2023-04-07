@@ -384,6 +384,7 @@ header{
 .admin-community-form-table > tbody > tr > td.key{
     padding-left: 15px;
     font-weight: bold;
+    width: 70px;
 }
 .admin-community-form-table > tbody > tr > td.key.cate{
     width: 70px;
@@ -459,7 +460,7 @@ header{
 .control-buttons{
     position: relative;
     bottom: -15px;
-    right: -400px;
+    right: -418.3px;
     margin: 0 auto;
 }
 .control-buttons > input{
@@ -467,10 +468,11 @@ header{
     height: 40px;
     border-radius: 20px;
     cursor: pointer;
+    margin-bottom: 20px;
 }
 #admin-community-write-content{
     resize: none;
-    width: 200px;
+    width: 800px!important;
     min-height: 210px;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -484,6 +486,7 @@ header{
     margin-top: 20px;
     border: none;
     font-size: 13px;
+    text-align: center;
 }
 
 .admin-community-control-buttons{
@@ -509,4 +512,11 @@ header{
     border: none;
     background: #2ce97b;
     color: #fff;
+}
+
+.admin-community-view-rdate{
+	padding-left: 20px;
+}
+.admin-community-view-comment-rdate{
+	width: 80px;
 }

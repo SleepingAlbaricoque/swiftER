@@ -1,25 +1,64 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
-
         function deleteConfirm(element){
             if(confirm("정말로 삭제하시겠습니까?")){
-                location.href = "#";
+            	let checkedNo = [];
+                let no = [[${article.no}]];
+                checkedNo.push(no);
+                
+            	// ajax로 delete 컨트롤러로 배열 보내기
+            	let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+            	fetch("/swiftER/admin/community/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
+            	.then(response => response.json())
+            	.then(function(json){
+            		location.href = "/swiftER/admin/community";
+            	})
+            	.catch(err => console.error(err));
+            }
+        }
+        
+        function checkAll(element){
+            let checkboxes = Array.from(document.getElementsByName("individualItem"));
+            element.addEventListener('change', function(){  
+                
+                if(this.checked){
+                    checkboxes.forEach(function(checkbox){
+                        checkbox.checked = true;
+                    });
+                }else{
+                    checkboxes.forEach(function(checkbox){
+                        checkbox.checked = false;
+                    });
+                }
+            });
+        }
+        
+        function commentDeleteConfirm(element){
+            if(confirm("선택한 댓글을 정말로 삭제하시겠습니까?")){
+            	let checkboxes = Array.from(document.getElementsByName("individualItem"));
+            	let checkedNo = [];
+            	
+            	// 체크박스 중 체크된 박스의 index 번호로(총 체크박스 중 i 번째) 글 번호 가져와서 array에 저장
+            	checkboxes.forEach(function(checkbox){
+            		if(checkbox.checked){
+            			let i = checkboxes.indexOf(checkbox);
+            			let no = document.querySelectorAll(".comment-no")[i].value;
+            			checkedNo.push(no);
+            		}
+            	});
+            	
+            	console.log(checkedNo);
+            	
+            	// ajax로 delete 컨트롤러로 배열 보내기
+            	let headers = new Headers();
+                headers.append("Content-Type", "application/json; charset=utf-8");
+            	fetch("/swiftER/admin/community/delete?checkedNo=" + checkedNo, {headers:headers, method:"GET"})
+            	.then(response => response.json())
+            	.then(function(json){
+            		location.href = "/swiftER/admin/community/view?no=" + [[${article.no}]];
+            	})
+            	.catch(err => console.error(err));
             }
         }
     </script>
@@ -30,36 +69,36 @@
                         <table class="admin-community-form-table">
                             <tr>
                                 <td class="key">제목</td>
-                                <td>한사랑 응급실 시설 괜찮나요?</td>
+                                <td>[[${article.title}]]</td>
                                 <td class="key cate">유형</td>
-                                <td>ER</td>
+                                <td>[[${article.cate}]]</td>
                             </tr>
                             <tr>
                                 <td class="key">작성자</td>
-                                <td>admin</td>
+                                <td>[[${article.member_uid}]]</td>
                                 <td class="key">작성일자</td>
-                                <td>2023-03-14</td>
+                                <td class="admin-community-view-rdate">[[${article.rdate}]]</td>
                             </tr>
                             <tr>
                                 <td class="key">내용</td>
                                 <td colspan="3">
-                                    <textarea name="admin-community-write-content" id="admin-community-write-content" cols="30" rows="10" readonly>업데이트 예정입니다</textarea>
+                                    <textarea name="admin-community-write-content" id="admin-community-write-content" cols="30" rows="10" readonly>[[${article.content}]]</textarea>
                                 </td>
                             </tr>
                         </table>
                         <div class="admin-community-control-buttons">
-                            <input type="button" value="목록으로" class="admin-community-back-to-list" onclick="location.href='#'">
+                            <input type="button" value="목록으로" class="admin-community-back-to-list" th:onclick="|location.href='@{/admin/community}'|">
                             <input type="button" value="삭제하기" class="admin-community-delete-article" onclick="deleteConfirm(this)">
                         </div>
                     </form>
                 </div>
-                <div class="community-view-panel-main doc-community-panel shadow">
+                <div class="community-view-panel-main doc-community-panel shadow" th:if="${comments != null}">
                     <p>커뮤니티 댓글 보기</p>
                     <div class="community-view-table-wrapper doc-community">
                         <table class="community-view-table doc-community">
                             <tr>
                                 <tr>
-                                    <th><i class="fa-sharp fa-regular fa-square"></i></th>
+                                    <th><input type="checkbox" onclick="checkAll(this)"></i></th>
                                     <th class="key">번호</th>
                                     <th class="key" colspan="3">내용</th>
                                     <th class="key">날짜</th>
@@ -67,18 +106,18 @@
                                     <th></th>
                                 </tr>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>1</td>
-                                <td colspan="3"><textarea name="admin-community-review-content" id="admin-community-review-content" cols="20" readonly>한사랑 응급실 시설 좋아요</textarea></td>
-                                <td>2023-03-14</td>
-                                <td>admin</td>
+                            <tr th:each="comment : ${comments}">
+                            	<input type="hidden" class="comment-no" th:value="${comment.no}">
+                                <td><input type="checkbox" name="individualItem"></td>
+                                <td>[[${comment.no}]]</td>
+                                <td colspan="3"><textarea name="admin-community-review-content" id="admin-community-review-content" cols="20" readonly>[[${comment.content}]]</textarea></td>
+                                <td class="admin-community-view-comment-rdate">[[${comment.rdate}]]</td>
+                                <td>[[${comment.member_uid}]]</td>
                             </tr>
                         </table>
                     </div>
                     <div class="control-buttons">
-                        <input type="button" value="목록으로" class="admin-community-back-to-list" onclick="location.href='#'">
-                        <input type="button" value="삭제하기" class="admin-community-delete-article" onclick="deleteConfirm(this)">
+                        <input type="button" value="삭제하기" class="admin-community-delete-article" onclick="commentDeleteConfirm(this)">
                     </div>
                 </div>
             </div>

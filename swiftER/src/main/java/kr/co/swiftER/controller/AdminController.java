@@ -742,6 +742,16 @@ public class AdminController {
 	@GetMapping("admin/community/delete")
 	@ResponseBody
 	public Map<String, Integer> deleteCommunityArticles(String[] checkedNo){
+		// // 댓글이 있다면 원글 댓글 카운트에서 삭제한 수만큼 빼기
+		for(String no : checkedNo) {
+			// 해당 글이 댓글인지 글인지 체크하기(parent값 여부 체크)
+			int parent = service.selectIsComment(no);
+			
+			if(parent != 0) { // 댓글인 경우
+				service.updateArticleCommentByMinusOne(parent);
+			}
+		}
+		
 		int result = service.deleteCommunityArticles(checkedNo);
 		
 		Map<String, Integer> resultMap = new HashMap<>();
@@ -785,7 +795,31 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/community/view")
-	public String communityView() {
+	public String communityView(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 들고오기
+		CommunityArticleVO article = service.selectCommunityArticle(no);
+		
+		// rdate substring하기
+		article.setRdate(article.getRdate().substring(0, 10));
+		
+		
+		// 댓글이 있다면 댓글 들고오기
+		List<CommunityArticleVO> comments = new ArrayList<>();
+		
+		if(article.getComments() > 0) {
+			comments = service.selectComments(no);
+			
+			// rdate substring하기
+			for(CommunityArticleVO comment : comments)
+				comment.setRdate(comment.getRdate().substring(0, 10));
+			
+			// 댓글 정보 저장하기
+			model.addAttribute("comments", comments);
+		}
+		
+		// 글 정보 저장하기
+		model.addAttribute("article", article);
+		
 		return "admin/admin_community_view";
 	}
 	

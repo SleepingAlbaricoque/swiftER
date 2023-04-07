@@ -207,4 +207,22 @@
 		</foreach>
 		;
 	</delete>
+	
+	<select id="selectCommunityArticle" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+		select * from `community_article` as a 
+		join `community_cate` as b 
+		on a.cateCode = b.code
+		where `no` = #{no};
+	</select>
+	
+	<select id="selectComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+		select * from `community_article` where `parent` =#{no} order by no desc;
+	</select>
+	
+	<select id="selectIsComment" resultType="int">
+		select `parent` from `community_article` where `no` = #{no};
+	</select>
+	<update id="updateArticleCommentByMinusOne">
+		update `community_article` set `comments` = `comments`-1 where `no` =#{parent};
+	</update>
 </mapper>
