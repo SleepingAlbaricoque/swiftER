@@ -6,7 +6,7 @@
     let regUid   = /^[a-z0-9]+[a-z0-9]{4,12}$/g;
     let regName  = /^[가-힣]{2,6}$/;
     let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
+    let regContact 	 = /^\d{3}-\d{3,4}-\d{4}$/;
     let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
     let regZip = /\d{5}/;
 
@@ -16,7 +16,7 @@
     let isNameOk  = false;
     let isEmailOk = false;
     let isEmailAuthOk = false;
-    let isHpOk 	  = false;
+    let isContactOk 	  = false;
     let isZipOk = false;
 
     $(function(){
@@ -113,15 +113,15 @@
     	});
 
     	// 휴대폰 유효성 검사
-    	$('input[name=hp]').focusout(function(){
-    		let hp = $(this).val();
+    	$('input[name=contact]').focusout(function(){
+    		let contact = $(this).val();
 
-    		if(!hp.match(regHp)){
-    			isHpOk = false;
-    			$('.resultHp').css('color', 'red').text('휴대폰이 유효하지 않습니다.');
+    		if(!contact.match(regContact)){
+    			isContactOk = false;
+    			$('.resultContact').css('color', 'red').text('휴대폰이 유효하지 않습니다.');
     		}else{
-    			isHpOk = true;
-    			$('.resultHp').css('color', 'green').text('O');
+    			isContactOk = true;
+    			$('.resultContact').css('color', 'green').text('O');
     		}
     	});
     	
@@ -167,7 +167,7 @@
     			return false;
     		}
     		// 휴대폰 검증
-    		if(!isHpOk){
+    		if(!isContactOk){
     			alert('휴대폰을 확인하십시오.');
     			return false;
     		}
@@ -178,105 +178,6 @@
     			return false;
     		}
     		
-    		let uid = $('input[name=uid]').val();
-    		let pass = $('input[name=pass2]').val();
-    		let name = $('input[name=name]').val();
-    		let nickname = $('input[name=name]').val();
-    		let birth = $('input[name=birth]').val();
-    		let email = $('input[name=email]').val();
-    		let contact = $('input[name=hp]').val();
-    		let zip = $('input[name=zip]').val();
-    		let addr1 = $('input[name=addr1]').val();
-    		let addr2 = $('input[name=addr2]').val();
-    		let grade = $('input[name=grade]').val();
-    		
-    		let jsonData = {
-				"uid" : uid,
-				"pass" : pass,
-				"name" : name,
-				"nickname" : nickname,
-				"birth" : birth,
-				"email" : email,
-				"contact" : contact,
-				"zip" : zip,
-				"addr1" : addr1,
-				"addr2" : addr2,
-				"grade" : grade
-			}
-    		
-    		console.log(jsonData);
-    		
-    		$.ajax({
-				
-				url : '/swiftER/member/insertMember',
-				method : 'post',
-				data : jsonData,
-				dataType : 'json',
-				async    : false,
-				success : function(data){
-					if(data.result == 1){
-						
-						let member_uid = $('input[name=uid]').val();
-						let kind = $('select[name=kind]').val();
-						let specialty = $('input[name=specialty]').val();
-						
-						let jsonData2 = {
-							"member_uid" : member_uid,
-							"kind" : kind,
-							"specialty" : specialty,
-						}
-						$.ajax({
-							
-							url : '/swiftER/member/insertDoctor',
-							method : 'post',
-							data : jsonData2,
-							dataType : 'json',
-							async    : false,
-							success : function(data){
-								if(data.result == 1){
-									/*
-										var formData = new FormData();
-										
-										var inputFile = $("input[name='uploadFile']");
-										
-										var files = inputFile[0].files;
-										
-										console.log(files);
-										
-										for(var i = 0; i < files.length; i++) {
-											formData.append('uploadFile', files[i]);
-										}
-										
-										$.ajax({
-											url : '/swiftER/member/doctorFile',
-											processData : false,
-											contentType : false,
-											data : formData,
-											type : "POST",
-											success : function(result){
-												alert("!");
-											}
-										});
-									*/
-										    
-								}else{
-									alert("오류 발생!");
-								}
-								
-									}
-						});
-						
-						alert("회원가입이 완료되었습니다!")
-						
-						location.href="/swiftER/member/login";	
-					}else{
-						alert("오류 발생!");
-					}
-					
-						}
-			});
-			
-			
     	});
 
     });

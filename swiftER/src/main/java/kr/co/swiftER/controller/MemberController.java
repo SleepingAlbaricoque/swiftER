@@ -82,29 +82,24 @@ public class MemberController {
 		return "redirect:/index?success="+result;
 	}
 	
-	/* 의사회원 가입(파일 제외)*/
+	/* 의사회원 가입*/
 	@PostMapping("/member/registerDoc")
-    public String registerDoc(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req) {
+    public String registerDoc(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req, MultipartFile file) {
 		String regip = req.getRemoteAddr();
+		String nickname = vo.getName();
 		vo.setRegip(regip);
+		vo.setNickname(nickname);
 		
+		service.insertMember(vo);
 		
-		/*
-		// 사용자가 업로드한 파일들 가져오고 dvo 객체의 file 속성값 정하기
-		if(!dvo.getCert_oriName().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
-			List<MultipartFile> files = req.getFiles("fname");
-			
-			for(MultipartFile file : files) {
-				// DB에 파일 업로드
-				service.insertMember(vo);
-				service.insertMemberDoctor(dvo);
-			}
+		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
+		if(!dvo.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
+			service.insertMemberDoctor(dvo, file);
 		}else { // 첨부 파일이 없는 경우
 			
-			service.insertMember(vo);
-			service.insertMemberDoctor(dvo);
 		}
-		*/
+
+		
 		return "redirect:/index";
 	}
 	
