@@ -53,9 +53,34 @@ select::-ms-expand {
     height: auto;
     box-sizing: border-box;
 }
+#search > .er > div.fixed{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #000;
+}
 
 #search > .er > div.selectBox.on{
     left: 110px;
+}
+
+#search > .er > a.btnClose.on{
+    left: 477px;
+    background: url(/화면구현/er/img/hiraMap_close.png) no-repeat;
+}
+#search > .er > a.btnClose{
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    transform: translate(0,-50%);
+    width: 35px;
+    height: 62px;
+    text-indent: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    transition-duration: .6s;
 }
 #search > .er > div.selectBox{
     position: absolute;
@@ -136,6 +161,15 @@ select::-ms-expand {
     line-height: 25px;
     word-break: break-all;
 }
+#search > .er > div > form > p{
+    background: url(/화면구현/img/swifter_logo_resize.png) 0 20px no-repeat;
+    background-size: 50px;
+    padding: 20px 0 0 58px;
+    color: #666;
+    font-size: 12px;
+    min-height: 70px;
+    word-break: keep-all;
+}
 #search > .er > div > form > div.btn{
     width: 250px;
     height: 50px;
@@ -162,11 +196,6 @@ select::-ms-expand {
     width: 100%;
     height: auto;
     margin: 0 auto;
-}
-#search > .er > div.map > h2{
-    font-size: 25px;
-    font-weight: bold;
-    margin: 30px;
 }
 
 /* 맵 크기 값 */
