@@ -83,8 +83,8 @@ public class MemberController {
 	}
 	
 	/* 의사회원 가입(파일 제외)*/
-	@PostMapping("/member/registerDoctor")
-    public String registerDoctor(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req) {
+	@PostMapping("/member/registerDoc")
+    public String registerDoc(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req) {
 		String regip = req.getRemoteAddr();
 		vo.setRegip(regip);
 		
