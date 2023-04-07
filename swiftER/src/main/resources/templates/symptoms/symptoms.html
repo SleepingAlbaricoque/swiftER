@@ -26,7 +26,7 @@
                                 	<h4>자주 찾는 증상</h4>
                                 	<table>
 	                                	<tr>
-	                                		<th><a th:href="@{/symptoms/symptoms?body1_code=40}"><img src="../img/ico_symptomIndex_18.gif" alt="골반아이콘"></a><br><span>골반</span></th>
+	                                		<th><img src="../img/ico_symptomIndex_18.gif" alt="골반아이콘"><br><span>골반</span></th>
 	                                		<td>
 	                                			<div>
 	                                				<ul>
@@ -86,7 +86,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code} or ${bd1.part2b} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -98,7 +98,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code} or ${bd1.part2b} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -110,7 +110,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -122,7 +122,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code} or ${bd1.part2b} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -134,7 +134,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -146,7 +146,7 @@
                                     <h3 th:value="${cate.code}">[[${cate.part}]]</h3>
 	                                    <ul class="subcateBox">
 	                                        <li th:each="bd1 : ${bd1}" th:if="${bd1.part2a} eq ${cate.code}">
-	                                            <input type="checkbox" id="cont001" th:name="${bd1.symptom}" th:value="${bd1.part2a}">
+	                                            <input type="checkbox" th:id="${bd1.symptom}" th:value="${bd1.part2a}">
 	                                            <label for="chk01">[[${bd1.symptom}]]</label>
 	                                        </li>
 	                                    </ul>
@@ -157,7 +157,7 @@
                             <div class="search_animal" id="checkbox-container-1">
                                 <p>최근 일 주일 내 야생동물과 접촉했거나, 반려동물의 채액이 피부와 접촉한 적이 있습니까?</p><br/>
                                 
-                                    <input type="radio" name="chk1" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="radio" name="chk1" id="우울&환부 통증" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk1" style="margin-right:50px;">예</label>
                                     <input type="radio" name="chk1" onclick="handleCheckboxClick(event, 'checkbox-container-1')"><label for="animalchk2">아니요</label>
                             </div>
                             <div class="search_animal" id="checkbox-container-2">
@@ -167,9 +167,9 @@
                                     <input type="radio" name="chk2" onclick="handleCheckboxClick(event, 'checkbox-container-2')"><label for="animalchk2">아니요</label>
                             </div>
                             <div class="search_animal" id="checkbox-container-3">
-                                <p>최근 일 주일 내 닭고기 또는 돼지고기, 소고기를 섭취하신적이 있습니까?</p><br/>
+                                <p>최근 일 주일 내 닭고기, 돼지고기, 소고기 또는 유제품을 섭취하신적이 있습니까?</p><br/>
                                 
-                                    <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
+                                    <input type="radio" name="chk3" id="우울&환부 통증" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk1" style="margin-right:50px;">예</label>
                                     <input type="radio" name="chk3" onclick="handleCheckboxClick(event, 'checkbox-container-3')"><label for="animalchk2">아니요</label>
                             </div>
 							</th:block>
