@@ -56,8 +56,8 @@
             	
             	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
-                const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.name);
-                const delimiter = "& ";
+                const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.id);
+                const delimiter = "&";
                 console.log(checkedValues);
                 
 				
