@@ -19,7 +19,7 @@ public class MemberDoctorVO {
 	private String cert_newName;
 	private int verified;
 	private String veriMsg;
-	public void setRegip(String regip) {
-		
-	}
+	// 파일 업로드를 위해 추가
+	private MultipartFile fname;
+	private int file;
 }

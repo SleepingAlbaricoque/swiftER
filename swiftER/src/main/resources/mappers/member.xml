@@ -103,14 +103,6 @@
 		select `grade` from `member` where `uid`=#{uid};
 	</select>
 	
-	<!-- 의사회원 가입 -->
-	<insert id="insertMemberDoctor">
-		insert into `member_doctor` set
-			`member_uid`=#{member_uid},
-			`kind`=#{kind},
-			`specialty`=#{specialty}
-	</insert>
-	
 	<!-- 아이디 찾기 -->
 	<select id="findId" resultType="kr.co.swiftER.vo.MemberVO">
 		select * from `member` where `name`=#{name} and `email`=#{email};
@@ -136,4 +128,11 @@
 			`specialty`=#{specialty}
 			where `member_uid`=#{member_uid};
 	</update>
+	
+	<!-- 의사회원 가입 
+	<insert id="insertMemberDoctor">
+		insert `member_doctor` set 
+			`
+	</insert>
+	-->
 </mapper>
