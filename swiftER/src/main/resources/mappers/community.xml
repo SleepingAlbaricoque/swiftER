@@ -83,6 +83,13 @@
 		 WHERE `parent` =#{parent} ORDER BY `no` DESC
 		 LIMIT #{start}, 10;	
     </select>
+    
+    <select id="selectComment" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+     SELECT a.*, b.uid FROM `community_article` AS a 
+	 JOIN `member` AS b  ON a.member_uid = b.uid
+	 WHERE `parent` != 0 ORDER BY `no`= #{no} DESC LIMIT 1;
+    </select>
+    
      <select id="selectQnaComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
          SELECT a.*, b.uid FROM `community_article` AS a 
 		 JOIN `member` AS b ON a.member_uid = b.uid 
@@ -109,13 +116,13 @@
 		SET a.`comments` = b.`comments`;
     </update>
     
-    <update id="modifyArticle" parameterType="kr.co.swiftER.vo.CommunityArticleVO" >
+    <update id="modifyArticle">
 	 update `community_article`
 	 set
 	   `title` = #{title},
-	   `content` = #{content}
+	   `content` = #{content},
+	   `rdate`=NOW()
 	 where `no` = #{no};
-	 
 	</update>
     
     <delete id="deleteArticle">
