@@ -225,4 +225,35 @@
 	<update id="updateArticleCommentByMinusOne">
 		update `community_article` set `comments` = `comments`-1 where `no` =#{parent};
 	</update>
+	
+	
+	<select id="selectERReviews" resultType="kr.co.swiftER.vo.ERReviewVO">
+		select * from `search_er_review` 
+		<where>
+		<if test="region_code != 0">and `region_code`= #{region_code}</if>
+		<if test="subregion_code != 0">and `subregion_code` =#{subregion_code}</if>
+		</where>
+		order by no desc 
+		limit #{start}, 10;
+	</select>
+	
+	<select id="selectERReviewsTotal" resultType="int">
+		select count(`no`) from `search_er_review` 
+		<where>
+		<if test="region_code != 0">and `region_code`= #{region_code}</if>
+		<if test="subregion_code != 0">and `subregion_code` =#{subregion_code}</if>
+		</where>
+	</select>
+	
+	<select id="selectRegionCodes" resultType="kr.co.swiftER.vo.ERCateVO">
+		select * from `search_er_cate`;
+	</select>
+	
+	<delete id="deleteCommunityArticles">
+		delete from `search_er_review` where `no` in
+		<foreach item="no" collection="array" open="(" close=")" separator=",">
+			 #{no}
+		</foreach>
+		;
+	</delete>
 </mapper>

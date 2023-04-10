@@ -10,6 +10,8 @@ import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
+import kr.co.swiftER.vo.ERCateVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -89,6 +91,28 @@ public interface AdminDAO {
 	
 	// 댓글 삭제 시 원글의 comment 카운터 -1 하기
 	public int updateArticleCommentByMinusOne(int parent);
+	
+	
+	// er
+	// 모든 글 불러오기
+	public List<ERReviewVO> selectERReviews(@Param(value="region_code") String region_code, @Param(value="subregion_code") String subregion_code, @Param(value="start") int start);
+	
+	// region, subregion별 글 총 갯수 구하기
+	public int selectERReviewsTotal(@Param(value="region_code") String region_code, @Param(value="subregion_code") String subregion_code);
+	
+	// 모든 region_code값 불러오기
+	public List<ERCateVO> selectRegionCodes();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

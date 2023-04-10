@@ -31,6 +31,8 @@ import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
 import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
+import kr.co.swiftER.vo.ERCateVO;
+import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -171,6 +173,23 @@ public class AdminService {
 	public int updateArticleCommentByMinusOne(int parent) {
 		return dao.updateArticleCommentByMinusOne(parent);
 	}
+	
+	// er
+	// 모든 글 불러오기
+	public List<ERReviewVO> selectERReviews(String region_code, String subregion_code, int start){
+		return dao.selectERReviews(region_code, subregion_code, start);
+	}
+	
+	// region, subregion별 글 총 갯수 구하기
+	public int selectERReviewsTotal(String region_code, String subregion_code) {
+		return dao.selectERReviewsTotal(region_code, subregion_code);
+	};
+	
+	// 모든 region_code값 불러오기
+	public List<ERCateVO> selectRegionCodes(){
+		return dao.selectRegionCodes();
+	}
+	
 	
 	
 	

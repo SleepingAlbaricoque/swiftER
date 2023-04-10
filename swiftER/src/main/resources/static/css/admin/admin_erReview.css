@@ -404,3 +404,13 @@ header{
     background: #2ce97b;
     color: #fff;
 }
+
+#admin-er-city:focus, #admin-er-town:focus{
+	box-shadow:0 0 3px #2ce97b;
+    -moz-box-shadow:0 0 3px #2ce97b;
+    -webkit-box-shadow:0 0 3px #2ce97b;
+}
+
+#admin-er-city, #admin-er-town{
+	font-size: 13px;
+}
