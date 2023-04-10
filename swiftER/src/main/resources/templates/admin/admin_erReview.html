@@ -1,15 +1,18 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
         function numHightlight(i){
-                let num = document.querySelectorAll(".num")[i];
-                let numLength = document.querySelectorAll(".num").length;
+    		i -= 1;
+            let num = document.querySelectorAll(".num")[i];
+            let numLength = document.querySelectorAll(".num").length;
 
-                for(let j =0; j < numLength; j++){
-                    document.querySelectorAll(".num")[j].classList.remove('on');    
-                }
-
-                num.classList.add('on');
+            for(let j =0; j < numLength; j++){
+                document.querySelectorAll(".num")[j].classList.remove('on');    
             }
+
+            num.classList.add('on');
+            
+            location.href = "/swiftER/admin/er/review?region_code=" + [[${region_code}]] + "&subregion_code=" + [[${subregion_code}]] + "&pg=" + (i + 1);
+        }
 
         function selectRegion(code){
         	location.href = "/swiftER/admin/er/review?region_code=" + code;
@@ -57,11 +60,33 @@
             }
         }
         
+        function selectSubregion(code){
+        	location.href = "/swiftER/admin/er/review?region_code=" + [[${region_code}]] + "&subregion_code=" + code;
+        }
+        
         window.onload = () => {
         	let pg = [[${pg}]];
+        	
+        	// 사용자가 리다이렉트 전 선택한 region 값에 따라 subregion select 옵션값 출력하기
+        	let headers = new Headers();
+        	headers.append("Content-Type", "application/json; charset=utf-8");
+        	fetch("/swiftER/admin/er/subregion?region_code=" + [[${region_code}]], {headers:headers, method:"GET"})
+        	.then(response => response.json())
+        	.then(function(json){
+        		let subregionCate = document.querySelector('#admin-er-town'); // subregion selectbox
+        		let option = `<option value="0">전체</option>`; // subregion selectbox에 넣을 option 리스트
+        		
+        		json.forEach(json => {
+        			option += `<option value="${json.subregion_code}">${json.subregion}</option>`; // 각 subregion 값을 option 태그에 넣어서 리스트에 추가
+        		})
+        		
+        		subregionCate.insertAdjacentHTML("beforeend", option); // selectbox에 추가; append()는 동작 안함
+        		document.querySelector('#admin-er-town').value = [[${subregion_code}]]; // 사용자가 선택한 subregion을 select 박스 맨 위에 놓기; region_code처럼 밑에서 따로하면 적용이 안돼서 여기서 설정; 아마 리스트 불러오기 전에 value값이 먼저 설정돼서 적용이 안되는 듯
+        	})
+        	.catch(err => console.error(err));
+        	
         	// 사용자가 선택한 옵션을 select 박스 맨 위에 놓기
         	document.querySelector('#admin-er-city').value = [[${region_code}]];
-        	document.querySelector('#admin-er-town').value = [[${subregion_code}]];
         	
         	// 페이지 로드 시 페이지 파라미터로 넘어온 pg 페이지 버튼이 highlight 되도록
         	document.querySelectorAll('.num')[pg - 1].classList.add('on');
@@ -77,7 +102,7 @@
                             	<option th:value="${region.region_code}">[[${region.region}]]</option>
                             </th:block>
                         </select>
-                        <select name="town" id="admin-er-town">
+                        <select name="town" id="admin-er-town" onchange="selectSubregion(value)">
                         </select>
                     </div>
                     <div class="review-table-wrapper">
@@ -102,7 +127,7 @@
 	                            </tr>
                             </th:block>
                             <tr>
-                            	<td colspan="5" class="admin-er-delete-wrap">
+                            	<td colspan="5" class="admin-er-delete-wrap" style="text-align:right;">
                             		<input type="button" value="삭제하기" class="admin-list-delete" onclick="deleteConfirm(this)">
                             	</td>
                             </tr>

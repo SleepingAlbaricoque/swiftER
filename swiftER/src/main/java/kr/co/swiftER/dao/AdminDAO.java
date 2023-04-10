@@ -12,6 +12,7 @@ import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.ERSubcateVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -103,10 +104,17 @@ public interface AdminDAO {
 	// 모든 region_code값 불러오기
 	public List<ERCateVO> selectRegionCodes();
 	
+	// 선택한 글 삭제
+	public int deleteERReviews(@Param(value="array")String[] checkedNo);
 	
+	// 선택한 region의 subregion 코드들 가져오기
+	public List<ERSubcateVO> loadSubregions(String region_code);
 	
+	// 선택한 리뷰글 불러오기
+	public ERReviewVO selectERReview(String no);
 	
-	
+	// region, subregion 코드값 이용해서 한글 이름 가져오기
+	public String[] selectERCates(@Param(value="region_code") int region_code, @Param(value="subregion_code") int subregion_code);
 	
 	
 	

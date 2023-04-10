@@ -249,11 +249,26 @@
 		select * from `search_er_cate`;
 	</select>
 	
-	<delete id="deleteCommunityArticles">
+	<delete id="deleteERReviews">
 		delete from `search_er_review` where `no` in
 		<foreach item="no" collection="array" open="(" close=")" separator=",">
 			 #{no}
 		</foreach>
 		;
 	</delete>
+	
+	<select id="loadSubregions" resultType="kr.co.swiftER.vo.ERSubcateVO">
+		select * from `search_er_subcate` where `region_code` = #{region_code};
+	</select>
+	
+	<select id="selectERReview" resultType="kr.co.swiftER.vo.ERReviewVO">
+		select * from `search_er_review` where `no` = #{no};
+	</select>
+	
+	<select id="selectERCates" resultType="String">
+		(select `region` from `search_er_cate` where `region_code` = #{region_code})
+		union all(
+			select `subregion` from `search_er_subcate` where `region_code` = #{region_code} and `subregion_code` = #{subregion_code} 
+		);
+	</select>
 </mapper>

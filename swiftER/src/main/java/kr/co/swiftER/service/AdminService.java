@@ -33,6 +33,7 @@ import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.ERSubcateVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -190,11 +191,25 @@ public class AdminService {
 		return dao.selectRegionCodes();
 	}
 	
+	// 선택한 글 삭제
+	public int deleteERReviews(String[] checkedNo) {
+		return dao.deleteERReviews(checkedNo);
+	}
 	
+	// 선택한 region의 subregion 코드들 가져오기
+	public List<ERSubcateVO> loadSubregions(String region_code){
+		return dao.loadSubregions(region_code);
+	}
 	
+	// 선택한 리뷰글 불러오기
+	public ERReviewVO selectERReview(String no) {
+		return dao.selectERReview(no);
+	}
 	
-	
-	
+	// region, subregion 코드값 이용해서 한글 이름 가져오기
+	public String[] selectERCates(int region_code, int subregion_code) {
+		return dao.selectERCates(region_code, subregion_code);
+	}
 	
 	
 	

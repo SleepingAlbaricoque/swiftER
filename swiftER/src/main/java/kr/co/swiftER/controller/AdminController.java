@@ -34,6 +34,7 @@ import kr.co.swiftER.vo.CSQuestionsVO;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERCateVO;
 import kr.co.swiftER.vo.ERReviewVO;
+import kr.co.swiftER.vo.ERSubcateVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
 import lombok.extern.log4j.Log4j2;
@@ -732,8 +733,8 @@ public class AdminController {
 	// ER Reviews
 	@GetMapping("admin/er/delete")
 	@ResponseBody
-	public Map<String, Integer> deleteERReviewArticles(String[] checkedNo){
-		int result = service.deleteArticles(checkedNo);
+	public Map<String, Integer> deleteERReviews(String[] checkedNo){
+		int result = service.deleteERReviews(checkedNo);
 		
 		Map<String, Integer> resultMap = new HashMap<>();
 		resultMap.put("result", 1);
@@ -775,8 +776,26 @@ public class AdminController {
 		return "admin/admin_erReview";
 	}
 	
+	@GetMapping("/admin/er/subregion")
+	@ResponseBody
+	public List<ERSubcateVO> loadSubregions(String region_code){
+		List<ERSubcateVO> subregions = service.loadSubregions(region_code);
+		
+		return subregions;
+	}
+	
 	@GetMapping("/admin/er/review/detail")
-	public String erReviewView() {
+	public String erReviewView(String no, Model model) {
+		// 글번호 argument를 이용해 글 정보 불러오기
+		ERReviewVO review = service.selectERReview(no);
+		
+		// region, subregion 코드값 이용해서 한글 이름 가져오기
+		String[] cates = service.selectERCates(review.getRegion_code(), review.getSubregion_code());
+		
+		// 글 정보 저장하기
+		model.addAttribute("review", review);
+		model.addAttribute("cates", cates);
+		
 		return "admin/admin_erReview_view";
 	}
 	
