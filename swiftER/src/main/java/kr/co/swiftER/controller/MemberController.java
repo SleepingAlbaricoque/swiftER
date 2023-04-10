@@ -84,21 +84,32 @@ public class MemberController {
 	
 	/* 의사회원 가입*/
 	@PostMapping("/member/registerDoc")
-    public String registerDoc(MemberVO vo, MemberDoctorVO dvo, MultipartHttpServletRequest req, MultipartFile file) {
+    public String registerDoc(@ModelAttribute("MemberVO") MemberVO vo, @RequestParam(value="kind") String kind, @RequestParam(value="specialty") String specialty, MultipartFile fname, MultipartHttpServletRequest req) {
+		MemberDoctorVO dvo = new MemberDoctorVO();
+		dvo.setKind(kind);
+		dvo.setSpecialty(specialty);
+		dvo.setMember_uid(vo.getUid());
+		
 		String regip = req.getRemoteAddr();
-		String nickname = vo.getName();
 		vo.setRegip(regip);
-		vo.setNickname(nickname);
+		// 의사는 별명 = 이름
+		vo.setNickname(vo.getName());
 		
 		service.insertMember(vo);
 		
-		// 사용자가 업로드한 파일들 가져오고 article 객체의 file 속성값 정하기
-		if(!dvo.getFname().isEmpty()) { // 첨부 파일이 한 개 이상인 경우
-			service.insertMemberDoctor(dvo, file);
-		}else { // 첨부 파일이 없는 경우
+		if(!fname.isEmpty()) {
+			List<MultipartFile> files = req.getFiles("fname");
+			dvo.setFile(files.size());
 			
+			// 의사회원 DB에 insert
+			for(MultipartFile file : files) {
+				service.insertMemberDoctor(dvo, file);
+			}
+		}else {
+			return null;
 		}
 
+		
 		
 		return "redirect:/index";
 	}

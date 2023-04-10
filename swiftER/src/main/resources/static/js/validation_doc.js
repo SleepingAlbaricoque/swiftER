@@ -97,6 +97,33 @@
     			$('.resultName').css('color', 'green').text('O');
     		}
     	});
+    	
+    	// 닉네임 검증
+    	$('input[name=nickname]').focusout(function(){
+    		let nickname = $('input[name=nickname]').val();
+			isNickOk = false;
+    		$('.resultNick').css('color', 'black').text('...');
+    			
+    		setTimeout(()=>{
+    			
+    			$.ajax({
+    				url : '/swiftER/member/checkNick',
+    				method : 'get',
+    				data : {"nickname":nickname},
+    				dataType : 'json',
+    				success : function(data){
+    					if(data.result == 0){
+    						isNickOk = true;
+    						$('.resultNick').css('color', 'green').text('사용 가능한 별명입니다.')
+    					}else{
+    						isNickOk = false;
+    						$('.resultNick').css('color', 'red').text('이미 사용중인 별명입니다.')
+    					}
+    				}
+    			});
+    			
+    		}, 500);
+    	});
 
     	// 이메일 유효성 검사
     	$('input[name=email]').focusout(function(){
@@ -141,7 +168,7 @@
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
     	
-    	$('.submit').click(function(){
+    	$('.register > form').click(function(e){
 
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
@@ -161,6 +188,11 @@
     			alert('이름을 확인하십시오.');
     			return false;
     		}
+    		// 별명 검증
+    		if(!isNickOk){
+    			alert('별명을 확인하십시오.');
+    			return false;
+    		}
     		// 이메일 검증
     		if(!isEmailOk){
     			alert('이메일을 확인하십시오.');
@@ -171,13 +203,14 @@
     			alert('휴대폰을 확인하십시오.');
     			return false;
     		}
-    		
     		// 우편번호 검증
     		if(!isZipOk){
     			alert('우편번호를 확인하십시오.');
     			return false;
     		}
     		
+    		// 최종 전송
+    		return true;
+    		
     	});
-
     });
