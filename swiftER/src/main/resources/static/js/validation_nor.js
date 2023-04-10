@@ -6,7 +6,7 @@
     let regUid   = /^[a-z0-9]+[a-z0-9]{4,12}$/g;
     let regName  = /^[가-힣]{2,6}$/;
     let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    let regHp 	 = /^\d{3}-\d{3,4}-\d{4}$/;
+    let regContact 	 = /^\d{3}-\d{3,4}-\d{4}$/;
     let regPass  = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;
     let regZip = /\d{5}/;
 
@@ -16,7 +16,7 @@
     let isNameOk  = false;
     let isEmailOk = false;
     let isEmailAuthOk = false;
-    let isHpOk 	  = false;
+    let isContactOk 	  = false;
     let isZipOk = false;
 
     $(function(){
@@ -187,7 +187,6 @@
     			alert('이름을 확인하십시오.');
     			return false;
     		}
-    		
     		// 별명 검증
     		if(!isNickOk){
     			alert('별명을 확인하십시오.');

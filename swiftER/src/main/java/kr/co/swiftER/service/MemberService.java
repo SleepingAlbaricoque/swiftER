@@ -132,7 +132,7 @@ public class MemberService {
 	private String uploadPath;
 
 	// 의사회원 가입
-	public void insertMemberDoctor(MemberDoctorVO dvo, MultipartFile file) {
+	public MemberDoctorVO insertMemberDoctor(MemberDoctorVO dvo, MultipartFile file) {
 		if(!file.isEmpty()) {
 			// application.properties에서 설정한 파일 저장 경로의 시스템 경로 구하기
 			String path = new File(uploadPath).getAbsolutePath();
@@ -154,7 +154,13 @@ public class MemberService {
 			}catch(Exception e) {
 				throw new RuntimeException(e);
 			}
+			
+			String member_uid = dvo.getMember_uid();
+			String kind = dvo.getKind();
+			String specialty = dvo.getSpecialty();
+			dvo = new MemberDoctorVO().builder().member_uid(member_uid).kind(kind).specialty(specialty).cert_oriName(oriName).cert_newName(newName).build();
 			dao.insertMemberDoctor(dvo);
 		}
+		return dvo;
 	}
 }
