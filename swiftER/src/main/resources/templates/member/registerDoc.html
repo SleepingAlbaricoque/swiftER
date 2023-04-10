@@ -55,10 +55,6 @@
 			})
 		});
 		
-		$('').submit(function(){
-			
-		});
-		
 	});
 	
 	</script>
@@ -88,7 +84,7 @@
                 <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="register">
-	            <form action="#" method="post" enctype="multipart/form-data">
+	            <form th:action="@{/member/registerDoc}" method="post" enctype="multipart/form-data">
 	                <section>
 	                    <h4>필수 정보입력</h4>
 	                    <table>

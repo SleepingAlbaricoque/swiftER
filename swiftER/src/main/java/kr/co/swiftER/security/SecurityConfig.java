@@ -50,6 +50,7 @@ public class SecurityConfig {
 				.requestMatchers("/community/freeView").permitAll()
 				.requestMatchers("/community/freeModify").permitAll()
 				.requestMatchers("/community/deleteArticle").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/deleteComment").permitAll()
 				.requestMatchers("/community/qnaView").permitAll()
 				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/mytownWrite").hasAnyRole("0", "1", "2")

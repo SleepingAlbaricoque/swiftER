@@ -54,7 +54,7 @@
             // 검색 버튼 클릭시 Jquery 전송
  			function checkboxresult(){
             	
-            	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            	const checkboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
                 const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
                 const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.id);
                 const delimiter = "&";
@@ -80,12 +80,12 @@
                 }
                 
 
-                let symptom = checkedValues.join(delimiter);
+                let symptoms = checkedValues.join(delimiter);
          		
          		let ischk = confirm('검색하시겠습니까?');
          		
          		if(ischk){
-         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+symptom;
+         			location.href="/swiftER/symptoms/resultsymptoms?symptom="+symptoms;
          		}else{
          			return false;
          		}

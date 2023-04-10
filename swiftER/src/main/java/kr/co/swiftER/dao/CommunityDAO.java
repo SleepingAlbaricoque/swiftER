@@ -26,7 +26,7 @@ public interface CommunityDAO {
 	public int deleteArticle(@Param("no")String no);
 	/* Comment */
 	public int insertComment(CommunityArticleVO vo);
-	public List<CommunityArticleVO> selectComments(@Param("start")int start,@Param("parent")String parent); 
+	public List<CommunityArticleVO> selectComments(@Param("start")int start, @Param("parent")String parent); 
 	public List<CommunityArticleVO> selectQnaComments(@Param("parent")String parent); 
 	public int selectCommentCountTotal(@Param("parent")String parent);
 	public int updateComments(@Param("parent") Integer parent);
