@@ -82,15 +82,17 @@ public class CommunityController {
 
     	 int currentPage = service.getCurrentPage(pg);
          int start = service.getLimitStart(currentPage);
-         long total = service.getCommentTotalCount(parent);
+         long total = service.getCommentTotalCount(no);
          int lastPage = service.getLastPageNum(total);
          int pageStartNum = service.getPageStartNum(total, start);
          int groups[] = service.getPageGroup(currentPage, lastPage);
     	
     	 CommunityCateVO ccv = service.selectCate(cateCode);
          CommunityArticleVO vo = service.selectFreeArticle(no);
-         List<CommunityArticleVO> cm = service.selectComments(start, parent);
+         List<CommunityArticleVO> cm = service.selectComments(start, no);
+         
          service.updateArticleView(no);
+         
          
          model.addAttribute("currentPage", currentPage);
          model.addAttribute("lastPage", lastPage);
@@ -108,7 +110,7 @@ public class CommunityController {
     
     @PostMapping(value = {"community/freeView"})
     public String FreeComment(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser, CommunityArticleVO vo,
-    		Integer cateCode, Integer regionCode, Integer parent, String no , String comment) {
+    		Integer cateCode, Integer regionCode, Integer parent, String no , String comments) {
     	
     	MemberEntity member = myUser.getMember();
     	
@@ -193,17 +195,25 @@ public class CommunityController {
     }
     
     @GetMapping(value = {"community/deleteComment"})
-    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comment) {
+    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comments) {
     	
     	service.deleteComment(no);
+    	
+    	
+    	log.info("no : " + no);
+    	
     	
     	model.addAttribute("cateCode", cateCode);
     	model.addAttribute("regionCode", regionCode);
     	model.addAttribute("parent", parent);
-    	model.addAttribute("comment", comment);
     	model.addAttribute("no", no);
     	
-    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent+"&comment="+comment;
+    	
+    	if(cateCode.equals("11")) {
+			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+		}else {
+			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+		}
     }
     
     /* Qna */

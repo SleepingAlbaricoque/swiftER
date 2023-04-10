@@ -87,7 +87,7 @@
     <select id="selectComment" resultType="kr.co.swiftER.vo.CommunityArticleVO">
      SELECT a.*, b.uid FROM `community_article` AS a 
 	 JOIN `member` AS b  ON a.member_uid = b.uid
-	 WHERE `parent` != 0 ORDER BY `no`= #{no} DESC LIMIT 1;
+	 WHERE `parent` != 0 ORDER BY `no`= #{no};
     </select>
     
      <select id="selectQnaComments" resultType="kr.co.swiftER.vo.CommunityArticleVO">
@@ -116,6 +116,10 @@
 		SET a.`comments` = b.`comments`;
     </update>
     
+    <update id="updateDeleteComments">
+		UPDATE `community_article` SET `comments` = `comments`- 1 WHERE `no`= #{no};    
+    </update>
+    
     <update id="modifyArticle">
 	 update `community_article`
 	 set
@@ -130,6 +134,6 @@
     </delete>
     
     <delete id="deleteComment">
-    	delete from `community_article` where `no`=#{no};
+    	delete FROM `community_article` WHERE `no`=#{no};
     </delete>
 </mapper>
