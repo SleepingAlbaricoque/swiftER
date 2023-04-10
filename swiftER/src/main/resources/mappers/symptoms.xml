@@ -14,7 +14,7 @@
 		JOIN `search_symptoms` AS b ON a.code = b.part2a
 	</select>
 	
-	<select id="selectillness" resultType="kr.co.swiftER.vo.SymptomsSymptomsVO">
+	<select id="selectillness" resultType="kr.co.swiftER.vo.SymptomsSymptomsVO" parameterType="map">
 		select * from `search_symptoms` where `symptom`=#{symptom};
 	</select>
 	
