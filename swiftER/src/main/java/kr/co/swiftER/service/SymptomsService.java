@@ -26,7 +26,7 @@ public class SymptomsService {
 		return dao.selectBody1(code);
 	}
 	
-	public List<SymptomsSymptomsVO> selectillness(List<String> symptom) {
+	public List<SymptomsSymptomsVO> selectillness(String symptom) {
 		return dao.selectillness(symptom);
 	}
 	public List<SymptomsSymptomsVO> selectsymp1(String illness) {

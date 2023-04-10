@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,19 +47,19 @@ public class SymptomsController {
 	
 	@PostMapping(value="symptoms/symptoms")
 	@ResponseBody
-	public String symptoms(Model model, @RequestParam(value="checkedValues[]") ArrayList<SymptomsSymptomsVO> checkBoxArr) {
+	public String symptoms(Model model,  @Param("symptom") String symptom) {
 		
-		List<SymptomsSymptomsVO> symp = new ArrayList<>();
+		List<SymptomsSymptomsVO> symptoms = new ArrayList<>();
 		
-		model.addAttribute("symp", symp);
-		model.addAttribute("checkBoxArr", checkBoxArr);
+		model.addAttribute("symptoms", symptoms);
+		
 		
 		return "symptoms/symptoms";
 	}
 
 	
 	@GetMapping("symptoms/resultsymptoms")
-	public String resultsymptoms(Model model, String body1_code,  String illness, @RequestParam("symptom") List<String> symptom){
+	public String resultsymptoms(Model model, String body1_code,  String illness, @RequestParam(value = "symptoms", required = false) List<String> symptoms, String symptom){
 		
 		List<SymptomsSymptomsVO> ill = service.selectillness(symptom);
 		List<SymptomsSymptomsVO> symp1 = service.selectsymp1(illness);
