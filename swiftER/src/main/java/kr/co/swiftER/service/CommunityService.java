@@ -34,8 +34,14 @@ public class CommunityService {
 	public List<CommunityArticleVO> selectQnaComments(String parent){
         return dao.selectQnaComments(parent);
     }
+	public int modifyComment(String no, String content) {
+		return dao.modifyComment(no, content);
+	}
 	public int updateComments(Integer parent) {
 		return dao.updateComments(parent);
+	}
+	public int updateDeleteComments(String no) {
+		return dao.updateDeleteComments(no);
 	}
 	public int deleteComment(String no) {
 		return dao.deleteComment(no);
@@ -61,6 +67,9 @@ public class CommunityService {
 		return dao.selectFindTitleSearch(start, title, cateCode, regionCode, keyword);
 	}
 	public int modifyArticle(String no, String title, String content) {
+		return dao.modifyArticle(no, title, content);
+	}
+	public int modifyQnaComment(String no, String title, String content) {
 		return dao.modifyArticle(no, title, content);
 	}
 	public int updateArticleView(String no) {

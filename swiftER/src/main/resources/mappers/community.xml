@@ -117,7 +117,7 @@
     </update>
     
     <update id="updateDeleteComments">
-		UPDATE `community_article` SET `comments` = `comments`- 1 WHERE `no`= #{no};    
+		UPDATE `community_article` SET `comments` = `comments`- 1 WHERE `parent`= #{parnet};    
     </update>
     
     <update id="modifyArticle">
@@ -127,6 +127,22 @@
 	   `content` = #{content},
 	   `rdate`=NOW()
 	 where `no` = #{no};
+	</update>
+	
+	<update id="modifyQnaComment">
+		update `community_article`
+		set 
+		`title` = #{title},
+		`content`= #{content},
+			`rdate` = NOW()
+		where `no` = #{no}
+	</update>
+	
+	<update id="modifyComment">
+		update `community_article`
+		set `content`= #{content},
+			`rdate` = NOW()
+		where `no` = #{no}
 	</update>
     
     <delete id="deleteArticle">
