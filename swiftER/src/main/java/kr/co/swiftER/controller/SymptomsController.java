@@ -71,7 +71,6 @@ public class SymptomsController {
 		model.addAttribute("dep", dep);
 		model.addAttribute("symptom", symptom);
 
-		
 		return "symptoms/resultsymptoms";
 	}
 	

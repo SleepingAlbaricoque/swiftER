@@ -362,13 +362,16 @@ div[class*=search_body_subcate] > h3 {
     font-weight: bold;
 }
 .search_body_subcate > h4 {
+    font-weight: 700;
+    line-height: 50px;
+    padding: 0 20px;
 	font-size: 30px;
 	padding: 20px;
 	text-align:center;
 }
 .search_body_subcate > table {
 	margin-left: 170px;
-    height: auto;
+    height: 600px;
     border-spacing: 20px;
 }
 .search_body_subcate > table > tbody > tr {}
@@ -386,10 +389,9 @@ div[class*=search_body_subcate] > h3 {
 .search_body_subcate > table > tbody > tr > td > div > ul {
 }
 .search_body_subcate > table > tbody > tr > td > div > ul > li {
-	width: 155px;
-    margin-bottom: 4px;
+	width: 190px;
 	padding-left: 8px;
-	padding: 5px 0 2px;
+	padding: 15px 2px;
     line-height: 1.5;
     text-align: left;
 }
@@ -398,7 +400,7 @@ div[class*=search_body_subcate] > h3 {
 	color: #333;
     text-decoration: none;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 18px;
 }
 .search_body_subcate > table > tbody > tr > td > div > ul > li > a:hover {
 	color: #0e787c;
@@ -539,4 +541,16 @@ footer > div > p:nth-of-type(2){
 .size {
     width: 23%;
     text-align: center;
+}
+a.top {
+  position: fixed;
+  text-align: center;
+  width: 50px;
+  height: 60px;
+  right: 10%;
+  bottom: 50px;
+  display: none;
+  border: 1px solid #01b1ff;
+  background: #01b1ff;
+  border-radius: 30px;
 }
