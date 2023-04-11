@@ -22,6 +22,7 @@ public interface CommunityDAO {
 	public int selectCountTotal(@Param("cateCode")String cateCode);
 	public List<CommunityArticleVO> selectFindTitleSearch(@Param("start")int start,@Param("title")String title, @Param("cateCode") String cateCode,@Param("regionCode") String regionCode, @Param("keyword")String keyword);
 	public int modifyArticle(@Param("no")String no, @Param("title")String title, @Param("content")String content);
+	public int modifyQnaComment(@Param("no")String no, @Param("title")String title, @Param("content")String content);
 	public int updateArticleView(String no);
 	public int deleteArticle(@Param("no")String no);
 	/* Comment */
@@ -29,6 +30,8 @@ public interface CommunityDAO {
 	public List<CommunityArticleVO> selectComments(@Param("start")int start, @Param("parent")String parent); 
 	public List<CommunityArticleVO> selectQnaComments(@Param("parent")String parent); 
 	public int selectCommentCountTotal(@Param("parent")String parent);
+	public int modifyComment(@Param("no")String no, @Param("content")String content);  
 	public int updateComments(@Param("parent") Integer parent);
+	public int updateDeleteComments(@Param("no") String no);
 	public int deleteComment(@Param("no")String no);
 }
