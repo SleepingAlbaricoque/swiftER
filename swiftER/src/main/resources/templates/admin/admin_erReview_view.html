@@ -26,8 +26,8 @@
                         <table class="admin-erReview-table">
                             <tr>
                                 <td class="key" colspan="3">지역 </td>
-                                <td>[[${cates[0]}]]-[[${cates[1]}]]</td>
-                                <td class="key" colspan="1">병원명</td>
+                                <td style="padding-left: 20px;">[[${cates[0]}]]-[[${cates[1]}]]</td>
+                                <td class="key">병원명</td>
                                 <td>[[${review.hospital_name}]]</td>
                                 <td class="key">작성자</td>
                                 <td>[[${review.member_uid}]]</td>
@@ -37,13 +37,13 @@
                             </tr>
                             <tr>
                                 <td class="key" colspan="2">제목</td>
-                                <td colspan="6">
+                                <td colspan="6" style="padding-left: 20px;">
                                     [[${review.title}]]
                                 </td>
                             </tr>
                             <tr>
                                 <td class="key" colspan="2">내용</td>
-                                <td colspan="6">
+                                <td colspan="6" style="padding-left: 20px;">
                                     <textarea name="admin-erReview-content" id="admin-erReview-content" cols="40" rows="10" readonly>[[${review.content}]]</textarea>
                                 </td>
                             </tr>

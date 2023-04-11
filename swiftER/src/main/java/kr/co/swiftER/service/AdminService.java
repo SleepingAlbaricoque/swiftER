@@ -212,6 +212,17 @@ public class AdminService {
 	}
 	
 	
+	// main
+	// 어제까지 DB에 저장된 수치 구하기
+	public int selectCountMembersTillYesterday(String today) {
+		return dao.selectCountMembersTillYesterday(today);
+	}
+	public int selectCountCommunityArticlesTillYesterday(String today) {
+		return dao.selectCountCommunityArticlesTillYesterday(today);
+	}
+	public int selectCountERReviewsTillYesterday(String today) {
+		return dao.selectCountERReviewsTillYesterday(today);
+	}	
 	
 	
 	

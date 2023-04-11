@@ -1,25 +1,11 @@
 <th:block th:include="@{admin/admin_header.html}"/>
     <script>
-        function searchBar(){
-            let bar = document.querySelector('.search-bar');
-
-            bar.classList.toggle('on');
-        }
-
-        function revealSubCate(i){
-            let subcate = document.querySelectorAll('.subcate')[i];
-            let subcateLength = document.querySelectorAll('.subcate').length;
-
-            for(let j =0; j <subcateLength; j++ ){
-                document.querySelectorAll('.subcate')[j].classList.remove('on');
-            }
-
-            subcate.classList.toggle('on');
-        }
+    let i = [[${membersDiff}]];
+    console.log(i);
     </script>
             <div class="admin-content">
                 <div class="control-panel-main shadow">
-                    <p>현황 보고서<span>* <span>2023-03-10</span> 기준</span></p>
+                    <p>현황 보고서<span>* <span>[[${today}]]</span> 기준</span></p>
                     <ul>
                         <li class="control-panel-main-item">
                             <ol>
@@ -29,8 +15,15 @@
                             </ol>
                             <ol>
                                 <li>총 회원 수</li>
-                                <li>30명</li>
-                                <li>전일 대비 <span class="decrease">3명 </span><i class="fa-solid fa-angle-down decrease"></i></li>
+                                <li>[[${totalMembers}]]명</li>
+                                <li>전일 대비
+	                                <span th:if="${membersDiff > 0}" class="increase">[[${membersDiff}]]명 </span>
+	                                <span th:if="${membersDiff == 0}">- </span>
+	                                <span th:if="${membersDiff < 0}" class="decrease">[[${membersDiff}]]명 </span>
+	                                <i th:if="${membersDiff > 0}"  class="fa-solid fa-angle-up increase"></i>
+	                                <i th:if="${membersDiff == 0}"></i>
+	                                <i th:if="${membersDiff < 0}"  class="fa-solid fa-angle-down decrease"></i>
+                                </li>
                             </ol>
                         </li>
                         <li class="control-panel-main-item">
@@ -41,8 +34,15 @@
                             </ol>
                             <ol>
                                 <li>총 병원 리뷰 수</li>
-                                <li>100건</li>
-                                <li>전일 대비 <span class="increase">5건 </span><i class="fa-solid fa-angle-up increase"></i></li>
+                                <li>[[${totalERReviews}]]건</li>
+                                <li>전일 대비 
+	                                <span th:if="${reviewsDiff > 0}" class="increase">[[${reviewsDiff}]]건 </span>
+	                                <span th:if="${reviewsDiff == 0}">- </span>
+	                                <span th:if="${reviewsDiff < 0}" class="decrease">[[${reviewsDiff}]]건 </span>
+	                                <i th:if="${reviewsDiff > 0}"  class="fa-solid fa-angle-up increase"></i>
+	                                <i th:if="${reviewsDiff == 0}"></i>
+	                                <i th:if="${reviewsDiff < 0}"  class="fa-solid fa-angle-down decrease"></i>
+                                </li>
                             </ol>
                         </li>
                         <li class="control-panel-main-item">
@@ -53,14 +53,21 @@
                             </ol>
                             <ol>
                                 <li>총 커뮤니티 작성글 수</li>
-                                <li>1500건</li>
-                                <li>전일 대비 <span class="increase">50건 </span><i class="fa-solid fa-angle-up increase"></i></li>
+                                <li>[[${totalCommunity}]]건</li>
+                                <li>전일 대비 
+                                	<span th:if="${articlesDiff > 0}" class="increase">[[${articlesDiff}]]건 </span>
+	                                <span th:if="${articlesDiff == 0}">- </span>
+	                                <span th:if="${articlesDiff < 0}" class="decrease">[[${articlesDiff}]]건 </span>
+	                                <i th:if="${articlesDiff > 0}"  class="fa-solid fa-angle-up increase"></i>
+	                                <i th:if="${articlesDiff == 0}"></i>
+	                                <i th:if="${articlesDiff < 0}"  class="fa-solid fa-angle-down decrease"></i>
+                               	</li>
                             </ol>
                         </li>
                     </ul>
                     <p>
-                        <a href="#">
-                            <input type="button" value="보고서 상세보기">
+                        <a th:href="@{/admin/main}">
+                            <input type="button" value="새로고침">
                         </a>
                     </p>
                 </div>
@@ -68,145 +75,47 @@
                     <div class="preview shadow">
                         <p>최근 병원 리뷰</p>
                         <table>
-                            <tr>
+                            <tr th:each="review, index: ${reviews}" th:if="${index.index} < 5">
                                 <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
+                                <td>[[${review.hospital_name}]]</td>
                                 <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
+                                    <a th:href="@{/admin/er/review/detail?no=__${review.no}__}">[[${review.title}]]</a>
                                 </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
+                                <td>[[${review.rdate}]]</td>
                             </tr>
                         </table>
                         <p class="go-to-list-button">
-                            <input type="button" value="리스트 더보기" onclick="location.href='#'">
+                            <input type="button" value="리스트 더보기" th:onclick="|location.href='@{/admin/er/review}'|">
                         </p>
                     </div>
                     <div class="preview shadow">
                         <p>최근 커뮤니티 글</p>
                         <table>
-                            <tr>
+                            <tr th:each="article, index: ${communityArticles}" th:if="${index.index} < 5">
                                 <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
+                                <td colspan="2">
+                                    <a th:href="@{/admin/community/view?no=__${article.no}__}">[[${article.title}]]</a>
                                 </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
+                                <td>[[${article.rdate}]]</td>
                             </tr>
                         </table>
                         <p class="go-to-list-button">
-                            <input type="button" value="리스트 더보기" onclick="location.href='#'">
+                            <input type="button" value="리스트 더보기" th:onclick="|location.href='@{/admin/community}'|">
                         </p>
                     </div>
                     <div class="preview shadow">
                         <p>최근 문의글</p>
                         <table>
-                            <tr>
+                            <tr th:each="question, index: ${questions}" th:if="${index.index} < 5">
                                 <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
+                                <td colspan="2">
+                                    <a th:href="@{/admin/cs/qna/view?no=__${question.no}__}">[[${question.title}]]</a>
                                 </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa-solid fa-angle-right"></i></td>
-                                <td>한사랑병원</td>
-                                <td>
-                                    <a href="#">화장실만 조금 더 청결하면 더 좋을 것 같아요</a>
-                                </td>
-                                <td>23.03.10</td>
+                                <td>[[${question.rdate}]]</td>
                             </tr>
                         </table>
                         <p class="go-to-list-button">
-                            <input type="button" value="리스트 더보기" onclick="location.href='#'">
+                            <input type="button" value="리스트 더보기" th:onclick="|location.href='@{/admin/cs/qna}'|">
                         </p>
                     </div>
             </div>

@@ -117,7 +117,11 @@ public interface AdminDAO {
 	public String[] selectERCates(@Param(value="region_code") int region_code, @Param(value="subregion_code") int subregion_code);
 	
 	
-	
+	// main
+	// 어제까지 DB에 저장된 수치 구하기
+	public int selectCountMembersTillYesterday(String today);
+	public int selectCountCommunityArticlesTillYesterday(String today);
+	public int selectCountERReviewsTillYesterday(String today);
 	
 	
 	

@@ -271,4 +271,14 @@
 			select `subregion` from `search_er_subcate` where `region_code` = #{region_code} and `subregion_code` = #{subregion_code} 
 		);
 	</select>
+	
+	<select id="selectCountMembersTillYesterday" resultType="int">
+		select count(`uid`) from `member` where DATE(rdate) &lt; #{today};
+	</select>
+	<select id="selectCountCommunityArticlesTillYesterday" resultType="int">
+		select count(`no`) from `community_article` where `parent`=0 and DATE(rdate) &lt; #{today};
+	</select>
+	<select id="selectCountERReviewsTillYesterday" resultType="int">
+		select count(`no`) from `search_er_review` where DATE(rdate) &lt; #{today};
+	</select>
 </mapper>
