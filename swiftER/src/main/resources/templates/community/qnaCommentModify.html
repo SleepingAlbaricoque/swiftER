@@ -11,11 +11,12 @@
             </ul>
           </aside>
           <article>
-              <form th:action="@{/community/qnaComment}" method="POST">
+              <form th:action="@{/community/qnaCommentModify}" method="POST">
               <input type="hidden" name="no" th:value="${no}">
           	  <input type="hidden" name="cateCode" th:value="${cateCode}">
 			  <input type="hidden" name="regionCode" th:value="0">
 			  <input type="hidden" name="parent" th:value="${parent}">
+			  <input type="hidden" name="title" th:value="${title}">
                 <table>
                   <tr>
                     <td>제목</td>                  
@@ -31,7 +32,7 @@
                   </tr>
                 </table>
                 <div>
-                  <a th:href="@{./qnaView(cateCode=${cateCode},no=${no},parent=${parent})}" class="btnCancle">취소하기</a>
+                  <a th:href="@{./qnaView(cateCode=${cateCode}, no=${parent}, parent=${parent})}" class="btnCancle">취소하기</a>
                   <input type="submit" class="btnSubmit" value="답변하기"/>
                 </div>
               </form>

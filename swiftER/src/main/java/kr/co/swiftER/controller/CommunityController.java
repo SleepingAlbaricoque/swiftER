@@ -287,17 +287,15 @@ public class CommunityController {
         model.addAttribute("parent", parent);
         model.addAttribute("no", no);
         model.addAttribute("vo", vo);
-
-        return "community/qnaComment";
+        
+        return "community/qnaCommentModify";
     }
     
     @PostMapping(value = {"community/qnaCommentModify"})
     public String QnaCommentModify(Model model, CommunityArticleVO vo, @RequestParam("cateCode") String cateCode,
-    		 String no, String parent,@RequestParam("title") String title, String content) {
+    		 String no, String parent, @RequestParam("title") String title, String content) {
     	
     	service.modifyQnaComment(no, title, content);
-    	
-    	//log.info("no : " + no);
     	
     	model.addAttribute("no", no);
     	 
