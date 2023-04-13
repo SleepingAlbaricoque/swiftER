@@ -194,4 +194,20 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
 	text-align: center;
 	font-size: 12px;
 }
+
+.noteTable > tbody > tr > td {
+	border-bottom: 1px solid #dfe5ed;
+}
+
+.noteTable > tbody > tr > td > input {
+	border-top : none;
+	border-bottom : none;
+}
+
+.note-button{
+	border-radius: 5px;
+	width: 25%;
+	float: right;
+	margin-right:30px;
+}
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
