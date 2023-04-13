@@ -295,6 +295,7 @@
     white-space: nowrap;
     padding-right: 8px;
     padding-bottom: 15px;
+    text-align: left;
 }
 .preview > table > tbody > tr > td:nth-child(3){
     width: 3%;

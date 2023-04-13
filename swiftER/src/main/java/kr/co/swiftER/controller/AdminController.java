@@ -3,11 +3,14 @@ package kr.co.swiftER.controller;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.security.Principal;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.jsoup.Jsoup;
@@ -47,7 +50,52 @@ public class AdminController {
 	private AdminService service;
 	
 	@GetMapping("admin/main")
-	public String main() {
+	public String main(Model model) {
+		// 전체 회원 수 및 각 게시판 별 작성글 수 불러오기
+		int totalMembers = service.selectCountTotal();
+		int totalERReviews = service.selectERReviewsTotal("0", "0");
+		int totalCommunity = service.selectCountCommunityArticlesTotal("0", "100");
+		
+		model.addAttribute("totalMembers", totalMembers);
+		model.addAttribute("totalERReviews", totalERReviews);
+		model.addAttribute("totalCommunity", totalCommunity);
+		
+		// 게시판 글 불러오기
+		List<ERReviewVO> reviews = service.selectERReviews("0", "0", 0);
+		List<CommunityArticleVO> communityArticles = service.selectCommunityArticles("0", "100", 0);
+		List<CSQuestionsVO> questions = service.selectArticles("3", "0", 0);
+		
+		// rdate 날짜만 남기기
+		for(CommunityArticleVO article: communityArticles){
+			article.setRdate(article.getRdate().substring(0, 10));
+		}
+		for(CSQuestionsVO question: questions){
+			question.setRdate(question.getRdate().substring(0, 10));
+		}
+		
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("communityArticles", communityArticles);
+		model.addAttribute("questions", questions);
+		
+		// 오늘 날짜 구해서 저장하기
+		// date 클래스는 보안 문제로 오라클 securing coding 문서에서도 사용을 지양할 것을 권장한다
+		ZonedDateTime todayDateTime = ZonedDateTime.now();
+		String today = todayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA));
+		model.addAttribute("today", today);
+		
+		// 전일 대비 작성글 수, 회원수 증감 구하기
+		int membersTillYesterday = service.selectCountMembersTillYesterday(today);
+		int articlesTillYesterday = service.selectCountCommunityArticlesTillYesterday(today);
+		int reviewsTillYesterday = service.selectCountERReviewsTillYesterday(today);
+		
+		int membersDiff = totalMembers - membersTillYesterday;
+		int articlesDiff = totalCommunity - articlesTillYesterday;
+		int reviewsDiff = totalERReviews - reviewsTillYesterday;
+		
+		model.addAttribute("membersDiff", membersDiff);
+		model.addAttribute("articlesDiff", articlesDiff);
+		model.addAttribute("reviewsDiff", reviewsDiff);
+		
 		return "admin/admin_main";
 	}
 	
@@ -251,7 +299,7 @@ public class AdminController {
 			List<MultipartFile> files = req.getFiles("fname");
 			article.setFile(files.size());
 			
-			// 사용자가 작성한 QnA DB에 insert
+			// 사용자가 작성한 notice DB에 insert
 			service.insertArticle(article);
 			
 			for(MultipartFile file : files) {
@@ -260,7 +308,7 @@ public class AdminController {
 			}
 		}else { // 첨부 파일이 없는 경우
 			
-			// 사용자가 작성한 QnA DB에 insert
+			// 사용자가 작성한 notice DB에 insert
 			service.insertArticle(article);
 			
 			article.setFile(0);
@@ -422,7 +470,7 @@ public class AdminController {
 			List<MultipartFile> files = req.getFiles("fname");
 			article.setFile(files.size());
 			
-			// 사용자가 작성한 QnA DB에 insert
+			// 사용자가 작성한 faq DB에 insert
 			service.insertArticle(article);
 			
 			for(MultipartFile file : files) {
@@ -431,7 +479,7 @@ public class AdminController {
 			}
 		}else { // 첨부 파일이 없는 경우
 			
-			// 사용자가 작성한 QnA DB에 insert
+			// 사용자가 작성한 faq DB에 insert
 			service.insertArticle(article);
 			
 			article.setFile(0);

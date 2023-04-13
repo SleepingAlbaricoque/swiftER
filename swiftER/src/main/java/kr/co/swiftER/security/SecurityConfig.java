@@ -55,6 +55,7 @@ public class SecurityConfig {
 				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/mytownWrite").hasAnyRole("0", "1", "2")
 				.requestMatchers("/community/qnaComment").hasAnyRole("2")
+				.requestMatchers("/community/qnaCommentModify").permitAll()
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()

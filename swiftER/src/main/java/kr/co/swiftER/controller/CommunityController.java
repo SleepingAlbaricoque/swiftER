@@ -175,6 +175,7 @@ public class CommunityController {
     		
     		service.modifyArticle(no, title, content);
     		
+    		
     		if(cateCode.equals("11")) {
     			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
     		}else {
@@ -194,25 +195,37 @@ public class CommunityController {
     	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
     
+    @GetMapping(value = {"community/modifyComment"})
+    public String ModifyComment(Model model,@RequestParam("cateCode") String cateCode, String no, String parent, String content) {
+    	
+    	service.modifyComment(no, content);
+    	
+    	if(cateCode.equals("11")) {
+			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
+		}else {
+			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
+		}
+    }
+    
     @GetMapping(value = {"community/deleteComment"})
-    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode, String parent, String comments) {
+    public String DeleteComment(Model model,@RequestParam("cateCode") String cateCode, String no, String regionCode,String parent, String comments) {
     	
     	service.deleteComment(no);
     	
-    	
-    	log.info("no : " + no);
-    	
+    	//log.info("no : " + no);
+    	//log.info("parent : " + parent);
     	
     	model.addAttribute("cateCode", cateCode);
     	model.addAttribute("regionCode", regionCode);
     	model.addAttribute("parent", parent);
     	model.addAttribute("no", no);
     	
+    	//service.updateDeleteComments(no);
     	
     	if(cateCode.equals("11")) {
-			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
 		}else {
-			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
+			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
 		}
     }
     
@@ -264,9 +277,31 @@ public class CommunityController {
         
         
         return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+no+"&parent="+parent;
-        
     }
-
+    
+    @GetMapping(value = {"community/qnaCommentModify"})
+    public String QnaCommentModify(Model model,@RequestParam("cateCode") String cateCode, String no, String title, String parent) {
+    	CommunityArticleVO vo = service.selectFreeArticle(no);
+    	
+        model.addAttribute("cateCode", cateCode);
+        model.addAttribute("parent", parent);
+        model.addAttribute("no", no);
+        model.addAttribute("vo", vo);
+        
+        return "community/qnaCommentModify";
+    }
+    
+    @PostMapping(value = {"community/qnaCommentModify"})
+    public String QnaCommentModify(Model model, CommunityArticleVO vo, @RequestParam("cateCode") String cateCode,
+    		 String no, String parent, @RequestParam("title") String title, String content) {
+    	
+    	service.modifyQnaComment(no, title, content);
+    	
+    	model.addAttribute("no", no);
+    	 
+    	return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
+    }
+    
     /* Mytown */
     @GetMapping(value = {"community/mytownWrite"})
     public String MytownWrite(Model model, @RequestParam("cateCode") String cateCode){
