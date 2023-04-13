@@ -1,4 +1,17 @@
 <th:block th:insert="~{@{_header.html}}"/>
+<script>
+$(document).on('click', '.modify-button', function(e) {
+	  e.preventDefault();
+	  var commentNo = $(this).data('comment-no');
+	  var commentContent = $(this).closest('li').find('.comment_font').text().trim();
+	  var formHtml = '<form method="post" action="/modifyComment">' +
+	                    '<input type="hidden" name="commentNo" value="' + commentNo + '">' +
+	                    '<textarea name="commentContent" style=" resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333; ">' + commentContent + '</textarea>'
+	                  '</form>';
+	  $(this).closest('li').find('.comment_font').html(formHtml);
+	});
+
+</script>
   <section id="community">
       <div class="free">
         <section class="view">
@@ -63,7 +76,7 @@
                           <!-- 댓글 아티클 부가 기능 -->
                           <div class="comment__ext">
                           <div class="comment__button">
-                              <span><a href=#  class="button--comment-modify">수정</a> |</span>
+                              <span><a href=#  class="button--comment-modify modify-button" data-comment-no="${cm.no}">수정</a> |</span>
                               <span><a th:href="@{/community/deleteComment(cateCode=${cateCode}, no=${cm.no}, regionCode=100, parent=${cm.parent})}" class="button--comment-delete">삭제</a>
                               </span>
                           </div>
