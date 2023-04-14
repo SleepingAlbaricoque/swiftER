@@ -1,15 +1,49 @@
 <th:block th:insert="~{@{_header.html}}"/>
 <script>
-$(document).on('click', '.modify-button', function(e) {
+$(document).on('click', '.button--comment-modify', function(e) {
 	  e.preventDefault();
-	  var commentNo = $(this).data('comment-no');
-	  var commentContent = $(this).closest('li').find('.comment_font').text().trim();
-	  var formHtml = '<form method="post" action="/modifyComment">' +
-	                    '<input type="hidden" name="commentNo" value="' + commentNo + '">' +
-	                    '<textarea name="commentContent" style=" resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333; ">' + commentContent + '</textarea>'
-	                  '</form>';
-	  $(this).closest('li').find('.comment_font').html(formHtml);
+
+	  var commentItem = $(this).closest('li');
+
+	  var no = commentItem.attr('data-comment-no');
+	  var content = commentItem.find('.comment_font').text().trim();
+
+	  var formHtml = '<form method="post" action="/community/modifyComment">' +
+	                   '<input type="hidden" name="no" value="' + no + '">' +
+	                   '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
+	                   '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
+	                 '</form>';
+
+	  commentItem.find('.comment_font').html(formHtml);
 	});
+$(document).on('click', '.button--comment-update', function(e) {
+	  e.preventDefault();
+
+	  var commentForm = $(this).closest('form');
+	  var no = commentForm.find('[name=no]').val();
+	  var content = commentForm.find('[name=content]').val();
+	  
+	  console.log('no : ' + no);
+	  console.log('content : ' + content);
+
+	  $.ajax({
+	    type: 'POST',
+	    url: '/community/modifyComment',
+	    data: {
+	      "no": no,
+	      "content": content
+	    },
+	    success: function(response) {
+	      var commentItem = $('[data-comment-no="' + no + '"]');
+	      commentItem.find('.comment_font').text(content);
+	    },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	      alert('댓글 수정에 실패했습니다. 다시 시도해주세요.');
+	    }
+	  });
+	});
+
+
 
 </script>
   <section id="community">
@@ -76,7 +110,7 @@ $(document).on('click', '.modify-button', function(e) {
                           <!-- 댓글 아티클 부가 기능 -->
                           <div class="comment__ext">
                           <div class="comment__button">
-                              <span><a href=#  class="button--comment-modify modify-button" data-comment-no="${cm.no}">수정</a> |</span>
+                              <span><a href=#  class="button--comment-modify" data-comment-no="${cm.no}">수정</a> |</span>
                               <span><a th:href="@{/community/deleteComment(cateCode=${cateCode}, no=${cm.no}, regionCode=100, parent=${cm.parent})}" class="button--comment-delete">삭제</a>
                               </span>
                           </div>
