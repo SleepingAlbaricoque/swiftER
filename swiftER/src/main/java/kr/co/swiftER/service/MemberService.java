@@ -18,6 +18,7 @@ import kr.co.swiftER.repo.MemberRepo;
 import kr.co.swiftER.vo.CommunityArticleVO;
 import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.MemberDoctorVO;
+import kr.co.swiftER.vo.MemberHistoryVO;
 import kr.co.swiftER.vo.MemberTermsVO;
 import kr.co.swiftER.vo.MemberVO;
 
@@ -162,5 +163,10 @@ public class MemberService {
 			dao.insertMemberDoctor(dvo);
 		}
 		return dvo;
+	}
+
+	// 마이페이지 간편 이력 부분(post)
+	public int insertNote(MemberHistoryVO hvo) {
+		return dao.insertNote(hvo);
 	}
 }

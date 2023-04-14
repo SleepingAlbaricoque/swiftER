@@ -138,4 +138,13 @@
 			`specialty`=#{specialty}
 			where `member_uid`=#{member_uid};
 	</update>
+	
+	<!-- 마이페이지 간편이력 추가 -->
+	<insert id="insertNote">
+		INSERT `member_history` set
+			`uid`=#{uid},
+			`rdate`=#{rdate},
+			`hospital`=#{hospital},
+			`symptom`=#{symptom}
+	</insert>
 </mapper>
