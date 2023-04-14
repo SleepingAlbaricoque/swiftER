@@ -15,11 +15,29 @@
     <link rel="stylesheet" th:href="@{/css/admin/admin_cs.css?v=13}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_community.css?v=20}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_erReview.css?v=3}">
-    <script>
+    <script defer>
 	    function searchBar(){
 	        let bar = document.querySelector('.search-bar');
 	
 	        bar.classList.toggle('on');
+	        
+	        // 사용자가 검색창에 입력할 때마다 자동완성
+	        const searchInput = document.getElementById('search-input');
+		    const searchResults = document.getElementById('search-results');
+		    
+		    searchInput.addEventListener('input', ()=>{
+		    	const query = searchInput.value;
+		    	fetch('/swiftER/admin/search?query=' + query)
+		    	.then((response) => response.json())
+		    	.then((data) => {
+		    		searchResults.innerHTML = "";
+		    		data.forEach((result) =>{
+		    			const li = document.createElement('li');
+		    			li.textContent = result;
+		    			searchResults.appendChild(li);
+		    		});
+		    	});
+		    });
 	    }
 	
 	    function revealSubCate(i){
@@ -32,6 +50,8 @@
 	
 	        subcate.classList.toggle('on');
 	    }
+	    
+	   
     </script>
 </head>
 <body>
@@ -50,7 +70,10 @@
                     <i class="fa-solid fa-magnifying-glass fa-flip-horizontal fa-stack-1x"></i>
                 </a>
                 <div class="search-bar"> 
-                    <input type="text">
+                    <input type="text" id="search-input">
+                    <div style="background-color:red;">
+            			<ul id="search-results" style="max-height: 100px; overflow-y: auto;"></ul>
+            		</div>
                     <input type="button" value="검색" onClick="location.href='#'"> 
                 </div>
             </div>

@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.swiftER.autocomplete.Trie;
 import kr.co.swiftER.service.AdminService;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
 import kr.co.swiftER.vo.AdminMemberSearchVO;
@@ -48,6 +49,11 @@ public class AdminController {
 
 	@Autowired
 	private AdminService service;
+	
+	@Autowired
+	private Trie trie;
+	
+	// 메인
 	
 	@GetMapping("admin/main")
 	public String main(Model model) {
@@ -98,6 +104,19 @@ public class AdminController {
 		
 		return "admin/admin_main";
 	}
+	
+	// 헤더 검색 자동완성
+	@ResponseBody
+	@GetMapping("admin/search")
+	public List<String> search(String query){
+		trie.insert("a");
+		trie.insert("ab");
+		trie.insert("abc");
+		
+		List<String> suggestions = trie.autoComplete(query);
+		return suggestions;
+	}
+	
 	
 	// 멤버
 	
