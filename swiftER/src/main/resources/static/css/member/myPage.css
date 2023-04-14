@@ -1,4 +1,4 @@
-#wrapper {
+ #wrapper {
     width: 1300px;
 }
 
@@ -139,6 +139,8 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
     font-size: 20px;
 }
 
+
+
 .calendarborder{
     width: 507px;
     height: 425px;
@@ -191,7 +193,41 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
 }
 
 .noteTd {
+	width: 140px;
+	height: 32px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 15px;
+	outline: none;
+	background-color: rgb(233, 233, 233);
 	text-align: center;
-	font-size: 12px;
+}
+
+#note-submit{
+	float: right;
+	width: 140px;
+	height: 25px;
+	margin-top: 10px;
+	margin-right: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 2.5px;
+	font-weight: 500;
+	color: #000;
+	background-color: rgb(233, 233, 233);
+	border: 1px solid black;
+	border-radius: 45px;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
+	outline: none;
+}
+
+#note-submit:hover{
+	background-color: #2EE59D;
+	box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+	color: #fff;
+	transform: translateY(-7px);
 }
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');

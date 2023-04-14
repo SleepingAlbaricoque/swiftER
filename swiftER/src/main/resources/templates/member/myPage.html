@@ -189,7 +189,7 @@
                 </div>
             </article>
             <div class="calendarborder">
-            	<h4 id="name">간편 이력</h4>
+            	<h4 id="s_name">간편 이력</h4>
                 <div id="selectDate">
                     <input type="date" id="calendar">
                 </div>
@@ -220,26 +220,64 @@
                 </div>
                 <h4 id="s_name">기록</h4>
                 <div class="note">
-                    <table class="noteTable">
-                    <!-- db 만들었으니 ajax 통신으로 주고받으면 될듯 -->
-                        <tr>
-                            <th>날짜</th>
-                            <th>병원명</th>
-                            <th>질환/증상</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="date" class="noteTd" id="udate">
-                            </td>
-                            <td>
-                                <input type="text" class="noteTd" id="hos">
-                            </td>
-                            <td>
-                                <input type="text" class="noteTd" id="symptom">
-                            </td>
-                        </tr>
-                    </table>
+	                <form th:action="@{/member/note}">
+	                    <table class="noteTable">
+	                    <!-- db 만들었으니 ajax 통신으로 주고받으면 될듯 -->
+	                        <tr>
+	                            <th>날짜</th>
+	                            <th>병원명</th>
+	                            <th>질환/증상</th>
+	                        </tr>
+	                        <tr>
+	                            <td>
+	                            	<input type="hidden" th:value="${vo.uid}" id="uid">
+	                                <input type="date" class="noteTd" id="udate">
+	                            </td>
+	                            <td>
+	                                <input type="text" class="noteTd" id="hos" placeholder="병원이름">
+	                            </td>
+	                            <td>
+	                                <input type="text" class="noteTd" id="symptom" placeholder="증상명">
+	                            </td>
+	                        </tr>
+	                    </table>
+	                    <button type="button" id="note-submit">저장</button>
+                    </form>
                 </div>
+                <script>
+                $(function(){
+            		$('#note-submit').click(function(){
+            			let uid = $('#uid').val();
+            			let udate = $('#udate').val();
+            			let hos = $('#hos').val();
+            			let symptom = $('#symptom').val();
+            			
+            			let jsonData = {
+            					"uid" : uid,
+            					"rdate" : udate,
+            					"hospital" : hos,
+            					"symptom" : symptom
+            			}
+            			
+            			$.ajax({
+            				url : '/swiftER/member/note',
+            				method : 'post',
+            				data : jsonData,
+            				dataType : 'json',
+            				success : function(data){
+            					if(data.result == 1){
+            						redirect: '/swiftER/member/myPage'
+            					}else{
+            						alert('실패');
+            					}
+            				}
+            			});
+            			
+            			
+            		});
+            		
+            	});
+                </script>
             </div>
             <article class="reviewSection">
                 <section>
