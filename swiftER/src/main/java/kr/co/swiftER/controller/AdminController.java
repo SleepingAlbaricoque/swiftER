@@ -109,6 +109,7 @@ public class AdminController {
 	@ResponseBody
 	@GetMapping("admin/search")
 	public List<String> search(String query){
+		// community, qna, erReview 글을 DB에서 불러와서 타이틀만 trie에 저장
 		trie.insert("a");
 		trie.insert("ab");
 		trie.insert("abc");
@@ -117,6 +118,10 @@ public class AdminController {
 		return suggestions;
 	}
 	
+	@GetMapping("admin/search/result")
+	public String searchResult(String query) {
+		return "admin/admin_searchResult";
+	}
 	
 	// 멤버
 	
