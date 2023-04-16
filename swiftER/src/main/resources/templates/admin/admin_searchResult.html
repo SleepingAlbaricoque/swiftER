@@ -17,12 +17,12 @@
                         <table class="community-table">
                         	<th:block th:each="result: ${results}">
 	                        	<tr>
-	                        		<td>
-	                        			<a th:cate="${result.cate}" th:no="${result.no}" th:onclick="redirect(this.getAttribute('cate'), this.getAttribute('no'))">[[${result.title}]]</a>
+	                        		<td class="search-result-title-wrapper">
+	                        			<a class="search-result-title" th:cate="${result.cate}" th:no="${result.no}" th:onclick="redirect(this.getAttribute('cate'), this.getAttribute('no'))">[[${result.title}]]</a>
 	                        		</td>
 	                        	</tr>
 	                        	<tr>
-	                        		<td>[(${result.content})]</td>
+	                        		<td class="search-result-content">[(${result.content})]</td>
 	                        	</tr>
                         	</th:block>
                         </table>

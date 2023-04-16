@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin.css?v=10}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin.css?v=17}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_member.css}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_cs.css?v=13}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_community.css?v=21}">
@@ -25,6 +25,7 @@
 	        const searchInput = document.getElementById('search-input');
 		    const searchResults = document.getElementById('search-results');
 		    const result = document.querySelector('.search-result-wrapper');
+		    const searchBar = document.querySelector('.search-bar');
 		    
 		    searchInput.addEventListener('input', ()=>{
 		    	const query = searchInput.value;
@@ -35,15 +36,18 @@
 		    		data.forEach((result) =>{
 		    			const li = document.createElement('li');
 		    			li.textContent = result;
+		    			li.setAttribute('onclick', 'alert(1);');
 		    			searchResults.appendChild(li);
 		    		});
 		    		result.style.display='block';
 		    	});
 		    });
 		    
-		    searchInput.addEventListener('focusout', ()=>{
+		    
+		    searchBar.addEventListener('focusout', ()=>{
 		    	result.style.display='none';
 		    });
+		    
 	    }
 	
 	    function revealSubCate(i){
@@ -61,6 +65,7 @@
 	    	let query = document.getElementById('search-input').value;
 	    	location.href = '/swiftER/admin/search/result?query=' + query;
 	    }
+	    
 
     </script>
 </head>

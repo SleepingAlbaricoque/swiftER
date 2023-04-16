@@ -106,7 +106,7 @@
 	</delete>
 	
 	<select id="selectCountArticlesTotal" resultType="int">
-		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode}
+		select count(`no`) from `cs_questions` where `cateCode` = #{cateCode} and `qno`=0 
 		<if test="subcateCode != 0">
 			and `subcateCode` = #{subcateCode}
 		</if>
