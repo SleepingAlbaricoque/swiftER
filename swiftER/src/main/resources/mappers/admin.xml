@@ -281,4 +281,14 @@
 	<select id="selectCountERReviewsTillYesterday" resultType="int">
 		select count(`no`) from `search_er_review` where DATE(rdate) &lt; #{today};
 	</select>
+	
+	<select id="selectCommunityArticlesWithKeyword" resultType="kr.co.swiftER.vo.CommunityArticleVO">
+		select * from `community_article` where `parent`=0 and (`title` like CONCAT('%', #{keyword}, '%') or `content` like CONCAT('%', #{keyword}, '%'));
+	</select>
+	<select id="selectQnasWithKeyword" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		select * from `cs_questions` where `cateCode`=3 and (`title` like CONCAT('%', #{keyword}, '%') or `content` like CONCAT('%', #{keyword}, '%'));
+	</select>
+	<select id="selectERReviewsWithKeyword" resultType="kr.co.swiftER.vo.ERReviewVO">
+		select * from `search_er_review` where `title` like CONCAT('%', #{keyword}, '%') or `content` like CONCAT('%', #{keyword}, '%');
+	</select>
 </mapper>

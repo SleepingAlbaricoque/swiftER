@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.swiftER.autocomplete.PageRankCalculator;
 import kr.co.swiftER.autocomplete.Trie;
 import kr.co.swiftER.service.AdminService;
 import kr.co.swiftER.vo.AdminMemberModifyVO;
@@ -41,6 +42,7 @@ import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
+import kr.co.swiftER.vo.PageVO;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -52,6 +54,9 @@ public class AdminController {
 	
 	@Autowired
 	private Trie trie;
+	
+	@Autowired
+	private PageRankCalculator pageRankCalculator;
 	
 	// 메인
 	
@@ -109,17 +114,62 @@ public class AdminController {
 	@ResponseBody
 	@GetMapping("admin/search")
 	public List<String> search(String query){
-		// community, qna, erReview 글을 DB에서 불러와서 타이틀만 trie에 저장
-		trie.insert("a");
-		trie.insert("ab");
-		trie.insert("abc");
+		// community, erReview, qna 글을 DB에서 불러오기
+		List<PageVO> pages = new ArrayList<>();
 		
+		List<PageVO> commPages = service.selectCommunityArticlesForSearch(query);
+		for(PageVO vo : commPages) 
+			pages.add(vo);
+		
+		List<PageVO> erPages = service.selectERReviewsForSearch(query);
+		for(PageVO vo : erPages)
+			pages.add(vo);
+		
+		List<PageVO> qnaPages = service.selectQnasForSearch(query);
+		for(PageVO vo : qnaPages)
+			pages.add(vo);
+		
+		// 불러온 게시글들의 타이틀을 trie tree에 저장
+		for(PageVO page : pages)
+			trie.insert(page.getTitle());
+		
+		// autocomplete의 결과 저장; 검색 쿼리가 게시글 제목 맨 처음에 오는 경우만 검색 가능하고, 중간에 오는 경우는 검색 불가
 		List<String> suggestions = trie.autoComplete(query);
 		return suggestions;
 	}
 	
 	@GetMapping("admin/search/result")
-	public String searchResult(String query) {
+	public String searchResult(String query, Model model) {
+		// community, erReview, qna 글을 DB에서 불러오기
+		List<PageVO> pages = new ArrayList<>();
+		
+		List<PageVO> commPages = service.selectCommunityArticlesForSearch(query);
+		for(PageVO vo : commPages) 
+			pages.add(vo);
+		
+		List<PageVO> erPages = service.selectERReviewsForSearch(query);
+		for(PageVO vo : erPages)
+			pages.add(vo);
+		
+		List<PageVO> qnaPages = service.selectQnasForSearch(query);
+		for(PageVO vo : qnaPages)
+			pages.add(vo);
+		
+		// PageRankCalculator를 이용해 검색결과 출력 순위 정하기
+		Map<PageVO, Double> ranks = pageRankCalculator.calculatePageRank(pages, query, 10);
+		
+		// rank 값까지 담을 새로운 List<PageVO> 객체 만들고 model에 저장
+		List<PageVO> results = new ArrayList<>();
+		for(Map.Entry<PageVO, Double> entry : ranks.entrySet()) {
+			PageVO page = entry.getKey();
+			Double rank = entry.getValue();
+			results.add(new PageVO(page.getNo(), page.getCate(), page.getTitle(), page.getContent(), rank, page.getRdate()));
+		}
+		
+		results.sort((r1, r2) -> Double.compare(r2.getRank(), r1.getRank()));
+		
+		model.addAttribute("results", results);
+		
 		return "admin/admin_searchResult";
 	}
 	

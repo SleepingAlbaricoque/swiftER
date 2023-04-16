@@ -123,9 +123,13 @@ public interface AdminDAO {
 	public int selectCountCommunityArticlesTillYesterday(String today);
 	public int selectCountERReviewsTillYesterday(String today);
 	
-	
-	
-	
+	// 제목 또는 본문에 검색 keyword를 포함하는 글 모두 불러오기
+	// community_article
+	public List<CommunityArticleVO> selectCommunityArticlesWithKeyword(String keyword);
+	// cs_questions: qna만 불러오기
+	public List<CSQuestionsVO> selectQnasWithKeyword(String keyword);
+	//er_review
+	public List<ERReviewVO> selectERReviewsWithKeyword(String keyword);
 	
 	
 	// 파일 처리
