@@ -195,16 +195,15 @@ public class CommunityController {
     	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
     
-    @GetMapping(value = {"community/modifyComment"})
-    public String ModifyComment(Model model,@RequestParam("cateCode") String cateCode, String no, String parent, String content) {
+    @PostMapping(value = {"community/modifyComment"})
+    public String ModifyComment(Model model,@RequestParam("cateCode") String cateCode, @RequestParam("no") String no, String parent, @RequestParam("content") String content) {
+    	
+    	log.info("no : " + no);
+    	log.info("content : " + content);
     	
     	service.modifyComment(no, content);
-    	
-    	if(cateCode.equals("11")) {
-			return "redirect:/community/qnaView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
-		}else {
-			return "redirect:/community/freeView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
-		}
+    	    	
+    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
     }
     
     @GetMapping(value = {"community/deleteComment"})

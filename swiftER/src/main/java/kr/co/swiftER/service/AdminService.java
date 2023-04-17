@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +37,7 @@ import kr.co.swiftER.vo.ERReviewVO;
 import kr.co.swiftER.vo.ERSubcateVO;
 import kr.co.swiftER.vo.FileVO;
 import kr.co.swiftER.vo.MemberVO;
+import kr.co.swiftER.vo.PageVO;
 
 @Service
 public class AdminService {
@@ -223,6 +225,71 @@ public class AdminService {
 	public int selectCountERReviewsTillYesterday(String today) {
 		return dao.selectCountERReviewsTillYesterday(today);
 	}	
+	
+	// 검색 keyword를 포함하는 글을 DB에서 불러와서 PageVO로 전환하기
+	// community_article 테이블
+	public List<PageVO> selectCommunityArticlesForSearch(String keyword){
+		List<CommunityArticleVO> articles = dao.selectCommunityArticlesWithKeyword(keyword);
+		
+		// article 정보를 담은 PageVO 객체들을 저장할 list 객체 -> 메서드 리턴값
+		List<PageVO> pages = new ArrayList<>();
+		
+		for(CommunityArticleVO article : articles) {
+			// article 정보를 담을 PageVO 객체 생성
+			PageVO page = new PageVO();
+			page.setNo(article.getNo());		
+			page.setCate(1);
+			page.setTitle(article.getTitle());
+			page.setContent(article.getContent());
+			page.setRdate(article.getRdate().substring(0, 10));		
+			
+			// PageVO를 pages에 담기
+			pages.add(page);
+		}
+		return pages;
+	}
+	
+	// er_review 테이블; 로직은 바로 위의 메서드와 동일 
+	public List<PageVO> selectERReviewsForSearch(String keyword){
+		List<ERReviewVO> reviews = dao.selectERReviewsWithKeyword(keyword);
+		
+		List<PageVO> pages = new ArrayList<>();
+		
+		for(ERReviewVO review : reviews) {
+			PageVO page = new PageVO();
+			page.setNo(review.getNo());
+			page.setCate(2);
+			page.setTitle(review.getTitle());
+			page.setContent(review.getContent());
+			page.setRdate(review.getRdate());
+			
+			pages.add(page);
+		}
+		
+		return pages;
+	}
+	
+	// cs_questions 테이블; 로직은 바로 위의 메서드들과 동일
+	public List<PageVO> selectQnasForSearch(String keyword){
+		List<CSQuestionsVO> questions = dao.selectQnasWithKeyword(keyword);
+		
+		List<PageVO> pages = new ArrayList<>();
+		
+		for(CSQuestionsVO question : questions) {
+			PageVO page = new PageVO();
+			page.setNo(question.getNo());
+			page.setCate(3);
+			page.setTitle(question.getTitle());
+			page.setContent(question.getContent());
+			page.setRdate(question.getRdate().substring(0, 10));
+			
+			pages.add(page);
+		}
+		return pages;
+	}
+	
+	
+	
 	
 	
 	

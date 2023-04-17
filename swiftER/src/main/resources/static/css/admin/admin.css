@@ -26,7 +26,7 @@
       width: 100%;
       height: 60px;
       background: #fafbfd;
-      overflow: hidden;
+      overflow-x: clip;
   }
 
   .logo > div{
@@ -92,6 +92,37 @@
       bottom: 5.5px;
       cursor: pointer;
   }
+
+.search-result-wrapper{
+	background-color: #fff; 
+	position:relative; 
+	z-index:1; 
+	top: 9px;
+    left: 69px;
+    width: 285px;
+    box-shadow: 1px 7px 10px -3px rgba(0,0,0,0.30);
+}
+.search-result-wrapper > ul li:hover{
+	background-color: #fafbfd;
+}
+
+.search-result-content{
+	border-bottom: 1px solid #c3c0c0;
+    padding-bottom: 20px;
+    text-align: left;
+    padding-left : 10px;
+    text-overflow:ellipsis; 
+    overflow:hidden; 
+}
+
+.search-result-title{
+	font-size: 17.5px;
+	cursor: pointer;
+}
+
+.search-result-title-wrapper{
+	text-align: left;
+}
 
   .menu{
       position: relative;

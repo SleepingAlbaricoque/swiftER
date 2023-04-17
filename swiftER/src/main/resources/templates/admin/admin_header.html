@@ -10,16 +10,44 @@
     <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin.css?v=2}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin.css?v=17}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_member.css}">
     <link rel="stylesheet" th:href="@{/css/admin/admin_cs.css?v=13}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_community.css?v=20}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_erReview.css?v=3}">
-    <script>
+    <link rel="stylesheet" th:href="@{/css/admin/admin_community.css?v=21}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin_erReview.css?v=4}">
+    <script defer>
 	    function searchBar(){
 	        let bar = document.querySelector('.search-bar');
 	
 	        bar.classList.toggle('on');
+	        
+	        // 사용자가 검색창에 입력할 때마다 자동완성
+	        const searchInput = document.getElementById('search-input');
+		    const searchResults = document.getElementById('search-results');
+		    const result = document.querySelector('.search-result-wrapper');
+		    const searchBar = document.querySelector('.search-bar');
+		    
+		    searchInput.addEventListener('input', ()=>{
+		    	const query = searchInput.value;
+		    	fetch('/swiftER/admin/search?query=' + query)
+		    	.then((response) => response.json())
+		    	.then((data) => {
+		    		searchResults.innerHTML = "";
+		    		data.forEach((result) =>{
+		    			const li = document.createElement('li');
+		    			li.textContent = result;
+		    			li.setAttribute('onclick', 'alert(1);');
+		    			searchResults.appendChild(li);
+		    		});
+		    		result.style.display='block';
+		    	});
+		    });
+		    
+		    
+		    searchBar.addEventListener('focusout', ()=>{
+		    	result.style.display='none';
+		    });
+		    
 	    }
 	
 	    function revealSubCate(i){
@@ -32,6 +60,13 @@
 	
 	        subcate.classList.toggle('on');
 	    }
+	    
+	    function moveToSearchResult(){
+	    	let query = document.getElementById('search-input').value;
+	    	location.href = '/swiftER/admin/search/result?query=' + query;
+	    }
+	    
+
     </script>
 </head>
 <body>
@@ -50,8 +85,11 @@
                     <i class="fa-solid fa-magnifying-glass fa-flip-horizontal fa-stack-1x"></i>
                 </a>
                 <div class="search-bar"> 
-                    <input type="text">
-                    <input type="button" value="검색" onClick="location.href='#'"> 
+                    <input type="text" id="search-input" placeholder="제목으로 글 검색">
+                    <div class="search-result-wrapper">
+            			<ul id="search-results" style="max-height: 100px; overflow-y: auto;"></ul>
+            		</div>
+                    <input type="button" value="검색" onclick="moveToSearchResult()"> 
                 </div>
             </div>
             <div class="menu">

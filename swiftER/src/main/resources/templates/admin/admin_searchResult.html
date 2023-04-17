@@ -1,0 +1,35 @@
+<th:block th:include="@{admin/admin_header.html}"/>
+    <script>
+    function redirect(cate, no){
+    	if(cate == 1){ // community article
+    		location.href = "/swiftER/admin/community/view?no=" + no;
+    	}else if(cate == 2){ // er reviews
+    		location.href = "/swiftER/admin/er/review/detail?no=" + no;
+    	}else{ // qna
+    		location.href = "/swiftER/admin/cs/qna/view?no=" + no;
+    	}
+    }
+    </script>
+            <div class="admin-content">
+                <div class="community-panel-main shadow">
+                    <p>검색 결과</p>
+                    <div class="community-table-wrapper">
+                        <table class="community-table">
+                        	<th:block th:each="result: ${results}">
+	                        	<tr>
+	                        		<td class="search-result-title-wrapper">
+	                        			<a class="search-result-title" th:cate="${result.cate}" th:no="${result.no}" th:onclick="redirect(this.getAttribute('cate'), this.getAttribute('no'))">[[${result.title}]]</a>
+	                        		</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td class="search-result-content">[(${result.content})]</td>
+	                        	</tr>
+                        	</th:block>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
