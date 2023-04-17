@@ -24,6 +24,7 @@
 	        // 사용자가 검색창에 입력할 때마다 자동완성
 	        const searchInput = document.getElementById('search-input');
 		    const searchResults = document.getElementById('search-results');
+		    const searchResultsWrapper = document.querySelector('.search-result-wrapper');
 		    const result = document.querySelector('.search-result-wrapper');
 		    const searchBar = document.querySelector('.search-bar');
 		    
@@ -36,18 +37,19 @@
 		    		data.forEach((result) =>{
 		    			const li = document.createElement('li');
 		    			li.textContent = result;
-		    			li.setAttribute('onclick', 'alert(1);');
+		    			li.setAttribute('onclick', 'moveToSearchResultFromAutocomplete()');
 		    			searchResults.appendChild(li);
 		    		});
 		    		result.style.display='block';
 		    	});
 		    });
 		    
-		    
-		    searchBar.addEventListener('focusout', ()=>{
-		    	result.style.display='none';
-		    });
-		    
+		   // 자동완성 결과 출력 후 사용자가 결과창 밖의 지점을 클릭하면 결과창 숨기기
+		   document.addEventListener('click', function(event){
+			   if(!searchResultsWrapper.contains(event.target)){
+				   result.style.display='none';
+			   }
+		   });
 	    }
 	
 	    function revealSubCate(i){
@@ -61,9 +63,17 @@
 	        subcate.classList.toggle('on');
 	    }
 	    
+	    // 검색 버튼을 누르면 결과 페이지로 이동 
 	    function moveToSearchResult(){
 	    	let query = document.getElementById('search-input').value;
 	    	location.href = '/swiftER/admin/search/result?query=' + query;
+	    }
+	    
+	    // 자동완성 결과 누르면 그 결과를 search bar input에 채워넣기
+	    function moveToSearchResultFromAutocomplete(){
+	    	 const searchInput = document.getElementById('search-input');
+	    	 
+	    	 searchInput.value = event.target.innerText;
 	    }
 	    
 

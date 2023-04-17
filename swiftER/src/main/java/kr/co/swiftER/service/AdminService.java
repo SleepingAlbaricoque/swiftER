@@ -289,10 +289,6 @@ public class AdminService {
 	}
 	
 	
-	
-	
-	
-	
 	// 페이징
 	// 글 총 갯수(total)
 	public int selectCountArticlesTotal(String cateCode, String subcateCode) {
