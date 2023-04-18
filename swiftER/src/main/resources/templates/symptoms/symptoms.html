@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<th:block th:insert="~{@{symptoms/_header.html}}"/>
+<th:block th:include="@{_header.html}"/>
         <main>
             <div>
                 <div class="title">
@@ -185,4 +185,4 @@
                 </div>
             </div>
         </main>
-<th:block th:insert="~{@{symptoms/_footer.html}}"/>
+<th:block th:include="@{_footer.html}"/>    

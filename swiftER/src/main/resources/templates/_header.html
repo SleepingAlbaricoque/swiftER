@@ -11,11 +11,26 @@
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/swifter_logo_head.png}">
-    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css?v=25}">
     <link rel="stylesheet" th:href="@{/css/cs.css?v=8}">
-    <link rel="stylesheet" th:href="@{/css/community.css}" />
+    <link rel="stylesheet" th:href="@{/css/community.css?v=2}" />
     <link rel="stylesheet" th:href="@{/css/er.css}"/>
     <link rel="stylesheet" th:href="@{/css/rating.css}"/>
+    <script>
+    	window.onload = () =>{
+    		const links = document.querySelectorAll('.highlight-on-hover');
+        	
+        	links.forEach(link => {
+    	   		link.addEventListener('mouseenter', () => {
+    			    link.classList.add('hovered');
+    			  });
+    	
+    			link.addEventListener('mouseleave', () => {
+    			  link.classList.remove('hovered');
+    		  	});
+        	});
+    	}
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -34,30 +49,28 @@
                 	<a th:href="@{/cs/index}">고객센터</a>
                 </div>
             </div>
-            <div class="logo">
-                <div>
-                    <a th:href="@{/}">
-                        <img th:src="@{/img/swifter_logo.png}" alt="logo" class="logoImage">
-                    </a>
-                </div>
-            </div>
             <div class="menu">
-                <div>
+            	<div class="logo">
+            		<a th:href="@{/}">
+            			<img th:src="@{/img/swifter_logo_horizontal.png}" alt="logo" class="logoImage">
+            		</a>
+            	</div>
+                <div class="menu-list">
                     <ul>
                         <li>
-                            <a th:href="@{/symptoms/symptoms}">증상검색</a>
+                            <a class="highlight-on-hover" th:href="@{/symptoms/symptoms}">증상검색</a>
                         </li>
                         <li>
-                            <a th:href="@{/er/er}">응급실검색</a>
+                            <a class="highlight-on-hover"  th:href="@{/er/er}">응급실검색</a>
                         </li>
                         <li>
-                            <a href="#">약국검색</a>
+                            <a class="highlight-on-hover"  href="#">약국검색</a>
                         </li>
                         <li>
-                            <a th:href="@{/community/freeList}">커뮤니티</a>
+                            <a class="highlight-on-hover"  th:href="@{/community/freeList}">커뮤니티</a>
                         </li>
                         <li>
-                            <a th:href="@{/cs/index}">고객센터</a>
+                            <a class="highlight-on-hover"  th:href="@{/cs/index}">고객센터</a>
                         </li>
                     </ul>
                 </div>

@@ -30,93 +30,50 @@
 	
 	.top{
 	    height: 35px;
+	    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
 	}
 	.top > div{
 	    width: 1200px;
 	    height: 100%;
 	    margin: 0 auto;
 	    text-align: right;
+	    padding-left: 120px;
 	}
 	.top > div > a{
 	    display: inline-block;
 	    height: 100%;
 	    line-height: 35px;
-	    border-right: 1px solid #e9e9e9;
 	    padding: 0 10px;
-	    color: #646464;
+	    color: #fff;
+	    position: relative;
 	}
-	.top > div > a:last-child{
-	    border-right: none;
-	}
+	.top > div > a:not(:first-child)::after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        height: 50%;
+        border-right: 1px solid #fff;
+        transform: translateY(-50%);
+    }
 	
 	.logo{
-	    height: 115px;
-	    border-bottom: 1px solid #e9e9e9;
-	}
-	.logo > div{
-	    position: relative;
-	    width: 1200px;
-	    height: 100%;
-	    margin: 0 auto;
-	}
-	.logo > div > a{
-	    display: inline-block;
-	    margin-top: 30px;
-	}
-	.logo > div > form{
-	    position: absolute;
-	    left: 50%;
-	    top: 50%;
-	    margin-left: -185px;
-	    margin-top: -22px;
-	    display: inline-block;
-	    width: 370px;
-	    height: 45px;
-	}
-	.logo > div > form> input{
-	    position: absolute;
-	    width: 100%;
-	    height: 100%;
-	    border: 1px solid #e9e9e9;
-	    border-radius: 5px;
-	    font-size: 20px;
-	    padding-left: 10px;
-	    padding-right: 30px;
-	    box-sizing: border-box;
-	}
-	.logo > div > form > button{
-	    position: absolute;
-	    right: 6px;
-	    top: 10px;
-	    background: #fff;
-	    border: none;
-	    font-size: 20px;
-	    color: #333;
-	    outline: none;
-	}
-	.logo > div > form > button > a{
-	    position: absolute;
-	    font-size: 20px;
-	    display: inline-block;
-	    right: 0.3px;
-	    top: 0px;
+	    width: 100px!important;
+        justify-content: flex-start!important;
 	}
 	.logoImage{
 	    width: 200px;
-	    position: absolute;
-	    left: -100px;
-	    top: -50px;
+	    padding-left: 40px;
 	}
 	
 	.menu{
-	    height: 50px;
-	    background: #f2f2f2;
+	    height: 85px;
+	    background: #fff;
 	    border-bottom: 1px solid #ddd;
 	    box-sizing: border-box;
 	    display: flex;
 	    align-items: center;
 	    justify-content: center;
-	    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
 	}
 	.menu > div{
 	    width: 1000px;
@@ -136,23 +93,57 @@
 	.menu > div > ul > li > a{
 	    padding: 0 55px;
 	    font-size: 19px;
-	    color: #fff;
 	    font-family: 'IBM Plex Sans KR', sans-serif;
 	}
+
+.menu-list {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.highlight-on-hover {
+  display: inline-block;
+  position: relative;
+}
+
+.highlight-on-hover::before {
+  content: "";
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: rgba(1,177,255,1);
+  transition: width 0.2s ease;
+  
+}
+
+.highlight-on-hover:hover {
+  cursor: pointer;
+  color: rgba(1,177,255,1);
+}
+
+.highlight-on-hover:hover::before {
+  width: 100%;
+}
+
+.highlight-on-hover.hovered::before {
+  width: 100%;
+}
 	
 	/*footer*/
 	footer{
 	    width: 100%;
 	    height: 192px;
-	    background: #fff;
+	    background: #455464;
 	    border-top: 1px solid #e9e9e9;
 	    box-sizing: border-box;
-	    background: #01b1ff;
 	    overflow: hidden;
 	}
 	footer > ul{
 	    width: 1200px;
-	    height: 39px;
+	    height: 50px;
 	    margin: 0 auto;
 	    padding: 15px 0;
 	    box-sizing: border-box;
@@ -165,7 +156,10 @@
 	    border-right: 1px solid #d7d7d7;
 	    padding: 0 10px;
 	}
-	footer > ul > li > a{color: #fff;}
+	footer > ul > li > a{
+		color: #fff;
+		font-size: 13px;
+	}
 	footer > ul > li:first-child{border-left: 1px solid #d7d7d7;}
 	
 	.footerLogoImage{
