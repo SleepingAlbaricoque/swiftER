@@ -20,7 +20,7 @@
 	/*header*/
 	header{
 	    width: 100%;
-	    height: 197px;
+	    height: 120.3px;
 	}
 	
 	header > div{
@@ -96,41 +96,41 @@
 	    font-family: 'IBM Plex Sans KR', sans-serif;
 	}
 
-.menu-list {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-}
-
-.highlight-on-hover {
-  display: inline-block;
-  position: relative;
-}
-
-.highlight-on-hover::before {
-  content: "";
-  position: absolute;
-  bottom: -28px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: rgba(1,177,255,1);
-  transition: width 0.2s ease;
-  
-}
-
-.highlight-on-hover:hover {
-  cursor: pointer;
-  color: rgba(1,177,255,1);
-}
-
-.highlight-on-hover:hover::before {
-  width: 100%;
-}
-
-.highlight-on-hover.hovered::before {
-  width: 100%;
-}
+	.menu-list {
+	  position: relative;
+	  height: 200px;
+	  overflow: hidden;
+	}
+	
+	.highlight-on-hover {
+	  display: inline-block;
+	  position: relative;
+	}
+	
+	.highlight-on-hover::before {
+	  content: "";
+	  position: absolute;
+	  bottom: -28px;
+	  left: 0;
+	  width: 0;
+	  height: 2px;
+	  background-color: rgba(1,177,255,1);
+	  transition: width 0.2s ease;
+	  
+	}
+	
+	.highlight-on-hover:hover {
+	  cursor: pointer;
+	  color: rgba(1,177,255,1);
+	}
+	
+	.highlight-on-hover:hover::before {
+	  width: 100%;
+	}
+	
+	.highlight-on-hover.hovered::before {
+	  width: 100%;
+	}
 	
 	/*footer*/
 	footer{
@@ -198,230 +198,283 @@
 	    margin-right: 30px;
 	}
 	
-/* review pop창 */
-/* 마이페이지 팝업 */
-.popup {                
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
+	/* index */
+	.banner{
+            width: 100%;
+            height: 700px;
+            display: grid;
+            place-items: center;
+            background-image: url("../img/banner.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.8;
+        }
 
-.popup.on {display: block;}
+        .banner-menu{
+            margin: 0 auto;
+            width: 85%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.popup > div {
-    display: table;        
-    width: auto;
-    height: auto;                
-    margin: 0 auto;
-    margin-top: 200px;
-    background: #fff;
+        .banner-menu-button{
+            border: 5px solid #fff;
+            box-sizing: border-box;
+            width: 23%;
+            height: 70%;
+            margin: 0 1.5%;
+            text-align: center;
+            padding: 30px;
+            cursor: pointer;
+        }
+		.banner-menu-button:hover{
+			background-color: rgba(44,233,123,1);
+			border: 5px solid rgba(44,233,123,1);
+		}
 
-}
 
-.popup > div > nav {
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    box-sizing: border-box;
-    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
-    overflow: hidden;
-}
-.popup > div > nav > h2 {
-    float: left;               
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
+        .banner-menu-link{
+            color: #fff;
 
-}
-.popup > div > nav > button {
-    float: right;
-    width: 30px;
-    height: 30px;
-    background-image: url('/swiftER/img/ico_sprites.png');
-    background-color: transparent;
-    background-position: 227px -25px;
-    border: none;
-    font-size: 0;
-    color: white;
-    cursor: pointer;
-}
-.popup > div > section {
-    padding: 16px;
-    box-sizing: border-box;
-    width: 100%;
-    height: auto;
-}
+        }
 
-.popup > div > section > article {}
-.popup > div > section > article > h3 {
-    font-size: 15px;
-    margin-bottom: 4px;
-}
-.popup > div > section > article > table {
-    width: 100%;
-    border-top: 2px solid #444;
-    border-bottom: 1px solid #aaa;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-}
-    
-.popup > div > section > article > table td {
-    padding: 10px;
-    box-sizing: border-box;
-    border-left: 1px solid #f1f1f1;
-    vertical-align: top;                
-}
-.popup > div > section > article > table td:first-child {
-    border-left: none;
-}
+        .banner-menu-icon{
+            font-size: 100px;
+        }
 
-.popup > div > section > article:nth-child(1) > table td:nth-child(1) {width: 150px;}
-.popup > div > section > article:nth-child(1) > table td:nth-child(2) {width: 300px;}
-.popup > div > section > article:nth-child(1) > table td:nth-child(3) {width: 160px;}
-.popup > div > section > article:nth-child(1) > table td:nth-child(4) {width: 80px; text-align: center; vertical-align: middle;}
-.popup > div > section > article:nth-child(1) > table th {
-    background: #a5a7a5;
-    padding: 4px;
-    box-sizing: border-box;
-    color: white;
-}
-.popup > div > section > article:nth-child(1) > table img {
-    float: left;
-}
-.popup > div > section > article:nth-child(1) > table ul {
-    float: left;
-    margin-left: 10px;
-}
-.popup > div > section > article:nth-child(1) > table ul > li {
-    line-height: 18px;
-}
-
-.popup > div > section > article:nth-child(1) > table ol {}
-.popup > div > section > article:nth-child(1) > table ol > li {
-    line-height: 18px;
-    overflow: hidden;                
-}
-.popup > div > section > article:nth-child(1) > table ol > li > span {
-    display: inline-block;
-}
-.popup > div > section > article:nth-child(1) > table ol > li > span:nth-child(1){float: left;}
-.popup > div > section > article:nth-child(1) > table ol > li > span:nth-child(2){float: right;}
-
-.popup > div > section > article:nth-child(2) table th {width: 150px;}
-.popup > div > section > article:nth-child(2) table tr {
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.popup > div > section > table {
-    width: 100%;
-    border-top: 2px solid #444;
-    border-bottom: 1px solid #aaa;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-}
-.popup > div > section > table th {
-    width: 120px;                
-}
-.popup > div > section > table tr {
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.popup > div > section > table tr > td {
-    padding: 10px;
-    border-left: 1px solid #f1f1f1;
-    box-sizing: border-box;
-}
-
-.popup > div > section > table tr > td:nth-child(2) {
-    width: 360px;
-}
-
-.popup > div > section > div {
-    text-align: center;
-}
-
-.popup > div > section > form > table {
-    width: 600px;
-    border-top: 2px solid #444;
-    border-bottom: 1px solid #aaa;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-}
-.popup > div > section > form > table label {
-    margin-right: 10px;
-}
-
-.popup > div > section > form > table input[type=text] {
-    width: 100%;                
-    padding: 4px;
-    box-sizing: border-box;                
-    border: 1px solid #f1f1f1;
-    vertical-align: middle;
-}
-.popup > div > section > form > table textarea.title {
-    width: 100%;
-    height: 30px;
-    padding: 2px;
-    box-sizing: border-box;                
-    border: 1px solid #f1f1f1;
-    vertical-align: middle;
-    resize: none;
-}
-.popup > div > section > form > table textarea.content {
-    width: 100%;
-    height: 160px;
-    padding: 4px;
-    box-sizing: border-box;                
-    border: 1px solid #f1f1f1;
-    vertical-align: middle;
-    resize: none;
-}
-.popup > div > section > form > table th {
-    width: 120px;                
-}
-.popup > div > section > form > table tr {
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.popup > div > section > form > table tr > td {
-    padding: 10px;
-    border-left: 1px solid #f1f1f1;
-    box-sizing: border-box;
-}
-
-.popup > div > section > form > table tr > td:nth-child(2) {
-    width: 360px;
-}
-
-.popup > div > section > form > div {
-    padding: 5px 0;
-    text-align: center;                
-}
-.popup > div > section > form > div.hide {
-	padding: 0;
-}
-
-.btnPositive {
-    padding: 6px 12px;
-    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);;
-    border: 1px solid #fff;
-    box-sizing: border-box;
-    color: white;
-    margin: 10px auto;
-    cursor: pointer;
-}
-
-.btnNegative {
-    padding: 6px 12px;
-    background: #9e9e9e;
-    border: 1px solid #fff;
-    box-sizing: border-box;
-    color: white;
-    margin: 10px auto;
-    cursor: pointer;
-}
+        .banner-menu-link > p {
+            margin-top: 25px;
+            font-size: 1.7rem;
+            font-weight: bold;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+	
+		/* review pop창 */
+		/* 마이페이지 팝업 */
+		.popup {                
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    display: none;
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0, 0, 0, 0.5);
+		    z-index: 1000;
+		}
+		
+		.popup.on {display: block;}
+		
+		.popup > div {
+		    display: table;        
+		    width: auto;
+		    height: auto;                
+		    margin: 0 auto;
+		    margin-top: 200px;
+		    background: #fff;
+		
+		}
+		
+		.popup > div > nav {
+		    width: 100%;
+		    height: auto;
+		    padding: 10px;
+		    box-sizing: border-box;
+		    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+		    overflow: hidden;
+		}
+		.popup > div > nav > h2 {
+		    float: left;               
+		    font-size: 18px;
+		    font-weight: bold;
+		    color: white;
+		
+		}
+		.popup > div > nav > button {
+		    float: right;
+		    width: 30px;
+		    height: 30px;
+		    background-image: url('/swiftER/img/ico_sprites.png');
+		    background-color: transparent;
+		    background-position: 227px -25px;
+		    border: none;
+		    font-size: 0;
+		    color: white;
+		    cursor: pointer;
+		}
+		.popup > div > section {
+		    padding: 16px;
+		    box-sizing: border-box;
+		    width: 100%;
+		    height: auto;
+		}
+		
+		.popup > div > section > article {}
+		.popup > div > section > article > h3 {
+		    font-size: 15px;
+		    margin-bottom: 4px;
+		}
+		.popup > div > section > article > table {
+		    width: 100%;
+		    border-top: 2px solid #444;
+		    border-bottom: 1px solid #aaa;
+		    border-collapse: collapse;
+		    margin-bottom: 10px;
+		}
+		    
+		.popup > div > section > article > table td {
+		    padding: 10px;
+		    box-sizing: border-box;
+		    border-left: 1px solid #f1f1f1;
+		    vertical-align: top;                
+		}
+		.popup > div > section > article > table td:first-child {
+		    border-left: none;
+		}
+		
+		.popup > div > section > article:nth-child(1) > table td:nth-child(1) {width: 150px;}
+		.popup > div > section > article:nth-child(1) > table td:nth-child(2) {width: 300px;}
+		.popup > div > section > article:nth-child(1) > table td:nth-child(3) {width: 160px;}
+		.popup > div > section > article:nth-child(1) > table td:nth-child(4) {width: 80px; text-align: center; vertical-align: middle;}
+		.popup > div > section > article:nth-child(1) > table th {
+		    background: #a5a7a5;
+		    padding: 4px;
+		    box-sizing: border-box;
+		    color: white;
+		}
+		.popup > div > section > article:nth-child(1) > table img {
+		    float: left;
+		}
+		.popup > div > section > article:nth-child(1) > table ul {
+		    float: left;
+		    margin-left: 10px;
+		}
+		.popup > div > section > article:nth-child(1) > table ul > li {
+		    line-height: 18px;
+		}
+		
+		.popup > div > section > article:nth-child(1) > table ol {}
+		.popup > div > section > article:nth-child(1) > table ol > li {
+		    line-height: 18px;
+		    overflow: hidden;                
+		}
+		.popup > div > section > article:nth-child(1) > table ol > li > span {
+		    display: inline-block;
+		}
+		.popup > div > section > article:nth-child(1) > table ol > li > span:nth-child(1){float: left;}
+		.popup > div > section > article:nth-child(1) > table ol > li > span:nth-child(2){float: right;}
+		
+		.popup > div > section > article:nth-child(2) table th {width: 150px;}
+		.popup > div > section > article:nth-child(2) table tr {
+		    border-bottom: 1px solid #f1f1f1;
+		}
+		
+		.popup > div > section > table {
+		    width: 100%;
+		    border-top: 2px solid #444;
+		    border-bottom: 1px solid #aaa;
+		    border-collapse: collapse;
+		    margin-bottom: 10px;
+		}
+		.popup > div > section > table th {
+		    width: 120px;                
+		}
+		.popup > div > section > table tr {
+		    border-bottom: 1px solid #f1f1f1;
+		}
+		
+		.popup > div > section > table tr > td {
+		    padding: 10px;
+		    border-left: 1px solid #f1f1f1;
+		    box-sizing: border-box;
+		}
+		
+		.popup > div > section > table tr > td:nth-child(2) {
+		    width: 360px;
+		}
+		
+		.popup > div > section > div {
+		    text-align: center;
+		}
+		
+		.popup > div > section > form > table {
+		    width: 600px;
+		    border-top: 2px solid #444;
+		    border-bottom: 1px solid #aaa;
+		    border-collapse: collapse;
+		    margin-bottom: 10px;
+		}
+		.popup > div > section > form > table label {
+		    margin-right: 10px;
+		}
+		
+		.popup > div > section > form > table input[type=text] {
+		    width: 100%;                
+		    padding: 4px;
+		    box-sizing: border-box;                
+		    border: 1px solid #f1f1f1;
+		    vertical-align: middle;
+		}
+		.popup > div > section > form > table textarea.title {
+		    width: 100%;
+		    height: 30px;
+		    padding: 2px;
+		    box-sizing: border-box;                
+		    border: 1px solid #f1f1f1;
+		    vertical-align: middle;
+		    resize: none;
+		}
+		.popup > div > section > form > table textarea.content {
+		    width: 100%;
+		    height: 160px;
+		    padding: 4px;
+		    box-sizing: border-box;                
+		    border: 1px solid #f1f1f1;
+		    vertical-align: middle;
+		    resize: none;
+		}
+		.popup > div > section > form > table th {
+		    width: 120px;                
+		}
+		.popup > div > section > form > table tr {
+		    border-bottom: 1px solid #f1f1f1;
+		}
+		
+		.popup > div > section > form > table tr > td {
+		    padding: 10px;
+		    border-left: 1px solid #f1f1f1;
+		    box-sizing: border-box;
+		}
+		
+		.popup > div > section > form > table tr > td:nth-child(2) {
+		    width: 360px;
+		}
+		
+		.popup > div > section > form > div {
+		    padding: 5px 0;
+		    text-align: center;                
+		}
+		.popup > div > section > form > div.hide {
+			padding: 0;
+		}
+		
+		.btnPositive {
+		    padding: 6px 12px;
+		    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);;
+		    border: 1px solid #fff;
+		    box-sizing: border-box;
+		    color: white;
+		    margin: 10px auto;
+		    cursor: pointer;
+		}
+		
+		.btnNegative {
+		    padding: 6px 12px;
+		    background: #9e9e9e;
+		    border: 1px solid #fff;
+		    box-sizing: border-box;
+		    color: white;
+		    margin: 10px auto;
+		    cursor: pointer;
+		}

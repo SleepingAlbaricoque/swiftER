@@ -1,49 +1,40 @@
 <th:block th:include="@{_header.html}"/>
-		<div class="banner">
-			<img th:src="@{/img/main_banner.png}">
-		</div>
-		
-		<div class="collection">
-			<div class="symptom" onclick="location.href='symptoms/symptoms'">
-				<a th:href="@{symptoms/symptoms}">
-					<img th:src="@{/img/temperature.png}">
-				</a>
-				<a th:href="@{symptoms/symptoms}">
-					<h2>증상 검색</h2>
-				</a>
-				<h3>
-					현재 증상을 체크하여<br>질병을 유추할 수 있습니다
-				</h3>
-			</div>
-			
-			<div class="er"onclick="location.href='er/er'">
-				<a th:href="@{er/er}">
-					<img th:src="@{/img/hospital.png}">
-				</a>
-				<a th:href="@{er/er}">
-					<h2>응급실 검색</h2>
-				</a>	
-				<h3>
-					주변의 응급실을 조건에<br>맞추어 검색할 수 있습니다
-				</h3>
-			</div>
-			
-			<div class="community" onclick="location.href='community/freeList'">
-				<a th:href="@{community/freeList}">
-					<img th:src="@{/img/conversation.png}">
-				</a>
-				<a th:href="@{community/freeList}">
-					<h2>커뮤니티</h2>
-				</a>
-				<h3>
-					동네 또는 다른 회원들과<br>소통할 수 있습니다
-				</h3>
-			</div>
-		</div>
-		<div class="buttonSection">
-			<button onclick="location.href='member/terms'">회원가입</button>
-			<button onclick="location.href='cs/index'">더 알아보기</button>
-		</div>
-	</div>
-</body>
+<main>
+    <div class="banner">
+        <div class="banner-menu">
+            <div class="banner-menu-button" th:onclick="|location.href='@{/symptoms/symptoms}'|">
+                <a href="#" class="banner-menu-link">
+                    <i class="fa-solid fa-magnifying-glass banner-menu-icon"></i>
+                    <p>
+                        원하는 증상을 선택하여 질병을 찾아보세요
+                    </p>
+                </a>
+            </div>
+            <div class="banner-menu-button" th:onclick="|location.href='@{/er/er}'|">
+                <a href="#" class="banner-menu-link">
+                    <i class="fa-solid fa-hospital banner-menu-icon"></i>
+                    <p>
+                        필요한 서비스 기반으로 응급실을 찾아보세요
+                    </p>
+                </a>
+            </div>
+            <div class="banner-menu-button" th:onclick="|location.href='@{/community/freeList?(cateCode=12,regionCode=100)}'|">
+                <a href="#" class="banner-menu-link">
+                    <i class="fa-solid fa-comments banner-menu-icon"></i>
+                    <p>
+                        이웃들과 건강/병원 <br>관련 정보를 나눠보세요
+                    </p>
+                </a>
+            </div>
+            <div class="banner-menu-button" th:onclick="|location.href='@{/cs/faq}'|">
+                <a href="#" class="banner-menu-link">
+                    <i class="fa-solid fa-headset banner-menu-icon"></i>
+                    <p>
+                        사이트 이용에 필요한 <br>정보를 확인하세요
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
 <th:block th:include="@{_footer.html}"/> 
