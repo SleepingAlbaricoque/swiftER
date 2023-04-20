@@ -205,7 +205,7 @@
                 <div class="control-buttons">
                     <input type="button" value="목록으로" class="back-to-member-list" th:onclick="|location.href='@{/admin/member}'|">
                     <input type="button" value="수정하기" class="modify-member" onclick="modifyMember(this)">
-                    <input type="button" value="탈퇴시키기" class="modify-member" th:uid="${member.member.uid}" th:onclick="permaBan(this.getAttribute('uid'))">
+                    <input type="button" value="정지시키기" class="modify-member" th:uid="${member.member.uid}" th:onclick="permaBan(this.getAttribute('uid'))">
                 </div>
             </div>
         </main>
