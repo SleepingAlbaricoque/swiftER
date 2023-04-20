@@ -335,6 +335,17 @@ public class MemberController {
 		return map;
 	}
 	
+	/* 날짜 선택하여 정보 받아오기 
+	@ResponseBody
+	@PostMapping("member/findHistory")
+	public Map<String, Integer> findHistory(@ModelAttribute("MemberHistoryVO") MemberHistoryVO hvo){
+	
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		return map;
+	}
+	*/
 	/* 2차에서 하자 
 	
 	
