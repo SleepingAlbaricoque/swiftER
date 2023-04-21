@@ -14,6 +14,64 @@
     <script src="https://kit.fontawesome.com/bf3bc66abd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script>
+                $(function(){
+            		$('#note-submit').click(function(){
+            			let uid = $('#uid').val();
+            			let udate = $('#udate').val();
+            			let hos = $('#hos').val();
+            			let symptom = $('#symptom').val();
+            			
+            			let jsonData = {
+            					"uid" : uid,
+            					"rdate" : udate,
+            					"hospital" : hos,
+            					"symptom" : symptom
+            			}
+            			
+            			console.log(uid);
+            			console.log(udate);
+            			console.log(hos);
+            			console.log(symptom);
+            			
+            			$.ajax({
+            				url : '/swiftER/member/note',
+            				method : 'post',
+            				data : jsonData,
+            				dataType : 'json',
+            				success : function(data){
+            					if(data.result == 1){
+            						alert('저장되었습니다!');
+            						location.href="/swiftER/member/myPage"
+            					}else{
+            						alert('실패');
+            					}
+            						}
+            			});
+            			
+            			
+            		});
+            		
+            		$('#calendar').change(function(){
+            			let rdate = $('#calendar').val();
+            			
+            			$.ajax({
+            				url : '/swiftER/member/findHistory',
+            				method : 'post',
+            				data : {"rdate":rdate},
+            				dataType : 'json',
+            				success : function(data){
+            					if(data.result != 0){
+            						
+            					}else{
+            						
+            					}
+            				}
+            			});
+            		});
+            		
+            	});
+                </script>
     <title>마이페이지</title>
 
    <style>
@@ -244,40 +302,7 @@
 	                    <button type="button" id="note-submit">저장</button>
                     </form>
                 </div>
-                <script>
-                $(function(){
-            		$('#note-submit').click(function(){
-            			let uid = $('#uid').val();
-            			let udate = $('#udate').val();
-            			let hos = $('#hos').val();
-            			let symptom = $('#symptom').val();
-            			
-            			let jsonData = {
-            					"uid" : uid,
-            					"rdate" : udate,
-            					"hospital" : hos,
-            					"symptom" : symptom
-            			}
-            			
-            			$.ajax({
-            				url : '/swiftER/member/note',
-            				method : 'post',
-            				data : jsonData,
-            				dataType : 'json',
-            				success : function(data){
-            					if(data.result == 1){
-            						redirect: '/swiftER/member/myPage'
-            					}else{
-            						alert('실패');
-            					}
-            				}
-            			});
-            			
-            			
-            		});
-            		
-            	});
-                </script>
+               
             </div>
             <article class="reviewSection">
                 <section>
