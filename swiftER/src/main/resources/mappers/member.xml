@@ -147,4 +147,8 @@
 			`hospital`=#{hospital},
 			`symptom`=#{symptom}
 	</insert>
+	
+	<select id="selectHistories" resultType="kr.co.swiftER.vo.MemberHistoryVO">
+		select * from `member_history` where `uid`=#{uid} and `rdate`=#{rdate};
+	</select>
 </mapper>

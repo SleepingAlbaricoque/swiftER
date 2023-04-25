@@ -169,4 +169,9 @@ public class MemberService {
 	public int insertNote(MemberHistoryVO hvo) {
 		return dao.insertNote(hvo);
 	}
+
+	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo) {
+		return dao.selectHistories(hvo);
+		
+	}
 }
