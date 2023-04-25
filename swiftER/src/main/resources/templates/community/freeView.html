@@ -5,24 +5,25 @@ $(document).on('click', '.button--comment-modify', function(e) {
 
 	  var commentItem = $(this).closest('li');
 
-	  var no = commentItem.attr('data-comment-no');
+	  var no = commentItem.data('comment-no');
 	  var content = commentItem.find('.comment_font').text().trim();
 
 	  var formHtml = '<form method="post" action="/community/modifyComment">' +
-	                   '<input type="hidden" name="no" value="' + no + '">' +
-	                   '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
-	                   '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
+	                 '<input type="hidden" name="no" value="' + no + '">' +
+	                 '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
+	                 '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
 	                 '</form>';
 
 	  commentItem.find('.comment_font').html(formHtml);
 	});
-$(document).on('click', '.button--comment-update', function(e) {
+
+	$(document).on('click', '.button--comment-update', function(e) {
 	  e.preventDefault();
 
 	  var commentForm = $(this).closest('form');
 	  var no = commentForm.find('[name=no]').val();
 	  var content = commentForm.find('[name=content]').val();
-	  
+
 	  console.log('no : ' + no);
 	  console.log('content : ' + content);
 
@@ -42,8 +43,6 @@ $(document).on('click', '.button--comment-update', function(e) {
 	    }
 	  });
 	});
-
-
 
 </script>
   <section id="community">
