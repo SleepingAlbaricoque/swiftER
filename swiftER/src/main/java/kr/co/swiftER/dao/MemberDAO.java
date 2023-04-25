@@ -57,4 +57,6 @@ public interface MemberDAO {
 
 	public int insertNote(MemberHistoryVO hvo);
 
+	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo);
+
 }

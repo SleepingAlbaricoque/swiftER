@@ -53,16 +53,23 @@
             		});
             		
             		$('#calendar').change(function(){
+            			let uid = $('#huid').val();
             			let rdate = $('#calendar').val();
-            			
+            			// console.log(rdate);
+            			let jsonData = {
+            					"uid": uid,
+            					"rdate": rdate
+            			}
+            			// console.log(jsonData);
             			$.ajax({
             				url : '/swiftER/member/findHistory',
             				method : 'post',
-            				data : {"rdate":rdate},
+            				data : jsonData,
             				dataType : 'json',
             				success : function(data){
-            					if(data.result != 0){
-            						
+            					if(data.hs != null){
+            						//alert('!');
+            						console.log(data.hs);
             					}else{
             						
             					}
@@ -100,10 +107,10 @@
     <div id="wrapper">
         <header>
         <p class="p_Header">
-			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
-			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입</a>
-			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
-			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인 |</a>
+			<a sec:authorize="!isAuthenticated()" th:href="@{/member/terms}">회원가입 |</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃 |</a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/member/myPage}">마이페이지 |</a>
        	</p>
             <div class="centerName">
                 <div>
@@ -257,22 +264,14 @@
                             <th>날짜</th>
                             <th>병원명</th>
                             <th>질환/증상</th>
+                            <th><input type="hidden" th:value="${vo.uid}" id="huid"></th>
                         </tr>
                         <tr>
-                            <td>2023.03.10</td>
+                            <td>2023-04-21</td>
                             <td>부산대병원</td>
-                            <td>두드러기</td>
+                            <td>감기</td>
                         </tr>
-                        <tr>
-                            <td>2023.03.10</td>
-                            <td>부산대병원</td>
-                            <td>두드러기</td>
-                        </tr>
-                        <tr>
-                            <td>2023.03.10</td>
-                            <td>부산대병원</td>
-                            <td>두드러기</td>
-                        </tr>	
+	
                     </table>
                     
                 </div>
