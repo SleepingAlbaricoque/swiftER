@@ -196,14 +196,16 @@ public class CommunityController {
     }
     
     @PostMapping(value = {"community/modifyComment"})
-    public String ModifyComment(Model model,@RequestParam("cateCode") String cateCode, @RequestParam("no") String no, String parent, @RequestParam("content") String content) {
+    public String ModifyComment(Model model,String no, String content) {
     	
     	log.info("no : " + no);
     	log.info("content : " + content);
     	
     	service.modifyComment(no, content);
     	    	
-    	return "redirect:/community/freeView?cateCode="+cateCode+"&no="+parent+"&parent="+parent;
+    	//return "redirect:/community/freeView?cateCode=\"+cateCode+\"&no=\"+no+\"&parent=\"+parent";
+    	
+    	return null;
     }
     
     @GetMapping(value = {"community/deleteComment"})

@@ -2,30 +2,36 @@
 <script>
 $(document).on('click', '.button--comment-modify', function(e) {
 	  e.preventDefault();
-
+	  
 	  var commentItem = $(this).closest('li');
-
-	  var no = commentItem.data('comment-no');
+	  const commentLink = $('.button--comment-modify');
+	  
+	  console.log('commentItem : ' + commentItem);
+	  // const link = document.querySelector('.button--comment-modify');
+	  // const no = link.dataset.no;
+	  var no = commentLink.data('comment-no');
 	  var content = commentItem.find('.comment_font').text().trim();
 
+	  console.log('no1 : ' + no);
+	  console.log('content1 : ' + content);
+	  
 	  var formHtml = '<form method="post" action="/community/modifyComment">' +
-	                 '<input type="hidden" name="no" value="' + no + '">' +
-	                 '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
-	                 '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
+	                   '<input type="hidden" name="no" value="' + no + '">' +
+	                   '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
+	                   '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
 	                 '</form>';
 
 	  commentItem.find('.comment_font').html(formHtml);
 	});
-
-	$(document).on('click', '.button--comment-update', function(e) {
+$(document).on('click', '.button--comment-update', function(e) {
 	  e.preventDefault();
 
 	  var commentForm = $(this).closest('form');
 	  var no = commentForm.find('[name=no]').val();
 	  var content = commentForm.find('[name=content]').val();
-
-	  console.log('no : ' + no);
-	  console.log('content : ' + content);
+	  
+	  console.log('no2 : ' + no);
+	  console.log('content2 : ' + content);
 
 	  $.ajax({
 	    type: 'POST',
@@ -34,15 +40,20 @@ $(document).on('click', '.button--comment-modify', function(e) {
 	      "no": no,
 	      "content": content
 	    },
+	    dataType:'json',
 	    success: function(response) {
-	      var commentItem = $('[data-comment-no="' + no + '"]');
+	      var commentLink = $('[data-comment-no="' + no + '"]');
 	      commentItem.find('.comment_font').text(content);
+	      
+	      location.href = 'http://127.0.0.1:8181/swiftER/community/freeView?cateCode=10&no=316&parent=316&comments=1';
 	    },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	      alert('댓글 수정에 실패했습니다. 다시 시도해주세요.');
 	    }
 	  });
 	});
+
+
 
 </script>
   <section id="community">
@@ -109,7 +120,7 @@ $(document).on('click', '.button--comment-modify', function(e) {
                           <!-- 댓글 아티클 부가 기능 -->
                           <div class="comment__ext">
                           <div class="comment__button">
-                              <span><a href=#  class="button--comment-modify" data-comment-no="${cm.no}">수정</a> |</span>
+                              <span><a href=#  class="button--comment-modify" th:data-comment-no="${cm.no}">수정</a> |</span>
                               <span><a th:href="@{/community/deleteComment(cateCode=${cateCode}, no=${cm.no}, regionCode=100, parent=${cm.parent})}" class="button--comment-delete">삭제</a>
                               </span>
                           </div>
