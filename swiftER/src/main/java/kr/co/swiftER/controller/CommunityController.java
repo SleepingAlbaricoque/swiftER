@@ -1,6 +1,8 @@
 package kr.co.swiftER.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.swiftER.entity.MemberEntity;
@@ -195,17 +198,25 @@ public class CommunityController {
     	return "redirect:/community/freeList?cateCode="+cateCode+"&regionCode="+regionCode;
     }
     
+    @ResponseBody
     @PostMapping(value = {"community/modifyComment"})
-    public String ModifyComment(Model model,String no, String content) {
+    public Map<String, Integer> ModifyComment(Model model, String no, String content,String cateCode ) {
     	
-    	log.info("no : " + no);
-    	log.info("content : " + content);
+    	//log.info("no : " + no);
+    	//log.info("content : " + content);
     	
-    	service.modifyComment(no, content);
+    	int result = service.modifyComment(no, content);
+    	CommunityCateVO cates = service.selectCate(cateCode);
     	    	
     	//return "redirect:/community/freeView?cateCode=\"+cateCode+\"&no=\"+no+\"&parent=\"+parent";
+
+    	Map<String, Integer> resultMap = new HashMap<>();
+    	resultMap.put("result", result);
+    	//resultMap.put("cateCode", result);
+    	//resultMap.put("no", result);
+    	//resultMap.put("parent", result);
     	
-    	return null;
+    	return resultMap;
     }
     
     @GetMapping(value = {"community/deleteComment"})

@@ -32,10 +32,6 @@ public class SecurityConfig {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		// 사이트 위조 방지 설정
-		http.csrf().disable();
-		
-		
 		// 인가(접근권한) 설정
 		http.authorizeHttpRequests()
 				.requestMatchers("/css/**").permitAll() // spring security가 css, img,js 폴더 접근도 막아서 설정해
@@ -46,16 +42,8 @@ public class SecurityConfig {
 				.requestMatchers("/member/registerNor").permitAll()
 				.requestMatchers("/member/registerDoc").permitAll()
 				.requestMatchers("/error/**").permitAll()
-				.requestMatchers("/community/freeList").permitAll()
-				.requestMatchers("/community/freeView").permitAll()
-				.requestMatchers("/community/freeModify").permitAll()
-				.requestMatchers("/community/deleteArticle").hasAnyRole("0", "1", "2")
-				.requestMatchers("/community/deleteComment").permitAll()
-				.requestMatchers("/community/qnaView").permitAll()
-				.requestMatchers("/community/freeWrite").hasAnyRole("0", "1", "2")
-				.requestMatchers("/community/mytownWrite").hasAnyRole("0", "1", "2")
+				.requestMatchers("/community/**").permitAll()
 				.requestMatchers("/community/qnaComment").hasAnyRole("2")
-				.requestMatchers("/community/qnaCommentModify").permitAll()
 				.requestMatchers("/cs/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/download").permitAll()
 				.requestMatchers("/").permitAll()
@@ -70,6 +58,9 @@ public class SecurityConfig {
 				.requestMatchers("/symptoms/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0");
+		
+		// 사이트 위조 방지 설정
+		http.csrf().disable();
 		
 		// 자동로그인 설정
 		http.rememberMe()
