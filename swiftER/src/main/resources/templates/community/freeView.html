@@ -1,5 +1,55 @@
 <th:block th:insert="~{@{_header.html}}"/>
 <script>
+/**$(document).on('click', '.button--comment-modify', function(e) {
+	  e.preventDefault();
+
+	  var commentItem = $(this).closest('li');
+	  const commentLink = $(this);
+
+	  console.log('commentItem : ' + commentItem);
+	  var no = commentLink.data('comment-no');
+	  var content = commentItem.find('.comment_font').text().trim();
+
+	  console.log('no1 : ' + no);
+	  console.log('content1 : ' + content);
+
+	  var formHtml = '<form method="post" action="/community/modifyComment">' +
+	                 '<input type="hidden" name="no" value="' + no + '">' +
+	                 '<textarea name="content" style="resize: none; height: 60px; width: 860px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 5px; font-size: 16px; line-height: 1.5; color: #333;">' + content + '</textarea>' +
+	                 '<button type="submit" class="button--comment-update" style="">수정 완료</button>' +
+	                 '</form>';
+
+	  commentItem.find('.comment_font').html(formHtml);
+
+	  $(document).on('click', '.button--comment-update', function(e) {
+	    e.preventDefault();
+
+	    var commentForm = $(this).closest('form');
+	    var no = commentForm.find('[name=no]').val();
+	    var content = commentForm.find('[name=content]').val();
+
+	    console.log('no2 : ' + no);
+	    console.log('content2 : ' + content);
+
+	    $.ajax({
+	      type: 'POST',
+	      url: '/swiftER/community/modifyComment',
+	      data: {
+	        "no": no,
+	        "content": content
+	      },
+	      dataType:'json',
+	      success: function(response) {
+	        var commentItem = $('[data-comment-no="' + no + '"]').closest('li');
+	        commentItem.find('.comment_font').text(content);
+
+	        var parent = getUrlParameter('parent');
+	        var cateCode = getUrlParameter('cateCode');
+	        var no = getUrlParameter('no');
+
+	        alert('성공!');
+	        //location.href = 'http://127.0.0.1:8181/swiftER/community/freeView?cateCode=' + cateCode + '&no=' + no + '&parent=' + parent;
+**/
 $(document).on('click', '.button--comment-modify', function(e) {
 	  e.preventDefault();
 	  
@@ -35,26 +85,38 @@ $(document).on('click', '.button--comment-update', function(e) {
 
 	  $.ajax({
 	    type: 'POST',
-	    url: '/community/modifyComment',
+	    url: '/swiftER/community/modifyComment',
 	    data: {
 	      "no": no,
 	      "content": content
 	    },
 	    dataType:'json',
 	    success: function(response) {
-	      var commentLink = $('[data-comment-no="' + no + '"]');
-	      commentItem.find('.comment_font').text(content);
 	      
-	      location.href = 'http://127.0.0.1:8181/swiftER/community/freeView?cateCode=10&no=316&parent=316&comments=1';
+	    	console.log(response);
+	    	//var commentLink = $('[data-comment-no="' + no + '"]');
+	      	//commentItem.find('.comment_font').text(content);
+	      	
+	      	var cateCode = response.cateCode;
+	      	var no = response.no;
+	      	var parent = response.parent;
+	      	
+	      	location.href = '/swiftER/community/freeView?cateCode='+[[${cateCode}]]+'&no='+[[${no}]]+'&parent='+[[${parent}]];
+	      
 	    },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	      alert('댓글 수정에 실패했습니다. 다시 시도해주세요.');
 	    }
 	  });
 	});
-
-
-
+/*
+	function getUrlParameter(name) {
+	  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	  var results = regex.exec(location.search);
+	  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	}
+*/
 </script>
   <section id="community">
       <div class="free">
