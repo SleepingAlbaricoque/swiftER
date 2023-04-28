@@ -38,6 +38,10 @@ dependencies {
 	implementation 'org.jsoup:jsoup:1.15.4'
 	// https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
 	implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework:spring-messaging'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework:spring-messaging'
 	
 }
 

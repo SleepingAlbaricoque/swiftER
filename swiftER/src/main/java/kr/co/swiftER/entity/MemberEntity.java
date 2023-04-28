@@ -1,7 +1,10 @@
 package kr.co.swiftER.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,4 +30,10 @@ public class MemberEntity {
 	private String regip;
 	private String rdate;
 	private String wdate;
+	
+	@OneToMany(mappedBy = "receiver")
+	private List<MessageEntity> receivedMessages;
+	
+	@OneToMany(mappedBy = "sender")
+	private List<MessageEntity> sentMessages;
 }
