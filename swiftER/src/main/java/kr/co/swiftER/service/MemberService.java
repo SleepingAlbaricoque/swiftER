@@ -81,6 +81,11 @@ public class MemberService {
 		return dao.selectErReviewList(uid);
 	}
 
+	public List<ERReviewVO> selectErListAll(String uid) {
+
+		return dao.selectErListAll(uid);
+	}
+
 	/* 내가 작성한 글 갯수 */
 	public int countCa(String uid) {
 		return dao.countCa(uid);
@@ -174,4 +179,6 @@ public class MemberService {
 		return dao.selectHistories(hvo);
 		
 	}
+
+
 }

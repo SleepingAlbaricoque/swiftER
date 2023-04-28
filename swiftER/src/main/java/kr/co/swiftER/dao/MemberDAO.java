@@ -59,4 +59,6 @@ public interface MemberDAO {
 
 	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo);
 
+	public List<ERReviewVO> selectErListAll(String uid);
+
 }

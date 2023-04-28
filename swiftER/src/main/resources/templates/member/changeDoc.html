@@ -36,6 +36,7 @@
         </header>
         <main>
             <h2>
+            	<a th:href="@{/member/myPage}" class="home"><img th:src="@{/img/member/cancel.png}" alt="취소" width="50px" height="50px"></a>
                 <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="register">
@@ -134,7 +135,7 @@
                     </table>        
                 </section>
                 <div>
-                    <button class="submit">
+                    <button class="submit" id="submit">
                         회원정보수정
                     </button>
                 </div>
