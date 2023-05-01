@@ -15,21 +15,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="message")
+@Table(name="messages")
 public class MessageEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name="uid")
 	private MemberEntity sender;
-	
-	@ManyToOne
-	@JoinColumn(name="uid")
 	private MemberEntity receiver;
-	
-	private String content;
-	
+	private String message;
 	private LocalDateTime rdate;
 }

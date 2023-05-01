@@ -9,6 +9,6 @@ import kr.co.swiftER.entity.MemberEntity;
 import kr.co.swiftER.entity.MessageEntity;
 
 @Repository
-public interface MessageRepository extends JpaRepository<MessageEntity, Long>{
+public interface MessageRepo extends JpaRepository<MessageEntity, Long>{
 	List<MessageEntity> findByReceiverOrSenderOrderByTimestampDesc(MemberEntity receiver, MemberEntity sender);
 }
