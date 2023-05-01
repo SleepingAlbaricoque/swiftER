@@ -172,12 +172,22 @@ public class MemberService {
 
 	// 마이페이지 간편 이력 부분(post)
 	public int insertNote(MemberHistoryVO hvo) {
-		return dao.insertNote(hvo);
+		dao.insertNote(hvo);
+		return 1;
 	}
 
 	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo) {
 		return dao.selectHistories(hvo);
 		
+	}
+
+	public int checkHistory(MemberHistoryVO hvo) {
+		return dao.checkHistory(hvo);
+	}
+
+	public int updateNote(MemberHistoryVO hvo) {
+		dao.updateNote(hvo);
+		return 2;
 	}
 
 

@@ -60,7 +60,7 @@
                             <td th:if="${cas.cateCode == 10}">자유 게시판</td>
                             <td th:if="${cas.cateCode == 11}">질문 게시판</td>
                             <td th:if="${cas.cateCode == 12}">내가 사는 동네</td>
-                            <td><a th:href="@{}">[[${cas.title}]]</a></td>
+                            <td><a th:href="@{/community/qnaView(cateCode=${cas.cateCode},no=${cas.no},parent=${cas.no},comments=${cas.comments})}">[[${cas.title}]]</a></td>
                             <td>[[${cas.view}]]</td>
                             <td>[[${cas.comments}]]</td>
                             <td>[[${cas.rdate}]]</td>

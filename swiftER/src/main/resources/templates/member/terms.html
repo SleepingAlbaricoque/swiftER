@@ -10,34 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../img/swifter_logo_head.png">
-    <script>
-    	function checkAgreeDoc() {
-    		let checkbox = document.querySelector("#agree > input[type=checkbox]");
-    		let checkAgree = checkbox.checked;
-    		
-    		//console.log(checkAgree);
-    		
-    		if(checkAgree == false){
-    			alert('모두 동의를 체크하셔야 가입을 진행할 수 있습니다!');
-    		} else {
-    			location.href="/swiftER/member/registerDoc";
-    		}
-    	}
-    	
-    	function checkAgreeNor() {
-    		let checkbox = document.querySelector("#agree > input[type=checkbox]");
-    		let checkAgree = checkbox.checked;
-    		
-    		//console.log(checkAgree);
-    		
-    		if(checkAgree == false){
-    			alert('모두 동의를 체크하셔야 가입을 진행할 수 있습니다!');
-    		} else {
-    			location.href="/swiftER/member/registerNor";
-    		}
-    	}
-    	
-    </script>
+	<script th:src="@{/js/terms.js}"></script>
 </head>
 <body>
     <div class="terms">

@@ -139,7 +139,12 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
     font-size: 20px;
 }
 
-
+h6 {
+	font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
 
 .calendarborder{
     width: 507px;
@@ -218,7 +223,7 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
 #note-submit{
 	float: right;
 	width: 140px;
-	height: 25px;
+	height: 40px;
 	margin-top: 10px;
 	margin-right: 10px;
 	font-family: 'Roboto', sans-serif;
@@ -227,7 +232,7 @@ article.reviewSection > section > table > tbody > tr > th:nth-child(5) {
 	letter-spacing: 2.5px;
 	font-weight: bold	;
 	color: #000;
-	background-color: #FBFFCC;
+	background-color: #FFFFA6;
 	border: 0px solid #F8FFA6;
 	border-radius: 45px;
 	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);

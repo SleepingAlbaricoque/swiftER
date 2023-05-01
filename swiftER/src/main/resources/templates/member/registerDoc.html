@@ -13,51 +13,7 @@
     <script th:src="@{/js/validation_doc.js}"></script>
     <script th:src="@{/js/postcode.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-	$(document).ready(function(){
-		$('#btnEmailCheck').click(function(){
-			let email = $('input[name=email]').val();
-			
-			$.ajax({
-				url : '/swiftER/member/checkEmail',
-   				method : 'get',
-   				data : {"email":email},
-   				dataType : 'json',
-   				success : function(data){
-   					console.log(email);
-   				}
-			});
-		});
-		
-		$('#btncheckCode').click(function(){
-			let code = $('input[name=code]').val();
-			
-			$.ajax({
-				url : '/swiftER/member/checkCode',
-				method : 'get',
-				data : {"code":code},
-				dataType : 'json',
-				success : function(data){
-					
-					console.log('data : ' + data);
-					
-					if(data.result != 0){
-						$('.resultCode').css('color', 'red').text('사용할수 없는 이메일입니다');
-						console.log(data.result);
-					}else{
-						$('.resultCode').css('color', 'green').text('사용 가능한 이메일입니다');
-						$('input[name=code]').attr('readonly', true);
-						isEmailAuthOk = true;
-						console.log(data.result);
-					}
-				}
-				
-			})
-		});
-		
-	});
-	
-	</script>
+	<script th:src="@{/js/registerDoc.js}"></script>
 </head>
 <body>
     <div id="wrapper">
