@@ -55,10 +55,14 @@ public interface MemberDAO {
 
 	public void insertMemberDoctor(MemberDoctorVO dvo);
 
-	public int insertNote(MemberHistoryVO hvo);
+	public void insertNote(MemberHistoryVO hvo);
 
 	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo);
 
 	public List<ERReviewVO> selectErListAll(String uid);
+
+	public int checkHistory(MemberHistoryVO hvo);
+
+	public void updateNote(MemberHistoryVO hvo);
 
 }

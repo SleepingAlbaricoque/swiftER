@@ -31,7 +31,7 @@
 	
 	<!-- 마이페이지 리뷰 불러오기 -->
 	<select id="selectErReviewList" resultType="kr.co.swiftER.vo.ERReviewVO">
-		SELECT a.title,a.rating,a.rdate,b.region,b.subregion FROM `search_er_review` as a
+		SELECT a.*,b.region,b.subregion FROM `search_er_review` as a
 		JOIN `search_er_subcate` AS b 
 		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code` 
 		WHERE `member_uid` = #{uid} ORDER BY `no` DESC LIMIT 3;
@@ -39,7 +39,7 @@
 	
 	<!-- 마이페이지 리뷰 전체 불러오기 -->
 	<select id="selectErListAll" resultType="kr.co.swiftER.vo.ERReviewVO">
-		SELECT a.title, a.rating, a.rdate, b.region, b.subregion FROM `search_er_review` as a
+		SELECT a.*, b.region, b.subregion FROM `search_er_review` as a
 		JOIN `search_er_subcate` AS b
 		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code`
 		WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 10;
@@ -147,6 +147,11 @@
 			where `member_uid`=#{member_uid};
 	</update>
 	
+	<!-- 간편이력 존재 여부 체크 -->
+	<select id="checkHistory" resultType="Integer">
+		SELECT COUNT(*) FROM `member_history` WHERE `uid`=#{uid} and `rdate`=#{rdate};
+	</select>
+	
 	<!-- 마이페이지 간편이력 추가 -->
 	<insert id="insertNote">
 		INSERT `member_history` set
@@ -155,6 +160,14 @@
 			`hospital`=#{hospital},
 			`symptom`=#{symptom}
 	</insert>
+	
+	<!-- checkHistory의 결과값이 0이 아닐 경우 update -->
+	<update id="updateNote">
+		UPDATE `member_history` set
+			`hospital`=#{hospital},
+			`symptom`=#{symptom}
+			where `uid`=#{uid} and `rdate`=#{rdate};
+	</update>
 	
 	<select id="selectHistories" resultType="kr.co.swiftER.vo.MemberHistoryVO">
 		select * from `member_history` where `uid`=#{uid} and `rdate`=#{rdate};

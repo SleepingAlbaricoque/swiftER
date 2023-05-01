@@ -565,13 +565,17 @@ article > section > table > tbody > tr > td > div:first-child > input {
 }
 
 #th3 {
-    width: 60%;
+    width: 20%;
 }
 
 #th4 {
-    width: 10%;
+    width: 40%;
 }
 
 #th5 {
+    width: 10%;
+}
+
+#th6 {
     width: 10%;
 }

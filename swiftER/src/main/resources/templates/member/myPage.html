@@ -14,77 +14,7 @@
     <script src="https://kit.fontawesome.com/bf3bc66abd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-     <script>
-                $(function(){
-            		$('#note-submit').click(function(){
-            			let uid = $('#uid').val();
-            			let udate = $('#udate').val();
-            			let hos = $('#hos').val();
-            			let symptom = $('#symptom').val();
-            			
-            			let jsonData = {
-            					"uid" : uid,
-            					"rdate" : udate,
-            					"hospital" : hos,
-            					"symptom" : symptom
-            			}
-            			
-            			console.log(uid);
-            			console.log(udate);
-            			console.log(hos);
-            			console.log(symptom);
-            			
-            			$.ajax({
-            				url : '/swiftER/member/note',
-            				method : 'post',
-            				data : jsonData,
-            				dataType : 'json',
-            				success : function(data){
-            					if(data.result == 1){
-            						alert('저장되었습니다!');
-            						location.href="/swiftER/member/myPage"
-            					}else{
-            						alert('실패');
-            					}
-            						}
-            			});
-            			
-            			
-            		});
-            		
-            		$('#calendar').change(function(){
-            			let uid = $('#huid').val();
-            			let rdate = $('#calendar').val();
-            			// console.log(rdate);
-            			let jsonData = {
-            					"uid": uid,
-            					"rdate": rdate
-            			}
-            			// console.log(jsonData);
-            			$.ajax({
-            				url : '/swiftER/member/findHistory',
-            				method : 'post',
-            				data : jsonData,
-            				dataType : 'json',
-            				success : function(data){
-            					if(data.hs != null){
-            						var count = 0;
-            						for (var i in data.hs){
-            							count++;
-            						}
-            						console.log(data.hs);
-            						//document.getElementsByClassName("date1").innerHTML = data.hs.rdate;
-            						//document.getElementByClassName("hos1").innerHTML = data.hs.hospital;
-            						//document.getElementByclassName("sym1").innerHTML = data.hs.symptom;
-            					}else{
-            						
-            					}
-            				}
-            			});
-            		});
-            		
-            	});
-                </script>
+    <script th:src="@{/js/member.js}"></script>
     <title>마이페이지</title>
 
 </head>
@@ -225,7 +155,7 @@
                             <td th:if="${cas.cateCode == 10}">자유 게시판</td>
                             <td th:if="${cas.cateCode == 11}">질문 게시판</td>
                             <td th:if="${cas.cateCode == 12}">내가 사는 동네</td>
-                            <td><a th:href="@{#}">[[${cas.title}]]</a></td>
+                            <td><a th:href="@{/community/qnaView(cateCode=${cas.cateCode},no=${cas.no},parent=${cas.no},comments=${cas.comments})}">[[${cas.title}]]</a></td>
                             <td>[[${cas.comments}]]</td>
                             <td>[[${cas.view}]]</td>
                             <td>[[${cas.rdate}]]</td>
@@ -252,24 +182,15 @@
                             <th><input type="hidden" th:value="${vo.uid}" id="huid"></th>
                         </tr>
                         <tr>
-                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
-                            <td class="hospital">-</td>
-                            <td class="symptom">-</td>
+                            <td id="date1">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+                            <td id="hos1">-</td>
+                            <td id="sym1">-</td>
                         </tr>
-                        <tr>
-                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
-                            <td class="hospital">-</td>
-                            <td class="symptom">-</td>
-                        </tr>
-                        <tr>
-                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
-                            <td class="hospital">-</td>
-                            <td class="symptom">-</td>
-                        </tr>	
                     </table>
                     
                 </div>
                 <h4 id="s_name">기록</h4>
+                <h6>이미 간편이력이 존재시 새로운 내용으로<br/>업데이트 합니다</h6>
                 <div class="note">
 	                <form th:action="@{/member/note}">
 	                    <table class="noteTable">
@@ -305,18 +226,18 @@
                         
                     <table>
                         <tr>
-                            <th>지역</th>
                             <th>세부지역</th>
+                            <th>병원명</th>
                             <th>제목</th>
                             <th>평점</th>
                             <th>날짜</th>
                         </tr>
-                        <tr th:each="ers : ${ers}">
-                            <td>[[${ers.region}]]</td>
-                            <td>[[${ers.subregion}]]</td>
-                            <td><a th:href="@{#}">[[${ers.title}]]</a></td>
-                            <td>[[${ers.rating}]]</td>
-                            <td>[[${ers.rdate}]]</td>
+                        <tr th:each="er : ${ers}">
+                            <td>[[${er.subregion}]]</td>
+                            <td><a th:href="@{/er/erDetail(code=${er.hospital_code},city=${er.region},town=${er.subregion})}">[[${er.hospital_name}]]</a></td>
+                            <td><a th:href="@{/er/erDetail(code=${er.hospital_code},city=${er.region},town=${er.subregion})}">[[${er.title}]]</a></td>
+                            <td>[[${er.rating}]]</td>
+                            <td>[[${er.rdate}]]</td>
                         </tr>
                     </table>
                 </section>

@@ -336,18 +336,29 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("member/note")
 	public Map<String, Integer> insertNote(@ModelAttribute("MemberHistoryVO") MemberHistoryVO hvo){
-		int result = service.insertNote(hvo);
-		Map<String, Integer> map = new HashMap<>();
+		int check = service.checkHistory(hvo);
+		// 체크해서 0이면 insert실행
+		if(check == 0) {
+			int result = service.insertNote(hvo); // 1반환
+			Map<String, Integer> map = new HashMap<>();
+			map.put("result", result);
+			return map;
+		// 이미 존재하는 경우는 update 실행
+		}else {
+			int result = service.updateNote(hvo); // 2반환
+			Map<String, Integer> map = new HashMap<>();
+			map.put("result", result);
+			return map;
+		}
 		
-		map.put("result", result);
-		return map;
 	}
 	
 	/*날짜 선택하여 정보 받아오기 */
 	@ResponseBody
 	@PostMapping("member/findHistory")
 	public Map<String, MemberHistoryVO> findHistory(@ModelAttribute("MemberHistoryVO") MemberHistoryVO hvo){
-	
+		
+		
 		List<MemberHistoryVO> history = service.selectHistories(hvo);
 		System.out.println(history);
 		
