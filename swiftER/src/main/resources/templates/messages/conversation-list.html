@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversation List</title>
+</head>
+<body>
+    <h1>Conversation List</h1>
+    <ul>
+        <li th:each="lastMessage : ${lastMessages}">
+            <a th:href="@{/conversation/{otherUser}(otherUser=${lastMessage.receiver == currentUser ? lastMessage.sender : lastMessage.receiver})}">
+                <span th:text="${lastMessage.sender}"></span>: <span th:text="${lastMessage.message}"></span>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>

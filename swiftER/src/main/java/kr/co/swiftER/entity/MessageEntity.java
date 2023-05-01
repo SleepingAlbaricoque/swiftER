@@ -2,6 +2,7 @@ package kr.co.swiftER.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,13 +16,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name="messages")
 public class MessageEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private MemberEntity sender;
-	private MemberEntity receiver;
+	private String sender;
+	private String receiver;
 	private String message;
 	private LocalDateTime rdate;
 }

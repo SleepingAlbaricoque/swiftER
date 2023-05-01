@@ -42,6 +42,11 @@ dependencies {
     implementation 'org.springframework:spring-messaging'
     implementation 'org.springframework:spring-web'
     implementation 'org.springframework:spring-messaging'
+	// https://mvnrepository.com/artifact/org.webjars/sockjs-client
+	implementation group: 'org.webjars', name: 'sockjs-client', version: '1.5.1'
+	// https://mvnrepository.com/artifact/org.webjars/stomp-websocket
+	implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3'
+	
 	
 }
 
