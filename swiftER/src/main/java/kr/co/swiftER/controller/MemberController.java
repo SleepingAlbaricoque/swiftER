@@ -248,6 +248,14 @@ public class MemberController {
 		model.addAttribute("cas", cas);
 		return "member/articleList";
 	}
+
+	/* 작성한 리뷰 페이지 */
+	@GetMapping("member/reviewList")
+	public String reviewList(String uid, Model model) {
+		List<ERReviewVO> ers = service.selectErListAll(uid);
+		model.addAttribute("ers", ers);
+		return "member/reviewList";
+	}	
 	
 	/* 아이디 찾기(get) */
 	@GetMapping("member/findId")
@@ -344,7 +352,6 @@ public class MemberController {
 		System.out.println(history);
 		
 		Map<String, MemberHistoryVO> map = new HashMap<>();
-		
 		for(MemberHistoryVO hs: history)
 			map.put("hs", hs);
 		

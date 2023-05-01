@@ -29,5 +29,7 @@ public class ERReviewVO {
 	public void setRating(String rating) {
 		this.rating = Integer.parseInt(rating);
 	}
-	
+	// 추가 필드
+	private String region;
+	private String subregion;
 }

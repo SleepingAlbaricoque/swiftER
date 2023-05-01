@@ -21,20 +21,28 @@
 	
 	<!-- 마이페이지 게시판 불러오기 -->
 	<select id="selectCaList" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 3;
+		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} AND `parent`=0 ORDER BY `no` DESC LIMIT 3;
 	</select>
 	
 	<!-- 마이페이지 게시판 전체 불러오기 -->
 	<select id="selectCaListAll" resultType="kr.co.swiftER.vo.CommunityArticleVO">
-		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 10;
+		SELECT * FROM `community_article` WHERE `member_uid`=#{uid} AND `parent`=0 ORDER BY `no` DESC LIMIT 10;
 	</select>
 	
 	<!-- 마이페이지 리뷰 불러오기 -->
 	<select id="selectErReviewList" resultType="kr.co.swiftER.vo.ERReviewVO">
-		SELECT a.*,b.region,b.subregion FROM `search_er_review` as a
+		SELECT a.title,a.rating,a.rdate,b.region,b.subregion FROM `search_er_review` as a
 		JOIN `search_er_subcate` AS b 
 		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code` 
 		WHERE `member_uid` = #{uid} ORDER BY `no` DESC LIMIT 3;
+	</select>
+	
+	<!-- 마이페이지 리뷰 전체 불러오기 -->
+	<select id="selectErListAll" resultType="kr.co.swiftER.vo.ERReviewVO">
+		SELECT a.title, a.rating, a.rdate, b.region, b.subregion FROM `search_er_review` as a
+		JOIN `search_er_subcate` AS b
+		ON a.`region_code` = b.`region_code` AND a.`subregion_code` = b.`subregion_code`
+		WHERE `member_uid`=#{uid} ORDER BY `no` DESC LIMIT 10;
 	</select>
 	
 	<!-- 회원가입 -->

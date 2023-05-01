@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/member.css}">
+    <link rel="stylesheet" th:href="@{/css/member/member.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
@@ -33,6 +33,7 @@
         </header>
         <main>
             <h2>
+            	<a th:href="@{/member/myPage}" class="home"><img th:src="@{/img/member/cancel.png}" alt="취소" width="50px" height="50px"></a>
                 <a th:href="@{/}" class="home"><img th:src="@{/img/member/home.png}" alt="홈으로" width="50px" height="50px"></a>
             </h2>
             <article class="list">
@@ -40,57 +41,29 @@
                     <h4 class="title">작성한 리뷰 목록입니다</h4>
                     <table class="articleList">
                         <tr>
-                            <th id="td1">
+                            <th id="th1">
                                 지역
                             </th>
-                            <th id="td2">
+                            <th id="th2">
                                 세부지역
                             </th>
-                            <th id="td3">
+                            <th id="th3">
                                 제목
                             </th>
-                            <th id="td4">
+                            <th id="th4">
                                 평점
                             </th>
-                            <th id="td5">
+                            <th id="th5">
                                 작성일
                             </th>
                         </tr>
                         
-                        <tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">삼선병원 괜찮아요 좋아요 다시 가고 싶어요</a></td>
-                            <td>5</td>
-                            <td>23.03.13</td>
-                        </tr>
-                        <tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">삼선병원 괜찮아요 좋아요 다시 가고 싶어요</a></td>
-                            <td>5</td>
-                            <td>23.03.13</td>
-                        </tr>
-                        <tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">삼선병원 괜찮아요 좋아요 다시 가고 싶어요</a></td>
-                            <td>5</td>
-                            <td>23.03.13</td>
-                        </tr>
-                        <tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">삼선병원 괜찮아요 좋아요 다시 가고 싶어요</a></td>
-                            <td>5</td>
-                            <td>23.03.13</td>
-                        </tr>
-                        <tr>
-                            <td>부산광역시</td>
-                            <td>사상구</td>
-                            <td><a th:href="@{#}">삼선병원 괜찮아요 좋아요 다시 가고 싶어요</a></td>
-                            <td>5</td>
-                            <td>23.03.13</td>
+                        <tr th:each="ers : ${ers}">
+                        	<td>[[${ers.region}]]</td>
+                        	<td>[[${ers.subregion}]]</td>
+                        	<td>[[${ers.title}]]</td>
+                        	<td>[[${ers.rating}]]</td>
+                        	<td>[[${ers.rdate}]]</td>
                         </tr>
                     </table>
                 </section>

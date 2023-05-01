@@ -68,8 +68,14 @@
             				dataType : 'json',
             				success : function(data){
             					if(data.hs != null){
-            						//alert('!');
+            						var count = 0;
+            						for (var i in data.hs){
+            							count++;
+            						}
             						console.log(data.hs);
+            						//document.getElementsByClassName("date1").innerHTML = data.hs.rdate;
+            						//document.getElementByClassName("hos1").innerHTML = data.hs.hospital;
+            						//document.getElementByclassName("sym1").innerHTML = data.hs.symptom;
             					}else{
             						
             					}
@@ -81,27 +87,6 @@
                 </script>
     <title>마이페이지</title>
 
-   <style>
-    #calendar {
-      padding: 8px;
-      border: none;
-      border-bottom: 2px solid #ccc;
-      font-size: 16px;
-      font-family: Arial, sans-serif;
-      color: #555;
-      background-color: transparent;
-    }
-
-    #calendar::-webkit-calendar-picker-indicator {
-      color: #555;
-      font-size: 16px;
-    }
-
-    #calendar:focus {
-      outline: none;
-      border-bottom: 2px solid #1e87f0;
-    }
-    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -267,11 +252,20 @@
                             <th><input type="hidden" th:value="${vo.uid}" id="huid"></th>
                         </tr>
                         <tr>
-                            <td>2023-04-21</td>
-                            <td>부산대병원</td>
-                            <td>감기</td>
+                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+                            <td class="hospital">-</td>
+                            <td class="symptom">-</td>
                         </tr>
-	
+                        <tr>
+                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+                            <td class="hospital">-</td>
+                            <td class="symptom">-</td>
+                        </tr>
+                        <tr>
+                            <td class="date">&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+                            <td class="hospital">-</td>
+                            <td class="symptom">-</td>
+                        </tr>	
                     </table>
                     
                 </div>
@@ -308,7 +302,7 @@
                     <h4 class="article_name">
                         내가 작성한 리뷰
                     </h4>
-                        <span><a href="#"><i class="fa-sharp fa-regular fa-keyboard"></i>&nbsp;리뷰 작성하기</a></span>
+                        
                     <table>
                         <tr>
                             <th>지역</th>
@@ -318,8 +312,8 @@
                             <th>날짜</th>
                         </tr>
                         <tr th:each="ers : ${ers}">
-                            <td>[[${ers.region_code}]]</td>
-                            <td>[[${ers.subregion_code}]]</td>
+                            <td>[[${ers.region}]]</td>
+                            <td>[[${ers.subregion}]]</td>
                             <td><a th:href="@{#}">[[${ers.title}]]</a></td>
                             <td>[[${ers.rating}]]</td>
                             <td>[[${ers.rdate}]]</td>
@@ -327,7 +321,7 @@
                     </table>
                 </section>
                 <div>
-                    <button class="submit">더보기</button>
+                    <button class="submit" th:onclick="|location.href='@{reviewList(uid=${vo.uid})}'|">더보기</button>
                 </div>
             </article>
         </main>
