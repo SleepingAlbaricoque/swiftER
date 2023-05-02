@@ -240,20 +240,60 @@ public class MemberController {
 	
 	/* 작성한 글 페이지 */
 	@GetMapping("member/articleList")
-	public String articleList(String uid, Model model) {
-		List<CommunityArticleVO> cas = service.selectCaListAll(uid);
+	public String articleList(String uid, Model model, String pg) {
+		/* 페이징 처리 */
+		
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = service.selectCountArticleList(uid); // 내가 작성한 글 갯수
+		
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroup(currentPage, lastPageNum); // 페이지 그룹 번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작 번호
+		int start = service.getLimitStart(currentPage); // 시작 인덱스
+		// 페이징용
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		
+		
+		List<CommunityArticleVO> cas = service.selectCaListAll(uid, start);
 		MemberVO vo = service.selectMember(uid);
 		for(CommunityArticleVO ca : cas)
 			ca.setRdate(vo.getRdate().substring(0,10));
 		model.addAttribute("cas", cas);
+		model.addAttribute("uid", uid);
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		return "member/articleList";
 	}
 
 	/* 작성한 리뷰 페이지 */
 	@GetMapping("member/reviewList")
-	public String reviewList(String uid, Model model) {
-		List<ERReviewVO> ers = service.selectErListAll(uid);
+	public String reviewList(String uid, Model model, String pg) {
+		/* 페이징 처리 */
+		
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = service.selectCountReviewList(uid); // 내가 작성한 글 갯수
+		
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroup(currentPage, lastPageNum); // 페이지 그룹 번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작 번호
+		int start = service.getLimitStart(currentPage); // 시작 인덱스
+		// 페이징용
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		List<ERReviewVO> ers = service.selectErListAll(uid, start);
 		model.addAttribute("ers", ers);
+		model.addAttribute("uid", uid);
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		return "member/reviewList";
 	}	
 	
@@ -383,5 +423,6 @@ public class MemberController {
 		
 	}
 	*/
+	
 	
 }

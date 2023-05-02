@@ -29,9 +29,11 @@ public interface MemberDAO {
 
 	public List<CommunityArticleVO> selectCaList(String uid);
 	
-	public List<CommunityArticleVO> selectCaListAll(String uid);
+	public List<CommunityArticleVO> selectCaListAll(@Param(value="uid")String uid, @Param(value="start")int start);
 
 	public List<ERReviewVO> selectErReviewList(String uid);
+
+	public List<ERReviewVO> selectErListAll(@Param(value="uid")String uid, @Param(value="start")int start);
 
 	public int countCa(String uid);
 	
@@ -59,10 +61,12 @@ public interface MemberDAO {
 
 	public List<MemberHistoryVO> selectHistories(MemberHistoryVO hvo);
 
-	public List<ERReviewVO> selectErListAll(String uid);
-
 	public int checkHistory(MemberHistoryVO hvo);
 
 	public void updateNote(MemberHistoryVO hvo);
+
+	public int selectCountArticleList(String uid);
+
+	public int selectCountReviewList(String uid);
 
 }
