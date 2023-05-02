@@ -41,7 +41,7 @@
                  </div>
                  <article class="review">
                     <nav><h1>고객님의 의견을 들려주세요</h1></nav>
-                    <th:block th:unless="${#strings.isEmpty(reviews)}">
+                    <th:block th:if="${total > 0}">
 					    <ul>
 					        <th:block th:each="review : ${reviews}">
 					            <li>
@@ -57,7 +57,7 @@
 					        </th:block>
 					    </ul>
 					</th:block>
-                    <th:block th:if="${#strings.isEmpty(reviews)}">
+                    <th:block th:unless="${total > 0}">
                     	<p class="none">해당 병원의 리뷰가 없습니다. 리뷰를 등록해 주세요!</p>
                     </th:block>
                     <div class="write">
@@ -67,7 +67,7 @@
                     </div>
                     
                     <div class="paging">
-                    <th:block th:unless="${#strings.isEmpty(reviews)}">
+                    <th:block th:if="${total > 0}">
                         <th:block th:if="${groups[0] > 1}">
 			                <a th:href="@{/er/erDetail(code=${code},city=${city},town=${town},pg=${groups[0]- 1}))}" class="prev">이전</a>
 			            </th:block>
