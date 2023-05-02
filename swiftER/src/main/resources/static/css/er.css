@@ -544,3 +544,12 @@ select::-ms-expand {
     color: #fe434c;
     font-weight: bold;
 }
+
+#search > .Detail > .board > .review > p{
+    font-size: 17px;
+    line-height: 55px;
+	
+	
+}
+
+
