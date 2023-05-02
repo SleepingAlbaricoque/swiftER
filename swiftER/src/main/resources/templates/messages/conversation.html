@@ -10,6 +10,7 @@
 </head>
 <body>
     <h1>Conversation with <span th:text="${otherUser}"></span></h1>
+    <p>logged in as <span sec:authentication="principal.username"></span></p>
     <div id="messages"></div>
     <form id="message-form">
     	<input type="hidden" id="otherUser" th:value="${otherUser}"> 

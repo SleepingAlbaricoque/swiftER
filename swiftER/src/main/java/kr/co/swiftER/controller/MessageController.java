@@ -75,12 +75,11 @@ public class MessageController {
 	}
 	
 	@MessageMapping("/chat")
-	@SendTo("/topic/{username}")
 	public void sendMessage(MessageEntity message, Principal principal) {
 		message.setSender(principal.getName());
 		message.setRdate(LocalDateTime.now());
 		repo.save(message);
-		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic" + message.getReceiver(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getReceiver(), message);
 	}
 	
 }

@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1>Conversation List</h1>
+    <p>logged in as <span sec:authentication="principal.username"></span></p>
     <ul>
         <li th:each="lastMessage : ${lastMessages}">
             <a th:href="@{/conversation/{otherUser}(otherUser=${lastMessage.receiver == currentUser ? lastMessage.sender : lastMessage.receiver})}">
