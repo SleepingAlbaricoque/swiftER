@@ -70,9 +70,9 @@ public class MemberService {
 	}
 	
 	/* 마이페이지 게시판 리스트 전체 불러오기 */
-	public List<CommunityArticleVO> selectCaListAll(String uid) {
+	public List<CommunityArticleVO> selectCaListAll(String uid, int start) {
 		
-		return dao.selectCaListAll(uid);
+		return dao.selectCaListAll(uid, start);
 	}
 
 	/* 마이페이지 리뷰 리스트 불러오기 */
@@ -81,9 +81,9 @@ public class MemberService {
 		return dao.selectErReviewList(uid);
 	}
 
-	public List<ERReviewVO> selectErListAll(String uid) {
+	public List<ERReviewVO> selectErListAll(String uid, int start) {
 
-		return dao.selectErListAll(uid);
+		return dao.selectErListAll(uid, start);
 	}
 
 	/* 내가 작성한 글 갯수 */
@@ -189,6 +189,80 @@ public class MemberService {
 		dao.updateNote(hvo);
 		return 2;
 	}
+	//
+	
+	/* 페이징을 위해 Qna 카테고리의 게시물 총 갯수 */
+	public int selectCountArticleList(String uid) {
+		return dao.selectCountArticleList(uid);
+	}
+	
+	
+	// 페이징
+	/////////////////////////////////////////////////////////
+	
+	
+	
+	/* 현재 페이지 번호 */
+	public int getCurrentPage(String pg) {
+		
+		int currentPage = 1;
+		
+		if(pg != null) {
+			currentPage= Integer.parseInt(pg);
+		}
+		
+		return currentPage;
+		
+	}
+	
+	/* 페이지 시작값 */
+    public int getLimitStart(int currentPage) {
+    	
+        return (currentPage - 1) * 10;
+        
+    }
+    
+    /* 마지막 페이지 번호 */
+    public int getLastPageNum(int total) {
+    	
+    	int lastPageNum = 0;
+    	
+    	if(total % 10 == 0) {
+    		lastPageNum = total / 10;
+    	}else {
+    		lastPageNum = total / 10 + 1;
+    	}
+    	
+    	return lastPageNum;
+    	
+    }
+    
+    /* 페이지 시작 번호 */
+    public int getPageStartNum(int total, int start) {
+    	
+    	return total - start;
+    	
+    }
+    
+    /* 페이지 그룹 */
+	public int[] getPageGroup(int currentPage, int lastPageNum) {
+		int groupCurrent = (int) Math.ceil(currentPage / 10.0);
+		int groupStart = (groupCurrent - 1) * 10 + 1;
+		int groupEnd = groupCurrent * 10;
+		
+		if(groupEnd > lastPageNum) {
+		
+			groupEnd = lastPageNum;
+			
+		}
+		
+		int[] groups = {groupStart, groupEnd};
+		
+		return groups;
+	}
 
+	public int selectCountReviewList(String uid) {
+		return dao.selectCountReviewList(uid);
+	}
 
 }

@@ -4,7 +4,8 @@
 $(document).ready(function(){
 	$('#btnEmailCheck').click(function(){
 		let email = $('input[name=email]').val();
-		
+		$(this).hide(); // 버튼 숨기기
+  		$(".resultEmail").text('전송중...');
 		$.ajax({
 			url : '/swiftER/member/checkEmail',
 			method : 'get',
@@ -12,6 +13,7 @@ $(document).ready(function(){
 			dataType : 'json',
 			success : function(data){
 				console.log(email);
+				$(".resultEmail").css('color', 'black').text('전송완료!');
 			}
 		});
 	});
@@ -29,7 +31,7 @@ $(document).ready(function(){
 				console.log('data : ' + data);
 				
 				if(data.result != 0){
-					$('.resultCode').css('color', 'red').text('사용할수 없는 이메일입니다');
+					$('.resultCode').css('color', 'red').text('인증번호가 올바르지 않습니다');
 					console.log(data.result);
 				}else{
 					$('.resultCode').css('color', 'green').text('사용 가능한 이메일입니다');

@@ -66,19 +66,24 @@
                         	<td>[[${er.subregion}]]</td>
                         	<td><a th:href="@{/er/erDetail(code=${er.hospital_code},city=${er.region},town=${er.subregion})}">[[${er.hospital_name}]]</a></td>
                         	<td><a th:href="@{/er/erDetail(code=${er.hospital_code},city=${er.region},town=${er.subregion})}">[[${er.title}]]</a></td>
-                        	<td>[[${er.rating}]]</td>
+                        	<td class="rating star" th:attrappend="class=${er.rating}">[[${er.rating}]]</td>
                         	<td>[[${er.rdate}]]</td>
                         </tr>
                     </table>
                 </section>
                 <div class="page">
-                    <a th:href="@{#}" class="prev">이전</a>
-                    <a th:href="@{#}" class="num on">1</a>
-                    <a th:href="@{#}" class="num">2</a>
-                    <a th:href="@{#}" class="num">3</a>
-                    <a th:href="@{#}" class="num">4</a>
-                    <a th:href="@{#}" class="num">5</a>
-                    <a th:href="@{#}" class="next">다음</a>
+                	<th:block th:if="${groups[0]>1}">
+                    	<a th:href="@{/member/reviewList(uid=${uid},pg=${groups[0]-1})}" class="prev">이전</a>
+                    </th:block>
+                    
+                    <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                    	<a th:href="@{/member/reviewList(uid=${uid},pg=${num})}"
+	            			th:class="${num==currentPage?'num on':'num'}">[[${num}]]</a>
+	                </th:block>
+	                
+	                <th:block th:if="${groups[1]<lastPageNum}">
+                    	<a th:href="@{/member/reviewList(uid=${uid},pg=${groups[1]+1})}" class="next">다음</a>
+                   	</th:block>
                 </div>
             </article>
         </main>
