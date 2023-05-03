@@ -12,12 +12,8 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/' + username, function(message) {
+        stompClient.subscribe('/user/topic', function(message) {
 			alert(message);
-            showMessage(JSON.parse(message.body));
-        });
-        stompClient.subscribe('/topic/' + otherUser, function(message) {
-			console.log('log3');
             showMessage(JSON.parse(message.body));
         });
     });
