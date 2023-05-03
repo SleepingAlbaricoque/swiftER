@@ -58,7 +58,8 @@ public class SecurityConfig {
 				.requestMatchers("/symptoms/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0")
-				.requestMatchers("/conversation/**").hasAnyRole("0", "1", "2");
+				.requestMatchers("/conversation/**").hasAnyRole("0", "1", "2")
+				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll();
 		
 		// 사이트 위조 방지 설정
 		http.csrf().disable();

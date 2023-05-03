@@ -56,25 +56,30 @@
                             </th>
                         </tr>
                         
-                        <tr th:each="cas : ${cas}">
-                            <td th:if="${cas.cateCode == 10}">자유 게시판</td>
-                            <td th:if="${cas.cateCode == 11}">질문 게시판</td>
-                            <td th:if="${cas.cateCode == 12}">내가 사는 동네</td>
-                            <td><a th:href="@{/community/qnaView(cateCode=${cas.cateCode},no=${cas.no},parent=${cas.no},comments=${cas.comments})}">[[${cas.title}]]</a></td>
-                            <td>[[${cas.view}]]</td>
-                            <td>[[${cas.comments}]]</td>
-                            <td>[[${cas.rdate}]]</td>
+                        <tr th:each="ca : ${cas}">
+                            <td th:if="${ca.cateCode == 10}">자유 게시판</td>
+                            <td th:if="${ca.cateCode == 11}">질문 게시판</td>
+                            <td th:if="${ca.cateCode == 12}">내가 사는 동네</td>
+                            <td><a th:href="@{/community/qnaView(cateCode=${ca.cateCode},no=${ca.no},parent=${ca.no},comments=${ca.comments})}">[[${ca.title}]]</a></td>
+                            <td>[[${ca.view}]]</td>
+                            <td>[[${ca.comments}]]</td>
+                            <td>[[${ca.rdate}]]</td>
                         </tr>
                     </table>
                 </section>
                 <div class="page">
-                    <a th:href="@{#}" class="prev">이전</a>
-                    <a th:href="@{#}" class="num on">1</a>
-                    <a th:href="@{#}" class="num">2</a>
-                    <a th:href="@{#}" class="num">3</a>
-                    <a th:href="@{#}" class="num">4</a>
-                    <a th:href="@{#}" class="num">5</a>
-                    <a th:href="@{#}" class="next">다음</a>
+                	<th:block th:if="${groups[0]>1}">
+                    	<a th:href="@{/member/articleList(uid=${uid},pg=${groups[0]-1})}" class="prev">이전</a>
+                    </th:block>
+                    
+                    <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                    	<a th:href="@{/member/articleList(uid=${uid},pg=${num})}"
+	            			th:class="${num==currentPage?'num on':'num'}">[[${num}]]</a>
+	                </th:block>
+	                
+	                <th:block th:if="${groups[1]<lastPageNum}">
+                    	<a th:href="@{/member/articleList(uid=${uid},pg=${groups[1]+1})}" class="next">다음</a>
+                   	</th:block>
                 </div>
             </article>
         </main>

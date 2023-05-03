@@ -4,11 +4,20 @@
 let stompClient = null;
 
 function connect() {
-    const socket = new SockJS('/chat');
+	console.log('log2');
+	let username = document.getElementById('currentUser').value;
+	let otherUser = document.getElementById('otherUser').value;
+	
+    const socket = new SockJS('/swiftER/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/' + username, function(message) {
+			alert(message);
+            showMessage(JSON.parse(message.body));
+        });
+        stompClient.subscribe('/topic/' + otherUser, function(message) {
+			console.log('log3');
             showMessage(JSON.parse(message.body));
         });
     });
@@ -23,7 +32,7 @@ function sendMessage() {
         receiver: otherUser.value,
         message: messageInput.value
     };
-    stompClient.send("/swiftER/app/chat", {}, JSON.stringify(message));
+    stompClient.send("/app/chat", {}, JSON.stringify(message));
     messageInput.value = '';
 }
 
@@ -32,4 +41,12 @@ document.getElementById('message-form').addEventListener('submit', function(even
     sendMessage();
 });
 
+function showMessage(message) {
+	console.log('log4');
+    const messageDiv = document.createElement('div');
+    messageDiv.innerHTML = `<strong>${message.sender}</strong>: ${message.message}`;
+    document.getElementById('messages').appendChild(messageDiv);
+}
+
+console.log('log1');
 connect();
