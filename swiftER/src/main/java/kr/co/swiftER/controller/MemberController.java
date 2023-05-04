@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -409,20 +410,20 @@ public class MemberController {
 		return map;
 	}
 	
-	/* 2차에서 하자 
-	
-	
-	// 카카오 
-	@ResponseBody
-	@GetMapping("member/callbackKakao")
-	public void kakaoCallback(@RequestParam String code) {
-		
-		System.out.println("code : " + code);
-		
-		// service.getKakaoAccesToken(code);
-		
-	}
-	*/
-	
+	@GetMapping("member/logout")
+    public String logout(HttpSession session) {
+        String access_Token = (String)session.getAttribute("access_Token");
+
+        if(access_Token != null && !"".equals(access_Token)){
+            service.kakaoLogout(access_Token);
+            session.removeAttribute("access_Token");
+            session.removeAttribute("userId");
+        }else{
+            System.out.println("access_Token is null");
+            //return "redirect:/";
+        }
+        //return "index";
+        return "redirect:/";
+    }
 	
 }
