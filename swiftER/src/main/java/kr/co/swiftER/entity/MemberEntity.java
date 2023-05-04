@@ -30,10 +30,5 @@ public class MemberEntity {
 	private String regip;
 	private String rdate;
 	private String wdate;
-	
-	@OneToMany(mappedBy = "receiver")
-	private List<MessageEntity> receivedMessages;
-	
-	@OneToMany(mappedBy = "sender")
-	private List<MessageEntity> sentMessages;
+
 }

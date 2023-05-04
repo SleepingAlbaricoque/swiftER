@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import kr.co.swiftER.entity.MessageEntity;
 import kr.co.swiftER.repo.MessageRepo;
@@ -72,12 +76,13 @@ public class MessageController {
 		return "messages/conversation";
 	}
 	
-	@GetMapping("/chat")
-	public void sendMessage(MessageEntity message, Principal principal) {
+	@MessageMapping("/chat")
+	public MessageEntity sendMessage(MessageEntity message, Principal principal) {
 		message.setSender(principal.getName());
 		message.setRdate(LocalDateTime.now());
 		repo.save(message);
-		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getReceiver(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic", message);
+		return message;
 	}
 	
 }
