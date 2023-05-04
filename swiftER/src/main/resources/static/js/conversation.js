@@ -12,7 +12,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/user/topic', function(message) {
+        stompClient.subscribe('/user/topic/' + otherUser, function(message) {
 			alert(message);
             showMessage(JSON.parse(message.body));
         });

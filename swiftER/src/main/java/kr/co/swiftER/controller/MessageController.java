@@ -81,7 +81,7 @@ public class MessageController {
 		message.setSender(principal.getName());
 		message.setRdate(LocalDateTime.now());
 		repo.save(message);
-		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic", message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getSender(), message);
 		return message;
 	}
 	
