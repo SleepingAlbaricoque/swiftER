@@ -1,0 +1,43 @@
+<th:block th:include="@{_header.html}"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script defer th:src="@{/js/conversation.js?v=72}"></script>
+<script>
+	
+</script>
+        <main class="message-board-wrapper">
+        	<input type="hidden" id="currentUser" th:value="${currentUser}">
+            <div class="message-board">
+                <aside class="message-list-wrapper">
+                    <div class="message-list-header">
+                       <p class="message-list-title">받은메시지함</p>
+                    </div>
+                    <div class="contact-search-bar-wrapper">
+                        <input type="text" class="contact-search-bar" placeholder="아이디를 검색하세요">
+                    </div>
+                    <div>
+                        <ul class="message-list" th:each="lastMessage: ${lastMessages}">
+                            <li class="message" th:otherUser="${lastMessage.key}" onclick="loadConversation(event, this.getAttribute('otherUser'))">
+                                <input type="hidden" id="otherUser" th:value="${lastMessage.key}">
+                                <a href="#" class="contact">[[${lastMessage.key}]]</a><br/>
+                                <a href="#" class="message-content">[[${lastMessage.value.message}]]</a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <div class="message-conversation">
+                    <div class="message-conversation-header">
+                        <span class="message-conversation-contact"></span>
+                    </div>
+                    <div class="message-chat">
+                        <ul class="message-chat-list">
+                        </ul>
+                    </div>
+                    <div class="message-chat-write">
+                        <input type="text" class="message-chat-write-bar" id="message-input" placeholder="메세지 입력">
+                        <a href="#" id="message-send-button"><i class="fa-solid fa-paper-plane fa-lg message-send-button"></i></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+<th:block th:include="@{_footer.html}"/>     

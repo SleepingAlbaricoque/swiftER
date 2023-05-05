@@ -25,5 +25,5 @@ public class MessageEntity {
 	private String sender;
 	private String receiver;
 	private String message;
-	private LocalDateTime rdate;
+	private String rdate;
 }
