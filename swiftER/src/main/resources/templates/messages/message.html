@@ -1,7 +1,7 @@
 <th:block th:include="@{_header.html}"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script defer th:src="@{/js/conversation.js?v=72}"></script>
+<script defer th:src="@{/js/conversation.js?v=104}"></script>
 <script>
 	
 </script>
@@ -19,7 +19,7 @@
                         <ul class="message-list" th:each="lastMessage: ${lastMessages}">
                             <li class="message" th:otherUser="${lastMessage.key}" onclick="loadConversation(event, this.getAttribute('otherUser'))">
                                 <input type="hidden" id="otherUser" th:value="${lastMessage.key}">
-                                <a href="#" class="contact">[[${lastMessage.key}]]</a><br/>
+                                <a href="#" class="contact">[[${lastMessage.key}]]</a><i class="fa-solid fa-circle fa-2xs"></i><br/>
                                 <a href="#" class="message-content">[[${lastMessage.value.message}]]</a>
                             </li>
                         </ul>

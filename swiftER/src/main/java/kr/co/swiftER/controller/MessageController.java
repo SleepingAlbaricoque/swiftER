@@ -84,6 +84,7 @@ public class MessageController {
 		message.setRdate(date.substring(0, 10) + " " + date.substring(11, 19));
 		repo.save(message);
 		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getSender(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/queue/messages", message);
 		return message;
 	}
 	
