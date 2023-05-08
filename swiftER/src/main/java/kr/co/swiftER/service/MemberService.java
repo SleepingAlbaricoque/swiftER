@@ -2,8 +2,16 @@ package kr.co.swiftER.service;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,9 +78,9 @@ public class MemberService {
 	}
 	
 	/* 마이페이지 게시판 리스트 전체 불러오기 */
-	public List<CommunityArticleVO> selectCaListAll(String uid) {
+	public List<CommunityArticleVO> selectCaListAll(String uid, int start) {
 		
-		return dao.selectCaListAll(uid);
+		return dao.selectCaListAll(uid, start);
 	}
 
 	/* 마이페이지 리뷰 리스트 불러오기 */
@@ -81,9 +89,9 @@ public class MemberService {
 		return dao.selectErReviewList(uid);
 	}
 
-	public List<ERReviewVO> selectErListAll(String uid) {
+	public List<ERReviewVO> selectErListAll(String uid, int start) {
 
-		return dao.selectErListAll(uid);
+		return dao.selectErListAll(uid, start);
 	}
 
 	/* 내가 작성한 글 갯수 */
@@ -189,6 +197,213 @@ public class MemberService {
 		dao.updateNote(hvo);
 		return 2;
 	}
+	//
+	
+	/* 페이징을 위해 Qna 카테고리의 게시물 총 갯수 */
+	public int selectCountArticleList(String uid) {
+		return dao.selectCountArticleList(uid);
+	}
+	
+	
+	// 페이징
+	/////////////////////////////////////////////////////////
+	
+	
+	
+	/* 현재 페이지 번호 */
+	public int getCurrentPage(String pg) {
+		
+		int currentPage = 1;
+		
+		if(pg != null) {
+			currentPage= Integer.parseInt(pg);
+		}
+		
+		return currentPage;
+		
+	}
+	
+	/* 페이지 시작값 */
+    public int getLimitStart(int currentPage) {
+    	
+        return (currentPage - 1) * 10;
+        
+    }
+    
+    /* 마지막 페이지 번호 */
+    public int getLastPageNum(int total) {
+    	
+    	int lastPageNum = 0;
+    	
+    	if(total % 10 == 0) {
+    		lastPageNum = total / 10;
+    	}else {
+    		lastPageNum = total / 10 + 1;
+    	}
+    	
+    	return lastPageNum;
+    	
+    }
+    
+    /* 페이지 시작 번호 */
+    public int getPageStartNum(int total, int start) {
+    	
+    	return total - start;
+    	
+    }
+    
+    /* 페이지 그룹 */
+	public int[] getPageGroup(int currentPage, int lastPageNum) {
+		int groupCurrent = (int) Math.ceil(currentPage / 10.0);
+		int groupStart = (groupCurrent - 1) * 10 + 1;
+		int groupEnd = groupCurrent * 10;
+		
+		if(groupEnd > lastPageNum) {
+		
+			groupEnd = lastPageNum;
+			
+		}
+		
+		int[] groups = {groupStart, groupEnd};
+		
+		return groups;
+	}
 
+	public int selectCountReviewList(String uid) {
+		return dao.selectCountReviewList(uid);
+	}
+
+	/* 카카오 */
+	public String getKaKaoAccessToken(String code){
+        String access_Token="";
+        String refresh_Token ="";
+        String reqURL = "https://kauth.kakao.com/oauth/token";
+
+        try{
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+
+            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
+            sb.append("&client_id=b59782950c07b248fe9ef97eacdd98a1"); // TODO REST_API_KEY 입력
+            sb.append("&redirect_uri=http://localhost:8181/swiftER/kakao/kakaoAuth"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&code=" + code);
+            bw.write(sb.toString());
+            bw.flush();
+
+            //결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
+
+            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+
+            access_Token = element.getAsJsonObject().get("access_token").getAsString();
+            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+
+            System.out.println("access_token : " + access_Token);
+            System.out.println("refresh_token : " + refresh_Token);
+
+            br.close();
+            bw.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return access_Token;
+    }
+	
+	/* 토큰으로 user 정보 얻기 */
+	public HashMap<String, Object> getUserInfo (String access_Token) {
+	    
+	    //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+	    HashMap<String, Object> userInfo = new HashMap<>();
+	    String reqURL = "https://kapi.kakao.com/v2/user/me";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        
+	        //    요청에 필요한 Header에 포함될 내용
+	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String line = "";
+	        String result = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println("response body : " + result);
+	        
+	        JsonParser parser = new JsonParser();
+	        JsonElement element = parser.parse(result);
+	        
+	        JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+	        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+	        
+	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+	        String email = kakao_account.getAsJsonObject().get("email").getAsString();
+	        
+	        userInfo.put("nickname", nickname);
+	        userInfo.put("email", email);
+	        
+	        System.out.println("nickname : "+nickname);
+	        System.out.println("email : "+email);
+	        
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    
+	    return userInfo;
+	}
+	
+	/* 카카오 로그아웃 */
+	public void kakaoLogout(String access_Token) {
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println(result);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
 }

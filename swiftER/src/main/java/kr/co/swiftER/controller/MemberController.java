@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -240,20 +241,60 @@ public class MemberController {
 	
 	/* 작성한 글 페이지 */
 	@GetMapping("member/articleList")
-	public String articleList(String uid, Model model) {
-		List<CommunityArticleVO> cas = service.selectCaListAll(uid);
+	public String articleList(String uid, Model model, String pg) {
+		/* 페이징 처리 */
+		
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = service.selectCountArticleList(uid); // 내가 작성한 글 갯수
+		
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroup(currentPage, lastPageNum); // 페이지 그룹 번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작 번호
+		int start = service.getLimitStart(currentPage); // 시작 인덱스
+		// 페이징용
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		
+		
+		List<CommunityArticleVO> cas = service.selectCaListAll(uid, start);
 		MemberVO vo = service.selectMember(uid);
 		for(CommunityArticleVO ca : cas)
 			ca.setRdate(vo.getRdate().substring(0,10));
 		model.addAttribute("cas", cas);
+		model.addAttribute("uid", uid);
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		return "member/articleList";
 	}
 
 	/* 작성한 리뷰 페이지 */
 	@GetMapping("member/reviewList")
-	public String reviewList(String uid, Model model) {
-		List<ERReviewVO> ers = service.selectErListAll(uid);
+	public String reviewList(String uid, Model model, String pg) {
+		/* 페이징 처리 */
+		
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = service.selectCountReviewList(uid); // 내가 작성한 글 갯수
+		
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroup(currentPage, lastPageNum); // 페이지 그룹 번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작 번호
+		int start = service.getLimitStart(currentPage); // 시작 인덱스
+		// 페이징용
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		List<ERReviewVO> ers = service.selectErListAll(uid, start);
 		model.addAttribute("ers", ers);
+		model.addAttribute("uid", uid);
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		return "member/reviewList";
 	}	
 	
@@ -369,19 +410,20 @@ public class MemberController {
 		return map;
 	}
 	
-	/* 2차에서 하자 
-	
-	
-	// 카카오 
-	@ResponseBody
-	@GetMapping("member/callbackKakao")
-	public void kakaoCallback(@RequestParam String code) {
-		
-		System.out.println("code : " + code);
-		
-		// service.getKakaoAccesToken(code);
-		
-	}
-	*/
+	@GetMapping("member/logout")
+    public String logout(HttpSession session) {
+        String access_Token = (String)session.getAttribute("access_Token");
+
+        if(access_Token != null && !"".equals(access_Token)){
+            service.kakaoLogout(access_Token);
+            session.removeAttribute("access_Token");
+            session.removeAttribute("userId");
+        }else{
+            System.out.println("access_Token is null");
+            //return "redirect:/";
+        }
+        //return "index";
+        return "redirect:/";
+    }
 	
 }

@@ -7,11 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.swiftER.entity.MessageEntity;
 import kr.co.swiftER.repo.MessageRepo;
@@ -57,27 +62,30 @@ public class MessageController {
 			}
 		}
 		
-		model.addAttribute("lastMessages", lastMessageMap.values());
+		model.addAttribute("lastMessages", lastMessageMap);
 		model.addAttribute("currentUser", username);
-		return "messages/conversation-list";
+		return "messages/message";
 	}
 	
+	@ResponseBody
 	@GetMapping("/conversation/{username}")
-	public String getConversation(Model model, Principal principal, @PathVariable String username) {
+	public List<MessageEntity> getConversation(Principal principal, @PathVariable String username) {
 		// 현재 사용자와 username을 가진 유저와의 메세지 가져오기
-		List<MessageEntity> messages = repo.findByReceiverAndSenderOrSenderOrReceiver(principal.getName(), username, username, principal.getName());
-		model.addAttribute("otherUser", username);
-		model.addAttribute("currentUser", principal.getName());
-		model.addAttribute("messages", messages);
-		return "messages/conversation";
+		List<MessageEntity> messages = repo.findByReceiverAndSenderOrSenderAndReceiverOrderByRdateAsc(principal.getName(), username, principal.getName(), username);
+		System.out.println(messages);
+		return messages;
 	}
 	
-	@GetMapping("/chat")
-	public void sendMessage(MessageEntity message, Principal principal) {
+	@MessageMapping("/chat")
+	public MessageEntity sendMessage(MessageEntity message, Principal principal) {
+		String date = LocalDateTime.now().toString();
+		
 		message.setSender(principal.getName());
-		message.setRdate(LocalDateTime.now());
+		message.setRdate(date.substring(0, 10) + " " + date.substring(11, 19));
 		repo.save(message);
-		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getReceiver(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getSender(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/queue/messages", message);
+		return message;
 	}
 	
 }
