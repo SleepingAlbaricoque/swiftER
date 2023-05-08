@@ -25,5 +25,6 @@ public class MessageEntity {
 	private String sender;
 	private String receiver;
 	private String message;
+	private int isRead;
 	private String rdate;
 }

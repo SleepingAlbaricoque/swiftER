@@ -27,32 +27,59 @@ function connect() {
         // aside 목록에 있는 모든 유저 subscribe
         otherUsers.forEach((otherUser)=>{
 			stompClient.subscribe('/user/topic/' + otherUser.value, function(message) {
-				console.log('Received message:', message);
-				console.log('Received message body:', JSON.parse(message.body));
             	handleIncomingMessage(JSON.parse(message.body));
         	});
         	subscriptions.push(otherUser.value);
 		});
-		console.log('subscriptions: ' + subscriptions.length);
         
         // 목록에 없는 유저가 메세지 보냈을 때 받기 위해 messages 채널에 subscribe
         stompClient.subscribe('/user/queue/messages', function(message) {
-			alert(message);
+			if(subscriptions.includes(JSON.parse(message.body).receiver)){ // subscriptions에 없는지 확인
+				
+			}
         });
     });
 }
 
 function handleIncomingMessage(message){
+	let currentChat = document.querySelector('.message-conversation-contact').innerText;
+	let currentChatUsernameIndex = currentChat.indexOf('님');
+	let currentChatUsername = currentChat.substring(0, currentChatUsernameIndex);
+	
+	// 메세지를 보낸 유저가 이미 구독한 유저이고, 현재 열려있는 창의 대화 상대와 일치할 때만 현재 창에 새 메세지 출력
 	for(const i in subscriptions){
-		if(message.sender == subscriptions[i]){
+		if(message.sender === subscriptions[i] && message.sender === currentChatUsername){
 			showMessage(message);
+		}
+	}
+	
+	// aside의 마지막 메세지도 방금 수신한 메세지로 바꿔주기
+	//let currentConvo = document.querySelector('.on');
+	let convoList = document.querySelectorAll('#otherUser');
+	for(const i in convoList){
+		let destination = convoList[i];
+		
+		if(destination.value === message.sender){
+			// aside에 새로운 메세지 알림 점 있는지 체크해서 메세지 내용 출력
+			if(destination.nextElementSibling.nextElementSibling.tagName === 'I'){ // 알림 점이 있는 경우
+				let asideMessageContent = destination.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+			    asideMessageContent.innerText = message.message;
+				
+			}else{ // 알림 점이 없는 경우
+				let asideMessageContent = destination.nextElementSibling.nextElementSibling.nextElementSibling;
+			    asideMessageContent.innerText = message.message;
+			    
+			    // aside에 새로운 메세지가 왔음을 알리는 점 표시(fontawesome)
+				const alertCircle = document.createElement('i');
+				alertCircle.classList.add('fa-solid', 'fa-circle', 'fa-2xs', 'new-message-alert');
+				destination.nextElementSibling.insertAdjacentElement('afterend', alertCircle);
+			}
 		}
 	}
 }
 
-// 새로 들어온 메세지 출력하기
+// 새로 들어온 메세지 출력하기(이미 구독한 유저가 메세지를 보낸 경우)
 function showMessage(message){
-	console.log('제발');
 	let messageLi = document.createElement('li');
 	let messageContent = document.createElement('div');
 	
@@ -65,16 +92,34 @@ function showMessage(message){
 	let date = document.createElement('span');
 	date.innerText = receiveTime;
 	
-	// aside의 마지막 메세지도 방금 수신한 메세지로 바꿔주기
-	let currentConvo = document.querySelector('.on');
-	let asideMessageContent = currentConvo.nextElementSibling.nextElementSibling.nextElementSibling;
-	console.log('asideMessageContent: ' + asideMessageContent);
-    asideMessageContent.innerText = message.message;
-	
 	messageList.appendChild(messageLi);
 	messageLi.appendChild(messageContent);
 	messageLi.appendChild(date);
 }
+
+// 구독하지 않은 유저가 메세지를 보냈을 때 처리하기
+function receiveMsgFromUnsubscribedUser(message){
+	
+	// 메세지를 송신한 유저 구독하기
+	stompClient.subscribe('/user/topic/' + message.sender, function(message){
+		
+	});
+	
+	// 새로 들어온 메세지 및 송신자를 aside에 출력하기
+	let div = document.querySelector('.contact-list-wrapper');
+	
+	let ul = document.createElement('ul');
+	ul.classList.add('message-list');
+	div.appendChild(ul);
+	
+	let li = document.createElement('li');
+	li.classList.add('message');
+	li.addEventListener('click', function(){
+		loadConversation(event, message.sender);
+	});
+}
+
+
 
 // 작성한 메세지 전송하고 화면에 출력하기
 function sendMessage() {
@@ -126,10 +171,15 @@ function loadConversation(event, otherUser){
 	});
 	
 	// 현재 대화 상대에게 on 클래스 적용하기
-	event.target.querySelector('input[type="hidden"]').classList.add('on');
+	event.target.querySelector('#otherUser').classList.add('on');
+	
+	// aside에서 현재 대화 상대에 표시된 새로운 메세지 표시 점이 있다면 없애기
+	if(event.target.querySelector('.fa-circle')){
+		event.target.querySelector('.fa-circle').remove();
+	}
 	
 	/*
-	// 이미 웹소켓 연결되어있는 경우 웹소켓 연결 끊고 새로 연결, 아닌 경우 바로 웹소켓 연결
+	// 이미 웹소켓 연결되어있는 경우 웹소켓 연결 끊고 새로 연결, 아닌 경우 바로 웹소켓 연결 => 페이지 최초 로드시 대화리스트의 모든 유저를 구독하는 방식으로 바꿈(실시간 알림때문에)
 	if (stompClient !== null) {
         stompClient.disconnect();
         connect(otherUser);
@@ -144,6 +194,9 @@ function loadConversation(event, otherUser){
 	
 	// 메세지 작성 창 내용 지우기
 	messageInput.value = '';
+	
+	// 기존에 메세지 전송 날짜 저장한 리스트의 값들 지우기
+	dateList.length = 0;
 	
 	// 대화 불러와서 출력하기
 	let headers = new Headers();
@@ -198,7 +251,9 @@ function loadConversation(event, otherUser){
 // 날짜 구분선 중 불러온 메세지와 같은 날짜(년-월-일)가 있는지 확인 -> 없으면 해당 날짜 구분선 추가
 function checkDateAndDivide(rdate){
 	let dates = document.querySelectorAll('.message-date');
-	
+	console.log('dates: ' + dates.length);
+	console.log('rdate: ' + rdate);
+	console.log(dateList.includes(rdate));
 	
 	if(dates.length > 0){
 			dates.forEach((date)=>{

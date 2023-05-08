@@ -73,6 +73,7 @@ ul::-webkit-scrollbar {
     font-weight: bold;
     font-size: 1.45rem;
     margin-bottom: 0.5rem;
+    width: 10rem;
 }
 .message-conversation{
     width: 65%;
@@ -162,6 +163,14 @@ ul::-webkit-scrollbar {
     left: -30px;
     width: 0;
 }
+.message-date{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 .message-date-divider{
 	text-align: center;
+}
+.new-message-alert{
+	padding-left: 1rem;
+	color: #2ce97b;
 }

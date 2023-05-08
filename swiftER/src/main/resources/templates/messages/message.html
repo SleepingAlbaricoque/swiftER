@@ -1,7 +1,7 @@
 <th:block th:include="@{_header.html}"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script defer th:src="@{/js/conversation.js?v=104}"></script>
+<script defer th:src="@{/js/conversation.js?v=128}"></script>
 <script>
 	
 </script>
@@ -15,11 +15,15 @@
                     <div class="contact-search-bar-wrapper">
                         <input type="text" class="contact-search-bar" placeholder="아이디를 검색하세요">
                     </div>
-                    <div>
+                    <div class="contact-list-wrapper">
                         <ul class="message-list" th:each="lastMessage: ${lastMessages}">
                             <li class="message" th:otherUser="${lastMessage.key}" onclick="loadConversation(event, this.getAttribute('otherUser'))">
                                 <input type="hidden" id="otherUser" th:value="${lastMessage.key}">
-                                <a href="#" class="contact">[[${lastMessage.key}]]</a><i class="fa-solid fa-circle fa-2xs"></i><br/>
+                                <a href="#" class="contact">[[${lastMessage.key}]]</a>
+                                <th:block th:if="${lastMessage.value.isRead == 0 && lastMessage.value.receiver == currentUser}">
+                                	<i class="fa-solid fa-circle fa-2xs new-message-alert"></i>
+                                </th:block>
+                                <br/>
                                 <a href="#" class="message-content">[[${lastMessage.value.message}]]</a>
                             </li>
                         </ul>

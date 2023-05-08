@@ -72,7 +72,15 @@ public class MessageController {
 	public List<MessageEntity> getConversation(Principal principal, @PathVariable String username) {
 		// 현재 사용자와 username을 가진 유저와의 메세지 가져오기
 		List<MessageEntity> messages = repo.findByReceiverAndSenderOrSenderAndReceiverOrderByRdateAsc(principal.getName(), username, principal.getName(), username);
-		System.out.println(messages);
+		
+		// 읽지 않은 메세지를 읽음으로 표시(DB에 isRead값을 0에서 1로 바꾸기)
+		for(MessageEntity message : messages) {
+			if(message.getIsRead() ==0 && message.getReceiver().equals(principal.getName())) { // isRead값이 0이고, 수신인이 현재 로그인된 유저인 메세지만 선택
+				message.setIsRead(1);
+				repo.save(message);
+			}
+		}
+		
 		return messages;
 	}
 	
