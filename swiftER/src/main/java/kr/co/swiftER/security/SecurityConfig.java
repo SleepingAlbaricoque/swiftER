@@ -67,6 +67,7 @@ public class SecurityConfig {
 				.requestMatchers("/conversation/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll()
 				.requestMatchers("/kakao/**").permitAll()
+				.requestMatchers("/message/search").hasAnyRole("0", "1", "2")
 				;
 		
 		// 사이트 위조 방지 설정

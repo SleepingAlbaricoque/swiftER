@@ -2,6 +2,7 @@ package kr.co.swiftER.controller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.swiftER.autocomplete.Trie;
+import kr.co.swiftER.entity.MemberEntity;
 import kr.co.swiftER.entity.MessageEntity;
+import kr.co.swiftER.repo.MemberRepo;
 import kr.co.swiftER.repo.MessageRepo;
 
 @Controller
@@ -28,7 +32,13 @@ public class MessageController {
 	private MessageRepo repo;
 	
 	@Autowired
+	private MemberRepo memberRepo;
+	
+	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
+	
+	@Autowired
+	private Trie trie;
 	
 	@GetMapping("/conversation")
 	public String getConversationList(Model model, Principal principal) {
@@ -96,4 +106,24 @@ public class MessageController {
 		return message;
 	}
 	
+	@ResponseBody
+	@GetMapping("message/search")
+	public List<String> usernameSearch(String query){
+		// member 테이블에서 uid 불러오기
+		List<MemberEntity> members = memberRepo.findAll();
+		List<String> usernames = new ArrayList<>();
+		
+		for(MemberEntity member : members) {
+			usernames.add(member.getUid());
+		}
+		
+		// trie tree에 검색 결과 저장
+		for(String username: usernames) {
+			trie.insert(username);
+		}
+		
+		// autocomplete의 결과 저장; 검색 쿼리가 게시글 제목 맨 처음에 오는 경우만 검색 가능하고, 중간에 오는 경우는 검색 불가
+		List<String> suggestions = trie.autoComplete(query);
+		return suggestions;
+	}
 }

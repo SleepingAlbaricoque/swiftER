@@ -75,6 +75,22 @@ ul::-webkit-scrollbar {
     margin-bottom: 0.5rem;
     width: 10rem;
 }
+@media(max-width:950px){
+	.contact{
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    width: 8rem;
+    }
+}
+@media(max-width:780px){
+	.contact{
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    width: 8rem;
+    }
+}
 .message-conversation{
     width: 65%;
     
@@ -173,4 +189,21 @@ ul::-webkit-scrollbar {
 .new-message-alert{
 	padding-left: 1rem;
 	color: #2ce97b;
+}
+@media(max-width:950px){
+	.new-message-alert{
+		padding-left: 1px;
+		color: #2ce97b;
+	}
+}
+
+/* 유저 아이디 검색 및 자동 완성 */
+.contact-search-result-wrapper{
+	background-color: #fff; 
+	position:relative; 
+	z-index:1; 
+	top: 9px;
+    left: 69px;
+    width: 285px;
+    box-shadow: 1px 7px 10px -3px rgba(0,0,0,0.30);
 }

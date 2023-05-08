@@ -15,10 +15,13 @@ const otherUsers = document.querySelectorAll('#otherUser');
 // stomp 구독 정보를 저장하기 위한 리스트 객체
 const subscriptions = [];
 
+// 유저 아이디 검색 및 자동 완성 기능을 위한 검색창
+const searchBar = document.querySelector('.contact-search-bar');
+
+/**********************************************************************************************************/
+
 // 웹소켓 연결하기
 function connect() {
-	console.log('log2');
-	
     const socket = new SockJS('/swiftER/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
@@ -34,8 +37,8 @@ function connect() {
         
         // 목록에 없는 유저가 메세지 보냈을 때 받기 위해 messages 채널에 subscribe
         stompClient.subscribe('/user/queue/messages', function(message) {
-			if(subscriptions.includes(JSON.parse(message.body).receiver)){ // subscriptions에 없는지 확인
-				
+			if(!subscriptions.includes(JSON.parse(message.body).receiver)){ // subscriptions에 없는지 확인
+				receiveMsgFromUnsubscribedUser(JSON.parse(message.body));
 			}
         });
     });
@@ -117,6 +120,13 @@ function receiveMsgFromUnsubscribedUser(message){
 	li.addEventListener('click', function(){
 		loadConversation(event, message.sender);
 	});
+	ul.appendChild(li);
+	
+	li.innerHTML = `<input type="hidden" id="otherUser" value="` + message.sender + `">`
+				+ `<a href="#" class="contact">` + message.sender + `</a>`
+				+ `<i class="fa-solid fa-circle fa-2xs new-message-alert"></i>`
+				+ `<br>`
+				+ `<a href="#" class="message-content">` + message.message + `</a>`;
 }
 
 
@@ -126,8 +136,10 @@ function sendMessage() {
    let receiver = document.querySelector('.on');
    
     const message = {
-        sender: currentUser.value,
-        receiver: receiver.value,
+        //sender: currentUser.value,
+        sender: 'admin3',
+        //receiver: receiver.value,
+        receiver: 'et009153',
         message: messageInput.value
     };
     stompClient.send("/app/chat", {}, JSON.stringify(message));
@@ -296,5 +308,31 @@ function getCurrentTime(){
 	const formattedTime = `${hours}:${minutes}`;
 	return formattedTime;
 }
+
+// 검색창에서 검색 시 유저 이름 자동 완성 기능(admin_header 로직 가져옴)
+function usernameAutoComplete(){
+	let query = searchBar.value;
+	
+	const searchResults = document.getElementById('contact-search-results');
+	const searchResultWrapper = document.querySelector('.contact-search-result-wrapper');
+	
+	fetch('/swiftER/message/search?query=' + query)
+	.then((response) => response.json())
+	.then((data) => {
+		searchResults.innerHTML = "";
+		data.forEach((result) => {
+			const li = document.createElement('li');
+			li.textContent = result;
+			li.setAttribute('onclick', 'alert(1)');
+			searchResults.appendChild(li);
+		});
+		searchResults.style.display= 'block';
+	});
+}
+
+// 검색창에 입력할 때마다 자동 완성 기능 실행
+searchBar.addEventListener('input', () => {
+	usernameAutoComplete();
+});
 
 connect();
