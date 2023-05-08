@@ -218,12 +218,12 @@ public class MemberController {
 		List<CommunityArticleVO> cas = service.selectCaList(uid);
 		
 		for(CommunityArticleVO ca : cas) 
-			ca.setRdate(vo.getRdate().substring(0,10));
+			ca.setRdate(ca.getRdate().substring(0,10));
 		
 		List<ERReviewVO> ers = service.selectErReviewList(uid);
 		
 		for(ERReviewVO er : ers)
-			er.setRdate(vo.getRdate().substring(0,10));
+			er.setRdate(er.getRdate().substring(0,10));
 		
 		/* 게시글 수 */
 		int ca = service.countCa(uid);
@@ -409,21 +409,5 @@ public class MemberController {
 		
 		return map;
 	}
-	
-	@GetMapping("member/logout")
-    public String logout(HttpSession session) {
-        String access_Token = (String)session.getAttribute("access_Token");
-
-        if(access_Token != null && !"".equals(access_Token)){
-            service.kakaoLogout(access_Token);
-            session.removeAttribute("access_Token");
-            session.removeAttribute("userId");
-        }else{
-            System.out.println("access_Token is null");
-            //return "redirect:/";
-        }
-        //return "index";
-        return "redirect:/";
-    }
 	
 }

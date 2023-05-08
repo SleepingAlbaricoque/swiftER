@@ -66,7 +66,8 @@ public class SecurityConfig {
 				.requestMatchers("/file/**").hasRole("0")
 				.requestMatchers("/conversation/**").hasAnyRole("0", "1", "2")
 				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll()
-				.requestMatchers("/kakao/**").permitAll();
+				.requestMatchers("/kakao/**").permitAll()
+				;
 		
 		// 사이트 위조 방지 설정
 		http.csrf().disable();
@@ -86,8 +87,7 @@ public class SecurityConfig {
 		// 로그아웃 설정
 		http.logout()
         .invalidateHttpSession(true)
-        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-        .logoutSuccessHandler(new KakaoLogoutSuccessHandler(restTemplate()))
+        .logoutUrl("/member/logout")
         .deleteCookies("remember-me", "JSESIONID"); // 자동 로그인 쿠키 삭제
 		return http.build();
 	}
