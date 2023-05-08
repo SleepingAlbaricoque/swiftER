@@ -29,15 +29,15 @@ extends SimpleUrlAuthenticationFailureHandler {
 
 	  String errorMessage;
 	  if (exception instanceof BadCredentialsException) { //비밀번호가 일치하지 않을 때 던지는 예외
-		  errorMessage = "incorrect ID or PW.";
-		  } else if (exception instanceof InternalAuthenticationServiceException) { //존재하지 않는 아이디일 때 던지는 예외
-			  errorMessage = "Account does not exist. Join our member.";
-			  } else if (exception instanceof UsernameNotFoundException) {
-				  errorMessage = "Account does not exist. Join our member.";
+		  errorMessage = URLEncoder.encode("아이디와 비밀번호가 일치하지 않습니다", "UTF-8");
+		  } else if (exception instanceof InternalAuthenticationServiceException) { // DB 허용값 이상으로 이상한 것 입력했을 때 출력
+			  errorMessage = URLEncoder.encode("DB연결 오류입니다 (재시도 필요)", "UTF-8");
+			  } else if (exception instanceof UsernameNotFoundException) { //존재하지 않는 아이디일 때 던지는 예외
+				  errorMessage = URLEncoder.encode("존재하지 않는 아이디입니다", "UTF-8");
 				  } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
-					  errorMessage = "Your request has been rejected. Contact the manager.";
+					  errorMessage = URLEncoder.encode("요청이 거부되었습니다 관리자에게 연락해주세요", "UTF-8");
 					  } else {
-						  errorMessage = "Login failed for an unknown reason. Contact the administrator.";
+						  errorMessage = URLEncoder.encode("알 수 없는 이유로 로그인에 실패했습니다(재시도 필요)", "UTF-8");
 						  }
 	  setDefaultFailureUrl("/member/login?error=true&exception="+errorMessage);
 	  super.onAuthenticationFailure(request, response, exception);
