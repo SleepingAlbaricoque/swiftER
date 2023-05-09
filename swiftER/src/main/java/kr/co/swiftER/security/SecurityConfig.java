@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +31,10 @@ public class SecurityConfig {
 	private final DataSource dataSource;
 	private final AuthenticationFailureHandler customFailureHandler;
 	
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
+	}
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
@@ -59,7 +65,10 @@ public class SecurityConfig {
 				.requestMatchers("/admin/**").hasRole("0")
 				.requestMatchers("/file/**").hasRole("0")
 				.requestMatchers("/conversation/**").hasAnyRole("0", "1", "2")
-				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll();
+				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll()
+				.requestMatchers("/kakao/**").permitAll()
+				.requestMatchers("/message/search").hasAnyRole("0", "1", "2")
+				;
 		
 		// 사이트 위조 방지 설정
 		http.csrf().disable();
@@ -78,11 +87,9 @@ public class SecurityConfig {
 		
 		// 로그아웃 설정
 		http.logout()
-		.invalidateHttpSession(true)
-		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-		.logoutSuccessUrl("/")
-		.deleteCookies("remember-me", "JSESIONID"); // 자동 로그인 쿠키 삭제
-		
+        .invalidateHttpSession(true)
+        .logoutUrl("/member/logout")
+        .deleteCookies("remember-me", "JSESIONID"); // 자동 로그인 쿠키 삭제
 		return http.build();
 	}
 	
@@ -116,5 +123,4 @@ public class SecurityConfig {
 	PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
 }

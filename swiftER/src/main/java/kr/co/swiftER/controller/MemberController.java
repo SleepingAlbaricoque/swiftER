@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -217,12 +218,12 @@ public class MemberController {
 		List<CommunityArticleVO> cas = service.selectCaList(uid);
 		
 		for(CommunityArticleVO ca : cas) 
-			ca.setRdate(vo.getRdate().substring(0,10));
+			ca.setRdate(ca.getRdate().substring(0,10));
 		
 		List<ERReviewVO> ers = service.selectErReviewList(uid);
 		
 		for(ERReviewVO er : ers)
-			er.setRdate(vo.getRdate().substring(0,10));
+			er.setRdate(er.getRdate().substring(0,10));
 		
 		/* 게시글 수 */
 		int ca = service.countCa(uid);
@@ -408,21 +409,5 @@ public class MemberController {
 		
 		return map;
 	}
-	
-	/* 2차에서 하자 
-	
-	
-	// 카카오 
-	@ResponseBody
-	@GetMapping("member/callbackKakao")
-	public void kakaoCallback(@RequestParam String code) {
-		
-		System.out.println("code : " + code);
-		
-		// service.getKakaoAccesToken(code);
-		
-	}
-	*/
-	
 	
 }

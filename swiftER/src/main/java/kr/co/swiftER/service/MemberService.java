@@ -2,8 +2,16 @@ package kr.co.swiftER.service;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,7 +73,6 @@ public class MemberService {
 	
 	/* 마이페이지 게시판 리스트 불러오기 */
 	public List<CommunityArticleVO> selectCaList(String uid) {
-		
 		return dao.selectCaList(uid);
 	}
 	
