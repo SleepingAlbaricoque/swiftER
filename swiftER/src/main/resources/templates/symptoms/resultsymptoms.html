@@ -2,6 +2,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <th:block th:insert="~{@{symptoms/_header.html}}"/>
+    <script th:src="@{/js/symptoms.js}"></script>
         <main>
             <div id="result">
                 <div class="title">
@@ -267,6 +268,6 @@
                         자세한 내용은 전문가와 상담하시길 바랍니다.
                     </p>
                 </div>
-            </div>
+            </div>	
         </main>
-<th:block th:insert="~{@{symptoms/_footer.html}}"/>
+<th:block th:insert="~{@{_footer.html}}"/>
