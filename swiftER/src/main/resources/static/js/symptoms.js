@@ -3,17 +3,24 @@
  */
 	
 	$( window ).scroll( function() {
-	if ( $( this ).scrollTop() > 200 ) {
-		$( '.top' ).fadeIn();
-	} else {
-		$( '.top' ).fadeOut();
-	}
-	});
+		if ( $( this ).scrollTop() > 200 ) {
+			$( '.topscroll' ).fadeIn();
+		} else {
+			$( '.topscroll' ).fadeOut();
+		}
 	
-	$( '.top' ).click( function() {
-	$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-	return false;
-	} );
+	});
+	$(document).ready(function() {
+	  // 스크롤 버튼 클릭 이벤트 처리
+	  $("a.topscroll").click(function() {
+	    // 부드러운 스크롤 애니메이션
+	    $("html, body").animate({ scrollTop: 0 }, "slow");
+	    return false;
+	  });
+	});
+
+	
+	
 
 
     // 반려동물 정보 체크박스 둘중하나 선택

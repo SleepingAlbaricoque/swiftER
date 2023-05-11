@@ -4,7 +4,7 @@
 <th:block th:insert="~{@{symptoms/_header.html}}"/>
 <script th:src="@{/js/symptoms.js}"></script>
         <main>
-            <div id="sympdiv">>
+            <div id="sympdiv">
                 <div class="title">
                     <h3>증상검색</h3>
                 </div>
@@ -180,10 +180,10 @@
                             <a href="#" class="btnclear" onclick="uncheckAllCheckboxes()">초기화</a>
                             <a href="#" class="btnresult" onclick="checkboxresult()">검색</a>
                         </div>
-                        </th:block> 
-  						<a href="#" class="top">Top</a>
+                        </th:block>
+  							<a href="#" class="topscroll">Top</a>
                     </form>
                 </div>
             </div>
         </main>
-<th:block th:insert="~{@{symptoms/_footer.html}}"/>
+<th:block th:insert="~{@{_footer.html}}"/>
