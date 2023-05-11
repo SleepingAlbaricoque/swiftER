@@ -20,10 +20,11 @@ import lombok.NoArgsConstructor;
 @Table(name="messages")
 public class MessageEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String sender;
 	private String receiver;
 	private String message;
-	private LocalDateTime rdate;
+	private int isRead;
+	private String rdate;
 }

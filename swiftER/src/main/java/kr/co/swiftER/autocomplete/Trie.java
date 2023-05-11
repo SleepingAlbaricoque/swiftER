@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype") // admin과 message에서 Trie 클래스 inject할 때 각각 다른 instance로 만들기 위해서 필요
 public class Trie {
 	/**
 	 * 검색 시 autocomplete를 구현하기 위한 trie tree 구조의 클래스

@@ -2,18 +2,27 @@ package kr.co.swiftER.controller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.swiftER.autocomplete.Trie;
+import kr.co.swiftER.entity.MemberEntity;
 import kr.co.swiftER.entity.MessageEntity;
+import kr.co.swiftER.repo.MemberRepo;
 import kr.co.swiftER.repo.MessageRepo;
 
 @Controller
@@ -23,7 +32,13 @@ public class MessageController {
 	private MessageRepo repo;
 	
 	@Autowired
+	private MemberRepo memberRepo;
+	
+	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
+	
+	@Autowired
+	private Trie trie;
 	
 	@GetMapping("/conversation")
 	public String getConversationList(Model model, Principal principal) {
@@ -57,27 +72,58 @@ public class MessageController {
 			}
 		}
 		
-		model.addAttribute("lastMessages", lastMessageMap.values());
+		model.addAttribute("lastMessages", lastMessageMap);
 		model.addAttribute("currentUser", username);
-		return "messages/conversation-list";
+		return "messages/message";
 	}
 	
+	@ResponseBody
 	@GetMapping("/conversation/{username}")
-	public String getConversation(Model model, Principal principal, @PathVariable String username) {
+	public List<MessageEntity> getConversation(Principal principal, @PathVariable String username) {
 		// 현재 사용자와 username을 가진 유저와의 메세지 가져오기
-		List<MessageEntity> messages = repo.findByReceiverAndSenderOrSenderOrReceiver(principal.getName(), username, username, principal.getName());
-		model.addAttribute("otherUser", username);
-		model.addAttribute("currentUser", principal.getName());
-		model.addAttribute("messages", messages);
-		return "messages/conversation";
+		List<MessageEntity> messages = repo.findByReceiverAndSenderOrSenderAndReceiverOrderByRdateAsc(principal.getName(), username, principal.getName(), username);
+		
+		// 읽지 않은 메세지를 읽음으로 표시(DB에 isRead값을 0에서 1로 바꾸기)
+		for(MessageEntity message : messages) {
+			if(message.getIsRead() ==0 && message.getReceiver().equals(principal.getName())) { // isRead값이 0이고, 수신인이 현재 로그인된 유저인 메세지만 선택
+				message.setIsRead(1);
+				repo.save(message);
+			}
+		}
+		
+		return messages;
 	}
 	
-	@GetMapping("/chat")
-	public void sendMessage(MessageEntity message, Principal principal) {
+	@MessageMapping("/chat")
+	public MessageEntity sendMessage(MessageEntity message, Principal principal) {
+		String date = LocalDateTime.now().toString();
+		
 		message.setSender(principal.getName());
-		message.setRdate(LocalDateTime.now());
+		message.setRdate(date.substring(0, 10) + " " + date.substring(11, 19));
 		repo.save(message);
-		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getReceiver(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/" + message.getSender(), message);
+		simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/queue/messages", message);
+		return message;
 	}
 	
+	@ResponseBody
+	@GetMapping("message/search")
+	public List<String> usernameSearch(String query){
+		// member 테이블에서 uid 불러오기
+		List<MemberEntity> members = memberRepo.findAll();
+		List<String> usernames = new ArrayList<>();
+		
+		for(MemberEntity member : members) {
+			usernames.add(member.getUid());
+		}
+		
+		// trie tree에 검색 결과 저장
+		for(String username: usernames) {
+			trie.insert(username);
+		}
+		
+		// autocomplete의 결과 저장; 검색 쿼리가 게시글 제목 맨 처음에 오는 경우만 검색 가능하고, 중간에 오는 경우는 검색 불가
+		List<String> suggestions = trie.autoComplete(query);
+		return suggestions;
+	}
 }

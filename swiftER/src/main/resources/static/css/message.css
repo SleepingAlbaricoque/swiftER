@@ -1,0 +1,209 @@
+/* message */
+.message-board-wrapper{
+    width: 100%;
+    height: auto;
+    margin-bottom: 7rem;
+    box-sizing: border-box;
+}
+.message-board{
+    width: 60%;
+    height: 60rem;
+    margin: 0 auto;
+    border: 1px solid #c7c6c6;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    border-radius: 6px;
+    margin-top: 6rem;
+}
+.message-list-wrapper{
+    width: 35%;
+    height: 100%;
+    border-right: 1px solid #c7c6c6;
+    box-sizing: border-box;
+}
+.message-list-header{
+    width: 100%;
+    height: 7%;
+    border-bottom: 1px solid #dddddd;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 1rem;
+    padding-top: 0.6rem;
+}
+.message-list-title{
+    font-size: 1.8rem;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+.contact-search-bar-wrapper{
+    width: 100%;
+    height: 5%;
+    border-bottom: 1px solid #dddddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contact-search-bar{
+    width: 90%;
+    height: 62%;
+    border-radius: 6px;
+    text-indent: 1rem;
+    background-color: #cecdcd;
+    border: none;
+}
+.message-list{
+    max-height: 52.6rem;
+    overflow: auto;
+}
+ul::-webkit-scrollbar {
+    display: none;
+}
+.message{
+    border-bottom: 1px solid #dddddd;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.contact{
+    display: inline-block;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: bold;
+    font-size: 1.45rem;
+    margin-bottom: 0.5rem;
+    width: 10rem;
+}
+@media(max-width:950px){
+	.contact{
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    width: 8rem;
+    }
+}
+@media(max-width:780px){
+	.contact{
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    width: 8rem;
+    }
+}
+.message-conversation{
+    width: 65%;
+    
+}
+.message-conversation-header{
+    width: 100%;
+    height: 7%;
+    border-bottom: 1px solid #dddddd;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 1rem;
+    padding-top: 0.6rem;
+    text-align: center;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 1.8rem;
+    
+}
+.message-conversation-contact{
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 1.8rem;
+}
+.message-chat{
+    height: 73%;
+    padding: 3rem;
+}
+.message-chat > ul{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    max-height: 45rem;
+    overflow: auto;
+}
+.otherUser-chat-bubble{
+    display: inline-block;
+    min-width: 10rem;
+    max-width: 30rem;
+    min-height: 1rem;
+    background-color: #dddddd;
+    border-radius: 20px;
+    border: none;
+    font-size: 1.5rem;
+    word-break: break-word;
+    overflow: hidden;
+    padding: 10px 10px 10px 20px;
+    
+}
+.otherUser-chat-bubble-li{
+    align-self: flex-start;
+}
+.my-chat-bubble{
+    display: inline-block;
+    min-width: 10rem;
+    max-width: 30rem;
+    min-height: 1rem;
+    background-color: #01b1ff;
+    border-radius: 20px;
+    border: none;
+    font-size: 1.5rem;
+    word-break: break-word;
+    overflow: hidden;
+    padding: 10px 10px 10px 20px;
+    
+}
+.my-chat-bubble-li{
+    align-self: flex-end;
+}
+.message-chat-write{
+    width: 100%;
+    height: 10%;
+    border-top: 1px solid #dddddd;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.message-chat-write-bar{
+    width: 90%;
+    height: 50%;
+    border: 1px solid #c7c6c6;
+    border-radius: 15px;
+    text-indent: 1.5rem;
+}
+.message-send-button{
+    color: #111;
+    position: relative;
+    left: -30px;
+    width: 0;
+}
+.message-date{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.message-date-divider{
+	text-align: center;
+}
+.new-message-alert{
+	padding-left: 1rem;
+	color: #2ce97b;
+}
+@media(max-width:950px){
+	.new-message-alert{
+		padding-left: 1px;
+		color: #2ce97b;
+	}
+}
+
+/* 유저 아이디 검색 및 자동 완성 */
+.contact-search-result-wrapper{
+	background-color: #fff; 
+	position:relative; 
+	z-index:1; 
+	top: 9px;
+    left: 69px;
+    width: 285px;
+    box-shadow: 1px 7px 10px -3px rgba(0,0,0,0.30);
+}
