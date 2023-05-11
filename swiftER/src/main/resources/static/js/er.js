@@ -18,6 +18,11 @@ $(document).ready(function () {
 	    $(this).toggleClass('on');
 	    $('.selectBox').toggleClass('on');
 	});
+	
+	$('.resetBtn').click(function(e){
+		e.preventDefault;
+		location.reload(true);
+	});
 
 	$('select[name=city]').on('change', function(){
 		let city =$(this).val();
@@ -175,20 +180,20 @@ $(document).ready(function () {
 					if (common) {
 					  filters.push((arr) => {
 					    console.log('mkioskTy1 filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['MKioskTy1'] == "Y");
+					    return arr.filter(item => item['MKioskTy1'] == "Y         ");
 					  });
 					}
 			        if (medicine) {
-			          filters.push((arr) => arr.filter(item => item['MKioskTy2'] == "Y"));
+			          filters.push((arr) => arr.filter(item => item['MKioskTy2'] == "Y         "));
 			        }
 			        if (surgery) {
 			          filters.push((arr) => {
 					    console.log('mkioskTy3 filter arr:', arr); // arr 출력
-					    return arr.filter(item => item['MKioskTy3'] == "Y");
+					    return arr.filter(item => item['MKioskTy3'] == "Y         ");
 					  });
 			        }
 			        if (neurosurgery) {
-			          filters.push((arr) => arr.filter(item => item['MKioskTy8'] == "Y"));
+			          filters.push((arr) => arr.filter(item => item['MKioskTy8'] == "Y         "));
 			        }
 			        if (ct) {
 			          filters.push((arr) => {
@@ -203,28 +208,30 @@ $(document).ready(function () {
 			          filters.push((arr) => arr.filter(item => item['hvangioayn'] == "Y"));
 			        }
 			        if (respirator) {
-			          filters.push((arr) => arr.filter(item => item['hvventilayn'] == 'Y'));
+			          filters.push((arr) => arr.filter(item => item['hvventiayn'] == "Y"));
 			        }
 			        if (incubator) {
-			          filters.push((arr) => arr.filter(item => item['hv11'] > 0));
+			          filters.push((arr) => arr.filter(item => item['hv11'] == "Y"));
 			        }
 					
 					let filtered = combined;
-
+					
+					// filters 적용
 					if (filters.length > 0) {
 					  filters.forEach(filterFn => {
 					    filtered = filterFn(filtered);
 					  });
 					}
 					
-					if(filtered.length > 0){
-						alert('선택하신 조건을 기반으로 한 검색 결과 입니다.');
-						combinedFiltered = filtered;	
-					}else{
-						alert('선택하신 조건을 모두 충족하는 결과가 없습니다, 선택하신 지역을 기반으로 한 검색 결과 입니다.');
-						combinedFiltered = combined;
+					// 필터링 결과 확인
+					if (filtered.length > 0) {
+					  alert('선택하신 조건을 기반으로 한 검색 결과 입니다.');
+					  combinedFiltered = filtered;
+					} else {
+					  alert('선택하신 조건을 모두 충족하는 결과가 없습니다, 선택하신 지역을 기반으로 한 검색 결과 입니다.');
+					  combinedFiltered = combined;
 					}
-					
+
 					console.log('filters', filters);
 					console.log('filtered', filtered);
 					

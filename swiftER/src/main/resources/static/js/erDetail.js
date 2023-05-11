@@ -40,7 +40,7 @@ $(document).ready(function () {
   			let maping = detail.dutyMapimg;
   			let empty = "해당 내용을 제공받지 못했습니다.";
   			
-  			if(maping != null && ''){
+  			if(maping != null && maping !== ''){
   				info.innerText = '• '+maping;
 			}else{
   				info.innerText = '• '+empty;
@@ -48,9 +48,9 @@ $(document).ready(function () {
   			
   			
   			tel.innerHTML = '<i class="fas fa-home"></i> ';
-  			tel.innerHTML += ' 응급실 전화 : '+detail.dutyTel3;
+  			tel.innerHTML += ' 응급실 전화1 : '+detail.dutyTel3;
 			etc1.innerHTML = '<i class="fas fa-home"></i> ';
-  			etc1.innerHTML += ' 내용이 없습니다.(진료시간 출력 예정)';
+  			etc1.innerHTML += ' 응급실 전화2 : '+detail.dutyTel1;
   			
   			var input = document.createElement('input'); 
 			input.type = 'hidden'; 
