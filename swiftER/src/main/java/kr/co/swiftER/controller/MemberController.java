@@ -410,4 +410,21 @@ public class MemberController {
 		return map;
 	}
 	
+	/* 카카오  */
+	@ResponseBody
+	@GetMapping("/kakao/kakaoAuth")
+	public String kakaoCallback(@RequestParam String code) throws Exception {
+
+	            System.out.println("code : " + code);
+	            String access_Token = service.getKaKaoAccessToken(code);
+	            service.createKakaoUser(access_Token);
+
+	            if(service.createKakaoUser(access_Token) == 0) {
+	            	return "redirect:/";
+	            }else {
+	            	return "0";
+	            }
+	    }
+	
+	
 }
