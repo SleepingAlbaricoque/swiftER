@@ -35,12 +35,15 @@ function connect() {
         	subscriptions.push(otherUser.value);
 		});
         
+        
         // 목록에 없는 유저가 메세지 보냈을 때 받기 위해 messages 채널에 subscribe
+        
         stompClient.subscribe('/user/queue/messages', function(message) {
 			if(!subscriptions.includes(JSON.parse(message.body).receiver)){ // subscriptions에 없는지 확인
 				receiveMsgFromUnsubscribedUser(JSON.parse(message.body));
 			}
         });
+        
     });
 }
 
@@ -136,12 +139,16 @@ function sendMessage() {
    let receiver = document.querySelector('.on');
    
     const message = {
-        //sender: currentUser.value,
-        sender: 'admin3',
-        //receiver: receiver.value,
-        receiver: 'et009153',
+        sender: currentUser.value,
+        receiver: receiver.value,
         message: messageInput.value
     };
+    
+    // 이전 대화 기록이 없는 유저에게 보내는 경우 해당 유저에게 구독 먼저 하기
+    
+    // aside에 해당 유저 이름과 방금 보낸 메세지를 출력하기(ul 객체로)
+    
+    
     stompClient.send("/app/chat", {}, JSON.stringify(message));
     
     // 방금 전송한 메세지를 화면에 출력하기 => 데이터베이스 저장 시간과 화면 출력 시간 불일치 문제 -> ajax로 해결?
@@ -182,13 +189,19 @@ function loadConversation(event, otherUser){
 		console.log(item);
 	});
 	
-	// 현재 대화 상대에게 on 클래스 적용하기
-	event.target.querySelector('#otherUser').classList.add('on');
+	console.log('event: ' + event.target);
+	console.log('event target: ' + event.target.classList.contains('autocomplete-result'));
 	
-	// aside에서 현재 대화 상대에 표시된 새로운 메세지 표시 점이 있다면 없애기
-	if(event.target.querySelector('.fa-circle')){
-		event.target.querySelector('.fa-circle').remove();
+	// 현재 대화 상대에게 on 클래스 적용하기
+	if(!event.target.classList.contains('autocomplete-result')){ // 자동 완성 리스트의 유저를 누른 게 아닌 경우에만 적용하기
+		event.target.querySelector('#otherUser').classList.add('on');
+	
+		// aside에서 현재 대화 상대에 표시된 새로운 메세지 표시 점이 있다면 없애기
+		if(event.target.querySelector('.fa-circle')){
+			event.target.querySelector('.fa-circle').remove();
+		}
 	}
+	
 	
 	/*
 	// 이미 웹소켓 연결되어있는 경우 웹소켓 연결 끊고 새로 연결, 아닌 경우 바로 웹소켓 연결 => 페이지 최초 로드시 대화리스트의 모든 유저를 구독하는 방식으로 바꿈(실시간 알림때문에)
@@ -323,10 +336,16 @@ function usernameAutoComplete(){
 		data.forEach((result) => {
 			const li = document.createElement('li');
 			li.textContent = result;
-			li.setAttribute('onclick', 'alert(1)');
+			li.setAttribute('onclick', 'createNewConversation(this.innerText)');
+			li.classList.add('autocomplete-result');
 			searchResults.appendChild(li);
 		});
 		searchResults.style.display= 'block';
+		
+			// 백스페이스로 query 내용 모두 지우는 경우 검색 결과 창이 안뜨게 하기
+			if(!query){
+			searchResults.style.display= 'none';
+		}
 	});
 }
 
@@ -334,5 +353,22 @@ function usernameAutoComplete(){
 searchBar.addEventListener('input', () => {
 	usernameAutoComplete();
 });
+
+
+// 자동 완성 리스트에서 유저 선택시, 이미 대화 목록에 있다면 해당 대화를 로드하고 대화 목록에 없다면 해당 유저에게 메세지 보낼 수 있도록 준비(aside에는 메세지를 보내고나야 표시하기)
+function createNewConversation(value){
+	
+	// 제목에 클릭한 유저의 이름 출력하기
+	document.querySelector('.message-conversation-contact').innerText = value + "님과의 대화";
+	
+	if(subscriptions.includes(value)){ // 이미 대화 목록에 있는 유저인 경우
+		loadConversation(event, value);
+	}else{ // 대화 목록에 없는 유저인 경우
+		
+		// 기존에 로드된 대화 삭제
+		let messageList = document.querySelector('.message-chat-list');
+		messageList.innerHTML = '';
+	}
+}
 
 connect();

@@ -40,6 +40,7 @@
     height: 5%;
     border-bottom: 1px solid #dddddd;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -200,10 +201,11 @@ ul::-webkit-scrollbar {
 /* 유저 아이디 검색 및 자동 완성 */
 .contact-search-result-wrapper{
 	background-color: #fff; 
-	position:relative; 
+	position:absolute; 
 	z-index:1; 
-	top: 9px;
-    left: 69px;
-    width: 285px;
+	top: 22.8rem;
+    left: 33.5rem;
+    width: 18%;
     box-shadow: 1px 7px 10px -3px rgba(0,0,0,0.30);
+    padding-left: 10px;
 }

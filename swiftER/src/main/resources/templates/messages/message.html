@@ -1,7 +1,7 @@
 <th:block th:include="@{_header.html}"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script defer th:src="@{/js/conversation.js?v=134}"></script>
+<script defer th:src="@{/js/conversation.js?v=154}"></script>
 <script>
 	
 </script>
@@ -14,10 +14,10 @@
                     </div>
                     <div class="contact-search-bar-wrapper">
                         <input type="text" class="contact-search-bar" placeholder="아이디를 검색하세요">
-                    	<div class="contact-search-result-wrapper">
-                    		<ul id="contact-search-results" style="max-height: 100px; overflow-y: auto;"></ul>
-                    	</div>
                     </div>
+                    <div class="contact-search-result-wrapper">
+                   		<ul id="contact-search-results" style="max-height: 100px; overflow-y: auto;"></ul>
+                   	</div>
                     <div class="contact-list-wrapper">
                         <ul class="message-list" th:each="lastMessage: ${lastMessages}">
                             <li class="message" th:otherUser="${lastMessage.key}" onclick="loadConversation(event, this.getAttribute('otherUser'))">
@@ -41,7 +41,7 @@
                         </ul>
                     </div>
                     <div class="message-chat-write">
-                        <input type="text" class="message-chat-write-bar" id="message-input" placeholder="메세지 입력">
+                        <input type="text" class="message-chat-write-bar" id="message-input" placeholder="메세지 입력" autocomplete="off">
                         <a href="#" id="message-send-button"><i class="fa-solid fa-paper-plane fa-lg message-send-button"></i></a>
                     </div>
                 </div>
