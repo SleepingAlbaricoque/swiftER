@@ -10,7 +10,7 @@ const messageInput = document.getElementById('message-input');
 const currentUser = document.getElementById('currentUser');
 
 // 현재 사용자가 메세지를 주고 받은 사용자 리스트(현재 aside에 떠있는 사용자들)
-const otherUsers = document.querySelectorAll('#otherUser');
+const otherUsers = document.querySelectorAll('.otherUser');
 
 // stomp 구독 정보를 저장하기 위한 리스트 객체
 const subscriptions = [];
@@ -61,7 +61,7 @@ function handleIncomingMessage(message){
 	
 	// aside의 마지막 메세지도 방금 수신한 메세지로 바꿔주기
 	//let currentConvo = document.querySelector('.on');
-	let convoList = document.querySelectorAll('#otherUser');
+	let convoList = document.querySelectorAll('.otherUser');
 	for(const i in convoList){
 		let destination = convoList[i];
 		
@@ -125,7 +125,7 @@ function receiveMsgFromUnsubscribedUser(message){
 	});
 	ul.appendChild(li);
 	
-	li.innerHTML = `<input type="hidden" id="otherUser" value="` + message.sender + `">`
+	li.innerHTML = `<input type="hidden" class="otherUser" value="` + message.sender + `">`
 				+ `<a href="#" class="contact">` + message.sender + `</a>`
 				+ `<i class="fa-solid fa-circle fa-2xs new-message-alert"></i>`
 				+ `<br>`
@@ -136,6 +136,8 @@ function receiveMsgFromUnsubscribedUser(message){
 
 // 작성한 메세지 전송하고 화면에 출력하기
 function sendMessage() {
+   
+   // 검색창에서 바로 
    let receiver = document.querySelector('.on');
    
     const message = {
@@ -144,7 +146,8 @@ function sendMessage() {
         message: messageInput.value
     };
     
-    // 이전 대화 기록이 없는 유저에게 보내는 경우 해당 유저에게 구독 먼저 하기
+    // 이전 대화 기록이 없는 유저에게 보내는 경우(그렇다면 현재 대화 목록에 없으므로 구독이 안되어있는 상태) 해당 유저에게 구독 먼저 하기
+    //if(){}
     
     // aside에 해당 유저 이름과 방금 보낸 메세지를 출력하기(ul 객체로)
     
@@ -183,22 +186,29 @@ document.getElementById('message-send-button').addEventListener('click', functio
 // 클릭한 유저와의 대화 전부 불러오기
 function loadConversation(event, otherUser){
 	// 대화 상대 리스트에서 내가 선택한 상대에게만 on 클래스 적용하고, 이전에 적용된 경우가 있으면 지우기
-	const otherUsersList = document.querySelectorAll('input[type="hidden"]');
-	otherUsersList.forEach((item)=>{
+	otherUsers.forEach((item)=>{
 		item.classList.remove('on');
-		console.log(item);
+		console.log(item.classList.contains('on'));
 	});
 	
-	console.log('event: ' + event.target);
+	console.log('event: ' + event.target.classList);
 	console.log('event target: ' + event.target.classList.contains('autocomplete-result'));
 	
 	// 현재 대화 상대에게 on 클래스 적용하기
 	if(!event.target.classList.contains('autocomplete-result')){ // 자동 완성 리스트의 유저를 누른 게 아닌 경우에만 적용하기
-		event.target.querySelector('#otherUser').classList.add('on');
+		console.log('if runs. event target contains ' + event.target.classList.contains('autocomplete-result'));
+		event.target.querySelector('.otherUser').classList.add('on');
 	
 		// aside에서 현재 대화 상대에 표시된 새로운 메세지 표시 점이 있다면 없애기
 		if(event.target.querySelector('.fa-circle')){
 			event.target.querySelector('.fa-circle').remove();
+		}
+	}else{ // aside의 대화 목록을 직접 누른 경우
+		console.log('autocomplete true');
+		for(let i=0; i < otherUsers.length; i++){ // aside의 대화 목록 중에서
+			if(otherUsers[i].value === otherUser){ // 검색창에서 선택한 유저 아이디와 같은 아이디가 있다면
+				otherUsers[i].classList.add('on'); // 
+			}
 		}
 	}
 	
@@ -276,10 +286,7 @@ function loadConversation(event, otherUser){
 // 날짜 구분선 중 불러온 메세지와 같은 날짜(년-월-일)가 있는지 확인 -> 없으면 해당 날짜 구분선 추가
 function checkDateAndDivide(rdate){
 	let dates = document.querySelectorAll('.message-date');
-	console.log('dates: ' + dates.length);
-	console.log('rdate: ' + rdate);
-	console.log(dateList.includes(rdate));
-	
+
 	if(dates.length > 0){
 			dates.forEach((date)=>{
 				
@@ -347,6 +354,13 @@ function usernameAutoComplete(){
 			searchResults.style.display= 'none';
 		}
 	});
+	
+	// 자동완성 결과 출력 후 사용자가 결과창 밖의 지점을 클릭하면 결과창 숨기기
+  	document.addEventListener('click', function(event){
+	   if(!searchResultWrapper.contains(event.target)){
+		   searchResults.style.display='none';
+	   }
+   	});
 }
 
 // 검색창에 입력할 때마다 자동 완성 기능 실행
@@ -363,7 +377,14 @@ function createNewConversation(value){
 	
 	if(subscriptions.includes(value)){ // 이미 대화 목록에 있는 유저인 경우
 		loadConversation(event, value);
+		
 	}else{ // 대화 목록에 없는 유저인 경우
+		
+		// 대화 상대 리스트에 적용된 on 클래스 지우기(이후 메세지를 보내면 aside에 대화 상대 등록 후 그 상대에게 on 클래스 주기)
+		otherUsers.forEach((item)=>{
+			item.classList.remove('on');
+			console.log(item.classList.contains('on'));
+		});
 		
 		// 기존에 로드된 대화 삭제
 		let messageList = document.querySelector('.message-chat-list');
