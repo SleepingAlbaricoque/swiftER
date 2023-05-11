@@ -72,7 +72,7 @@ public class ERRestController {
     }
     
     @ResponseBody
-    @PostMapping("er/erSearch3")    
+    @PostMapping(value = "er/erSearch3", produces = "application/text; charset=utf8")    
     public String erSearch3(String city, String town) throws IOException {
     	
     	// RestTemplate 생성            
