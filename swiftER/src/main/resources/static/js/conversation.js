@@ -37,9 +37,8 @@ function connect() {
         
         
         // 목록에 없는 유저가 메세지 보냈을 때 받기 위해 messages 채널에 subscribe
-        
         stompClient.subscribe('/user/queue/messages', function(message) {
-			if(!subscriptions.includes(JSON.parse(message.body).receiver)){ // subscriptions에 없는지 확인
+			if(!subscriptions.includes(JSON.parse(message.body).sender)){ // subscriptions에 없는지 확인
 				receiveMsgFromUnsubscribedUser(JSON.parse(message.body));
 			}
         });
@@ -48,6 +47,7 @@ function connect() {
 }
 
 function handleIncomingMessage(message){
+	console.log('aqui!');
 	let currentChat = document.querySelector('.message-conversation-contact').innerText;
 	let currentChatUsernameIndex = currentChat.indexOf('님');
 	let currentChatUsername = currentChat.substring(0, currentChatUsernameIndex);
@@ -107,9 +107,12 @@ function showMessage(message){
 function receiveMsgFromUnsubscribedUser(message){
 	
 	// 메세지를 송신한 유저 구독하기
-	stompClient.subscribe('/user/topic/' + message.sender, function(message){
-		
-	});
+	if(!subscriptions.includes(message.sender)){
+		stompClient.subscribe('/user/topic/' + message.sender, function(message){});
+	}
+	
+	// 구독 후 송신자 유저를 구독 목록에 추가하기
+	subscriptions.push(message.sender);
 	
 	// 새로 들어온 메세지 및 송신자를 aside에 출력하기
 	let div = document.querySelector('.contact-list-wrapper');
@@ -137,41 +140,80 @@ function receiveMsgFromUnsubscribedUser(message){
 // 작성한 메세지 전송하고 화면에 출력하기
 function sendMessage() {
    
-   // 검색창에서 바로 
-   let receiver = document.querySelector('.on');
+   let receiverInfo = document.querySelector('.message-conversation-contact').innerText;
+   let receiver = receiverInfo.substring(0, receiverInfo.indexOf('님'));
    
     const message = {
         sender: currentUser.value,
-        receiver: receiver.value,
+        receiver: receiver,
         message: messageInput.value
     };
     
-    // 이전 대화 기록이 없는 유저에게 보내는 경우(그렇다면 현재 대화 목록에 없으므로 구독이 안되어있는 상태) 해당 유저에게 구독 먼저 하기
-    //if(){}
-    
-    // aside에 해당 유저 이름과 방금 보낸 메세지를 출력하기(ul 객체로)
-    
+    if(!subscriptions.includes(receiver)){ // 해당 유저와의 최초 메세지인 경우 - 보안 문제가 중요한 이슈가 되거나 대화 갯수가 많아지면 DB에서 직접 조회하는 게 나을 수도 있음
+    	
+    	// 해당 유저에게 먼저 구독하기
+    	subscriptions.push(receiver);
+    	
+    	stompClient.subscribe('/user/topic/' + receiver, function(message){
+			handleIncomingMessage(JSON.parse(message.body));
+		});
+    	
+    	// aside에 해당 유저와의 대화 만들기
+		
+	}else{ // 기존 대화 목록이 존재하는 경우
+	
+		// aside의 마지막 메세지도 방금 전송한 메세지로 바꿔주기
+		
+	}
+	
+	
+    //let asideMessageContent = document.querySelector('.message-content');
+    //asideMessageContent.innerText = messageInput.value;
     
     stompClient.send("/app/chat", {}, JSON.stringify(message));
     
     // 방금 전송한 메세지를 화면에 출력하기 => 데이터베이스 저장 시간과 화면 출력 시간 불일치 문제 -> ajax로 해결?
-    console.log(messageInput.value);
 	let messageLi = document.createElement('li');
 	let messageContent = document.createElement('div');
 	let date = document.createElement('span');
 	messageContent.innerText = messageInput.value;
 	date.innerText = getCurrentTime();
-	
 	messageLi.classList.add('my-chat-bubble-li');
 	messageContent.classList.add('my-chat-bubble');
 	
+	const currentDate = new Date(); // 현재 날짜 구하기
+	const year = currentDate.getFullYear();
+	const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Pad month with leading zero if necessary
+	const day = String(currentDate.getDate()).padStart(2, '0'); // Pad day with leading zero if necessary
+	const formattedDate = `${year}-${month}-${day}`;
+	
+	let dateDividerLi = document.createElement('li'); // 첫 메세지라 날짜 divider가 아예 없거나 마지막 메세지 이후 날짜가 변경되었다면 날짜 divider 삽입하기 위해 li 요소 생성
+	let dateDivider = document.createElement('div'); // li 안에 값을 넣을 div 요소 생성
+	dateDividerLi.appendChild(dateDivider); // li 안에 div를 append하기
+	dateDividerLi.classList.add('message-date-divider');
+	dateDivider.classList.add('message-date');
+	dateDivider.innerText = formattedDate;
+
+	// 이미 존재하는 날짜 divider 중 가장 마지막 divider 날짜와 현재 날짜가 다를 경우 날짜 divider 삽입
+	let dateDividers = document.querySelectorAll('.message-date');
+	
+	if(dateDividers.length > 0){ // 다른 날짜 divider가 이미 존재하는 경우
+		let lastDivider = dateDividers[dateDividers.length - 1].innerText;
+		let currentConvertedDate = new Date(formattedDate);
+		let lastDividerConvertedDate = new Date(lastDivider);
+		
+		if(currentConvertedDate > lastDividerConvertedDate){
+			messageList.appendChild(dateDividerLi);
+		}
+		
+	}else{ // 다른 날짜 divider가 없는 경우
+		messageList.appendChild(dateDividerLi);
+	}
+	
+	// 메세지 내용 출력
 	messageList.appendChild(messageLi);
 	messageLi.appendChild(date);
 	messageLi.appendChild(messageContent);
-    
-    // aside의 마지막 메세지도 방금 전송한 메세지로 바꿔주기
-    let asideMessageContent = document.querySelector('.message-content');
-    asideMessageContent.innerText = messageInput.value;
     
     // 메세지 입력 창 초기화하기
     messageInput.value = '';
@@ -204,10 +246,13 @@ function loadConversation(event, otherUser){
 			event.target.querySelector('.fa-circle').remove();
 		}
 	}else{ // aside의 대화 목록을 직접 누른 경우
-		console.log('autocomplete true');
 		for(let i=0; i < otherUsers.length; i++){ // aside의 대화 목록 중에서
 			if(otherUsers[i].value === otherUser){ // 검색창에서 선택한 유저 아이디와 같은 아이디가 있다면
-				otherUsers[i].classList.add('on'); // 
+				otherUsers[i].classList.add('on'); // 그 유저 ul의 input[type=hidden] 요소에 on 클래스 부여
+				
+				if(otherUsers[i].nextElementSibling.nextElementSibling.tagName === 'I'){ // 해당 유저 대화 ul에 i 태그(새로운 메세지 알림 점)가 있다면
+					otherUsers[i].nextElementSibling.nextElementSibling.remove(); // 알림 점 remove하기
+				}
 			}
 		}
 	}
