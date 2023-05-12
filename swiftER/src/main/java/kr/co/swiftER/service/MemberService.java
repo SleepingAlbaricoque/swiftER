@@ -3,6 +3,7 @@ package kr.co.swiftER.service;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
@@ -328,10 +329,11 @@ public class MemberService {
     }
 
 	/* 토큰으로 사용자 정보 조회 */
-	public int createKakaoUser(String token) throws Exception {
+	public void createKakaoUser(String token) throws Exception {
 
         String reqURL = "https://kapi.kakao.com/v2/user/me";
-        int CBU = 0; 
+        int CBE = 0;
+        int CBU = 0;
         //access_token을 이용하여 사용자 정보 조회
         try {
             URL url = new URL(reqURL);
@@ -360,24 +362,49 @@ public class MemberService {
             JsonElement element = parser.parse(result);
 
             Long id = element.getAsJsonObject().get("id").getAsLong();
-            String uid = Long.toString(id);
+            
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
+            
+            String uid = Long.toString(id);
             String email = "";
+            
             if (hasEmail) {
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }
 
-            System.out.println("id : " + id);
+            System.out.println("uid : " + uid);
             System.out.println("email : " + email);
 
             br.close();
+            // email로 DB에 존재하는 사용자인지 확인하고
+            System.out.println("countByEmail : " + repo.countByEmail(email));
             System.out.println("countByUid : " + repo.countByUid(uid));
+            CBE = repo.countByEmail(email);
             CBU = repo.countByUid(uid);
+            // 없으면 회원가입 시키기
+            if(CBE == 0 & CBU == 0) {
+            	insertSocialMemeber(uid, email);
+            	
+            }else if(CBE == 1 & CBU == 0){
+            	// 원래 가입중인 일반회원 아이디로 로그인하기
+            }else {
+            	// 원래 가입중인 소셜회원 아이디로 로그인하기
+            }
             	
         } catch (IOException e) {
             e.printStackTrace();
         }
-       return CBU;
     }
 	
+	// 소셜 회원가입 시키기
+	public int insertSocialMemeber(String uid, String email) {
+		System.out.println("social uid : " +uid);
+		System.out.println("social email : "+ email);
+		String password = UUID.randomUUID().toString();
+		String randomPass = passwordEncoder.encode(password);
+		int result = dao.insertSocialMember(uid, email, randomPass);
+		return result;
+	}
+	
+	// 소셜회원 로그인 시키기
 }

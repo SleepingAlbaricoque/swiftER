@@ -69,8 +69,7 @@
 			`kind`=#{kind},
 			`specialty`=#{specialty},
 			`cert_oriName`=#{cert_oriName},
-			`cert_newName`=#{cert_newName},
-			`verified`=0,
+			`cert_newName`=#{cert_newName},			`verified`=0,
 			`VeriMsg`='심사중입니다';
 	</insert>
 	
@@ -182,4 +181,12 @@
 	<select id="selectCountReviewList" resultType="Integer">
 		select count(`no`) from `search_er_review` where `member_uid`=#{uid};
 	</select>
+	
+	<!-- 소셜회원 가입 시키기 -->
+	<insert id="insertSocialMember">
+		insert into `member` set 
+			`uid`=#{uid},
+			`pass`=#{randomPass},
+			`email`=#{email};
+	</insert>
 </mapper>
