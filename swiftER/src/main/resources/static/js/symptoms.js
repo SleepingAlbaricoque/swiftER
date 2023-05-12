@@ -19,15 +19,12 @@
 	  });
 	});
 
-	
-	
-
 
     // 반려동물 정보 체크박스 둘중하나 선택
     function handleCheckboxClick(event, containerId) {
         var clickedCheckbox = event.target;
         if (clickedCheckbox.checked) {
-            var checkboxes = document.querySelectorAll('#' + containerId + ' input[type="checkbox"]');
+            var checkboxes = document.querySelectorAll('#' + containerId + ' input[type="radio"]');
             for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i] !== clickedCheckbox) {
                     checkboxes[i].checked = false;
@@ -48,36 +45,25 @@
         }
     }
     
-    function checkboxresult() {
-  	  const div1Checkbox1 = document.getElementById('div1-checkbox1');
-  	  const div1Checkbox2 = document.getElementById('div1-checkbox2');
-  	  
-  	  const div2Checkbox1 = document.getElementById('div2-checkbox1');
-  	  const div2Checkbox2 = document.getElementById('div2-checkbox2');
-  	  
-  	  const div3Checkbox1 = document.getElementById('div3-checkbox1');
-  	  const div3Checkbox2 = document.getElementById('div3-checkbox2');
-
-  	  if (!div1Checkbox1.checked && !div1Checkbox2.checked && !div2Checkbox1.checked && !div2Checkbox2.checked && !div3Checkbox1.checked && !div3Checkbox2.checked) {
-  	    alert('동물 접촉 여부란에 체크하셔야 합니다!');
-  	    return false;
-  	  }
-
-  	  return true;
-  	}
 
     
     // 검색 버튼 클릭시 Jquery 전송
 	function checkboxresult(){
     	
+    	// 체크박스와 라디오박스 값 받아와서 배열에 쌓기
     	const checkboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
         const checkedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
         const checkedValues = checkedCheckboxes.map((checkbox) => checkbox.id);
         const delimiter = "&";
         console.log(checkedValues);
         
+        // 유효성 검사를 위한 선언
+        const chks = document.querySelectorAll('input[type="checkbox"]');
+        const chkarr = Array.from(chks).filter((checkbox) => checkbox.checked);
+        const chkarrValues = chkarr.map((checkbox) => checkbox.id);
 		
-        if(checkedValues.length == 0) {
+		// 유효성 검사
+        if(chkarrValues.length == 0) {
         	alert("증상을 체크해주세요!");
         	return false;	
         }

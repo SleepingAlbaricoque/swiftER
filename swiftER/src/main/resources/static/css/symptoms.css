@@ -546,7 +546,7 @@ div[class*=search_body_subcate] > h3 {
 	}
 	a.topscroll {
 		position: fixed;
-	    display: inline-block;
+	    display: none;
 	    background-color: #01b1ff;
 	    border-radius: 50%;
 	    right: 10%;
