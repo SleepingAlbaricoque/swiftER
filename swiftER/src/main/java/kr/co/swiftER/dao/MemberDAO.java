@@ -69,4 +69,6 @@ public interface MemberDAO {
 
 	public int selectCountReviewList(String uid);
 
+	public int insertSocialMember(@Param(value="uid")String uid, @Param(value="email")String email, @Param(value="randomPass")String randomPass);
+
 }

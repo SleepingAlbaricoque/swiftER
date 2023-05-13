@@ -399,7 +399,6 @@ public class MemberController {
 	@PostMapping("member/findHistory")
 	public Map<String, MemberHistoryVO> findHistory(@ModelAttribute("MemberHistoryVO") MemberHistoryVO hvo){
 		
-		
 		List<MemberHistoryVO> history = service.selectHistories(hvo);
 		System.out.println(history);
 		
@@ -410,21 +409,14 @@ public class MemberController {
 		return map;
 	}
 	
-	/* 카카오  */
+	/* 카카오 */
 	@ResponseBody
-	@GetMapping("/kakao/kakaoAuth")
-	public String kakaoCallback(@RequestParam String code) throws Exception {
+	@RequestMapping("/kakao/kakaoAuth")
+	public void kakaoCallback(@RequestParam String code, Model model) throws Exception {
 
-	            System.out.println("code : " + code);
-	            String access_Token = service.getKaKaoAccessToken(code);
-	            service.createKakaoUser(access_Token);
-
-	            if(service.createKakaoUser(access_Token) == 0) {
-	            	return "redirect:/";
-	            }else {
-	            	return "0";
-	            }
-	    }
-	
+        System.out.println("code : " + code);
+        String access_Token = service.getKaKaoAccessToken(code);
+        service.createKakaoUser(access_Token);
+	}
 	
 }

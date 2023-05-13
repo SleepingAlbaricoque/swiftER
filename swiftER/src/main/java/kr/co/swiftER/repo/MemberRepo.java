@@ -8,5 +8,7 @@ public interface MemberRepo extends JpaRepository<MemberEntity, String> {
 	public int countByUid(String uid);
 
 	public int countByNickname(String nickname);
+	
+	public int countByEmail(String email);
 }
 
