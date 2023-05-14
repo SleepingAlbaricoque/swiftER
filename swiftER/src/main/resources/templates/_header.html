@@ -37,7 +37,7 @@
     <div class="wrapper">
         <header>
             <div class="top">
-                <div sec:authorize="!isAuthenticated()">
+               <div sec:authorize="!isAuthenticated()">
                 	<a th:href="@{/}">HOME</a>
                     <a th:href="@{/member/login}">로그인</a>
                     <a th:href="@{/member/terms}">회원가입</a>
@@ -47,6 +47,7 @@
                 	<a th:href="@{/}">HOME</a>
                 	<a sec:authorize="hasRole('0')" th:href="@{/admin/main}">관리자 페이지</a>
                 	<a sec:authorize="!hasRole('0')" th:href="@{/member/myPage}">마이페이지</a>
+                	<a th:href="@{/conversation}">메세지함</a>
                 	<a th:href="@{/member/logout}">로그아웃</a>
                 	<a th:href="@{/cs/index}">고객센터</a>
                 </div>
