@@ -30,6 +30,7 @@ function connect() {
         // aside 목록에 있는 모든 유저 subscribe
         otherUsers.forEach((otherUser)=>{
 			stompClient.subscribe('/user/topic/' + otherUser.value, function(message) {
+				console.log('connect topic subscribe');
             	handleIncomingMessage(JSON.parse(message.body));
         	});
         	subscriptions.push(otherUser.value);
@@ -38,8 +39,10 @@ function connect() {
         
         // 목록에 없는 유저가 메세지 보냈을 때 받기 위해 messages 채널에 subscribe
         stompClient.subscribe('/user/queue/messages', function(message) {
+			console.log('connect queue subscribe');
 			if(!subscriptions.includes(JSON.parse(message.body).sender)){ // subscriptions에 없는지 확인
-				receiveMsgFromUnsubscribedUser(JSON.parse(message.body));
+				console.log('connect queue not subscribed');
+				receiveMsgFromNonsubscribedUser(JSON.parse(message.body));
 			}
         });
         
@@ -47,7 +50,7 @@ function connect() {
 }
 
 function handleIncomingMessage(message){
-	console.log('aqui!');
+	console.log('handleIncomingMessage');
 	let currentChat = document.querySelector('.message-conversation-contact').innerText;
 	let currentChatUsernameIndex = currentChat.indexOf('님');
 	let currentChatUsername = currentChat.substring(0, currentChatUsernameIndex);
@@ -86,6 +89,7 @@ function handleIncomingMessage(message){
 
 // 새로 들어온 메세지 출력하기(이미 구독한 유저가 메세지를 보낸 경우)
 function showMessage(message){
+	console.log(showMessage);
 	let messageLi = document.createElement('li');
 	let messageContent = document.createElement('div');
 	
@@ -104,15 +108,19 @@ function showMessage(message){
 }
 
 // 구독하지 않은 유저가 메세지를 보냈을 때 처리하기
-function receiveMsgFromUnsubscribedUser(message){
-	
+function receiveMsgFromNonsubscribedUser(message){
+	console.log('receiveMsgFromNonsubscribedUser');
 	// 메세지를 송신한 유저 구독하기
 	if(!subscriptions.includes(message.sender)){
-		stompClient.subscribe('/user/topic/' + message.sender, function(message){});
+		stompClient.subscribe('/user/topic/' + message.sender, function(message){
+			console.log('receiveMsgFromNonsubscribedUser subscribe?');
+			handleIncomingMessage(JSON.parse(message.body));
+		});
 	}
 	
 	// 구독 후 송신자 유저를 구독 목록에 추가하기
 	subscriptions.push(message.sender);
+	console.log(subscriptions[subscriptions.length - 1]);
 	
 	// 새로 들어온 메세지 및 송신자를 aside에 출력하기
 	let div = document.querySelector('.contact-list-wrapper');
@@ -126,20 +134,19 @@ function receiveMsgFromUnsubscribedUser(message){
 	li.addEventListener('click', function(){
 		loadConversation(event, message.sender);
 	});
-	ul.appendChild(li);
-	
 	li.innerHTML = `<input type="hidden" class="otherUser" value="` + message.sender + `">`
 				+ `<a href="#" class="contact">` + message.sender + `</a>`
 				+ `<i class="fa-solid fa-circle fa-2xs new-message-alert"></i>`
 				+ `<br>`
 				+ `<a href="#" class="message-content">` + message.message + `</a>`;
+	ul.appendChild(li);
 }
 
 
 
 // 작성한 메세지 전송하고 화면에 출력하기
 function sendMessage() {
-   
+   console.log('sendMessage');
    let receiverInfo = document.querySelector('.message-conversation-contact').innerText;
    let receiver = receiverInfo.substring(0, receiverInfo.indexOf('님'));
    
@@ -159,11 +166,46 @@ function sendMessage() {
 		});
     	
     	// aside에 해당 유저와의 대화 만들기
+    	let div = document.querySelector('.contact-list-wrapper');
+	
+		let ul = document.createElement('ul');
+		ul.classList.add('message-list');
+		div.appendChild(ul);
+		
+		let li = document.createElement('li');
+		li.classList.add('message');
+		li.addEventListener('click', function(){
+			loadConversation(event, message.receiver);
+		});
+		ul.appendChild(li);
+		
+		li.innerHTML = `<input type="hidden" class="otherUser" value="` + message.receiver + `">`
+					+ `<a href="#" class="contact">` + message.receiver + `</a>`
+					+ `<br>`
+					+ `<a href="#" class="message-content">` + message.message + `</a>`;
+					
+		li.setAttribute('otherUser', message.receiver);
+		
 		
 	}else{ // 기존 대화 목록이 존재하는 경우
-	
 		// aside의 마지막 메세지도 방금 전송한 메세지로 바꿔주기
-		
+		let convoList = document.querySelectorAll('.otherUser'); // 위에 otherUsers라고 이미 다른 변수에 같은 내용을 넣어놨으나 receiveMsgFromNonsubscribedUser 실행 시 push한 내용을 인식을 못해서 새로 여기서 만듦
+		for(const i in convoList){
+			
+			let destination = convoList[i];
+			
+			if(destination.value === message.receiver){
+				console.log('destination.value === message.receiver');
+				if(destination.nextElementSibling.nextElementSibling.tagName === 'I'){ // 알림 점이 있는 경우
+					destination.nextElementSibling.nextElementSibling.remove(); // 알림 점 없애기
+				}
+				
+				// aside에 메세지 내용 출력
+				let asideMessageContent = destination.nextElementSibling.nextElementSibling.nextElementSibling;
+				console.log(asideMessageContent);
+			    asideMessageContent.innerText = message.message;
+			}
+		}
 	}
 	
 	
