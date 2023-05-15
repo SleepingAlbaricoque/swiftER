@@ -30,6 +30,9 @@ public interface CSDAO {
 	// 내가 쓴 qna 답변 여부 체크
 	public int selectCountQnaAnswer(int no);
 	
+	// 내가 쓴 qna 답변글 가져오기
+	public CSQuestionsVO selectQnaAnswer(String no);
+	
 	// 파일 처리
 	// FileVO를 file 테이블에 업로드
 	public int insertFile(FileVO fvo);

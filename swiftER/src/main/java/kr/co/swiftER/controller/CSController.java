@@ -281,6 +281,13 @@ public class CSController {
 			model.addAttribute("files", files);
 		}
 		
+		// 답글있으면 불러와서 저장하기
+		CSQuestionsVO reply = service.selectQnaAnswer(no);
+		
+		if(reply != null) {
+			model.addAttribute("reply", reply);
+		}
+		
 		return "cs/qna_view";
 	}
 	

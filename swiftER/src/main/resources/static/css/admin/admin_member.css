@@ -76,12 +76,12 @@
     margin-left: 60px;
 }
 
-.control-buttons{
+.admin-member-control-buttons{
     position: relative;
     bottom: -15px;
     right: -780px;
 }
-.control-buttons > input{
+.admin-member-control-buttons > input{
     width: 100px;
     height: 40px;
     border-radius: 20px;

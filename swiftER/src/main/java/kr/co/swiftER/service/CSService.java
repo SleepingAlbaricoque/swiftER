@@ -71,6 +71,11 @@ public class CSService {
 		return dao.selectCountQnaAnswer(no);
 	}
 	
+	// 내가 쓴 qna 답변글 가져오기
+	public CSQuestionsVO selectQnaAnswer(String no) {
+		return dao.selectQnaAnswer(no);
+	}
+	
 	
 	// 파일 업로드
 	// applicaton.properties에서 설정한 파일 저장 경로 주입받기

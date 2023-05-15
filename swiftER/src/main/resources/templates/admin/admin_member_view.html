@@ -29,6 +29,12 @@
             let details = document.querySelectorAll(".member-detail");
             let zip = details[3].value.substring(0, 6);
             let addr1 = details[3].value.substring(6);
+            let veriMsg = '';
+            
+            // 의사 회원 중 심사 메세지를 적어야 하는 경우
+            if(document.querySelector('.veriMsg')){
+            	veriMsg = document.querySelector('.veriMsg').value;
+            }
             
             if(element.value === '수정하기'){
 
@@ -40,7 +46,6 @@
 
                 element.value = "저장하기";
             }else{
-
                 for(let i=0; i < details.length; i++){
                     document.querySelectorAll(".member-detail")[i].readOnly = true;
                     document.querySelectorAll(".member-detail")[i].style.border = 'none';
@@ -61,7 +66,7 @@
                 		addr1: addr1,
                 		email: details[4].value,
                 		addr2: details[5].value,
-                		veriMsg: document.querySelector('.veriMsg').value
+                		veriMsg: veriMsg
                 	}),
                 }).then(response => response.json())
                 .then(function(json){
@@ -112,6 +117,7 @@
             		.catch(err => console.error(err));
                     
                     location.href = "/swiftER/admin/member/view?uid=" + uid;
+                    
                     
             	}else{
                     fetch("/swiftER/admin/member/verify?uid=" + uid + "&status=1", {headers:headers, method:"GET"})
@@ -202,7 +208,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="control-buttons">
+                <div class="admin-member-control-buttons">
                     <input type="button" value="목록으로" class="back-to-member-list" th:onclick="|location.href='@{/admin/member}'|">
                     <input type="button" value="수정하기" class="modify-member" onclick="modifyMember(this)">
                     <input type="button" value="정지시키기" class="modify-member" th:uid="${member.member.uid}" th:onclick="permaBan(this.getAttribute('uid'))">

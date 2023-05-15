@@ -105,4 +105,8 @@
 	<select id="selectCountQnaAnswer" resultType="int">
 		select count(`no`) from `cs_questions` where `qno`=#{no};
 	</select>
+	
+	<select id="selectQnaAnswer" resultType="kr.co.swiftER.vo.CSQuestionsVO">
+		select * from `cs_questions` where `qno`= #{no};
+	</select>
 </mapper>

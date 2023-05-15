@@ -46,21 +46,16 @@
                         	[(${article.content})]
                         </td>
                     </tr>
+                    <th:block  th:if="${reply != null}">
                     <tr class="qna-view-answer selected" onmouseover="flick(this)" style="display:block;">
                         <th><i class="fa-solid fa-a"></i></th>
                     </tr>
                     <tr class="qna-view-answer" style="display:block;">
                         <td>
-                            현재 저희 서비스는 대도시 위주로 응급실 정보를 제공하고 있습니다. 추후 업데이트를 통해 더 많은 지역에 응급실 정보를 제공하는 swiftER로 거듭나겠습니다. 감사합니다. 
-                            But there's one sound
-                            That no one knows
-                            What does the fox say?
-                            "Ring-ding-ding-ding-dingeringeding!
-                            Gering-ding-ding-ding-dingeringeding!
-                            Gering-ding-ding-ding-dingeringeding!"
-                            What the fox say?
+                           [(${reply.content})]
                         </td>
                     </tr>
+                    </th:block>
                 </table>
             </div>
             <div class="back-to-qna-page">
