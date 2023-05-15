@@ -13,7 +13,7 @@ $(document).ready(function(){
 			dataType : 'json',
 			success : function(data){
 				console.log(email);
-				$(".resultEmail").css('color', 'black').text('전송완료!');
+				$(".resultEmail").css('color', 'green').text('전송완료');
 			}
 		});
 	});

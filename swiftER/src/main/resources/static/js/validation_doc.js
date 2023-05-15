@@ -21,7 +21,7 @@
 
     $(function(){
 
-        $('input[name=uid]').focusout(function() {
+        $('input[name=uid]').keydown(function() {
         	isUidOk=false;
         });
 
