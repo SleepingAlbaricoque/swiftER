@@ -4,7 +4,8 @@
 $(document).ready(function(){
 	$('#btnEmailCheck').click(function(){
 		let email = $('input[name=email]').val();
-		
+		$(this).hide(); // 버튼 숨기기
+  		$(".resultEmail").text('전송중...');
 		$.ajax({
 			url : '/swiftER/member/checkEmail',
 			method : 'get',
@@ -12,6 +13,7 @@ $(document).ready(function(){
 			dataType : 'json',
 			success : function(data){
 				console.log(email);
+				$(".resultEmail").css('color', 'green').text('전송완료');
 			}
 		});
 	});

@@ -134,7 +134,7 @@
     			$('.resultEmail').css('color', 'red').text('이메일이 유효하지 않습니다.');
     		}else{
     			isEmailOk = true;
-    			$('.resultEmail').text('O');
+    			$('.resultEmail').text('');
     		}
 
     	});
@@ -168,12 +168,13 @@
 
     	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때)
     	
-    	$('.register > form').click(function(e){
+    	$('.register > form').submit(function(e){
 
     		////////////////////////////////////
     		// 폼 데이터 유효성 검증(Vaildation)
     		////////////////////////////////////
     		// 아이디 검증
+    		console.log('아이디 검증 실행')
     		if(!isUidOk){
     			alert('아이디를 확인하십시오.');
     			return false;
