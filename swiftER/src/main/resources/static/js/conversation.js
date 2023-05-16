@@ -105,6 +105,12 @@ function showMessage(message){
 	messageList.appendChild(messageLi);
 	messageLi.appendChild(messageContent);
 	messageLi.appendChild(date);
+	
+	// 가장 최근 메세지가 가장 먼저 보이도록 스크롤 위치 조절
+	setTimeout(function(){ // 위에서 li 만들어서 append하고 시간이 좀 지나야 DOM에서 인식이 되어서 조금 기다리는 시간을 줘야 함
+		messageList.scrollTop = messageList.scrollHeight;
+		console.log(messageList.scrollHeight);
+	}, 50);	
 }
 
 // 구독하지 않은 유저가 메세지를 보냈을 때 처리하기
@@ -259,6 +265,12 @@ function sendMessage() {
     
     // 메세지 입력 창 초기화하기
     messageInput.value = '';
+    
+    // 가장 최근 메세지가 가장 먼저 보이도록 스크롤 위치 조절
+	setTimeout(function(){ // 위에서 li 만들어서 append하고 시간이 좀 지나야 DOM에서 인식이 되어서 조금 기다리는 시간을 줘야 함
+		messageList.scrollTop = messageList.scrollHeight;
+		console.log(messageList.scrollHeight);
+	}, 50);	
 }
 
 // 전송 버튼 누를 시 메세지 전송하기
@@ -368,6 +380,12 @@ function loadConversation(event, otherUser){
 	
 	// 제목에 클릭한 유저의 이름 출력하기
 	document.querySelector('.message-conversation-contact').innerText = otherUser + "님과의 대화";
+	
+	// 가장 최근 메세지가 가장 먼저 보이도록 스크롤 위치 조절
+	setTimeout(function(){ // 위에서 li 만들어서 append하고 시간이 좀 지나야 DOM에서 인식이 되어서 조금 기다리는 시간을 줘야 함
+		messageList.scrollTop = messageList.scrollHeight;
+		console.log(messageList.scrollHeight);
+	}, 50);	
 }
 
 // 날짜 구분선 중 불러온 메세지와 같은 날짜(년-월-일)가 있는지 확인 -> 없으면 해당 날짜 구분선 추가
