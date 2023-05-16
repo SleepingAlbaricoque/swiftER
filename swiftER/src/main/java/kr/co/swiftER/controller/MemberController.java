@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.swiftER.entity.MemberEntity;
 import kr.co.swiftER.security.MyUserDetails;
@@ -149,7 +152,7 @@ public class MemberController {
 	/* 회원탈퇴 post */
 	@ResponseBody
 	@PostMapping("member/deleteMember")
-	public Map<String, Integer> deleteMember(@RequestParam(value="pass2") String pass2, Authentication authentication){
+	public Map<String, Integer> deleteMember(@RequestParam(value="pass2") String pass2, Authentication authentication, HttpServletRequest request, HttpServletResponse response){
 		
 		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();		
 		
@@ -173,10 +176,15 @@ public class MemberController {
 				service.deleteDoctor(vo.getUid());
 				int result = service.deleteMember(vo.getUid());
 				map.put("result", result);
+				SecurityContextHolder.clearContext();
+				new SecurityContextLogoutHandler().logout(request, response, authentication);
 			}else {
 				System.out.println("일반회원 회원 탈퇴 진행");
+				
 				int result = service.deleteMember(vo.getUid());
 				map.put("result", result);
+				SecurityContextHolder.clearContext();
+				new SecurityContextLogoutHandler().logout(request, response, authentication);
 			}
 			
 		}

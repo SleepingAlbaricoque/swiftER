@@ -34,12 +34,15 @@ public class EmailController {
 
     @ResponseBody
     @GetMapping("member/checkEmail")
-    public String sendEmail(@RequestParam("email") String email) {
+    public Map<String,String> sendEmail(@RequestParam("email") String email) {
         String to = email;
         String subject = "swiftER 인증코드입니다";
         String text = "인증번호는 " + key + " 입니다";
         emailService.sendSimpleMessage(to, subject, text);
-        return email;
+        
+        Map<String,String> map = new HashMap<>();
+        map.put("email", email);
+        return map;
     }
     
     /* 이메일 인증번호 맞는지 확인 */
