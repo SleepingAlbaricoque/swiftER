@@ -1,0 +1,13 @@
+#wrapper {
+    margin: 0 auto;
+    width: 900px;
+    height: 100%;
+    text-align: center;
+}
+a {
+	color: black;
+	font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
