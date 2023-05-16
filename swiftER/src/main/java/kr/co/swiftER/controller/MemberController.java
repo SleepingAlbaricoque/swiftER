@@ -427,4 +427,11 @@ public class MemberController {
         service.createKakaoUser(access_Token);
 	}
 	
+	
+	// 403
+	@GetMapping("member/accessDenied")
+	public String showAccessDeniedPage() {
+	    return "member/accessDenied";
+	}
+	
 }

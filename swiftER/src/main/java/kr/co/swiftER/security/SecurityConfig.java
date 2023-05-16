@@ -79,6 +79,8 @@ public class SecurityConfig {
 				.requestMatchers("/chat/**", "/swiftER/chat/**").permitAll()
 				.requestMatchers("/kakao/**").permitAll()
 				.requestMatchers("/message/search").hasAnyRole("0", "1", "2")
+				.and()
+				.exceptionHandling().accessDeniedPage("/member/accessDenied")
 				;
 		
 		// 사이트 위조 방지 설정
