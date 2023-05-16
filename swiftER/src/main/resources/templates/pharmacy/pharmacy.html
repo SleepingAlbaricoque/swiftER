@@ -1,0 +1,50 @@
+<th:block th:insert="~{@{_header.html}}"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b25c276d476675ddffb5920e680cf36"></script>
+<script th:src="@{/js/pharmacy.js}"></script>
+<main id="search">
+    <section class="er">
+        <div class="map">
+            <div class="search_map" id="search_map">
+	            <div class="fixed">
+		            <h1>
+		                <img src="/swiftER/img/swifter_logo_resize.png" alt="logo">
+		            </h1>
+		        </div>
+		        <div class="selectBox on">
+		            <h2>약국 검색</h2>
+		            <form action="#">
+		                <div>
+		                    <fieldset class="location">
+		                    <legend>위치 조건 <Strong>*</Strong></legend>
+		                    <select name="city" id="city">
+		                    <option value="전체">전체</option>
+			                <th:block th:each="region, i:${region}">
+			                <option th:value="${region.region}" id="region">[[${region.region}]]</option>
+			                </th:block>
+		                    </select>
+		                    <select name="town" id="town">
+		                    </select>
+		                    </fieldset>
+		                    <h4></h4>
+		                    <fieldset class="med-department">
+		                        <legend>공휴일 영업 여부(체크시 공휴일에도 영업하는 약국만 출력) <Strong>*</Strong></legend>
+		                        <li class="checkCont">
+		                            <input type="checkbox" id="my-checkbox1" name="holyday" value="8"><label for="my-checkbox1">공휴일 영업 여부</label>
+		                        </li>
+		                    </fieldset>
+		                </div>
+		                <p>
+		                    본 페이지에서 제공하는 내용은 참고사항일 뿐 게시물에 대한 법적책임은 없음을 밝혀드립니다. 
+		                    자세한 내용은 전문가와 상담하시기 바랍니다.
+		                </p>
+		                <div class="btn">
+		                    <input type="reset" value="초기화" class="resetBtn">
+		                    <input type="submit" value="검색" class="subBtn">
+		                </div>
+		            </form>
+		        </div>
+	   		 	<a href="#" class="btnClose on" id="btnClose">창 닫기</a>
+            </div>
+        </div>
+    </section>
+</main>

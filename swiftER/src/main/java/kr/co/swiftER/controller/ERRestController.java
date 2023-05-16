@@ -26,6 +26,9 @@ public class ERRestController {
 	
 	@Value("${restApi.key}")
     private String restApiKey;
+	
+	@Value("${restApi.key2}")
+	private String restApiKey2;
     
     @Value("${restApi.erdetailUrl}")
     private String erdetailUrl;
@@ -38,9 +41,34 @@ public class ERRestController {
 
     @Value("${restApi.erSmTypeUrl}")
     private String erSmTypeUrl;
+    
+    @Value("${restApi.pharmacyListUrl}")
+    private String pharmacyListUrl;
 
     private String pageNo = "1";
     private String numOfRows = "1000";
+    
+    @ResponseBody
+    @PostMapping(value = "pharmacy/pharmacySearch", produces = "application/text; charset=utf8")    
+    public String pharmacySearch(String city, String town, String hday) throws IOException {
+        // RestTemplate 생성            
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "";
+        
+        // 오브젝트로 결과값 받아오기
+        if(hday != "") {
+        	url = pharmacyListUrl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&QT=" + hday + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        	
+        }else {
+        	url = pharmacyListUrl + restApiKey + "&Q0=" + city + "&Q1=" + town + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
+        }
+        
+        System.out.println("url : "+url);        
+        String response = restTemplate.getForObject(url, String.class);
+        
+        return response;
+    }
     
     @ResponseBody
     @PostMapping(value = "er/erSearch", produces = "application/text; charset=utf8")    

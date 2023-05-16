@@ -91,12 +91,13 @@ select::-ms-expand {
 }
 #search > .er > div.map > div.search_map  .info .title {
 	padding: 5px 0 0 10px;
-	height: 30px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-size: 15px;
-	font-weight: bold;
-	line-height: 30px;
+    height: 30px;
+    background: linear-gradient(90deg, rgba(44,233,123,1) 0%, rgba(44,233,123,1) 13%, rgba(1,177,255,1) 100%);
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #fff;
 }
 #search > .er > div.map > div.search_map .info .close {
 	position: absolute;
