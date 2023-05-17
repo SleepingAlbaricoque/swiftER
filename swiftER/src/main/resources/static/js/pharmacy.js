@@ -122,14 +122,44 @@ $(document).ready(function () {
 		            
 		            var jibun = document.createElement('div');
 		            jibun.className = 'jibun';
-		            jibun.innerHTML = '연락처1 : '+item.dutyTel1
+		            jibun.innerHTML = '연락처1 : '+item.dutyTel1;
 		            
-		            var linkdiv = document.createElement('div');
+		            var timediv = document.createElement('div');
+		            
+		            var timet = document.createElement('div');
+		            timet.className = 'ellipsis';
+		            timet.innerHTML = '운영시간';
 
+					var time = document.createElement('div');
+					time.className = 'time';
+					time.innerHTML = '월 '+ item.dutyTime1s.substr(0, 2) + '시 ~ '+ item.dutyTime1c.toString().substr(0, 2) + '시';
+					
+					
+					var time2 = document.createElement('div');
+					time2.className = 'time';
+					time2.innerHTML = '화 '+ item.dutyTime2s.substr(0, 2) + '시 ~ '+ item.dutyTime2c.toString().substr(0, 2) + '시';
+					
+					var time3 = document.createElement('div');
+					time3.className = 'time';
+					time3.innerHTML = '수 '+ item.dutyTime3s.substr(0, 2) + '시 ~ '+ item.dutyTime3c.toString().substr(0, 2) + '시';
+					
+					var time4 = document.createElement('div');
+					time4.className = 'time';
+					time4.innerHTML = '목 '+ item.dutyTime4s.substr(0, 2) + '시 ~ '+ item.dutyTime4c.toString().substr(0, 2) + '시';
+					
+					var time5 = document.createElement('div');
+					time5.className = 'time';
+					time5.innerHTML = '금 '+ item.dutyTime5s.substr(0, 2)+ '시 ~ '+ item.dutyTime5c.toString().substr(0, 2) + '시';
 		            
+		            timediv.appendChild(timet);
+		            timediv.appendChild(time);
+		            timediv.appendChild(time2);
+		            timediv.appendChild(time3);
+		            timediv.appendChild(time4);
+		            timediv.appendChild(time5);
 		            desc.appendChild(ellipsis);
 		            desc.appendChild(jibun);
-		            desc.appendChild(linkdiv);
+		            desc.appendChild(timediv);
 		            body.appendChild(desc);
 		            title.appendChild(close);
 		            info.appendChild(title);
