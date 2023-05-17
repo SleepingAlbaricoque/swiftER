@@ -31,7 +31,7 @@ extends SimpleUrlAuthenticationFailureHandler {
 	  if (exception instanceof BadCredentialsException) { //비밀번호가 일치하지 않을 때 던지는 예외
 		  errorMessage = URLEncoder.encode("아이디와 비밀번호가 일치하지 않습니다", "UTF-8");
 		  } else if (exception instanceof InternalAuthenticationServiceException) { // DB 허용값 이상으로 이상한 것 입력했을 때 출력
-			  errorMessage = URLEncoder.encode("DB연결 오류입니다 (재시도 필요)", "UTF-8");
+			  errorMessage = URLEncoder.encode("회원정보가 존재하지 않습니다", "UTF-8");
 			  } else if (exception instanceof UsernameNotFoundException) { //존재하지 않는 아이디일 때 던지는 예외
 				  errorMessage = URLEncoder.encode("존재하지 않는 아이디입니다", "UTF-8");
 				  } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
