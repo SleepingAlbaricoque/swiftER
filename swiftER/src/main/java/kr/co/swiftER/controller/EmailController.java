@@ -3,6 +3,7 @@ package kr.co.swiftER.controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class EmailController {
     private EmailService emailService;
     
   //인증번호 생성
-    protected final String key = createKey();
+    protected String key = "111111";
     
  // 인증코드 만들기
     public static String createKey() {
@@ -35,6 +36,7 @@ public class EmailController {
     @ResponseBody
     @GetMapping("member/checkEmail")
     public Map<String,String> sendEmail(@RequestParam("email") String email) {
+    	key = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
         String to = email;
         String subject = "swiftER 인증코드입니다";
         String text = "인증번호는 " + key + " 입니다";

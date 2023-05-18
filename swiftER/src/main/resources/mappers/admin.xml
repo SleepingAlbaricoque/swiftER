@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="selectCountTotal" resultType="int">
-		select count(`uid`) from `member`;
+		select count(`uid`) from `member` where `wdate` is null;
 	</select>
 
 	<select id="selectDocCountTotal" resultType="int">
@@ -59,7 +59,7 @@
 	</select>
 	
 	<update id="banMember">
-		update `member` set `grade`=4, `wdate`=NOW() where `uid`=#{uid};
+		update `member` set `grade`=4 where `uid`=#{uid};
 	</update>
 	
 	<select id="selectDocCert" resultType="kr.co.swiftER.vo.FileVO">
@@ -272,8 +272,8 @@
 		);
 	</select>
 	
-	<select id="selectCountMembersTillYesterday" resultType="int">
-		select count(`uid`) from `member` where DATE(rdate) &lt; #{today};
+	<select id="selectCountMembersToday" resultType="int">
+		SELECT (SELECT COUNT(*) FROM member WHERE DATE(rdate) = #{today}) - (SELECT COUNT(*) FROM member WHERE DATE(wdate) = #{today}) AS result;
 	</select>
 	<select id="selectCountCommunityArticlesTillYesterday" resultType="int">
 		select count(`no`) from `community_article` where `parent`=0 and DATE(rdate) &lt; #{today};

@@ -95,11 +95,10 @@ public class AdminController {
 		model.addAttribute("today", today);
 		
 		// 전일 대비 작성글 수, 회원수 증감 구하기
-		int membersTillYesterday = service.selectCountMembersTillYesterday(today);
+		int membersDiff = service.selectCountMembersToday(today);
 		int articlesTillYesterday = service.selectCountCommunityArticlesTillYesterday(today);
 		int reviewsTillYesterday = service.selectCountERReviewsTillYesterday(today);
 		
-		int membersDiff = totalMembers - membersTillYesterday;
 		int articlesDiff = totalCommunity - articlesTillYesterday;
 		int reviewsDiff = totalERReviews - reviewsTillYesterday;
 		

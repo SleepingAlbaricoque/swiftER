@@ -119,7 +119,7 @@ public interface AdminDAO {
 	
 	// main
 	// 어제까지 DB에 저장된 수치 구하기
-	public int selectCountMembersTillYesterday(String today);
+	public int selectCountMembersToday(String today);
 	public int selectCountCommunityArticlesTillYesterday(String today);
 	public int selectCountERReviewsTillYesterday(String today);
 	
