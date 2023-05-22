@@ -110,6 +110,6 @@ WebSocket/[SockJS](https://github.com/sockjs/sockjs-client) - 다양한 브라�
   
   CKEditor로 글 작성/수정 및 jsoup를 활용해 입력값 보안 처리
   
-  발표 PPT 작성 및 
+  발표 PPT 작성 및 발표
 
 
