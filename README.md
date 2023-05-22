@@ -30,6 +30,7 @@ Java17, Spring Boot 3.0.4, Apache Tomcat 9.0, MySQL 8.0, MariaDB 5.5.68, EC2
 
 [CKEditor](https://ckeditor.com/) - 게시글 작성(사진 첨부 기능 미구현)
 
+WebSocket/[SockJS](https://github.com/sockjs/sockjs-client) - 다양한 브라우저에서 실시간 일대일 채팅 구현 
 
 
 ### 정보 구조
