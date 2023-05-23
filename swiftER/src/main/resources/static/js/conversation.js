@@ -83,6 +83,13 @@ function handleIncomingMessage(message){
 				alertCircle.classList.add('fa-solid', 'fa-circle', 'fa-2xs', 'new-message-alert');
 				destination.nextElementSibling.insertAdjacentElement('afterend', alertCircle);
 			}
+			
+			// 현재 대화를 aside 대화 목록 최상단에 위치시키기
+		    let li = destination.parentNode;
+		 	let ul = li.parentNode;
+		 	let div = ul.closest('div');
+		 	
+		 	div.insertBefore(ul, div.firstChild);    
 		}
 	}
 }
@@ -133,7 +140,7 @@ function receiveMsgFromNonsubscribedUser(message){
 	
 	let ul = document.createElement('ul');
 	ul.classList.add('message-list');
-	div.appendChild(ul);
+	div.insertBefore(ul, div.firstChild);
 	
 	let li = document.createElement('li');
 	li.classList.add('message');
@@ -176,7 +183,7 @@ function sendMessage() {
 	
 		let ul = document.createElement('ul');
 		ul.classList.add('message-list');
-		div.appendChild(ul);
+		div.insertBefore(ul, div.firstChild); // div의 최상단에 위치시키기
 		
 		let li = document.createElement('li');
 		li.classList.add('message');
@@ -208,8 +215,14 @@ function sendMessage() {
 				
 				// aside에 메세지 내용 출력
 				let asideMessageContent = destination.nextElementSibling.nextElementSibling.nextElementSibling;
-				console.log(asideMessageContent);
 			    asideMessageContent.innerText = message.message;
+			    
+			    // 현재 대화를 aside 대화 목록 최상단에 위치시키기
+			    let li = destination.parentNode;
+			 	let ul = li.parentNode;
+			 	let div = ul.closest('div');
+			 	
+			 	div.insertBefore(ul, div.firstChild);   
 			}
 		}
 	}
