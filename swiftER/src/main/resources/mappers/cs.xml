@@ -30,6 +30,9 @@
 		<if test="keyword != ''">
 			and title like CONCAT('%', #{keyword}, '%')
 		</if>
+		<if test="cateCode == 3">
+			and a.qno = 0
+		</if>
 		order by no desc
 		limit #{start}, 10;
 	</select>

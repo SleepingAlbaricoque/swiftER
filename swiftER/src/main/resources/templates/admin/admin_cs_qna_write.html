@@ -49,7 +49,9 @@
                     	<input type="hidden" name="answer" th:value="${article.answer}">
                     	<input type="hidden" name="cateCode" value="3">
                     	<input type="hidden" name="subcateCode" th:value="${article.subcateCode}">
-                    	<input type="hidden" name="file" th:value="${answer.file}">
+                    	<th:block th:if="${article.file != null}">
+						    <input type="hidden" name="file" th:value="${article.file}">
+						</th:block>
                         <table class="admin-cs-form-table">
                             <tr>
                                 <td class="key">제목</td>
